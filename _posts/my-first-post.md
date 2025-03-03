@@ -5,7 +5,7 @@ coverImage: "/assets/blog/hello-world/cover.jpg"
 date: "2025-01-15T12:00:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/jj.jpeg"
+  picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/hello-world/cover.jpg"
 ---
