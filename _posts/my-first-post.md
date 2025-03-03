@@ -42,4 +42,4 @@ Feel free to explore the site, leave comments on posts that resonate with you, a
 
 Stay creative,
 
-[Your Name]
+[kl.ns.]
