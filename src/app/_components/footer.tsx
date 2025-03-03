@@ -18,15 +18,15 @@ export function Footer() {
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
             <div className="flex space-x-4">
               <a
-                href="https://twitter.com/yourusername"
+                href="https://x.com/leonnduati"
                 className="mx-3 font-bold hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Twitter
+                X/Twitter
               </a>
               <a
-                href="https://instagram.com/yourusername"
+                href="https://instagram.com/thoughtsofman_"
                 className="mx-3 font-bold hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -34,7 +34,7 @@ export function Footer() {
                 Instagram
               </a>
               <a
-                href="https://github.com/yourusername"
+                href="https://github.com/git2mann"
                 className="mx-3 font-bold hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
