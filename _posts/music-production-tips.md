@@ -5,7 +5,7 @@ coverImage: "/assets/blog/dynamic-routing/cover.jpg"
 date: "2025-01-10T10:30:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/jj.jpeg"
+  picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/dynamic-routing/cover.jpg"
 ---
