@@ -1,12 +1,19 @@
+/*
+
 import Container from "@/app/_components/container";
 import { EXAMPLE_PATH } from "@/lib/constants";
 import cn from "classnames";
+
+*/
 
 /**
  * Alert component
  * Displays a banner at the top of the page
  * Used to show preview mode status or link to the source code
- */
+ *
+
+
+/*
 type Props = {
   preview?: boolean;  // Whether the page is in preview mode
 };
