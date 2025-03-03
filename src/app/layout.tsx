@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 // Define metadata for the application (used for SEO and social sharing)
 export const metadata: Metadata = {
-  title: SITE_NAME,
+  title: "Leon Nduati: A Portfolio",
   description: "Personal portfolio and blog showcasing music, art, and projects",
   openGraph: {
     images: [HOME_OG_IMAGE_URL],
