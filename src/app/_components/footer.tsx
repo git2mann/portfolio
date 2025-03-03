@@ -14,7 +14,7 @@ export function Footer() {
           <h3 className="text-4xl lg:text-[2.5rem] font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
             {SITE_NAME}
           </h3>
-          <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
+          <h4 className="text-center md:text-left text-lg mt-5 lg:mt-0">
             /<em>klɛnz</em>/
           </h4>
           {/* Social links */}
