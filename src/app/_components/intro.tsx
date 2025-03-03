@@ -14,7 +14,7 @@ export function Intro() {
       </h1>
       {/* Site description */}
       <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
-        A personal portfolio and blog showcasing my music, art, and projects.
+        <b>klense</b> /<em>klɛnz</em>/ <b><em>n. </em></b>the artist.
       </h4>
     </section>
   );
