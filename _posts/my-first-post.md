@@ -4,7 +4,7 @@ excerpt: "An introduction to my creative journey and what you can expect to find
 coverImage: "/assets/blog/hello-world/cover.jpg"
 date: "2025-01-15T12:00:00.000Z"
 author:
-  name: Your Name
+  name: Leon Nduati
   picture: "/assets/blog/authors/jj.jpeg"
 ogImage:
   url: "/assets/blog/hello-world/cover.jpg"
