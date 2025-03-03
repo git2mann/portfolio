@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 
+/**
+ * PostTitle component
+ * Displays the title of a blog post with appropriate styling
+ */
 type Props = {
-  children?: ReactNode;
+  children?: ReactNode;  // Title content
 };
 
 export function PostTitle({ children }: Props) {

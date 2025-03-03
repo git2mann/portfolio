@@ -4,8 +4,8 @@ excerpt: "Starting your journey in music production can be overwhelming. Here ar
 coverImage: "/assets/blog/dynamic-routing/cover.jpg"
 date: "2025-01-10T10:30:00.000Z"
 author:
-  name: Your Name
-  picture: "/assets/blog/authors/jj.jpeg"
+  name: Leon Nduati
+  picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/dynamic-routing/cover.jpg"
 ---

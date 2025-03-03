@@ -2,8 +2,13 @@ import Container from "@/app/_components/container";
 import { EXAMPLE_PATH } from "@/lib/constants";
 import cn from "classnames";
 
+/**
+ * Alert component
+ * Displays a banner at the top of the page
+ * Used to show preview mode status or link to the source code
+ */
 type Props = {
-  preview?: boolean;
+  preview?: boolean;  // Whether the page is in preview mode
 };
 
 const Alert = ({ preview }: Props) => {
@@ -17,6 +22,7 @@ const Alert = ({ preview }: Props) => {
       <Container>
         <div className="py-2 text-center text-sm">
           {preview ? (
+            // Message shown in preview mode
             <>
               This page is a preview.{" "}
               <a
@@ -28,6 +34,7 @@ const Alert = ({ preview }: Props) => {
               to exit preview mode.
             </>
           ) : (
+            // Message shown in normal mode
             <>
               The source code for this blog is{" "}
               <a

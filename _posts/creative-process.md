@@ -4,8 +4,8 @@ excerpt: "A look into how I find inspiration and maintain creativity across diff
 coverImage: "/assets/blog/preview/cover.jpg"
 date: "2025-01-05T14:45:00.000Z"
 author:
-  name: Your Name
-  picture: "/assets/blog/authors/jj.jpeg"
+  name: Leon Nduati
+  picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/preview/cover.jpg"
 ---

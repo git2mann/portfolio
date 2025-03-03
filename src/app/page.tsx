@@ -4,15 +4,21 @@ import { getAllPosts } from "@/lib/api";
 import Link from "next/link";
 import Image from "next/image";
 
+/**
+ * Home page component
+ * Displays the main landing page with intro, featured sections, and recent blog posts
+ */
 export default function Index() {
+  // Get the 3 most recent blog posts
   const allPosts = getAllPosts().slice(0, 3);
 
   return (
     <main>
       <Container>
+        {/* Introduction section with site title and description */}
         <Intro />
         
-        {/* Hero Section */}
+        {/* Hero Section - Main welcome area */}
         <section className="mb-16">
           <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Welcome to My Creative Space</h2>
@@ -37,7 +43,7 @@ export default function Index() {
           </div>
         </section>
         
-        {/* Featured Sections */}
+        {/* Featured Sections - Quick links to main content areas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {/* Music Section */}
           <div className="border border-neutral-200 dark:border-slate-700 rounded-lg p-6 hover:shadow-md transition-shadow">
@@ -67,7 +73,7 @@ export default function Index() {
           </div>
         </div>
         
-        {/* Recent Blog Posts */}
+        {/* Recent Blog Posts - Preview of latest blog content */}
         <section className="mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-8">Recent Posts</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

@@ -20,7 +20,7 @@ export default function ContactPage() {
               <h3 className="text-xl font-bold mb-2">Email</h3>
               <p className="text-lg">
                 <a href="mailto:hello@yourdomain.com" className="hover:underline">
-                  hello@yourdomain.com
+                  nduatileon@gmail.com
                 </a>
               </p>
             </div>
@@ -29,7 +29,7 @@ export default function ContactPage() {
               <ul className="space-y-2">
                 <li>
                   <a 
-                    href="https://twitter.com/yourusername" 
+                    href="https://twitter.com/leonnduati" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-lg hover:underline"
@@ -39,7 +39,7 @@ export default function ContactPage() {
                 </li>
                 <li>
                   <a 
-                    href="https://instagram.com/yourusername" 
+                    href="https://instagram.com/thoughtsofman_" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-lg hover:underline"
@@ -49,7 +49,7 @@ export default function ContactPage() {
                 </li>
                 <li>
                   <a 
-                    href="https://linkedin.com/in/yourusername" 
+                    href="https://linkedin.com/in/leonnduati" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-lg hover:underline"
