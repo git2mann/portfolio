@@ -1,6 +1,7 @@
 import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import Image from "next/image";
+import { FaSpotify, FaApple, FaSoundcloud, FaBandcamp } from "react-icons/fa";
 
 export default function MusicPage() {
   const lyric = "What you got?";
@@ -76,40 +77,45 @@ export default function MusicPage() {
             <p className="text-lg">
               Listen to my music on various platforms and follow me to stay updated on new releases.
             </p>
+            
             <div className="flex flex-wrap gap-4 mt-6">
-            <a
-              href="https://spotify.com/artist/klense"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-lg bg-[#1DB954] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1DB954] focus:ring-opacity-50"
-            >
-              Spotify
-            </a>
-            <a
-              href="https://music.apple.com/artist/klense"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-lg bg-[#FA243C] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#FA243C] focus:ring-opacity-50"
-            >
-              Apple Music
-            </a>
-            <a
-              href="https://soundcloud.com/yourprofile"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-lg bg-[#FF7700] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#FF7700] focus:ring-opacity-50"
-            >
-              SoundCloud
-            </a>
-            <a
-              href="https://bandcamp.com/yourprofile"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-lg bg-[#629aa9] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#629aa9] focus:ring-opacity-50"
-            >
-              Bandcamp
-            </a>
-          </div>
+              <a
+                href="https://spotify.com/artist/klense"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg bg-[#1DB954] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1DB954] focus:ring-opacity-50"
+              >
+                <FaSpotify className="mr-2" />
+                Spotify
+              </a>
+              <a
+                href="https://music.apple.com/artist/klense"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg bg-[#FA243C] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#FA243C] focus:ring-opacity-50"
+              >
+                <FaApple className="mr-2" />
+                Apple Music
+              </a>
+              <a
+                href="https://soundcloud.com/yourprofile"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg bg-[#FF7700] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#FF7700] focus:ring-opacity-50"
+              >
+                <FaSoundcloud className="mr-2" />
+                SoundCloud
+              </a>
+              <a
+                href="https://bandcamp.com/yourprofile"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-lg bg-[#629aa9] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#629aa9] focus:ring-opacity-50"
+              >
+                <FaBandcamp className="mr-2" />
+                Bandcamp
+              </a>
+            </div>
           </div>
         </section>
         
