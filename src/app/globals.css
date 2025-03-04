@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.typewriter {
+  overflow: hidden; /* Hide overflow */
+  border-right: 0.15em solid orange; /* Cursor */
+  white-space: nowrap; /* Keep text on one line */
+  margin: 0 auto; /* Center the text */
+  letter-spacing: 0.15em; /* Adjust spacing */
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+/* Typing effect */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* Cursor blink effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: orange; }
+}
