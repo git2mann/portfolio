@@ -3,6 +3,7 @@ import Header from "@/app/_components/header";
 import Image from "next/image";
 
 export default function MusicPage() {
+  const lyric = "The ruin called with a sweet allure, chasing the dream that made me unsure";
   const musicProjects = [
     {
       id: 1,
@@ -49,6 +50,21 @@ export default function MusicPage() {
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12">
           Music
         </h1>
+
+        {/* Lyric Section with Typewriter Effect */}
+        <section className="mb-16">
+          <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Featured Lyric</h2>
+            <div className="typewriter">
+              <p className="text-2xl md:text-3xl font-bold italic text-neutral-900 dark:text-neutral-100">
+                "{lyric}"
+              </p>
+            </div>
+            <p className="text-lg mt-4 text-neutral-600 dark:text-neutral-400">
+              From the track <span className="font-semibold">"Silent Night"</span>, 2023
+            </p>
+          </div>
+        </section>
         
         <section className="mb-16">
           <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12">
