@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
 import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import Image from "next/image";
 
 export default function MusicPage() {
+  const lyric = "In the silence of the night, we find our way home.";
   const musicProjects = [
     {
       id: 1,
@@ -43,42 +43,33 @@ export default function MusicPage() {
     }
   ];
 
-  const lyric = "In the silence of the night, we find our way home.";
-  const [displayedLyric, setDisplayedLyric] = useState("");
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (index < lyric.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedLyric((prev) => prev + lyric[index]);
-        setIndex((prev) => prev + 1);
-      }, 100); // Adjust typing speed (100ms per character)
-      return () => clearTimeout(timeout);
-    }
-  }, [index, lyric]);
-
   return (
     <main>
       <Container>
         <Header />
+          <Header />
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12">
+            Music
+          </h1>
+          
+          {/* Lyric Section with Typewriter Effect */}
+          <section className="mb-16">
+            <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12 text-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">Featured Lyric</h2>
+              <div className="typewriter">
+                <p className="text-2xl md:text-3xl font-bold italic text-neutral-900 dark:text-neutral-100">
+                  "{lyric}"
+                </p>
+              </div>
+              <p className="text-lg mt-4 text-neutral-600 dark:text-neutral-400">
+                From the track <span className="font-semibold">"Silent Night"</span>, 2023
+              </p>
+            </div>
+          </section>
+        
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12">
           Music
         </h1>
-
-         {/* Lyric Section with JavaScript Typewriter Effect */}
-        <section className="mb-16">
-          <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Featured Lyric</h2>
-            <div className="typewriter">
-              <p className="text-2xl md:text-3xl font-bold italic text-neutral-900 dark:text-neutral-100">
-                "{displayedLyric}"
-              </p>
-            </div>
-            <p className="text-lg mt-4 text-neutral-600 dark:text-neutral-400">
-              From the track <span className="font-semibold">"Silent Night"</span>, 2023
-            </p>
-          </div>
-        </section>
         
         <section className="mb-16">
           <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12">
@@ -193,15 +184,21 @@ export default function MusicPage() {
         </section>
       </Container>
 
-      {/* Add CSS for the cursor */}
+      {/* CSS for the typewriter effect */}
       <style jsx>{`
         .typewriter p {
-          display: inline-block;
+          overflow: hidden; /* Hide overflow */
           border-right: 0.15em solid orange; /* Cursor */
           white-space: nowrap; /* Keep text on one line */
-          overflow: hidden; /* Hide overflow */
+          margin: 0 auto; /* Center the text */
           letter-spacing: 0.15em; /* Adjust spacing */
-          animation: blink-caret 0.75s step-end infinite;
+          animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        /* Typing effect */
+        @keyframes typing {
+          from { width: 0; }
+          to { width: 100%; }
         }
 
         /* Cursor blink effect */
