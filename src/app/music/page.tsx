@@ -62,18 +62,20 @@ export default function MusicPage() {
             </p>
             <div className="flex flex-wrap gap-4 mt-6">
               <a 
-                href="https://spotify.com/artist/yourprofile" 
+                href="https://spotify.com/artist/klense" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#1DB954] hover:bg-[#1ed760] text-white font-bold py-2 px-4 rounded-full"
+                aria-label="Follow me on Spotify"
               >
                 Spotify
               </a>
               <a 
-                href="https://music.apple.com/artist/yourprofile" 
+                href="https://music.apple.com/artist/klense" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#FA243C] hover:bg-[#fb3a50] text-white font-bold py-2 px-4 rounded-full"
+                aria-label="Follow me on Apple Music"
               >
                 Apple Music
               </a>
@@ -82,6 +84,7 @@ export default function MusicPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#FF7700] hover:bg-[#ff8822] text-white font-bold py-2 px-4 rounded-full"
+                aria-label="Follow me on SoundCloud"
               >
                 SoundCloud
               </a>
@@ -90,6 +93,7 @@ export default function MusicPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#629aa9] hover:bg-[#74a7b5] text-white font-bold py-2 px-4 rounded-full"
+                aria-label="Follow me on Bandcamp"
               >
                 Bandcamp
               </a>
@@ -101,17 +105,24 @@ export default function MusicPage() {
           <h2 className="text-3xl md:text-4xl font-bold mb-8">Releases</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {musicProjects.map((project) => (
-              <div key={project.id} className="border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+              <article 
+                key={project.id} 
+                className="border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                aria-labelledby={`project-${project.id}-title`}
+              >
                 <div className="relative h-64">
                   <Image
                     src={project.image}
-                    alt={project.title}
+                    alt={`Cover art for ${project.title}`}
                     fill
                     className="object-cover"
+                    aria-labelledby={`project-${project.id}-title`}
                   />
                 </div>
                 <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
+                  <h3 id={`project-${project.id}-title`} className="text-2xl font-bold mb-2">
+                    {project.title}
+                  </h3>
                   <p className="text-sm mb-4 text-gray-500 dark:text-gray-400">
                     Released: {new Date(project.releaseDate).toLocaleDateString('en-US', {
                       year: 'numeric',
@@ -126,6 +137,7 @@ export default function MusicPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-medium hover:underline"
+                      aria-label={`Listen to ${project.title} on Spotify`}
                     >
                       Spotify
                     </a>
@@ -134,6 +146,7 @@ export default function MusicPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-medium hover:underline"
+                      aria-label={`Listen to ${project.title} on Apple Music`}
                     >
                       Apple Music
                     </a>
@@ -142,12 +155,13 @@ export default function MusicPage() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-sm font-medium hover:underline"
+                      aria-label={`Listen to ${project.title} on Bandcamp`}
                     >
                       Bandcamp
                     </a>
                   </div>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </section>
@@ -157,7 +171,16 @@ export default function MusicPage() {
           <div className="border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden">
             <div className="p-6">
               <p className="text-lg mb-4">No upcoming shows at the moment. Check back soon!</p>
-              <p>Want to book me for a show? Get in touch at <a href="mailto:booking@yourdomain.com" className="underline hover:text-blue-600">booking@yourdomain.com</a></p>
+              <p>
+                Want to book me for a show? Get in touch at{" "}
+                <a 
+                  href="mailto:nduatileon@gmail.com" 
+                  className="underline hover:text-blue-600"
+                  aria-label="Email me to book a show"
+                >
+                  nduatileon@gmail.com
+                </a>
+              </p>
             </div>
           </div>
         </section>
