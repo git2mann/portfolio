@@ -3,7 +3,7 @@ import Header from "@/app/_components/header";
 import Image from "next/image";
 
 export default function MusicPage() {
-  const lyric = "What you got?";
+  const lyric = "Any time I drop, what you got?";
   const musicProjects = [
     {
       id: 1,
