@@ -3,7 +3,7 @@ import Header from "@/app/_components/header";
 import Image from "next/image";
 
 export default function MusicPage() {
-  const lyric = "The ruin called with a sweet allure, chasing the dream that made me unsure";
+  const lyric = "See myself in 1st place, consequently never shocked";
   const musicProjects = [
     {
       id: 1,
@@ -61,7 +61,7 @@ export default function MusicPage() {
               </p>
             </div>
             <p className="text-lg mt-4 text-neutral-600 dark:text-neutral-400">
-              From the track <span className="font-semibold">"Silent Night"</span>, 2023
+              From the track <span className="font-semibold">"Roast (SATAOP, 2021)"</span>, 2023
             </p>
           </div>
         </section>
