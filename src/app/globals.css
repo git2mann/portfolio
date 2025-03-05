@@ -2,215 +2,104 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Advanced Animations */
+/* Custom animations */
 @keyframes fadeIn {
-  from { 
-    opacity: 0; 
-    transform: translateY(20px); 
-  }
-  to { 
-    opacity: 1; 
-    transform: translateY(0); 
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-  from { 
-    transform: translateX(-30px); 
-    opacity: 0; 
-  }
-  to { 
-    transform: translateX(0); 
-    opacity: 1; 
-  }
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 @keyframes scaleIn {
-  from { 
-    transform: scale(0.9); 
-    opacity: 0; 
-  }
-  to { 
-    transform: scale(1); 
-    opacity: 1; 
-  }
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-}
-
-/* Improved Base Styles */
+/* Base styles */
 html {
   scroll-behavior: smooth;
-  scrollbar-width: thin;
 }
 
 body {
-  @apply antialiased text-gray-900 dark:text-gray-100 
-         transition-colors duration-300 
-         bg-white dark:bg-slate-900 
-         selection:bg-purple-200 dark:selection:bg-purple-800;
+  @apply antialiased text-gray-900 dark:text-gray-100 transition-colors duration-200;
 }
 
-/* Enhanced Typography */
+/* Typography improvements */
 h1, h2, h3, h4, h5, h6 {
-  @apply tracking-tight font-bold 
-         text-gray-900 dark:text-white 
-         transition-colors duration-200;
+  @apply tracking-tight;
 }
 
-/* Advanced Card Hover Effects */
+/* Card hover effects */
 .hover-card {
-  @apply transition-all duration-300 ease-in-out 
-         border border-transparent 
-         hover:border-purple-200 dark:hover:border-purple-800 
-         hover:shadow-2xl;
+  @apply transition-all duration-300 ease-in-out border border-transparent hover:border-purple-200 dark:hover:border-purple-800 hover:shadow-lg;
 }
 
 .hover-card:hover {
-  @apply transform -translate-y-2 
-         scale-105;
+  @apply transform -translate-y-1 scale-105;
 }
 
-/* Refined Button Styles */
+/* Button styles */
 .btn {
-  @apply inline-flex items-center justify-center 
-         px-6 py-3 rounded-xl 
-         font-semibold 
-         transition-all duration-300 ease-in-out 
-         focus:outline-none focus:ring-2 focus:ring-offset-2 
-         focus:ring-purple-500 dark:focus:ring-purple-300;
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 ease-in-out;
 }
 
 .btn-primary {
-  @apply bg-black text-white 
-         hover:bg-purple-900 
-         dark:bg-white dark:text-black 
-         dark:hover:bg-purple-100 
-         shadow-md hover:shadow-xl;
+  @apply bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200;
 }
 
 .btn-secondary {
-  @apply bg-white text-black border border-black 
-         hover:bg-purple-50 
-         dark:bg-slate-800 dark:text-white 
-         dark:border-slate-700 
-         dark:hover:bg-slate-700 
-         shadow-sm hover:shadow-md;
+  @apply bg-white text-black border border-black hover:bg-black hover:text-white 
+         dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700;
 }
 
-/* Advanced Animated Elements */
+/* Animated elements */
 .animate-fade-in {
-  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
 .animate-slide-in {
-  animation: slideIn 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: slideIn 0.6s ease-out forwards;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: scaleIn 0.4s ease-out forwards;
 }
 
-.animate-pulse {
-  animation: pulse 2s infinite;
-}
-
-/* Enhanced Gradient Text */
+/* Gradient text */
 .gradient-text {
-  @apply bg-clip-text text-transparent 
-         bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 
-         dark:from-purple-400 dark:via-pink-300 dark:to-red-400 
-         animate-gradient-x;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400;
 }
 
-@keyframes gradient-x {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.animate-gradient-x {
-  background-size: 200% auto;
-  animation: gradient-x 3s ease infinite;
-}
-
-/* Image Hover with Smooth Transition */
+/* Image hover effects */
 .image-hover {
-  @apply transition-all duration-300 ease-in-out 
-         hover:scale-105 hover:shadow-xl 
-         rounded-lg overflow-hidden;
+  @apply transition-transform duration-300 ease-in-out;
 }
 
-/* Custom Scrollbar with Smooth Transition */
+.image-hover:hover {
+  @apply transform scale-105;
+}
+
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  @apply w-2 bg-transparent;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-slate-800;
+  @apply bg-gray-100 dark:bg-gray-800;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-purple-300 dark:bg-purple-700 
-         rounded-full 
-         transition-colors duration-300;
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-purple-400 dark:bg-purple-600;
+  @apply bg-gray-400 dark:bg-gray-500;
 }
 
-/* Advanced Typewriter Effect */
-.typewriter {
-  @apply overflow-hidden 
-         border-r-2 border-gray-700 dark:border-gray-300 
-         whitespace-nowrap 
-         animate-typing;
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink {
-  0%, 100% { border-color: transparent }
-  50% { border-color: currentColor }
-}
-
-.animate-typing {
-  animation: 
-    typing 3.5s steps(40, end),
-    blink 0.75s step-end infinite;
-}
-
-/* Enhanced Glass Effect */
-.glass {
-  @apply backdrop-blur-xl 
-         bg-white/40 dark:bg-black/40 
-         border border-white/10 dark:border-black/10 
-         shadow-lg;
-}
-
-/* Advanced Loading Skeleton */
-.skeleton {
-  @apply animate-pulse 
-         bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 
-         dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 
-         bg-size-200 
-         rounded-lg;
-}
-
-/* Subtle Focus Outline */
+/* Focus states */
 *:focus {
-  @apply outline-none 
-         ring-2 ring-purple-500/50 
-         dark:ring-purple-300/50 
-         rounded-lg;
+  @apply outline-none ring-2 ring-purple-500/50 dark:ring-purple-300/50 rounded-lg;
 }
