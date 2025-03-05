@@ -2,23 +2,129 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased text-gray-900 dark:text-gray-100 transition-colors duration-200;
+}
+
+/* Typography improvements */
+h1, h2, h3, h4, h5, h6 {
+  @apply tracking-tight;
+}
+
+/* Card hover effects */
+.hover-card {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.hover-card:hover {
+  @apply transform -translate-y-1 shadow-lg;
+}
+
+/* Button styles */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 ease-in-out;
+}
+
+.btn-primary {
+  @apply bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200;
+}
+
+.btn-secondary {
+  @apply bg-white text-black border border-black hover:bg-black hover:text-white 
+         dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700;
+}
+
+/* Animated elements */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400;
+}
+
+/* Image hover effects */
+.image-hover {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.image-hover:hover {
+  @apply transform scale-105;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Typewriter effect */
 .typewriter {
-  overflow: hidden; /* Hide overflow */
-  border-right: 0.15em solid orange; /* Cursor */
-  white-space: nowrap; /* Keep text on one line */
-  margin: 0 auto; /* Center the text */
-  letter-spacing: 0.15em; /* Adjust spacing */
+  overflow: hidden;
+  border-right: 0.15em solid currentColor;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.15em;
   animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
-/* Typing effect */
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from { width: 0 }
+  to { width: 100% }
 }
 
-/* Cursor blink effect */
 @keyframes blink-caret {
-  from, to { border-color: transparent; }
-  50% { border-color: orange; }
+  from, to { border-color: transparent }
+  50% { border-color: currentColor }
+}
+
+/* Glass effect */
+.glass {
+  @apply backdrop-blur-lg bg-white/30 dark:bg-black/30;
+}
+
+/* Loading skeleton */
+.skeleton {
+  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
 }
