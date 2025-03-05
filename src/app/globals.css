@@ -24,25 +24,12 @@ html {
 }
 
 body {
-  @apply antialiased transition-colors duration-200 text-gray-900 dark:text-gray-100;
+  @apply antialiased text-gray-900 dark:text-gray-100 transition-colors duration-200;
 }
 
 /* Typography improvements */
 h1, h2, h3, h4, h5, h6 {
   @apply tracking-tight;
-}
-
-/* Ensure text is readable */
-.text-gray-900 {
-  @apply text-gray-900 dark:text-gray-100;
-}
-
-.text-gray-100 {
-  @apply text-gray-100 dark:text-gray-900;
-}
-
-.text-white {
-  @apply text-gray-50 dark:text-white;
 }
 
 /* Card hover effects */
@@ -64,7 +51,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary {
-  @apply bg-white text-black border border-black hover:bg-black hover:text-white dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700;
+  @apply bg-white text-black border border-black hover:bg-black hover:text-white 
+         dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700;
 }
 
 /* Animated elements */
@@ -104,11 +92,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500 dark:bg-gray-500;
+  @apply bg-gray-400 dark:bg-gray-500;
 }
 
 /* Typewriter effect */
@@ -138,5 +126,5 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Loading skeleton */
 .skeleton {
-  @apply animate-pulse bg-gray-300 dark:bg-gray-700 rounded;
+  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
 }
