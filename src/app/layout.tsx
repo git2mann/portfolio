@@ -41,9 +41,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head />
       <body
         className={cn(
           inter.className,
+          playfair.variable,
           "bg-white text-gray-900 dark:bg-slate-900 dark:text-slate-400 transition-colors duration-300"
         )}
       >
