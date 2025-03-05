@@ -50,12 +50,22 @@ export const NoFOUCScript = (storageKey: string) => {
   media.addEventListener("change", window.updateDOM);
 };
 
+const getInitialMode = (): ColorSchemePreference => {
+  if (typeof window === 'undefined') return 'system';
+  return (localStorage?.getItem(STORAGE_KEY) ?? 'system') as ColorSchemePreference;
+};
+
 const Switch = () => {
-  const [mode, setMode] = useState<ColorSchemePreference>(
-    () => (localStorage.getItem(STORAGE_KEY) ?? "system") as ColorSchemePreference
-  );
+  const [mounted, setMounted] = useState(false);
+  const [mode, setMode] = useState<ColorSchemePreference>(getInitialMode);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    
     const updateDOM = window.updateDOM;
     
     const handleStorage = (e: StorageEvent) => {
@@ -66,17 +76,20 @@ const Switch = () => {
 
     window.addEventListener("storage", handleStorage);
     return () => window.removeEventListener("storage", handleStorage);
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, mode);
+    if (!mounted) return;
+    localStorage?.setItem(STORAGE_KEY, mode);
     window.updateDOM?.();
-  }, [mode]);
+  }, [mode, mounted]);
 
   const handleModeSwitch = () => {
     const index = modes.indexOf(mode);
     setMode(modes[(index + 1) % modes.length]);
   };
+
+  if (!mounted) return null;
 
   return (
     <button
