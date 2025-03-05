@@ -11,7 +11,7 @@ export function Intro() {
       {/* Site title and description grouped together */}
       <div className="text-center md:text-left">
         <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
-          {SITE_NAME}
+          {SITE_NAME}.
         </h1>
         <h4 className="text-lg mt-2">
           <b>klense</b> <em>/klɛnz/</em> <b><em>n. </em></b>the artist.
