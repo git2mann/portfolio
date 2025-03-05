@@ -24,12 +24,7 @@ html {
 }
 
 body {
-  @apply antialiased transition-colors duration-200;
-  color: #1a1a1a; /* Darker text for better readability in light mode */
-}
-
-.dark body {
-  color: #eaeaea; /* Softer contrast in dark mode */
+  @apply antialiased transition-colors duration-200 text-gray-900 dark:text-gray-100;
 }
 
 /* Typography improvements */
@@ -39,19 +34,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Ensure text is readable */
 .text-gray-900 {
-  color: #1a1a1a !important; /* Darker for better contrast */
+  @apply text-gray-900 dark:text-gray-100;
 }
 
 .text-gray-100 {
-  color: #eaeaea !important; /* Softer in dark mode */
+  @apply text-gray-100 dark:text-gray-900;
 }
 
 .text-white {
-  color: #121212 !important; /* Prevent pure white text in light mode */
-}
-
-.dark .text-white {
-  color: #ffffff !important; /* Retain pure white in dark mode */
+  @apply text-gray-50 dark:text-white;
 }
 
 /* Card hover effects */
@@ -69,19 +60,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-  @apply bg-black text-white hover:bg-gray-800;
-}
-
-.dark .btn-primary {
-  @apply bg-white text-black hover:bg-gray-200;
+  @apply bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200;
 }
 
 .btn-secondary {
-  @apply bg-white text-black border border-black hover:bg-black hover:text-white;
-}
-
-.dark .btn-secondary {
-  @apply bg-gray-800 text-white border-gray-700 hover:bg-gray-700;
+  @apply bg-white text-black border border-black hover:bg-black hover:text-white dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700;
 }
 
 /* Animated elements */
