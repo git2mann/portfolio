@@ -24,12 +24,34 @@ html {
 }
 
 body {
-  @apply antialiased text-gray-900 dark:text-gray-100 transition-colors duration-200;
+  @apply antialiased transition-colors duration-200;
+  color: #1a1a1a; /* Darker text for better readability in light mode */
+}
+
+.dark body {
+  color: #eaeaea; /* Softer contrast in dark mode */
 }
 
 /* Typography improvements */
 h1, h2, h3, h4, h5, h6 {
   @apply tracking-tight;
+}
+
+/* Ensure text is readable */
+.text-gray-900 {
+  color: #1a1a1a !important; /* Darker for better contrast */
+}
+
+.text-gray-100 {
+  color: #eaeaea !important; /* Softer in dark mode */
+}
+
+.text-white {
+  color: #121212 !important; /* Prevent pure white text in light mode */
+}
+
+.dark .text-white {
+  color: #ffffff !important; /* Retain pure white in dark mode */
 }
 
 /* Card hover effects */
@@ -47,12 +69,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-  @apply bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200;
+  @apply bg-black text-white hover:bg-gray-800;
+}
+
+.dark .btn-primary {
+  @apply bg-white text-black hover:bg-gray-200;
 }
 
 .btn-secondary {
-  @apply bg-white text-black border border-black hover:bg-black hover:text-white 
-         dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700;
+  @apply bg-white text-black border border-black hover:bg-black hover:text-white;
+}
+
+.dark .btn-secondary {
+  @apply bg-gray-800 text-white border-gray-700 hover:bg-gray-700;
 }
 
 /* Animated elements */
@@ -92,11 +121,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
+  @apply bg-gray-500 dark:bg-gray-500;
 }
 
 /* Typewriter effect */
@@ -126,5 +155,5 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Loading skeleton */
 .skeleton {
-  @apply animate-pulse bg-gray-200 dark:bg-gray-700 rounded;
+  @apply animate-pulse bg-gray-300 dark:bg-gray-700 rounded;
 }
