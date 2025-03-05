@@ -14,7 +14,7 @@ export function Footer() {
           {/* Site Name + Definition */}
           <div className="text-center lg:text-left">
             <h3 className="text-4xl lg:text-[2.5rem] font-bold tracking-tighter leading-tight">
-              {SITE_NAME}
+              {SITE_NAME}.
             </h3>
             <p className="text-lg text-neutral-500 dark:text-neutral-400 mt-1">
               <b>klense</b> <em>/klɛnz/</em> <b><em>n. </em></b>the artist.
