@@ -1,17 +1,18 @@
 .switch {
   all: unset;
-  position: absolute;
+  position: fixed;
   right: 20px;
-  top: 70px;
+  top: 20px;
   display: inline-block;
   color: currentColor;
   border-radius: 50%;
   border: 1px dashed currentColor;
   cursor: pointer;
-  --size: 24px;
+  --size: 32px;
   height: var(--size);
   width: var(--size);
-  transition: all 0.3s ease-in-out 0s !important;
+  transition: all 0.3s ease-in-out;
+  z-index: 50;
 }
 
 [data-mode="system"] .switch::after {
@@ -29,20 +30,19 @@
 }
 
 [data-mode="light"] .switch {
-  box-shadow: 0 0 50px 10px yellow;
-  background-color: yellow;
-  border: 1px solid orangered;
+  box-shadow: 0 0 20px 5px rgba(255, 255, 0, 0.3);
+  background-color: #ffd700;
+  border: 1px solid #ff8c00;
 }
 
 [data-mode="dark"] .switch {
-  box-shadow: calc(var(--size) / 4) calc(var(--size) / -4) calc(var(--size) / 8)
-    inset #fff;
+  box-shadow: calc(var(--size) / 4) calc(var(--size) / -4) calc(var(--size) / 8) inset #fff;
   border: none;
   background: transparent;
-  animation: n linear 0.5s;
+  animation: moonPhase 0.5s ease-in-out;
 }
 
-@keyframes n {
+@keyframes moonPhase {
   40% {
     transform: rotate(-15deg);
   }
