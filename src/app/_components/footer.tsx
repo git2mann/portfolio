@@ -15,7 +15,7 @@ export function Footer() {
             {SITE_NAME}
           </h3>
           <h4 className="text-center md:text-left text-lg mt-5 lg:mt-0">
-            <em>/klɛnz/</em>
+            <em>klense</em>
           </h4>
           {/* Social links */}
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
