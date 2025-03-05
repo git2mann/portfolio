@@ -7,22 +7,32 @@ import { ThemeSwitcher } from "./_components/theme-switcher";
 
 import "./globals.css";
 
-// Load Inter font with Latin subset
 const inter = Inter({ subsets: ["latin"] });
 
-// Define metadata for the application (used for SEO and social sharing)
 export const metadata: Metadata = {
   title: SITE_NAME,
   description: "Personal portfolio and blog showcasing music, art, and projects",
+  icons: {
+    icon: [
+      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/favicon/apple-touch-icon.png' },
+    ],
+    other: [
+      {
+        rel: 'mask-icon',
+        url: '/favicon/favicon.ico',
+      },
+    ],
+  },
+  manifest: '/favicon/site.webmanifest',
   openGraph: {
     images: [HOME_OG_IMAGE_URL],
   },
 };
 
-/**
- * Root layout component that wraps all pages
- * Provides the HTML structure, font, theme switching, and footer
- */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,16 +41,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon/favicon.ico" />
+        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
       <body
         className={cn(inter.className, "dark:bg-slate-900 dark:text-slate-400")}
       >
-        {/* Theme switcher component for light/dark mode */}
         <ThemeSwitcher />
-        {/* Main content area with minimum height to push footer down */}
         <div className="min-h-screen">{children}</div>
-        {/* Global footer component */}
         <Footer />
       </body>
     </html>
