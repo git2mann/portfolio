@@ -7,38 +7,38 @@ import Image from "next/image";
 /**
  * Home page component
  * Displays the main landing page with intro, featured sections, and recent blog posts
- * Enhanced with advanced animations and styling
+ * Refined with monochromatic design
  */
 export default function Index() {
   // Get the 3 most recent blog posts
   const allPosts = getAllPosts().slice(0, 3);
 
   return (
-    <main className="bg-white dark:bg-slate-900">
+    <main className="bg-white dark:bg-gray-950">
       <Container>
         {/* Introduction section with site title and description */}
         <Intro />
         
         {/* Hero Section - Main welcome area */}
         <section className="mb-16 animate-fade-in">
-          <div className="bg-neutral-100 dark:bg-slate-800 rounded-xl p-8 md:p-12 glass hover-card">
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-8 md:p-12 soft-shadow hover-card">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 gradient-text">
               Welcome to My Creative Space
             </h2>
-            <p className="text-lg md:text-xl mb-6 dark:text-gray-300">
+            <p className="text-lg md:text-xl mb-6 text-gray-700 dark:text-gray-300">
               I'm a creative individual passionate about music, art, and various projects. 
               This is where I share my journey, creations, and thoughts.
             </p>
             <div className="flex flex-wrap gap-4">
               <Link 
                 href="/blog" 
-                className="btn btn-primary animate-slide-in"
+                className="btn animate-slide-in"
               >
                 Read My Blog
               </Link>
               <Link 
                 href="/music" 
-                className="btn btn-secondary animate-slide-in"
+                className="btn animate-slide-in"
               >
                 Explore My Music
               </Link>
@@ -49,34 +49,34 @@ export default function Index() {
         {/* Featured Sections - Quick links to main content areas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {/* Music Section */}
-          <div className="hover-card animate-scale-in border border-neutral-200 dark:border-slate-700 rounded-lg p-6 transition-all duration-300">
-            <h3 className="text-2xl font-bold mb-4 text-purple-700 dark:text-purple-400">Music</h3>
-            <p className="mb-4 dark:text-gray-300">
+          <div className="hover-card animate-scale-in p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Music</h3>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
               Check out my latest musical creations, releases, and performances.
             </p>
-            <Link href="/music" className="font-bold text-purple-600 hover:underline dark:text-purple-300">
+            <Link href="/music" className="text-gray-800 dark:text-gray-200 font-medium hover:underline">
               View Music →
             </Link>
           </div>
           
           {/* Art Section */}
-          <div className="hover-card animate-scale-in border border-neutral-200 dark:border-slate-700 rounded-lg p-6 transition-all duration-300 delay-100">
-            <h3 className="text-2xl font-bold mb-4 text-pink-700 dark:text-pink-400">Art</h3>
-            <p className="mb-4 dark:text-gray-300">
+          <div className="hover-card animate-scale-in p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Art</h3>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
               Explore my artwork, illustrations, and creative visual projects.
             </p>
-            <Link href="/art" className="font-bold text-pink-600 hover:underline dark:text-pink-300">
+            <Link href="/art" className="text-gray-800 dark:text-gray-200 font-medium hover:underline">
               View Art →
             </Link>
           </div>
           
           {/* Projects Section */}
-          <div className="hover-card animate-scale-in border border-neutral-200 dark:border-slate-700 rounded-lg p-6 transition-all duration-300 delay-200">
-            <h3 className="text-2xl font-bold mb-4 text-red-700 dark:text-red-400">Projects</h3>
-            <p className="mb-4 dark:text-gray-300">
+          <div className="hover-card animate-scale-in p-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Projects</h3>
+            <p className="mb-4 text-gray-700 dark:text-gray-300">
               Discover various projects I've been working on across different domains.
             </p>
-            <Link href="/projects" className="font-bold text-red-600 hover:underline dark:text-red-300">
+            <Link href="/projects" className="text-gray-800 dark:text-gray-200 font-medium hover:underline">
               View Projects →
             </Link>
           </div>
@@ -89,7 +89,7 @@ export default function Index() {
             {allPosts.map((post, index) => (
               <div 
                 key={post.slug} 
-                className={`hover-card animate-scale-in border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden transition-all duration-300 ${index === 0 ? '' : 'delay-' + (index * 100)}`}
+                className={`hover-card animate-scale-in border border-gray-200 dark:border-gray-800 rounded-lg overflow-hidden ${index === 0 ? '' : 'delay-' + (index * 100)}`}
               >
                 <Link href={`/posts/${post.slug}`} className="block">
                   <Image
@@ -100,11 +100,11 @@ export default function Index() {
                     className="w-full h-48 object-cover image-hover"
                   />
                 </Link>
-                <div className="p-6">
+                <div className="p-6 bg-white dark:bg-gray-900">
                   <h3 className="text-xl font-bold mb-2">
                     <Link 
                       href={`/posts/${post.slug}`} 
-                      className="hover:underline text-gray-900 dark:text-white"
+                      className="text-gray-900 dark:text-white hover:underline"
                     >
                       {post.title}
                     </Link>
@@ -116,12 +116,12 @@ export default function Index() {
                       day: 'numeric'
                     })}
                   </p>
-                  <p className="mb-4 dark:text-gray-300">
+                  <p className="mb-4 text-gray-700 dark:text-gray-300">
                     {post.excerpt.substring(0, 120)}...
                   </p>
                   <Link 
                     href={`/posts/${post.slug}`} 
-                    className="font-bold text-purple-600 hover:underline dark:text-purple-300"
+                    className="font-medium text-gray-800 dark:text-gray-200 hover:underline"
                   >
                     Read More →
                   </Link>
@@ -132,7 +132,7 @@ export default function Index() {
           <div className="text-center mt-8 animate-fade-in">
             <Link 
               href="/blog" 
-              className="btn btn-primary"
+              className="btn"
             >
               View All Posts
             </Link>
