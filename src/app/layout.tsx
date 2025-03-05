@@ -40,16 +40,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <head>
-        <link rel="icon" href="/favicon/favicon.ico" />
-        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png" />
-        <link rel="manifest" href="/favicon/site.webmanifest" />
-      </head>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           inter.className,
-          "dark:bg-slate-900 dark:text-slate-400 transition-colors duration-300"
+          "bg-white text-gray-900 dark:bg-slate-900 dark:text-slate-400 transition-colors duration-300"
         )}
       >
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 via-gray-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-slate-900"></div>
