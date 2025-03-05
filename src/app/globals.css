@@ -4,102 +4,136 @@
 
 /* Custom animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { 
+    opacity: 0; 
+    transform: translateY(15px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
 }
 
-@keyframes slideIn {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+@keyframes subtleHover {
+  from { transform: scale(1); }
+  to { transform: scale(1.015); }
 }
 
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* Base styles */
+/* Base styles with monochromatic approach */
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  @apply antialiased text-gray-900 dark:text-gray-100 transition-colors duration-200;
+  @apply antialiased text-gray-900 bg-white dark:bg-gray-950 dark:text-gray-100 
+         transition-colors duration-300 
+         selection:bg-gray-200 dark:selection:bg-gray-700;
 }
 
-/* Typography improvements */
+/* Typography with refined monochrome hierarchy */
 h1, h2, h3, h4, h5, h6 {
-  @apply tracking-tight;
+  @apply font-bold tracking-tight text-gray-900 dark:text-white;
 }
 
-/* Card hover effects */
+/* Refined card and interactive elements */
 .hover-card {
-  @apply transition-all duration-300 ease-in-out border border-transparent hover:border-purple-200 dark:hover:border-purple-800 hover:shadow-lg;
+  @apply transition-all duration-300 ease-in-out 
+         border border-gray-200 dark:border-gray-800 
+         rounded-xl shadow-sm hover:shadow-md 
+         dark:hover:border-gray-700;
 }
 
 .hover-card:hover {
-  @apply transform -translate-y-1 scale-105;
+  @apply transform -translate-y-1;
 }
 
-/* Button styles */
+/* Elegant button styles */
 .btn {
-  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-200 ease-in-out;
+  @apply inline-flex items-center justify-center 
+         px-6 py-3 rounded-lg 
+         font-medium tracking-wide 
+         transition-all duration-200 
+         border border-gray-900 dark:border-gray-100
+         bg-white dark:bg-gray-950 
+         text-gray-900 dark:text-gray-100
+         hover:bg-gray-100 dark:hover:bg-gray-900
+         focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700;
 }
 
-.btn-primary {
-  @apply bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200;
-}
-
-.btn-secondary {
-  @apply bg-white text-black border border-black hover:bg-black hover:text-white 
-         dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700;
-}
-
-/* Animated elements */
+/* Subtle animation classes */
 .animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: fadeIn 0.7s ease-out forwards;
 }
 
-.animate-slide-in {
-  animation: slideIn 0.6s ease-out forwards;
+.animate-subtle-hover {
+  animation: subtleHover 0.3s ease-in-out;
 }
 
-.animate-scale-in {
-  animation: scaleIn 0.4s ease-out forwards;
-}
-
-/* Gradient text */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400;
-}
-
-/* Image hover effects */
+/* Refined image hover */
 .image-hover {
-  @apply transition-transform duration-300 ease-in-out;
+  @apply transition-transform duration-300 ease-in-out 
+         overflow-hidden relative 
+         before:absolute before:inset-0 
+         before:bg-gray-100/10 
+         before:opacity-0 
+         hover:before:opacity-100 
+         hover:scale-[1.02];
 }
 
-.image-hover:hover {
-  @apply transform scale-105;
-}
-
-/* Custom scrollbar */
+/* Elegant scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  @apply w-2 bg-transparent;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-gray-100 dark:bg-gray-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  @apply bg-gray-300 dark:bg-gray-700 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
+  @apply bg-gray-400 dark:bg-gray-600;
 }
 
-/* Focus states */
+/* Soft focus and interaction states */
 *:focus {
-  @apply outline-none ring-2 ring-purple-500/50 dark:ring-purple-300/50 rounded-lg;
+  @apply outline-none ring-2 ring-gray-300/50 dark:ring-gray-700/50 rounded-lg;
+}
+
+/* Subtle background patterns or textures */
+.bg-pattern {
+  background-image: 
+    linear-gradient(45deg, 
+      rgba(0,0,0,0.02) 25%, 
+      transparent 25%, 
+      transparent 50%, 
+      rgba(0,0,0,0.02) 50%, 
+      rgba(0,0,0,0.02) 75%, 
+      transparent 75%, 
+      transparent
+    );
+  background-size: 40px 40px;
+}
+
+/* Monochromatic gradient text effect */
+.gradient-text {
+  @apply bg-clip-text text-transparent 
+         bg-gradient-to-r 
+         from-gray-800 to-gray-500 
+         dark:from-gray-100 dark:to-gray-400;
+}
+
+/* Soft shadow utilities */
+.soft-shadow {
+  @apply shadow-sm hover:shadow-md transition-shadow duration-300;
+}
+
+/* Elegant code block */
+pre, code {
+  @apply bg-gray-100 dark:bg-gray-900 
+         border border-gray-200 dark:border-gray-800 
+         rounded-lg p-4 
+         text-sm font-mono;
 }
