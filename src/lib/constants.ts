@@ -5,7 +5,7 @@ export const EXAMPLE_PATH = "personal-portfolio";
 export const CMS_NAME = "Markdown";
 
 // Name of the site displayed in various places
-export const SITE_NAME = "Leon K Nduati.";
+export const SITE_NAME = "Leon K Nduati";
 
 // URL for the Open Graph image used for social media sharing
 export const HOME_OG_IMAGE_URL =
