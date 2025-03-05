@@ -19,6 +19,7 @@ const config: Config = {
         "accent-7": "#333",
         success: "#0070f3",
         cyan: "#79FFE1",
+        dark: "#000000", // Pure black for dark mode
       },
       spacing: {
         28: "7rem",
