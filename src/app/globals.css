@@ -67,7 +67,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Advanced Card Hover Effects */
 .hover-card {
-  @apply transition-all duration-400 ease-in-out 
+  @apply transition-all duration-300 ease-in-out 
          border border-transparent 
          hover:border-purple-200 dark:hover:border-purple-800 
          hover:shadow-2xl;
@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hover-card:hover {
   @apply transform -translate-y-2 
-         scale-[1.02];
+         scale-105;
 }
 
 /* Refined Button Styles */
@@ -142,7 +142,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Image Hover with Smooth Transition */
 .image-hover {
-  @apply transition-all duration-400 ease-in-out 
+  @apply transition-all duration-300 ease-in-out 
          hover:scale-105 hover:shadow-xl 
          rounded-lg overflow-hidden;
 }
