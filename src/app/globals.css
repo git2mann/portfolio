@@ -34,8 +34,8 @@ html {
   --hover-background: #f9fafb;
 }
 
-/* Dark theme */
-.dark {
+/* Dark theme - renamed to Dark Ocean */
+.theme-dark-ocean {
   --background-primary: #000000;
   --background-secondary: #111111;
   --text-primary: #ffffff;
@@ -43,6 +43,17 @@ html {
   --border-color: #333333;
   --card-background: #1a1a1a;
   --hover-background: #222222;
+}
+
+/* Pure Black theme - new */
+.dark {
+  --background-primary: #000000;
+  --background-secondary: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d4;
+  --border-color: #333333;
+  --card-background: #0a0a0a;
+  --hover-background: #141414;
 }
 
 /* Pastel Pink theme */
