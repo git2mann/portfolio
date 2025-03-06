@@ -37,7 +37,7 @@ html {
 /* Dark theme - pure black with proper contrast */
 .dark {
   --background-primary: #000000;
-  --background-secondary: #121212;
+  --background-secondary: #000000;
   --text-primary: #ffffff;
   --text-secondary: #b0b0b0;
   --border-color: #333333;
@@ -45,15 +45,15 @@ html {
   --hover-background: #242424;
 }
 
-/* Dark Ocean theme */
+/* Dark Ocean theme (previous dark theme) */
 .theme-dark-ocean {
-  --background-primary: #0f172a;
-  --background-secondary: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --border-color: #334155;
-  --card-background: #1e293b;
-  --hover-background: #334155;
+  --background-primary: #121212;
+  --background-secondary: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --border-color: #333333;
+  --card-background: #1a1a1a;
+  --hover-background: #242424;
 }
 
 /* Pastel Pink theme */
@@ -155,36 +155,6 @@ body {
   border: 1px solid var(--border-color);
 }
 
-/* Ensure text is legible in light themes */
-.theme-switcher-menu {
-  background-color: var(--card-background);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-}
-
-/* Improve visibility in light themes */
-.theme-option {
-  color: var(--text-primary);
-}
-
-.theme-option:hover {
-  background-color: var(--hover-background);
-  color: var(--text-hover);
-}
-
-/* Animated elements */
-.animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.animate-slide-in {
-  animation: slideIn 0.6s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.4s ease-out forwards;
-}
-
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -201,51 +171,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   opacity: 0.8;
-}
-
-/* Gradient text */
-.gradient-text {
-  @apply bg-clip-text text-transparent;
-  background-image: linear-gradient(to right, var(--text-primary), var(--text-secondary));
-}
-
-/* Image hover effects */
-.image-hover {
-  @apply transition-transform duration-300 ease-in-out;
-}
-
-.image-hover:hover {
-  @apply transform scale-105;
-}
-
-/* Typewriter effect */
-.typewriter {
-  overflow: hidden;
-  border-right: 0.15em solid var(--text-primary);
-  white-space: nowrap;
-  margin: 0 auto;
-  letter-spacing: 0.15em;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: var(--text-primary) }
-}
-
-/* Glass effect */
-.glass {
-  backdrop-filter: blur(8px);
-  background-color: color-mix(in srgb, var(--background-primary) 30%, transparent);
-}
-
-/* Loading skeleton */
-.skeleton {
-  background-color: var(--background-secondary);
-  @apply animate-pulse rounded;
 }
