@@ -34,26 +34,26 @@ html {
   --hover-background: #f9fafb;
 }
 
-/* Dark theme - pure black with proper contrast for content */
+/* Dark theme - pure black with proper contrast */
 .dark {
   --background-primary: #000000;
   --background-secondary: #121212;
   --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
+  --text-secondary: #b0b0b0;
   --border-color: #333333;
   --card-background: #1a1a1a;
   --hover-background: #242424;
 }
 
-/* Dark Ocean theme - deep blue dark theme with good text visibility */
+/* Dark Ocean theme */
 .theme-dark-ocean {
-  --background-primary: #000000;
-  --background-secondary: #121212;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --border-color: #333333;
-  --card-background: #1a1a1a;
-  --hover-background: #242424;
+  --background-primary: #0f172a;
+  --background-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --border-color: #334155;
+  --card-background: #1e293b;
+  --hover-background: #334155;
 }
 
 /* Pastel Pink theme */
