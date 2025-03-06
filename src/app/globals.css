@@ -155,13 +155,21 @@ body {
   border: 1px solid var(--border-color);
 }
 
+/* Ensure text is legible in light themes */
 .theme-switcher-menu {
   background-color: var(--card-background);
   border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Improve visibility in light themes */
+.theme-option {
+  color: var(--text-primary);
 }
 
 .theme-option:hover {
   background-color: var(--hover-background);
+  color: var(--text-hover);
 }
 
 /* Animated elements */
