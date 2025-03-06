@@ -36,17 +36,6 @@ html {
 
 /* Dark theme - pure black with enhanced text visibility and contrast */
 .dark {
-  --background-primary: #000000;
-  --background-secondary: #111111;
-  --text-primary: #ffffff;
-  --text-secondary: #c7c7c7;
-  --border-color: #333333;
-  --card-background: #0e0e0e;
-  --hover-background: #1c1c1c;
-}
-
-/* Dark Ocean theme - deep blue-tinted dark theme with optimal contrast */
-.theme-dark-ocean {
   --background-primary: #051622;
   --background-secondary: #0a2540;
   --text-primary: #f0f8ff;
@@ -54,6 +43,17 @@ html {
   --border-color: #1e3a5f;
   --card-background: #0c2135;
   --hover-background: #15344f;
+}
+
+/* Dark Ocean theme - deep blue-tinted dark theme with optimal contrast */
+.theme-dark-ocean {
+  --background-primary: #000000;
+  --background-secondary: #111111;
+  --text-primary: #ffffff;
+  --text-secondary: #c7c7c7;
+  --border-color: #333333;
+  --card-background: #0e0e0e;
+  --hover-background: #1c1c1c;
 }
 
 /* Pastel Pink theme */
