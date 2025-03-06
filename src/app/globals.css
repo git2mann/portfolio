@@ -164,6 +164,7 @@ body {
 
 /* Improve visibility in light themes */
 .theme-option {
+  background-color: var(--hover-background);
   color: var(--text-primary);
 }
 
