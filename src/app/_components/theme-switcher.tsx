@@ -20,7 +20,8 @@ const STORAGE_KEY = "theme";
 const themes: Theme[] = [
   { id: "system", name: "Auto", icon: "🔄", class: "system" },
   { id: "light", name: "Light", icon: "☀️", class: "light" },
-  { id: "dark", name: "Dark", icon: "🌙", class: "dark" },
+  { id: "dark", name: "Dark", icon: "🌑", class: "dark" },
+  { id: "dark-ocean", name: "Dark Ocean", icon: "🌙", class: "theme-dark-ocean" },
   { id: "pastel", name: "Pastel Pink", icon: "🌸", class: "theme-pastel" },
   { id: "forest", name: "Forest", icon: "🌲", class: "theme-forest" },
   { id: "ocean", name: "Ocean", icon: "🌊", class: "theme-ocean" },
