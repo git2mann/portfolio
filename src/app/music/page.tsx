@@ -13,7 +13,7 @@ export default function MusicPage() {
     description: "A hard-hitting track exploring themes of competition and self-confidence.",
     annotations: [
       {
-        line: "What you got?",
+        line: "What you got?" ,
         explanation: "A direct challenge to competitors, questioning their abilities and authenticity."
       }
     ]
