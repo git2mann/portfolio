@@ -50,16 +50,19 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     const resolvedTheme = theme === "system" ? systemTheme : theme;
     
+    // Get all theme classes
+    const allThemeClasses = themeList
+      .map(t => t.class)
+      .filter(c => c !== "system" && c !== "light");
+    
     // Remove all theme classes
-    document.documentElement.classList.remove(
-      ...themeList.map(t => t.class).filter(c => c !== "system" && c !== "light")
-    );
+    document.documentElement.classList.remove(...allThemeClasses);
     
     // Add the appropriate theme class
-    if (resolvedTheme !== "light") {
-      const themeClass = themeList.find(t => t.id === resolvedTheme)?.class;
-      if (themeClass && themeClass !== "system" && themeClass !== "light") {
-        document.documentElement.classList.add(themeClass);
+    if (resolvedTheme !== "light" && resolvedTheme !== "system") {
+      const themeObj = themeList.find(t => t.id === resolvedTheme);
+      if (themeObj) {
+        document.documentElement.classList.add(themeObj.class);
       }
     }
     
