@@ -252,11 +252,11 @@ body {
 }
 
 
+
 /* Sleek sword light sweep effect on featured lyric */
 .typewriter-container {
   display: inline-block;
   position: relative;
-  overflow: hidden;
 }
 
 .typewriter-text {
@@ -266,6 +266,7 @@ body {
   transform: scale(0.9);
   position: relative;
   animation: fade-in-scale 0.6s ease-out forwards;
+  padding-right: 5px; /* Prevents last character from being cropped */
 }
 
 .light-sweep {
@@ -304,8 +305,6 @@ body {
   0% { left: -100%; }
   100% { left: 100%; }
 }
-
-
 
 
 
