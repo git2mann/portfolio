@@ -252,6 +252,7 @@ body {
 }
 
 
+
 .typewriter-container {
   display: inline-block;
   position: relative;
@@ -259,11 +260,10 @@ body {
 
 .typewriter-text {
   display: inline-block;
-  overflow: hidden;
   white-space: nowrap;
   font-style: italic;
-  border-right: none;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  opacity: 0;
+  animation: shine-in 0.6s ease-out forwards;
 }
 
 .typing-cursor {
@@ -277,18 +277,24 @@ body {
   animation: blink-cursor 0.75s step-end infinite;
 }
 
-@keyframes typing {
-  0% { width: 0 }
-  30% { width: 25% }  /* Slight pause */
-  50% { width: 50% }
-  70% { width: 75% }  /* Slight slowdown */
-  100% { width: 100% }
+@keyframes shine-in {
+  0% {
+    opacity: 0;
+    filter: blur(4px);
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
 }
 
 @keyframes blink-cursor {
   0%, 100% { opacity: 0 }
   50% { opacity: 1 }
 }
+
 
 
 /* Waveform Player Styles */
