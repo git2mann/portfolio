@@ -253,6 +253,7 @@ body {
 
 
 
+
 .typewriter-container {
   display: inline-block;
   position: relative;
@@ -262,15 +263,14 @@ body {
 .typewriter-text {
   display: inline-block;
   white-space: nowrap;
-  font-style: italic;
   opacity: 0;
-  position: relative;
-  animation: shine-in 0.4s ease-out forwards;
+  transform: scale(0.8);
+  animation: flash-in 0.6s ease-out forwards;
 }
 
 .typing-cursor {
   position: absolute;
-  right: -6px; /* Slightly offset for italic text */
+  right: -4px;
   top: 50%;
   transform: translateY(-50%);
   width: 3px;
@@ -279,27 +279,29 @@ body {
   animation: blink-cursor 0.75s step-end infinite;
 }
 
-@keyframes shine-in {
+@keyframes flash-in {
   0% {
     opacity: 0;
-    transform: scaleX(0.8);
-    clip-path: inset(0 100% 0 0);
-    filter: brightness(2);
+    filter: blur(4px);
+    transform: scale(0.8);
   }
-  60% {
+  50% {
     opacity: 1;
-    clip-path: inset(0 0 0 0);
-    transform: scaleX(1);
+    filter: blur(0);
+    transform: scale(1.05);
   }
   100% {
-    filter: brightness(1);
+    opacity: 1;
+    filter: none;
+    transform: scale(1);
   }
 }
 
 @keyframes blink-cursor {
-  0%, 100% { opacity: 0 }
+  from, to { opacity: 0 }
   50% { opacity: 1 }
 }
+
 
 
 
