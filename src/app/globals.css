@@ -256,6 +256,7 @@ body {
 .typewriter-container {
   display: inline-block;
   position: relative;
+  overflow: hidden;
 }
 
 .typewriter-text {
@@ -263,7 +264,8 @@ body {
   white-space: nowrap;
   font-style: italic;
   opacity: 0;
-  animation: shine-in 0.6s ease-out forwards;
+  position: relative;
+  animation: shine-in 0.4s ease-out forwards;
 }
 
 .typing-cursor {
@@ -280,13 +282,17 @@ body {
 @keyframes shine-in {
   0% {
     opacity: 0;
-    filter: blur(4px);
-    transform: scale(0.95);
+    transform: scaleX(0.8);
+    clip-path: inset(0 100% 0 0);
+    filter: brightness(2);
+  }
+  60% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: scaleX(1);
   }
   100% {
-    opacity: 1;
-    filter: blur(0);
-    transform: scale(1);
+    filter: brightness(1);
   }
 }
 
