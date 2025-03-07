@@ -9,7 +9,7 @@ export default function MusicPage() {
     title: "Roast",
     lyrics: "What you got?",
     year: "2021",
-    audioUrl: "/assets/audio/roast.mp3", // This would be your actual audio file path
+    audioUrl: "/assets/music/sataop-klense-mp3s/Roast - Klense.mp3", // This would be your actual audio file path
     description: "A hard-hitting track exploring themes of competition and self-confidence.",
     annotations: [
       {
