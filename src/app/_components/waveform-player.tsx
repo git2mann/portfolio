@@ -12,7 +12,7 @@ export default function WaveformPlayer({ audioUrl }: WaveformPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -67,33 +67,40 @@ export default function WaveformPlayer({ audioUrl }: WaveformPlayerProps) {
     };
 
     // Event listeners
-    audio.addEventListener('play', () => {
+    const handlePlay = () => {
       audioContext.resume();
       draw();
-    });
+    };
 
-    audio.addEventListener('pause', () => {
+    const handlePause = () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-    });
+    };
 
-    audio.addEventListener('timeupdate', () => {
+    const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime);
-    });
+    };
 
-    audio.addEventListener('loadedmetadata', () => {
+    const handleLoadedMetadata = () => {
       setDuration(audio.duration);
-    });
+    };
+
+    audio.addEventListener('play', handlePlay);
+    audio.addEventListener('pause', handlePause);
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
 
     return () => {
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
-      audio.removeEventListener('play', () => {});
-      audio.removeEventListener('pause', () => {});
-      audio.removeEventListener('timeupdate', () => {});
-      audio.removeEventListener('loadedmetadata', () => {});
+      audio.removeEventListener('play', handlePlay);
+      audio.removeEventListener('pause', handlePause);
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      // Clean up audio context
+      audioContext.close();
     };
   }, []);
 
@@ -134,6 +141,7 @@ export default function WaveformPlayer({ audioUrl }: WaveformPlayerProps) {
         <button
           onClick={togglePlay}
           className="w-12 h-12 flex items-center justify-center rounded-full bg-indigo-600 hover:bg-indigo-700 text-white transition-colors"
+          aria-label={isPlaying ? 'Pause' : 'Play'}
         >
           {isPlaying ? (
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -162,7 +170,7 @@ export default function WaveformPlayer({ audioUrl }: WaveformPlayerProps) {
         </div>
       </div>
       
-      <audio ref={audioRef} src={audioUrl} />
+      <audio ref={audioRef} src={audioUrl} preload="metadata" />
     </div>
   );
 }
