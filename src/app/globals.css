@@ -37,7 +37,7 @@ html {
 /* Dark theme - pure black with proper contrast */
 .dark {
   --background-primary: #000000;
-  --background-secondary: #121212;
+  --background-secondary: #0a0a0a;
   --text-primary: #ffffff;
   --text-secondary: #b0b0b0;
   --border-color: #333333;
@@ -47,13 +47,13 @@ html {
 
 /* Dark Ocean theme */
 .theme-dark-ocean {
-  --background-primary: #0f172a;
-  --background-secondary: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --border-color: #334155;
-  --card-background: #1e293b;
-  --hover-background: #334155;
+  --background-primary: #1a202c;
+  --background-secondary: #2d3748;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --border-color: #4a5568;
+  --card-background: #2d3748;
+  --hover-background: #4a5568;
 }
 
 /* Pastel Pink theme */
