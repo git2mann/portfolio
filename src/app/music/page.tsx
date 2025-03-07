@@ -22,13 +22,13 @@ export default function MusicPage() {
   const musicProjects = [
     {
       id: 1,
-      title: "Latest Album",
-      description: "My most recent musical creation exploring themes of nature and technology.",
-      image: "/assets/blog/dynamic-routing/cover.jpg",
-      releaseDate: "2023-05-15",
+      title: "Squealer and the Aggressors of Peace",
+      description: "My most recent musical creation, a concept album.",
+      image: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg",
+      releaseDate: "October 14, 2022",
       tracks: [
-        { title: "Track 1", duration: "3:45", audioUrl: "/path/to/audio1.mp3" },
-        { title: "Track 2", duration: "4:12", audioUrl: "/path/to/audio2.mp3" }
+        { title: "Saudade in Err", duration: "1:17", audioUrl: "/path/to/audio1.mp3" },
+        { title: "Hummer's Theme", duration: "2:19", audioUrl: "/path/to/audio2.mp3" }
       ],
       links: {
         spotify: "https://spotify.com",
@@ -38,8 +38,8 @@ export default function MusicPage() {
     },
     {
       id: 2,
-      title: "Single Release",
-      description: "An experimental track combining electronic elements with acoustic instruments.",
+      title: "Allegory (Freestyle)",
+      description: "A good old-fashioned hip-hop freestyle by yours truly",
       image: "/assets/blog/hello-world/cover.jpg",
       releaseDate: "2023-02-10",
       tracks: [
