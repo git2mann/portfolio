@@ -1,9 +1,33 @@
 import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+// Dynamically import the WaveformPlayer to ensure it only loads on the client side
+const WaveformPlayer = dynamic(() => import("@/app/_components/waveform-player"), {
+  ssr: false,
+  loading: () => (
+    <div className="animate-pulse bg-neutral-200 dark:bg-slate-700 h-32 rounded-lg"></div>
+  ),
+});
 
 export default function MusicPage() {
-  const lyric = "What you got?";
+  // Featured song data
+  const featuredSong = {
+    title: "Roast",
+    lyrics: "What you got?",
+    year: "2021",
+    audioUrl: "/assets/audio/roast.mp3", // This would be your actual audio file path
+    description: "A hard-hitting track exploring themes of competition and self-confidence.",
+    annotations: [
+      {
+        line: "What you got?",
+        explanation: "A direct challenge to competitors, questioning their abilities and authenticity."
+      }
+    ]
+  };
+
+  // Music catalog
   const musicProjects = [
     {
       id: 1,
@@ -11,6 +35,10 @@ export default function MusicPage() {
       description: "My most recent musical creation exploring themes of nature and technology.",
       image: "/assets/blog/dynamic-routing/cover.jpg",
       releaseDate: "2023-05-15",
+      tracks: [
+        { title: "Track 1", duration: "3:45", audioUrl: "/path/to/audio1.mp3" },
+        { title: "Track 2", duration: "4:12", audioUrl: "/path/to/audio2.mp3" }
+      ],
       links: {
         spotify: "https://spotify.com",
         appleMusic: "https://music.apple.com",
@@ -23,6 +51,9 @@ export default function MusicPage() {
       description: "An experimental track combining electronic elements with acoustic instruments.",
       image: "/assets/blog/hello-world/cover.jpg",
       releaseDate: "2023-02-10",
+      tracks: [
+        { title: "Single", duration: "3:30", audioUrl: "/path/to/single.mp3" }
+      ],
       links: {
         spotify: "https://spotify.com",
         appleMusic: "https://music.apple.com",
@@ -35,11 +66,44 @@ export default function MusicPage() {
       description: "A joint venture with other musicians creating a unique soundscape.",
       image: "/assets/blog/preview/cover.jpg",
       releaseDate: "2022-11-22",
+      tracks: [
+        { title: "Collab Track", duration: "5:00", audioUrl: "/path/to/collab.mp3" }
+      ],
       links: {
         spotify: "https://spotify.com",
         appleMusic: "https://music.apple.com",
         bandcamp: "https://bandcamp.com"
       }
+    }
+  ];
+
+  // Behind the scenes content
+  const behindTheScenes = [
+    {
+      title: "Studio Setup",
+      description: "My creative space where the magic happens. Using a mix of analog and digital equipment.",
+      image: "/assets/blog/dynamic-routing/cover.jpg"
+    },
+    {
+      title: "Production Process",
+      description: "From initial concept to final master, each track goes through multiple iterations.",
+      image: "/assets/blog/hello-world/cover.jpg"
+    }
+  ];
+
+  // Merchandise items
+  const merchItems = [
+    {
+      title: "Album T-Shirt",
+      price: "$25",
+      image: "/assets/blog/preview/cover.jpg",
+      link: "https://merch-store.com/album-shirt"
+    },
+    {
+      title: "Limited Edition Vinyl",
+      price: "$35",
+      image: "/assets/blog/dynamic-routing/cover.jpg",
+      link: "https://merch-store.com/vinyl"
     }
   ];
 
@@ -51,70 +115,43 @@ export default function MusicPage() {
           Music
         </h1>
 
-        {/* Lyric Section with Typewriter Effect */}
-        <section className="mb-16">
-          <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Featured Lyric</h2>
-            <div className="typewriter">
-              <p className="text-2xl md:text-3xl font-bold italic text-neutral-900 dark:text-neutral-100">
-                "{lyric}"
-              </p>
-            </div>
-            <p className="text-lg mt-4 text-neutral-600 dark:text-neutral-400">
-              From the track <span className="font-semibold">"Roast"</span>, 2021
-            </p>
-          </div>
-        </section>
-        
+        {/* Featured Track Section with Lyrics */}
         <section className="mb-16">
           <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">About My Music</h2>
-            <p className="text-lg mb-6">
-              I create music that blends various genres and influences. My work explores the intersection of 
-              electronic production, traditional instrumentation, and experimental sound design.
-            </p>
-            <p className="text-lg">
-              Listen to my music on various platforms and follow me to stay updated on new releases.
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Featured Track</h2>
             
-            <div className="flex flex-wrap gap-4 mt-6">
-              <a
-                href="https://spotify.com/artist/klense"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-lg bg-[#1DB954] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#1DB954] focus:ring-opacity-50"
-              >
-                Spotify
-              </a>
-              <a
-                href="https://music.apple.com/artist/klense"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-lg bg-[#FA243C] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#FA243C] focus:ring-opacity-50"
-              >
-                Apple Music
-              </a>
-              <a
-                href="https://soundcloud.com/yourprofile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-lg bg-[#FF7700] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#FF7700] focus:ring-opacity-50"
-              >
-                SoundCloud
-              </a>
-              <a
-                href="https://bandcamp.com/yourprofile"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-lg bg-[#629aa9] px-5 py-2.5 font-medium text-white shadow-md transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#629aa9] focus:ring-opacity-50"
-              >
-                Bandcamp
-              </a>
+            {/* Waveform Player */}
+            <div className="mb-8">
+              <WaveformPlayer audioUrl={featuredSong.audioUrl} />
             </div>
-            
+
+            {/* Featured Lyric with Enhanced Animation */}
+            <div className="relative overflow-hidden py-8 mb-8">
+              <div className="typewriter-container relative">
+                <p className="text-2xl md:text-3xl font-bold italic text-neutral-900 dark:text-neutral-100 typewriter-text">
+                  "{featuredSong.lyrics}"
+                </p>
+                <div className="typing-cursor"></div>
+              </div>
+              <p className="text-lg mt-4 text-neutral-600 dark:text-neutral-400">
+                From the track <span className="font-semibold">"{featuredSong.title}"</span>, {featuredSong.year}
+              </p>
+            </div>
+
+            {/* Lyrics Annotation */}
+            <div className="bg-white dark:bg-slate-900 rounded-lg p-6 mb-6">
+              <h3 className="text-xl font-bold mb-4">Behind the Lyrics</h3>
+              {featuredSong.annotations.map((annotation, index) => (
+                <div key={index} className="mb-4">
+                  <p className="font-semibold mb-2">"{annotation.line}"</p>
+                  <p className="text-neutral-600 dark:text-neutral-400">{annotation.explanation}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
         
+        {/* Music Catalog */}
         <section className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">Releases</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -138,6 +175,21 @@ export default function MusicPage() {
                     })}
                   </p>
                   <p className="mb-4">{project.description}</p>
+                  
+                  {/* Track List */}
+                  <div className="mb-4">
+                    <h4 className="font-bold mb-2">Tracks:</h4>
+                    <ul className="space-y-2">
+                      {project.tracks.map((track, index) => (
+                        <li key={index} className="flex justify-between">
+                          <span>{track.title}</span>
+                          <span className="text-gray-500">{track.duration}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  {/* Streaming Links */}
                   <div className="flex space-x-3">
                     <a 
                       href={project.links.spotify} 
@@ -169,14 +221,77 @@ export default function MusicPage() {
             ))}
           </div>
         </section>
-        
+
+        {/* Behind the Scenes */}
         <section className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">Upcoming Shows</h2>
-          <div className="border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden">
-            <div className="p-6">
-              <p className="text-lg mb-4">No upcoming shows at the moment. Check back soon!</p>
-              <p>Want to book me for a show? Get in touch at <a href="mailto:nduatileon@gmail.com" className="underline hover:text-blue-600">nduatileon@gmail.com</a></p>
-            </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Behind the Scenes</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {behindTheScenes.map((item, index) => (
+              <div key={index} className="border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden">
+                <div className="relative h-48">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+                  <p>{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Merchandise Section */}
+        <section className="mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-8">Merch</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {merchItems.map((item, index) => (
+              <a
+                key={index}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden hover:shadow-md transition-all"
+              >
+                <div className="relative h-48">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-200"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold">{item.title}</h3>
+                  <p className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">{item.price}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+
+        {/* Newsletter Signup */}
+        <section className="mb-16">
+          <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-4">Stay Updated</h2>
+            <p className="mb-6">Subscribe to get updates about new releases, behind-the-scenes content, and exclusive merch drops.</p>
+            <form className="flex gap-4">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1 px-4 py-2 rounded-lg border border-neutral-300 dark:border-slate-600 dark:bg-slate-700"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 bg-black text-white dark:bg-white dark:text-black font-bold rounded-lg hover:opacity-90 transition-opacity"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </section>
       </Container>
