@@ -252,8 +252,7 @@ body {
 }
 
 
-
-
+/* Sleek sword light sweep effect on featured lyric */
 .typewriter-container {
   display: inline-block;
   position: relative;
@@ -264,43 +263,48 @@ body {
   display: inline-block;
   white-space: nowrap;
   opacity: 0;
-  transform: scale(0.8);
-  animation: flash-in 0.6s ease-out forwards;
+  transform: scale(0.9);
+  position: relative;
+  animation: fade-in-scale 0.6s ease-out forwards;
 }
 
-.typing-cursor {
+.light-sweep {
   position: absolute;
-  right: -4px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 80%;
-  background-color: currentColor;
-  animation: blink-cursor 0.75s step-end infinite;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg, 
+    rgba(255, 255, 255, 0) 40%, 
+    rgba(255, 255, 255, 0.8) 50%, 
+    rgba(255, 255, 255, 0) 60%
+  );
+  animation: sweep 0.6s ease-out forwards;
 }
 
-@keyframes flash-in {
+@keyframes fade-in-scale {
   0% {
     opacity: 0;
+    transform: scale(0.9);
     filter: blur(4px);
-    transform: scale(0.8);
   }
   50% {
     opacity: 1;
-    filter: blur(0);
     transform: scale(1.05);
+    filter: blur(0);
   }
   100% {
     opacity: 1;
-    filter: none;
     transform: scale(1);
   }
 }
 
-@keyframes blink-cursor {
-  from, to { opacity: 0 }
-  50% { opacity: 1 }
+@keyframes sweep {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
+
 
 
 
