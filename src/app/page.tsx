@@ -35,7 +35,7 @@ export default function Index() {
               </Link>
               <Link 
                 href="/music" 
-                className="bg-white hover:bg-black hover:text-white border border-black text-black font-bold py-3 px-6 duration-200 transition-colors"
+                className="bg-black hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-6 duration-200 transition-colors"
               >
                 Explore My Music
               </Link>
