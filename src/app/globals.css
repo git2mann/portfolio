@@ -18,9 +18,51 @@
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes rainbow {
+  0% { color: #ff0000; }
+  17% { color: #ff8000; }
+  33% { color: #ffff00; }
+  50% { color: #00ff00; }
+  67% { color: #0000ff; }
+  83% { color: #8000ff; }
+  100% { color: #ff0000; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
 /* Base styles */
 html {
   scroll-behavior: smooth;
+}
+
+/* Easter Egg Classes */
+.konami-active {
+  animation: rainbow 2s linear infinite;
+}
+
+.secret-spin {
+  animation: spin 1s linear infinite;
+}
+
+.secret-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.secret-click-count {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  font-size: 12px;
+  opacity: 0.5;
 }
 
 /* Theme Styles */
@@ -251,8 +293,6 @@ body {
   @apply animate-pulse rounded;
 }
 
-
-
 /* Sleek sword light sweep effect on featured lyric */
 .typewriter-container {
   display: inline-block;
@@ -266,7 +306,7 @@ body {
   transform: scale(0.9);
   position: relative;
   animation: fade-in-scale 0.6s ease-out forwards;
-  padding-right: 5px; /* Prevents last character from being cropped */
+  padding-right: 5px;
 }
 
 .light-sweep {
@@ -305,8 +345,6 @@ body {
   0% { left: -100%; }
   100% { left: 100%; }
 }
-
-
 
 /* Waveform Player Styles */
 input[type="range"] {
