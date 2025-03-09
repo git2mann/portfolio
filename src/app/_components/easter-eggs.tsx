@@ -54,48 +54,42 @@ export function EasterEggs() {
     let mouseMovements = 0;
     let mouseTimer: NodeJS.Timeout;
 
-    const createArtEffect = () => {
-      if (isEffectActive) return; // Prevent the effect from being created if already active
-      setIsEffectActive(true);
+    const createTrailEffect = (event: MouseEvent) => {
+      const trailElement = document.createElement('div');
+      trailElement.style.position = 'absolute';
+      trailElement.style.width = '15px';
+      trailElement.style.height = '15px';
+      trailElement.style.backgroundColor = 'rgba(255, 100, 100, 0.8)';
+      trailElement.style.borderRadius = '50%';
+      trailElement.style.pointerEvents = 'none';
+      trailElement.style.transition = 'transform 0.3s ease-out, opacity 0.6s ease-out';
+      trailElement.style.left = `${event.clientX - 7.5}px`; // Offset for center alignment
+      trailElement.style.top = `${event.clientY - 7.5}px`;
+      document.body.appendChild(trailElement);
 
-      // Create a subtle effect near the cursor
-      const effect = document.createElement('div');
-      effect.style.position = 'absolute';
-      effect.style.width = '20px';
-      effect.style.height = '20px';
-      effect.style.backgroundColor = 'rgba(255, 100, 100, 0.8)';
-      effect.style.borderRadius = '50%';
-      effect.style.pointerEvents = 'none';
-      effect.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
-      document.body.appendChild(effect);
-
-      const moveEffect = (event: MouseEvent) => {
-        effect.style.left = `${event.clientX - 10}px`; // Offset to center the effect
-        effect.style.top = `${event.clientY - 10}px`;
-      };
-
-      const removeEffect = () => {
-        effect.style.transform = 'scale(0)';
-        effect.style.opacity = '0';
+      // Animate the trail fading and shrinking
+      setTimeout(() => {
+        trailElement.style.transform = 'scale(0)';
+        trailElement.style.opacity = '0';
         setTimeout(() => {
-          effect.remove();
-          setIsEffectActive(false);
+          trailElement.remove();
         }, 300);
-      };
+      }, 100); // Start fading after 100ms to make the trail visible
 
-      window.addEventListener('mousemove', moveEffect);
-      setTimeout(removeEffect, 500); // Remove effect after 500ms
+      // Add multiple trails with a slight delay for a flowing effect
+      if (mouseMovements > 50) {
+        setSecretMessage('🎨 You are now making art with your cursor!');
+        setTimeout(() => setSecretMessage(''), 1500); // Hide message after 1.5 seconds
+      }
     };
 
-    const handleMouseMove = () => {
+    const handleMouseMove = (event: MouseEvent) => {
       mouseMovements++;
       clearTimeout(mouseTimer);
 
       mouseTimer = setTimeout(() => {
         if (mouseMovements > 50) {
-          createArtEffect();
-          setSecretMessage('🎨 You are now making art with your cursor!');
-          setTimeout(() => setSecretMessage(''), 1500); // Hide message after 1.5 seconds
+          createTrailEffect(event);
         }
         mouseMovements = 0;
       }, 500);
