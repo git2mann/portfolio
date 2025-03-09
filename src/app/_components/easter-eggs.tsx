@@ -60,7 +60,7 @@ export function EasterEggs() {
       
       mouseTimer = setTimeout(() => {
         if (mouseMovements > 50) {
-          setSecretMessage('🎨 You're making art with your cursor!');
+          setSecretMessage('🎨 You are now making art with your cursor!');
           setTimeout(() => setSecretMessage(''), 2000);
         }
         mouseMovements = 0;
