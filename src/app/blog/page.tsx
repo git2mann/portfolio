@@ -70,7 +70,7 @@ export default function BlogPage() {
                     className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" 
                   >
                     <Link href={`/posts/${post.slug}`}>
-                      <div className="relative h-64">
+                      <div className="aspect-w-3 aspect-h-2 relative"> {/* Aspect ratio applied here */}
                         <Image
                           src={post.coverImage}
                           alt={`Cover Image for ${post.title}`}
