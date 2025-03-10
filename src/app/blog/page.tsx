@@ -31,7 +31,7 @@ export default function BlogPage() {
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-8 animate-fade-in">
             Blog
           </h1>
-          
+
           {/* Featured Post */}
           {allPosts[0] && (
             <div className="mb-16 animate-slide-up">
@@ -63,11 +63,11 @@ export default function BlogPage() {
               <h2 className="text-3xl font-bold mb-8 sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm py-4 z-10">
                 {year}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> 
                 {postsByYear[year].map((post) => (
                   <article 
                     key={post.slug} 
-                    className="group relative bg-neutral-50 dark:bg-slate-800 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300"
+                    className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" 
                   >
                     <Link href={`/posts/${post.slug}`}>
                       <div className="relative h-64">
