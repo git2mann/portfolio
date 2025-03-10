@@ -48,4 +48,4 @@ Not every idea will be great, but dismissing too many can lead to creative block
 
 Inspiration isn’t a constant—it ebbs and flows. The key is to cultivate habits that keep you engaged, open to new ideas, and connected to your creative purpose. Stay curious, stay disciplined, and most importantly, keep creating.
 
-What keeps you inspired? Drop a comment, and let’s talk about it!
+What keeps you inspired?
