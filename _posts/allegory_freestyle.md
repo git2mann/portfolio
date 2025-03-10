@@ -24,11 +24,11 @@ I had so much fun working on this one. It's been ages since the last Klense song
 
 ## Production Notes
 The track features:
-- Hard-hitting boom-bap drums
-- Gritty, old-school hip-hop sampling
-- Aggressive, rapid-fire delivery
-- A raw, unfiltered mix to retain its freestyle essence
-- An audio excerpt from a friend at the end. He was spittin' lowkey too 🔥
+- - Hard-hitting boom-bap drums
+- - Gritty, old-school hip-hop sampling
+- - Aggressive, rapid-fire delivery
+- - A raw, unfiltered mix to retain its freestyle essence
+- - An audio excerpt from a friend at the end. He was spittin' lowkey too 🔥
 
 ## Lyrics
 ```
