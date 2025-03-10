@@ -24,4 +24,8 @@ export type Post = {
   };
   content: string;
   preview?: boolean;
+  tags?: string[];
+  contentType?: 'article' | 'video' | 'audio' | 'gallery';
+  mediaUrl?: string;
+  gallery?: string[];
 };
