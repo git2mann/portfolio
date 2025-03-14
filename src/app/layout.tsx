@@ -12,7 +12,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-playfa
 
 export const metadata: Metadata = {
   title: SITE_NAME,
-  description: "Personal portfolio and blog showcasing music, art, and projects",
+  description: "Leon Nduati's personal portfolio and blog showcasing music, art, and projects",
   icons: {
     icon: [
       { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
