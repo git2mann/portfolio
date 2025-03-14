@@ -76,34 +76,21 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", window.updateDOM);
 };
 
-  const ThemeSelector = () => {
+const ThemeSelector = () => {
   const [mounted, setMounted] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<string>("system");
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage?.getItem(STORAGE_KEY) ?? "system";
+    const savedTheme = localStorage.getItem(STORAGE_KEY) ?? "system";
     setCurrentTheme(savedTheme);
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
-    
-    const handleStorage = (e: StorageEvent) => {
-      if (e.key === STORAGE_KEY) {
-        setCurrentTheme(e.newValue || "system");
-      }
-    };
-
-    window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
-  }, [mounted]);
-
-  useEffect(() => {
-    if (!mounted) return;
-    localStorage?.setItem(STORAGE_KEY, currentTheme);
-    window.updateDOM?.();
+    localStorage.setItem(STORAGE_KEY, currentTheme);
+    document.documentElement.setAttribute("data-theme", currentTheme);
   }, [currentTheme, mounted]);
 
   const handleThemeChange = (themeId: string) => {
@@ -113,30 +100,39 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
 
   if (!mounted) return null;
 
-  const currentThemeData = themes.find(t => t.id === currentTheme);
+  const currentThemeData = themes.find((t) => t.id === currentTheme);
 
-  
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center space-x-2 px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-800 shadow-md hover:bg-gray-300 dark:hover:bg-gray-700 transition-all"
+        aria-label="Toggle theme selector"
+      >
+        <span className="text-xl">{currentThemeData?.icon}</span>
+        <span className="text-sm font-medium">{currentThemeData?.name}</span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 top-12 w-48 rounded-lg bg-white dark:bg-gray-900 shadow-lg z-50">
+          {themes.map((theme) => (
+            <button
+              key={theme.id}
+              onClick={() => handleThemeChange(theme.id)}
+              className={`w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors
+                ${currentTheme === theme.id ? "bg-blue-100 dark:bg-blue-800" : "hover:bg-gray-100 dark:hover:bg-gray-800"}
+              `}
+            >
+              <span className="text-xl">{theme.icon}</span>
+              <span className="text-sm font-medium">{theme.name}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
-
-const Script = memo(() => (
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `
-        const themes = ${JSON.stringify(themes)};
-        (${NoFOUCScript.toString()})('${STORAGE_KEY}', themes);
-      `,
-    }}
-  />
-));
-
-Script.displayName = "ThemeScript";
-
 export const ThemeSwitcher = () => {
-  return (
-    <>
-      <Script />
-      <ThemeSelector />
-    </>
-  );
+  return <ThemeSelector />;
 };
