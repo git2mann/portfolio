@@ -1,13 +1,13 @@
 ---
 title: "How to Stay Inspired as an Independent Artist"
 excerpt: "Keeping the creative fire burning as an independent artist isn’t always easy. Here are some key ways to stay inspired and keep pushing forward."
-coverImage: "/assets/blog/blog-post-covers/jabber-visuals-PlUQQyIMO8U-unsplash.jpg"
+coverImage: "/assets/blog/blog-post-covers/jawz-9Ut0azurqg0-unsplash.jpg"
 date: "2025-03-10T12:00:00.000Z"
 author:
   name: Leon Nduati
   picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
-  url: "/assets/blog/blog-post-covers/jabber-visuals-PlUQQyIMO8U-unsplash.jpg"
+  url: "/assets/blog/blog-post-covers/jawz-9Ut0azurqg0-unsplash.jpg"
 ---
 
 # How to Stay Inspired as an Independent Artist
