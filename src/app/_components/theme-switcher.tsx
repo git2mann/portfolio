@@ -28,14 +28,7 @@ const themes: Theme[] = [
   { id: "sunset", name: "Sunset", icon: "🌅", class: "theme-sunset" }
 ];
 
-// Make sure the FOUC script runs only once
-let scriptInitialized = false;
-
 export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
-  // Return early if already initialized
-  if (scriptInitialized) return;
-  scriptInitialized = true;
-
   const updateDOM = () => {
     const modifyTransition = () => {
       const css = document.createElement("style");
@@ -77,17 +70,11 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
     restoreTransitions();
   };
 
-  // Only set up event listeners and window property once
-  if (!window.updateDOM) {
-    window.updateDOM = updateDOM;
-    window.updateDOM();
-    
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", window.updateDOM);
-  }
+  window.updateDOM = updateDOM;
+  window.updateDOM();
+  
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", window.updateDOM);
 };
-
-// Global singleton pattern to ensure only one instance is mounted
-let themeSwitcherMounted = false;
 
 const ThemeSelector = () => {
   const [mounted, setMounted] = useState(false);
@@ -95,32 +82,28 @@ const ThemeSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    // Only mount if we're the first instance
-    if (themeSwitcherMounted) {
-      return;
-    }
-    
-    themeSwitcherMounted = true;
     setMounted(true);
-    const savedTheme = localStorage.getItem(STORAGE_KEY) ?? "system";
+    const savedTheme = localStorage?.getItem(STORAGE_KEY) ?? "system";
     setCurrentTheme(savedTheme);
-    
-    // Initialize NoFOUC script
-    NoFOUCScript(STORAGE_KEY, themes);
-    
-    // Clean up when component unmounts
-    return () => {
-      themeSwitcherMounted = false;
-    };
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
-    localStorage.setItem(STORAGE_KEY, currentTheme);
-    document.documentElement.setAttribute("data-theme", currentTheme);
-    if (window.updateDOM) {
-      window.updateDOM();
-    }
+    
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === STORAGE_KEY) {
+        setCurrentTheme(e.newValue || "system");
+      }
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    localStorage?.setItem(STORAGE_KEY, currentTheme);
+    window.updateDOM?.();
   }, [currentTheme, mounted]);
 
   const handleThemeChange = (themeId: string) => {
@@ -128,16 +111,15 @@ const ThemeSelector = () => {
     setIsOpen(false);
   };
 
-  // Don't render anything if we're not the primary instance
-  if (!mounted || (themeSwitcherMounted && !mounted)) return null;
+  if (!mounted) return null;
 
-  const currentThemeData = themes.find((t) => t.id === currentTheme);
+  const currentThemeData = themes.find(t => t.id === currentTheme);
 
   return (
-    <div className="relative">
+    <div className="fixed right-4 top-4 z-50">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 rounded-md bg-gray-200 dark:bg-gray-800 shadow-md hover:bg-gray-300 dark:hover:bg-gray-700 transition-all"
+        className="theme-switcher-button flex items-center space-x-2 rounded-lg px-3 py-2 shadow-lg hover:shadow-xl transition-all duration-200"
         aria-label="Toggle theme selector"
       >
         <span className="text-xl">{currentThemeData?.icon}</span>
@@ -145,28 +127,49 @@ const ThemeSelector = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-12 w-48 rounded-lg bg-white dark:bg-gray-900 shadow-lg z-50">
-          {themes.map((theme) => (
-            <button
-              key={theme.id}
-              onClick={() => handleThemeChange(theme.id)}
-              className={`w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors
-                ${currentTheme === theme.id ? "bg-blue-100 dark:bg-blue-800" : "hover:bg-gray-100 dark:hover:bg-gray-800"}
-              `}
-            >
-              <span className="text-xl">{theme.icon}</span>
-              <span className="text-sm font-medium">{theme.name}</span>
-            </button>
-          ))}
-        </div>
+        <>
+          <div
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="theme-switcher-menu absolute right-0 top-12 w-48 rounded-lg shadow-xl">
+            {themes.map((theme) => (
+              <button
+                key={theme.id}
+                onClick={() => handleThemeChange(theme.id)}
+                className={`theme-option w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors ${
+                  currentTheme === theme.id ? "bg-opacity-10 bg-current" : ""
+                }`}
+              >
+                <span className="text-xl">{theme.icon}</span>
+                <span className="text-sm font-medium">{theme.name}</span>
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
 };
 
-// Use a memoized component to reduce re-renders
-export const ThemeSwitcher = memo(() => {
-  // We don't need to wrap this with any additional state management
-  // since ThemeSelector now handles duplicate instances
-  return <ThemeSelector />;
-});
+const Script = memo(() => (
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `
+        const themes = ${JSON.stringify(themes)};
+        (${NoFOUCScript.toString()})('${STORAGE_KEY}', themes);
+      `,
+    }}
+  />
+));
+
+Script.displayName = "ThemeScript";
+
+export const ThemeSwitcher = () => {
+  return (
+    <>
+      <Script />
+      <ThemeSelector />
+    </>
+  );
+};
