@@ -28,7 +28,14 @@ const themes: Theme[] = [
   { id: "sunset", name: "Sunset", icon: "🌅", class: "theme-sunset" }
 ];
 
+// Make sure the FOUC script runs only once
+let scriptInitialized = false;
+
 export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
+  // Return early if already initialized
+  if (scriptInitialized) return;
+  scriptInitialized = true;
+
   const updateDOM = () => {
     const modifyTransition = () => {
       const css = document.createElement("style");
@@ -70,11 +77,17 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
     restoreTransitions();
   };
 
-  window.updateDOM = updateDOM;
-  window.updateDOM();
-  
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", window.updateDOM);
+  // Only set up event listeners and window property once
+  if (!window.updateDOM) {
+    window.updateDOM = updateDOM;
+    window.updateDOM();
+    
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", window.updateDOM);
+  }
 };
+
+// Global singleton pattern to ensure only one instance is mounted
+let themeSwitcherMounted = false;
 
 const ThemeSelector = () => {
   const [mounted, setMounted] = useState(false);
@@ -82,9 +95,23 @@ const ThemeSelector = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
+    // Only mount if we're the first instance
+    if (themeSwitcherMounted) {
+      return;
+    }
+    
+    themeSwitcherMounted = true;
     setMounted(true);
     const savedTheme = localStorage.getItem(STORAGE_KEY) ?? "system";
     setCurrentTheme(savedTheme);
+    
+    // Initialize NoFOUC script
+    NoFOUCScript(STORAGE_KEY, themes);
+    
+    // Clean up when component unmounts
+    return () => {
+      themeSwitcherMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -101,7 +128,8 @@ const ThemeSelector = () => {
     setIsOpen(false);
   };
 
-  if (!mounted) return null;
+  // Don't render anything if we're not the primary instance
+  if (!mounted || (themeSwitcherMounted && !mounted)) return null;
 
   const currentThemeData = themes.find((t) => t.id === currentTheme);
 
@@ -136,4 +164,9 @@ const ThemeSelector = () => {
   );
 };
 
-
+// Use a memoized component to reduce re-renders
+export const ThemeSwitcher = memo(() => {
+  // We don't need to wrap this with any additional state management
+  // since ThemeSelector now handles duplicate instances
+  return <ThemeSelector />;
+});
