@@ -124,7 +124,7 @@ export default function ContactPage() {
               </button>
               
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Note: This is a demo form and doesn't actually send messages yet.
+                Note: This is a demo form and doesn't actually send messages yet. I'll get to working on the implementation for this soon!
               </p>
             </form>
           </div>
