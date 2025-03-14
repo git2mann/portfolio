@@ -119,9 +119,9 @@ const ThemeSelector = () => {
             <button
               key={theme.id}
               onClick={() => handleThemeChange(theme.id)}
-              className={`w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors
+              className={w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors
                 ${currentTheme === theme.id ? "bg-blue-100 dark:bg-blue-800" : "hover:bg-gray-100 dark:hover:bg-gray-800"}
-              `}
+              }
             >
               <span className="text-xl">{theme.icon}</span>
               <span className="text-sm font-medium">{theme.name}</span>
