@@ -34,7 +34,7 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="text-lg hover:underline"
                   >
-                    Twitter
+                    X
                   </a>
                 </li>
                 <li>
