@@ -1,44 +1,8 @@
 import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function ProjectsPage() {
-  const projects = [
-    {
-      id: 1,
-      title: "Web Development Portfolio",
-      description: "A collection of websites and web applications I've built using modern technologies.",
-      image: "/assets/blog/dynamic-routing/cover.jpg",
-      tags: ["React", "Next.js", "Tailwind CSS"],
-      link: "https://github.com/yourusername/web-portfolio"
-    },
-    {
-      id: 2,
-      title: "Music Production Course",
-      description: "An online course I created teaching the fundamentals of electronic music production.",
-      image: "/assets/blog/hello-world/cover.jpg",
-      tags: ["Education", "Music Production", "Ableton Live"],
-      link: "https://yourcoursename.com"
-    },
-    {
-      id: 3,
-      title: "Interactive Art Installation",
-      description: "A collaborative project combining digital art with physical sensors for an immersive experience.",
-      image: "/assets/blog/preview/cover.jpg",
-      tags: ["Interactive Art", "Arduino", "Processing"],
-      link: "https://yourprojectsite.com"
-    },
-    {
-      id: 4,
-      title: "Photography Series",
-      description: "A collection of urban landscape photographs exploring light and architecture.",
-      image: "/assets/blog/dynamic-routing/cover.jpg",
-      tags: ["Photography", "Urban", "Fine Art"],
-      link: "https://yourphotographysite.com"
-    }
-  ];
-
   return (
     <main>
       <Container>
@@ -52,47 +16,8 @@ export default function ProjectsPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">My Creative Projects</h2>
             <p className="text-lg mb-6">
               Beyond music and art, I work on various projects spanning technology, education, and collaborative ventures.
-              Here you'll find a collection of my diverse creative endeavors.
+              More projects will be added soon.
             </p>
-          </div>
-        </section>
-        
-        <section className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <div key={project.id} className="border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                <div className="relative h-64">
-                  <Image
-                    src={project.image}
-                    alt={project.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, index) => (
-                      <span 
-                        key={index} 
-                        className="bg-neutral-200 dark:bg-slate-700 px-2 py-1 text-sm rounded"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="mb-4">{project.description}</p>
-                  <a 
-                    href={project.link} 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-bold hover:underline"
-                  >
-                    View Project →
-                  </a>
-                </div>
-              </div>
-            ))}
           </div>
         </section>
         
