@@ -1,9 +1,9 @@
 import Footer from "@/app/_components/footer";
+import Header from "@/app/_components/header";
 import { SITE_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import cn from "classnames";
-import { ThemeSwitcher } from "./_components/theme-switcher";
 
 import "./globals.css";
 
@@ -50,8 +50,8 @@ export default function RootLayout({
         )}
       >
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 via-gray-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-slate-900"></div>
-        <ThemeSwitcher />
-        <div className="min-h-screen animate-fade-in">{children}</div>
+        <Header />
+        <div className="min-h-screen pt-20 animate-fade-in">{children}</div>
         <Footer />
       </body>
     </html>
