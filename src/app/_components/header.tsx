@@ -21,7 +21,7 @@ const Header = () => {
           {["Blog", "Music", "Art", "Projects"].map((item) => (
             <li key={item}>
               <Link
-                href={`/${item.toLowerCase()}`}
+                href={/${item.toLowerCase()}}
                 className="relative px-4 py-2 text-sm font-medium rounded-md transition-all
                 hover:bg-blue-500 hover:text-white dark:hover:bg-blue-400
                 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
