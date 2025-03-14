@@ -1,35 +1,38 @@
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 
 const Header = () => {
+  const router = useRouter();
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm border-b border-neutral-200 dark:border-slate-700">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-neutral-300 dark:border-slate-800 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center h-16">
           {/* Logo / Home Link */}
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight md:tracking-tighter">
+          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
             <Link 
               href="/" 
-              className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className={`hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out ${router.pathname === "/" ? "text-blue-600 dark:text-blue-400" : ""}`}
             >
               🏡
             </Link>
           </h2>
 
           {/* Navigation & Theme Switcher */}
-          <div className="flex items-center space-x-8">
+          <div className="flex items-center space-x-10">
             <nav>
-              <ul className="flex space-x-6">
+              <ul className="flex space-x-8">
                 {[
                   { href: "/blog", label: "Blog" },
                   { href: "/music", label: "Music" },
                   { href: "/art", label: "Art" },
-                  { href: "/projects", label: "Projects" }
+                  { href: "projects", label: "Projects" }
                 ].map(({ href, label }) => (
                   <li key={href}>
                     <Link 
                       href={href} 
-                      className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                      className={`text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out font-medium ${router.pathname === href ? "text-blue-600 dark:text-blue-400" : ""}`}
                     >
                       {label}
                     </Link>
