@@ -13,7 +13,7 @@ const Header = () => {
           {/* Home link */}
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight md:tracking-tighter leading-tight">
             <Link href="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-              Klense
+              🏡
             </Link>
           </h2>
 
