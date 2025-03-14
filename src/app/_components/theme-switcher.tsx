@@ -50,15 +50,12 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     const resolvedTheme = theme === "system" ? systemTheme : theme;
     
-    // Get all theme classes
     const allThemeClasses = themeList
       .map(t => t.class)
       .filter(c => c !== "system" && c !== "light");
     
-    // Remove all theme classes
     document.documentElement.classList.remove(...allThemeClasses);
     
-    // Add the appropriate theme class
     if (resolvedTheme !== "light" && resolvedTheme !== "system") {
       const themeObj = themeList.find(t => t.id === resolvedTheme);
       if (themeObj) {
@@ -116,29 +113,28 @@ const ThemeSelector = () => {
   const currentThemeData = themes.find(t => t.id === currentTheme);
 
   return (
-    <div className="fixed right-4 top-4 z-50">
+    <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="theme-switcher-button flex items-center space-x-2 rounded-lg px-3 py-2 shadow-lg hover:shadow-xl transition-all duration-200"
+        className="theme-switcher-button flex items-center space-x-2 rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-slate-800 transition-all duration-200"
         aria-label="Toggle theme selector"
       >
         <span className="text-xl">{currentThemeData?.icon}</span>
-        <span className="text-sm font-medium">{currentThemeData?.name}</span>
       </button>
 
       {isOpen && (
         <>
           <div
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm"
+            className="fixed inset-0"
             onClick={() => setIsOpen(false)}
           />
-          <div className="theme-switcher-menu absolute right-0 top-12 w-48 rounded-lg shadow-xl">
+          <div className="theme-switcher-menu absolute right-0 top-12 w-48 rounded-lg shadow-xl bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700">
             {themes.map((theme) => (
               <button
                 key={theme.id}
                 onClick={() => handleThemeChange(theme.id)}
-                className={`theme-option w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors ${
-                  currentTheme === theme.id ? "bg-opacity-10 bg-current" : ""
+                className={`theme-option w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors hover:bg-gray-100 dark:hover:bg-slate-700 ${
+                  currentTheme === theme.id ? "bg-gray-100 dark:bg-slate-700" : ""
                 }`}
               >
                 <span className="text-xl">{theme.icon}</span>

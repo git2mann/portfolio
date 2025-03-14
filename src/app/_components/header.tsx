@@ -1,44 +1,53 @@
-import Link from "next/link";
+"use client";
 
-/**
- * Header component
- * Displays the site navigation with links to main sections
- */
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { ThemeSwitcher } from "./theme-switcher";
+
 const Header = () => {
+  const pathname = usePathname();
+
   return (
-    <div className="flex justify-between items-center mb-20 mt-8">
-      {/* Home link */}
-      <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight">
-        <Link href="/" className="hover:underline">
-          Home
-        </Link>
-      </h2>
-      {/* Main navigation */}
-      <nav>
-        <ul className="flex space-x-6">
-          <li>
-            <Link href="/blog" className="hover:underline">
-              Blog
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-neutral-300 dark:border-slate-800 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo / Home Link */}
+          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
+            <Link 
+              href="/" 
+              className={`hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out ${pathname === "/" ? "text-blue-600 dark:text-blue-400" : ""}`}
+            >
+              🏡
             </Link>
-          </li>
-          <li>
-            <Link href="/music" className="hover:underline">
-              Music
-            </Link>
-          </li>
-          <li>
-            <Link href="/art" className="hover:underline">
-              Art
-            </Link>
-          </li>
-          <li>
-            <Link href="/projects" className="hover:underline">
-              Projects
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
+          </h2>
+
+          {/* Navigation & Theme Switcher */}
+          <div className="flex items-center space-x-10">
+            <nav>
+              <ul className="flex space-x-8">
+                {[
+                  { href: "/blog", label: "Blog" },
+                  { href: "/music", label: "Music" },
+                  { href: "/art", label: "Art" },
+                  { href: "/projects", label: "Projects" }
+                ].map(({ href, label }) => (
+                  <li key={href}>
+                    <Link 
+                      href={href} 
+                      className={`text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out font-medium ${pathname === href ? "text-blue-600 dark:text-blue-400" : ""}`}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            
+            <ThemeSwitcher />
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 
