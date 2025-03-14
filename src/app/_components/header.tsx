@@ -1,9 +1,9 @@
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 
 const Header = () => {
-  const router = useRouter();
+  const pathname = usePathname();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-neutral-300 dark:border-slate-800 shadow-sm">
@@ -13,7 +13,7 @@ const Header = () => {
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
             <Link 
               href="/" 
-              className={`hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out ${router.pathname === "/" ? "text-blue-600 dark:text-blue-400" : ""}`}
+              className={`hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out ${pathname === "/" ? "text-blue-600 dark:text-blue-400" : ""}`}
             >
               🏡
             </Link>
@@ -27,12 +27,12 @@ const Header = () => {
                   { href: "/blog", label: "Blog" },
                   { href: "/music", label: "Music" },
                   { href: "/art", label: "Art" },
-                  { href: "projects", label: "Projects" }
+                  { href: "/projects", label: "Projects" }
                 ].map(({ href, label }) => (
                   <li key={href}>
                     <Link 
                       href={href} 
-                      className={`text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out font-medium ${router.pathname === href ? "text-blue-600 dark:text-blue-400" : ""}`}
+                      className={`text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out font-medium ${pathname === href ? "text-blue-600 dark:text-blue-400" : ""}`}
                     >
                       {label}
                     </Link>
