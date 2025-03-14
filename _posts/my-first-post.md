@@ -1,11 +1,11 @@
 ---
 title: "Welcome to My Personal Portfolio and Blog"
 excerpt: "An introduction to my creative journey and what you can expect to find on this site. I'll be sharing my thoughts on music, art, and various projects I'm working on."
-coverImage: "/assets/blog/blog post covers/selina-farzaei-x2QHTVg2HqA-unsplash.jpg"
+coverImage: "/assets/blog/blog-post-covers/selina-farzaei-x2QHTVg2HqA-unsplash.jpg"
 date: "2025-01-1T12:00:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/blog post covers/selina-farzaei-x2QHTVg2HqA-unsplash.jpg"
+  picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/blog post covers/selina-farzaei-x2QHTVg2HqA-unsplash.jpg"
 ---
