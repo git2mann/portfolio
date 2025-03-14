@@ -115,41 +115,7 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
 
   const currentThemeData = themes.find(t => t.id === currentTheme);
 
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="theme-switcher-button flex items-center space-x-2 rounded-lg px-3 py-2 shadow-md hover:shadow-lg transition-all duration-200"
-        aria-label="Toggle theme selector"
-      >
-        <span className="text-xl">{currentThemeData?.icon}</span>
-        <span className="text-sm font-medium">{currentThemeData?.name}</span>
-      </button>
-
-      {isOpen && (
-        <>
-          <div
-            className="fixed inset-0 bg-black/20 backdrop-blur-sm"
-            onClick={() => setIsOpen(false)}
-          />
-          <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-xl bg-white dark:bg-gray-800">
-            {themes.map((theme) => (
-              <button
-                key={theme.id}
-                onClick={() => handleThemeChange(theme.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-2 text-left transition-colors ${
-                  currentTheme === theme.id ? "bg-opacity-10 bg-current" : ""
-                }`}
-              >
-                <span className="text-xl">{theme.icon}</span>
-                <span className="text-sm font-medium">{theme.name}</span>
-              </button>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
+  
 };
 
 
