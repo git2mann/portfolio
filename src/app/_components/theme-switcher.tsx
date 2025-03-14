@@ -136,6 +136,4 @@ const ThemeSelector = () => {
   );
 };
 
-export const ThemeSwitcher = memo(() => {
-  return <ThemeSelector />;
-});
+
