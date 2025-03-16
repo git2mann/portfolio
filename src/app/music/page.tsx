@@ -1,5 +1,5 @@
 import Container from "@/app/_components/container";
-//import Header from "@/app/_components/header";
+import Header from "@/app/_components/header";
 import Image from "next/image";
 import FeaturedTrack from "@/app/_components/featured-track";
 
