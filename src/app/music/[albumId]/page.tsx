@@ -36,6 +36,50 @@ const albums: Album[] = [
         ]
       }
     ]
+  },
+  {
+    id: "2",
+    title: "Moths and Pretty Lights",
+    coverImage: "/assets/music-assets/MOTHS AND PRETTY LIGHTS Album Cover.jpeg",
+    releaseYear: "2025",
+    description: "An exploration of obsession, illusion, and the beauty in self-destruction.",
+    songs: [
+      {
+        id: "1",
+        title: "Phantom Glow",
+        year: "2025",
+        audioUrl: "/assets/music/moths-klense-mp3s/Phantom Glow - Klense.mp3",
+        lyrics: [
+          {
+            id: "1",
+            text: "Chasing after shadows, drawn to the neon burn",
+            explanation: "Symbolizing the allure of fleeting beauty and the dangers of obsession."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "3",
+    title: "Stillness Amidst",
+    coverImage: "/assets/music-assets/STILLNESS AMIDST Album Cover.jpeg",
+    releaseYear: "2024",
+    description: "A deep dive into the paradox of chaos and calm in modern life.",
+    songs: [
+      {
+        id: "1",
+        title: "Brain Fog",
+        year: "2024",
+        audioUrl: "/assets/music/stillness-klense-mp3s/Brain Fog - Klense.mp3",
+        lyrics: [
+          {
+            id: "1",
+            text: "Words are swimming but they never land",
+            explanation: "Capturing the feeling of mental exhaustion and disorientation."
+          }
+        ]
+      }
+    ]
   }
 ];
 
