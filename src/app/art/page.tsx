@@ -1,12 +1,12 @@
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
+//import Header from "@/app/_components/header";
 import Image from "next/image";
 
 export default function ArtPage() {
   return (
     <main>
       <Container>
-        <Header />
+        
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12">
           Art
         </h1>
