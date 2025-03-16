@@ -1,11 +1,11 @@
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
+//import Header from "@/app/_components/header";
 
 export default function ContactPage() {
   return (
     <main>
       <Container>
-        <Header />
+        
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12">
           Contact
         </h1>
