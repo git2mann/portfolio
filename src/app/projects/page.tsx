@@ -6,7 +6,7 @@ export default function ProjectsPage() {
   return (
     <main>
       <Container>
-        
+        <Header />
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-12">
           Projects
         </h1>
