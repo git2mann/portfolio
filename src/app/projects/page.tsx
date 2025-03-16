@@ -1,5 +1,5 @@
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
+//import Header from "@/app/_components/header";
 import Link from "next/link";
 
 export default function ProjectsPage() {
