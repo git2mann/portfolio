@@ -1,5 +1,5 @@
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
+//import Header from "@/app/_components/header";
 import { getAllPosts } from "@/lib/api";
 import Link from "next/link";
 import Image from "next/image";
@@ -26,7 +26,7 @@ export default function BlogPage() {
   return (
     <main className="min-h-screen">
       <Container>
-        <Header />
+        
         <div className="max-w-6xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-8 animate-fade-in">
             Blog
