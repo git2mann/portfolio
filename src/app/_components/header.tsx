@@ -4,6 +4,13 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 
+const navLinks = [
+  { href: "/blog", label: "Blog" },
+  { href: "/music", label: "Music" },
+  { href: "/art", label: "Art" },
+  { href: "/projects", label: "Projects" }
+];
+
 const Header = () => {
   const pathname = usePathname();
 
@@ -12,29 +19,28 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center h-16">
           {/* Logo / Home Link */}
-          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-            <Link 
-              href="/" 
-              className={`hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out ${pathname === "/" ? "text-blue-600 dark:text-blue-400" : ""}`}
-            >
-              🏡
-            </Link>
-          </h2>
+          <Link 
+            href="/" 
+            className={`text-2xl md:text-3xl font-extrabold tracking-tight hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out ${
+              pathname === "/" ? "text-blue-600 dark:text-blue-400" : ""
+            }`}
+          >
+            🏡
+          </Link>
 
           {/* Navigation & Theme Switcher */}
           <div className="flex items-center space-x-10">
             <nav>
               <ul className="flex space-x-8">
-                {[
-                  { href: "/blog", label: "Blog" },
-                  { href: "/music", label: "Music" },
-                  { href: "/art", label: "Art" },
-                  { href: "/projects", label: "Projects" }
-                ].map(({ href, label }) => (
+                {navLinks.map(({ href, label }) => (
                   <li key={href}>
                     <Link 
                       href={href} 
-                      className={`text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400 transition duration-200 ease-in-out font-medium ${pathname === href ? "text-blue-600 dark:text-blue-400" : ""}`}
+                      className={`font-medium transition duration-200 ease-in-out ${
+                        pathname === href 
+                          ? "text-blue-600 dark:text-blue-400"
+                          : "text-gray-700 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                      }`}
                     >
                       {label}
                     </Link>
