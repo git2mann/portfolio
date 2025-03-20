@@ -13,7 +13,7 @@ A modern, performant personal portfolio and blog built with Next.js, TypeScript,
 - **Projects Section**: Highlighting various creative and technical projects
 - **Dark Mode & Theme Switcher**: Multiple theme options including:
   - Light
-  - Dark (True Black)
+  - Dark Mode
   - Dark Ocean
   - Pastel Pink
   - Forest
@@ -74,8 +74,8 @@ Post content in Markdown...
 ## Project Structure
 
 ```
-├── _posts/           # Blog post markdown files
-├── public/           # Static assets
+├── _posts/          # Blog post markdown files
+├── public/          # Static assets
 │   ├── assets/      # Images and media
 │   └── favicon/     # Favicon files
 ├── src/
