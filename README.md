@@ -12,8 +12,8 @@ A modern, performant personal portfolio and blog built with Next.js, TypeScript,
 - **Art Gallery**: Showcase of visual artwork and exhibitions
 - **Projects Section**: Highlighting various creative and technical projects
 - **Dark Mode & Theme Switcher**: Multiple theme options including:
-  - Light
-  - Dark (True Black)
+  - Light Mode
+  - Dark Mode
   - Dark Ocean
   - Pastel Pink
   - Forest
@@ -48,6 +48,16 @@ npm run build
 # Start production server
 npm start
 ```
+
+## Generating a Blog Post
+
+To generate a new blog post, run the following script:
+
+```bash
+npx ts-node src/scripts/generatePost.ts
+```
+
+Follow the prompts to enter the post title, excerpt, and cover image URL. If you leave the cover image URL blank, a default image will be used.
 
 ## Content Management
 

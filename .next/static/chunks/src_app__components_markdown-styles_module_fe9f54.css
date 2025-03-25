@@ -1,0 +1,30 @@
+/* [project]/src/app/_components/markdown-styles.module.css [app-client] (css) */
+.markdown-styles-module__3QwRAG__markdown {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  line-height: 1.625;
+}
+
+.markdown-styles-module__3QwRAG__markdown p, .markdown-styles-module__3QwRAG__markdown ul, .markdown-styles-module__3QwRAG__markdown ol, .markdown-styles-module__3QwRAG__markdown blockquote {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.markdown-styles-module__3QwRAG__markdown h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  line-height: 1.375;
+}
+
+.markdown-styles-module__3QwRAG__markdown h3 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  line-height: 1.375;
+}
+
+
+/*# sourceMappingURL=src_app__components_markdown-styles_module_fe9f54.css.map*/
