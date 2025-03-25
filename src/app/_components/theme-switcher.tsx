@@ -1,6 +1,6 @@
 "use client";
 
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState, useRef } from "react";
 
 declare global {
   interface Window {
@@ -77,6 +77,7 @@ const ThemeSelector = () => {
   const [mounted, setMounted] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<string>("system");
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -103,6 +104,19 @@ const ThemeSelector = () => {
     window.updateDOM?.();
   }, [currentTheme, mounted]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
+
   const handleThemeChange = (themeId: string) => {
     setCurrentTheme(themeId);
     setIsOpen(false);
@@ -113,7 +127,7 @@ const ThemeSelector = () => {
   const currentThemeData = themes.find(t => t.id === currentTheme);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="theme-switcher-button flex items-center space-x-2 rounded-lg px-3 py-2 hover:bg-gray-100 dark:hover:bg-slate-800 transition-all duration-200"
