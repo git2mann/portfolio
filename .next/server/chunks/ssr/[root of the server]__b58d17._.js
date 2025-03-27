@@ -24,7 +24,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 __turbopack_esm__({
     "getAllPosts": (()=>getAllPosts),
     "getPostBySlug": (()=>getPostBySlug),
-    "getPostSlugs": (()=>getPostSlugs)
+    "getPostSlugs": (()=>getPostSlugs),
+    "getPostsByCategory": (()=>getPostsByCategory)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__ = __turbopack_import__("[externals]/ [external] (fs, cjs)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$gray$2d$matter$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/gray-matter/index.js [app-rsc] (ecmascript)");
@@ -54,12 +55,15 @@ function getPostBySlug(slug) {
     };
 }
 function getAllPosts() {
-    // Get all post slugs
     const slugs = getPostSlugs();
-    // Map each slug to its post data
-    const posts = slugs.map((slug)=>getPostBySlug(slug))// Sort posts by date in descending order (newest first)
-    .sort((post1, post2)=>post1.date > post2.date ? -1 : 1);
-    return posts;
+    const posts = slugs.map((slug)=>getPostBySlug(slug)).sort((post1, post2)=>post1.date > post2.date ? -1 : 1);
+    return posts.map((post)=>({
+            ...post,
+            category: post.category || "Music"
+        }));
+}
+function getPostsByCategory(category) {
+    return getAllPosts().filter((post)=>post.category === category);
 }
 }}),
 "[externals]/ [external] (node:process, cjs)": (function(__turbopack_context__) {

@@ -135,12 +135,12 @@ function getPostBySlug(slug) {
     };
 }
 function getAllPosts() {
-    // Get all post slugs
     const slugs = getPostSlugs();
-    // Map each slug to its post data
-    const posts = slugs.map((slug)=>getPostBySlug(slug))// Sort posts by date in descending order (newest first)
-    .sort((post1, post2)=>post1.date > post2.date ? -1 : 1);
-    return posts;
+    const posts = slugs.map((slug)=>getPostBySlug(slug)).sort((post1, post2)=>post1.date > post2.date ? -1 : 1);
+    return posts.map((post)=>({
+            ...post,
+            category: post.category || "Uncategorized"
+        }));
 }
 }}),
 "[project]/src/app/page.tsx [app-rsc] (ecmascript)": ((__turbopack_context__) => {

@@ -1,130 +1,66 @@
 import Container from "@/app/_components/container";
-//import Header from "@/app/_components/header";
-import { getAllPosts } from "@/lib/api";
 import Link from "next/link";
 import Image from "next/image";
-import DateFormatter from "@/app/_components/date-formatter";
 
 export default function BlogPage() {
-  const allPosts = getAllPosts();
-
-  // Group posts by year
-  const postsByYear = allPosts.reduce((acc, post) => {
-    const year = new Date(post.date).getFullYear();
-    if (!acc[year]) {
-      acc[year] = [];
-    }
-    acc[year].push(post);
-    return acc;
-  }, {} as Record<number, typeof allPosts>);
-
-  // Sort years in descending order
-  const years = Object.keys(postsByYear)
-    .map(Number)
-    .sort((a, b) => b - a);
-
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-neutral-100 dark:bg-slate-900">
       <Container>
-        
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-8 animate-fade-in">
-            Blog
-          </h1>
+          {/* Hero Section */}
+          <section className="text-center py-16">
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight leading-tight text-gray-800 dark:text-white">
+              Welcome to the Blog
+            </h1>
+            <p className="text-lg md:text-xl font-medium text-gray-700 dark:text-gray-300 mt-4">
+              Discover stories, tutorials, and insights from <span className="font-bold text-blue-600 dark:text-blue-400">Music</span> and <span className="font-bold text-purple-600 dark:text-purple-400">Tech</span>.
+            </p>
+          </section>
 
-          {/* Featured Post */}
-          {allPosts[0] && (
-            <div className="mb-16 animate-slide-up">
-              <Link href={`/posts/${allPosts[0].slug}`}>
-                <div className="group relative h-[60vh] overflow-hidden rounded-xl">
-                  <Image
-                    src={allPosts[0].coverImage}
-                    alt={`Cover Image for ${allPosts[0].title}`}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent">
-                    <div className="absolute bottom-0 p-8">
-                      <p className="text-white/70 mb-2">
-                        <DateFormatter dateString={allPosts[0].date} />
-                      </p>
-                      <h2 className="text-4xl font-bold text-white mb-4">{allPosts[0].title}</h2>
-                      <p className="text-white/90 text-lg max-w-2xl">{allPosts[0].excerpt}</p>
+          {/* Category Cards */}
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-16">
+            {[
+              {
+                category: "Music",
+                description: "Explore music production tips, stories, and insights.",
+                link: "/blog/music",
+                icon: "🎵", // Simple text-based placeholder
+                image: "/assets/blog/blog-post-covers/selina-farzaei-x2QHTVg2HqA-unsplash.jpg",
+              },
+              {
+                category: "Tech",
+                description: "Discover the latest in technology and development.",
+                link: "/blog/tech",
+                icon: "💻", // Simple text-based placeholder
+                image: "/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.jpg",
+              },
+            ].map(({ category, description, link, icon, image }) => (
+              <div key={category} className="text-center">
+                <Link
+                  href={link}
+                  className="block bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transform hover:scale-105 transition duration-300 ease-in-out"
+                >
+                  <div className="relative h-96">
+                    <Image
+                      src={image}
+                      alt={`${category} Category`}
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-6">
+                      <span className="text-6xl">{icon}</span>
+                      <h3 className="text-4xl font-bold text-white mt-6 drop-shadow-2xl">
+                        {category}
+                      </h3>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </div>
-          )}
-
-          {/* Posts by Year */}
-          {years.map((year) => (
-            <section key={year} className="mb-16 animate-fade-in">
-              <h2 className="text-3xl font-bold mb-8 sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm py-4 z-10">
-                {year}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"> 
-                {postsByYear[year].map((post) => (
-                  <article 
-                    key={post.slug} 
-                    className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" 
-                  >
-                    <Link href={`/posts/${post.slug}`}>
-                      <div className="relative h-64">
-                        <Image
-                          src={post.coverImage}
-                          alt={`Cover Image for ${post.title}`}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                        {/* Content type indicator */}
-                        <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/70 text-white text-sm">
-                          {post.coverImage.includes('.mp4') ? '🎥 Video' : 
-                           post.coverImage.includes('.mp3') ? '🎵 Audio' : 
-                           '📝 Article'}
-                        </div>
-                      </div>
-                      <div className="p-6">
-                        <div className="flex items-center mb-4">
-                          <Image
-                            src={post.author.picture}
-                            alt={post.author.name}
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                          />
-                          <div className="ml-3">
-                            <p className="font-medium">{post.author.name}</p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                              <DateFormatter dateString={post.date} />
-                            </p>
-                          </div>
-                        </div>
-                        <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                          {post.title}
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300">{post.excerpt}</p>
-                        
-                        {/* Tags (if available) */}
-                        {post.tags && (
-                          <div className="flex flex-wrap gap-2 mt-4">
-                            {post.tags.map((tag: string) => (
-                              <span 
-                                key={tag}
-                                className="px-3 py-1 bg-gray-200 dark:bg-slate-700 rounded-full text-sm"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </Link>
-                  </article>
-                ))}
+                </Link>
+                <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 mt-4">
+                  {description}
+                </p>
               </div>
-            </section>
-          ))}
+            ))}
+          </section>
         </div>
       </Container>
     </main>
