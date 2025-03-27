@@ -28,4 +28,5 @@ export type Post = {
   contentType?: 'article' | 'video' | 'audio' | 'gallery';
   mediaUrl?: string;
   gallery?: string[];
+  category?: string;
 };

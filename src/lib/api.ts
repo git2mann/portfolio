@@ -38,12 +38,21 @@ export function getPostBySlug(slug: string) {
  * @returns {Post[]} Array of all posts sorted by date (newest first)
  */
 export function getAllPosts(): Post[] {
-  // Get all post slugs
   const slugs = getPostSlugs();
-  // Map each slug to its post data
   const posts = slugs
     .map((slug) => getPostBySlug(slug))
-    // Sort posts by date in descending order (newest first)
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
-  return posts;
+  return posts.map((post) => ({
+    ...post,
+    category: post.category || "Music", // Default to "Music" for uncategorized posts
+  }));
+}
+
+/**
+ * Get posts by category
+ * @param {string} category - The category to filter posts by
+ * @returns {Post[]} Array of posts in the specified category
+ */
+export function getPostsByCategory(category: string): Post[] {
+  return getAllPosts().filter((post) => post.category === category);
 }
