@@ -1,7 +1,0 @@
-{
-  "/blog/page": "app/blog/page.js",
-  "/blog/music/page": "app/blog/music/page.js",
-  "/_not-found/page": "app/_not-found/page.js",
-  "/blog/tech/page": "app/blog/tech/page.js",
-  "/posts/[slug]/page": "app/posts/[slug]/page.js"
-}
