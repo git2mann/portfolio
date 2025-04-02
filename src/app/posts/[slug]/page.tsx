@@ -5,7 +5,6 @@ import { SITE_NAME } from "@/lib/constants";
 import markdownToHtml from "@/lib/markdownToHtml";
 import Alert from "@/app/_components/alert";
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
 
@@ -24,25 +23,28 @@ export default async function Post(props: Params) {
     return notFound();
   }
 
-  // Convert the markdown content to HTML
-  const content = await markdownToHtml(post.content || "");
+  // Convert the markdown content to HTML or use HTML content directly
+  const content =
+    post.contentType === 'markdown'
+      ? await markdownToHtml(post.content || "")
+      : post.content;
 
   return (
     <main>
       {/* Alert banner for preview mode */}
       <Alert preview={post.preview} />
       <Container>
-        <Header />
+        {/* Removed redundant Header component */}
         <article className="mb-32">
           {/* Post header with title, cover image, date, and author */}
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}
-            date={post.date}
+            date={post.date || ""}
             author={post.author}
           />
           {/* Post body with the HTML content */}
-          <PostBody content={content} />
+          <PostBody content={content} isHtml={post.contentType === 'html'} />
         </article>
       </Container>
     </main>
@@ -68,12 +70,13 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
   }
 
   const title = `${post.title} | ${SITE_NAME}`;
+  const ogImageUrl = post.ogImage?.url || "/default-og-image.jpg"; // Fallback to a default image
 
   return {
     title,
     openGraph: {
       title,
-      images: [post.ogImage.url],
+      images: [ogImageUrl],
     },
   };
 }

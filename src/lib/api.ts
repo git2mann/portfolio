@@ -20,17 +20,36 @@ export function getPostSlugs() {
  * @returns {Post} The post data including frontmatter and content
  */
 export function getPostBySlug(slug: string) {
-  // Remove .md extension from slug if present
-  const realSlug = slug.replace(/\.md$/, "");
-  // Construct the full path to the post file
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
-  // Read the file contents
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  // Parse the frontmatter and content using gray-matter
-  const { data, content } = matter(fileContents);
+  const realSlug = slug.replace(/\.(md|html)$/, "");
+  const mdPath = join(postsDirectory, `${realSlug}.md`);
+  const htmlPath = join(postsDirectory, `${realSlug}.html`);
 
-  // Return the post data with the slug and content
-  return { ...data, slug: realSlug, content } as Post;
+  let fileContents: string;
+  let contentType: 'markdown' | 'html';
+
+  if (fs.existsSync(mdPath)) {
+    fileContents = fs.readFileSync(mdPath, "utf8");
+    contentType = 'markdown';
+  } else if (fs.existsSync(htmlPath)) {
+    fileContents = fs.readFileSync(htmlPath, "utf8");
+    contentType = 'html';
+  } else {
+    throw new Error(`Post not found: ${slug}`);
+  }
+
+  if (contentType === 'markdown') {
+    const { data, content } = matter(fileContents);
+    return { ...data, slug: realSlug, content, contentType } as Post;
+  }
+
+  // Extract metadata from the <script> tag in HTML
+  const metadataMatch = fileContents.match(/<script type="application\/json" id="post-metadata">([\s\S]*?)<\/script>/);
+  if (!metadataMatch) {
+    throw new Error(`Metadata not found in HTML post: ${slug}`);
+  }
+
+  const metadata = JSON.parse(metadataMatch[1]);
+  return { ...metadata, slug: realSlug, content: fileContents, contentType } as Post;
 }
 
 /**
