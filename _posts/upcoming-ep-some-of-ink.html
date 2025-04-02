@@ -36,7 +36,8 @@
       top: 64px; /* Adjust this value to match the height of the website's main header */
       z-index: 40;
       background: rgba(var(--background-rgb), 0.8); /* Theme-aware semi-transparent background */
-      backdrop-filter: blur(10px); /* Glassy blur effect */
+      backdrop-filter: blur(10px); /* Glassy blur effect for modern browsers */
+      -webkit-backdrop-filter: blur(10px); /* Glassy blur effect for Safari */
       color: var(--text-color);
       border-bottom: 1px solid var(--border-color);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
