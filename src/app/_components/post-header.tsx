@@ -22,9 +22,11 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
       <PostTitle>{title}</PostTitle>
       
       {/* Author information (desktop view) */}
-      <div className="hidden md:block md:mb-12">
-        <Avatar name={author.name} picture={author.picture} />
-      </div>
+      {author?.name && author?.picture && (
+        <div className="hidden md:block md:mb-12">
+          <Avatar name={author.name} picture={author.picture} />
+        </div>
+      )}
       
       {/* Cover image */}
       <div className="mb-8 md:mb-16 sm:mx-0">
@@ -33,14 +35,18 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
       
       <div className="max-w-2xl mx-auto">
         {/* Author information (mobile view) */}
-        <div className="block md:hidden mb-6">
-          <Avatar name={author.name} picture={author.picture} />
-        </div>
+        {author?.name && author?.picture && (
+          <div className="block md:hidden mb-6">
+            <Avatar name={author.name} picture={author.picture} />
+          </div>
+        )}
         
         {/* Publication date */}
-        <div className="mb-6 text-lg">
-          <DateFormatter dateString={date} />
-        </div>
+        {date && (
+          <div className="mb-6 text-lg">
+            <DateFormatter dateString={date} />
+          </div>
+        )}
       </div>
     </>
   );

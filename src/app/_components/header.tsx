@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
@@ -16,9 +16,24 @@ const navLinks = [
 const Header = () => {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close the menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-neutral-300 dark:border-slate-800 shadow-md">
+    <header className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-neutral-300 dark:border-slate-800 shadow-md">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
         <div className="flex justify-between items-center h-16">
           {/* Logo / Home Link */}
@@ -67,7 +82,10 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       {menuOpen && (
-        <div className="md:hidden bg-white dark:bg-slate-900 border-t border-neutral-300 dark:border-slate-800 shadow-lg">
+        <div
+          ref={menuRef}
+          className="md:hidden bg-white dark:bg-slate-900 border-t border-neutral-300 dark:border-slate-800 shadow-lg"
+        >
           <nav className="flex flex-col space-y-4 p-6">
             {navLinks.map(({ href, label }) => (
               <Link

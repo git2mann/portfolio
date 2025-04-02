@@ -25,7 +25,7 @@ export type Post = {
   content: string;
   preview?: boolean;
   tags?: string[];
-  contentType?: 'article' | 'video' | 'audio' | 'gallery';
+  contentType?: 'markdown' | 'html';
   mediaUrl?: string;
   gallery?: string[];
   category?: string;

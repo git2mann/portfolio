@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upcoming EP: 'Some Of Ink'</title>
+  <script type="application/json" id="post-metadata">
+    {
+      "title": "Upcoming EP: 'Some Of Ink'",
+      "excerpt": "Excited to announce my upcoming EP, 'Some Of Ink', releasing on April 10th. A reflective journey revisiting and reimagining tracks from my 2021 release, Son Of Ink.",
+      "coverImage": "/assets/music-assets/Some Of Ink EP Cover.png",
+      "date": "2025-04-02T12:00:00.000Z",
+      "author": {
+        "name": "Leon Nduati",
+        "picture": "/assets/blog/authors/IMG_7908.PNG"
+      },
+      "ogImage": {
+        "url": "/assets/music-assets/Some Of Ink EP Cover.png"
+      },
+      "tags": ["Music", "EP", "New Release"],
+      "contentType": "audio"
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.75;
+      margin: 0;
+      padding: 0;
+      background: rgba(var(--background-rgb), 0.8); /* Glassy effect for the entire page */
+      backdrop-filter: blur(10px); /* Apply blur effect */
+      color: var(--text-color);
+    }
+    .sticky-header {
+      position: sticky;
+      top: 64px; /* Adjust this value to match the height of the website's main header */
+      z-index: 40;
+      background: rgba(var(--background-rgb), 0.8); /* Theme-aware semi-transparent background */
+      backdrop-filter: blur(10px); /* Glassy blur effect */
+      color: var(--text-color);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 1rem 1.5rem;
+    }
+    .header-content {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .header-content h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--text-color);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    .release-info {
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: var(--secondary-text-color);
+    }
+    .release-info p {
+      margin: 0;
+    }
+    .countdown {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      font-weight: 500;
+    }
+    section {
+      margin: 20px auto;
+      max-width: 800px;
+      padding: 20px;
+      background: var(--card-background-color);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    section h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--text-color);
+      border-left: 4px solid var(--accent-color);
+      padding-left: 10px;
+    }
+    section p {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      color: var (--secondary-text-color);
+    }
+    .tracklist {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .tracklist li {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--card-background-color);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tracklist li:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+    .tracklist strong {
+      font-size: 1.2rem;
+      color: var(--text-color);
+    }
+    .tracklist p {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: var(--secondary-text-color);
+    }
+    .toggle-content {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: var(--card-background-color);
+      border-left: 4px solid var(--accent-color);
+    }
+    .toggle-button {
+      cursor: pointer;
+      color: var(--accent-color);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+    .cover-image {
+      text-align: center;
+      margin: 40px 0;
+    }
+    .cover-container {
+      position: relative;
+      display: inline-block;
+      max-width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .cover-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    .cover-container img {
+      display: block;
+      width: 100%;
+      border-radius: 12px;
+    }
+    .cover-caption {
+      margin-top: 15px;
+      font-size: 1rem;
+      color: var(--secondary-text-color);
+      text-align: center;
+      font-style: italic;
+    }
+    .presave-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 15px 25px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--button-text-color); /* Use theme-aware text color */
+      background-color: var(--accent-color);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .presave-button:hover {
+      background-color: var(--accent-hover-color);
+      transform: scale(1.05);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0, 0, 0, 0.6); /* Darker overlay for emphasis */
+      backdrop-filter: blur(15px); /* Enhanced glassy effect for the modal */
+    }
+
+    .modal-content {
+      background-color: var(--card-background-color);
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .modal-content h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+
+    .modal-content p {
+      font-size: 1rem;
+      color: var(--secondary-text-color);
+      margin-bottom: 20px;
+    }
+
+    .presave-link {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--button-text-color); /* Use theme-aware text color */
+      background-color: var(--accent-color);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .presave-link:hover {
+      background-color: var(--accent-hover-color);
+      transform: scale(1.05);
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--text-color); /* Ensure it matches the theme */
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .close-button:hover {
+      color: var(--accent-color);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .alternate-cover {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .alt-caption {
+      font-size: 1rem;
+      color: var(--secondary-text-color);
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+    .arrow-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    .arrow {
+      font-size: 2rem;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+    .alt-cover-image {
+      max-width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .alt-cover-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    .cover-row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky-header">
+    <div class="header-content">
+      <h1>Upcoming EP: 'Some Of Ink' 🎧</h1>
+      <div class="release-info">
+        <p><strong>Release Date:</strong> April 10, 2025</p>
+        <div class="countdown" id="countdown-timer">Loading countdown...</div>
+      </div>
+    </div>
+  </header>
+  <article>
+    <section>
+      <p>🎉 <strong>Mark your calendars!</strong> My new EP, <em>Some Of Ink</em>, is dropping on <strong>April 10th</strong>. This project is a reflective journey—a chance to take a step back and see where I was in 2021 with <em>Son Of Ink</em>, and where I am now as an artist.</p>
+    </section>
+    <section>
+      <h2>🎵 Experience the Tracklist</h2>
+      <ul class="tracklist">
+        <li>
+          <strong>01. Back Again, Again</strong>
+          <p>A high-energy rework of the original track, infused with fresh ideas and bold lyricism. This track sets the tone for the EP with its vibrant beats (yes, beats) and reflective lyrics.</p>
+        </li>
+        <li>
+          <strong>02. Still Ultimate</strong>
+          <p>A reflective yet powerful take that showcases my growth and evolution as an artist. This track dives deep into themes of perseverance and self-discovery.</p>
+        </li>
+        <li>
+          <strong>03. Just Words</strong>
+          <p>A raw closer that abruptly ends, leaving room for reflection—or perhaps a hint at a deluxe version?</p>
+        </li>
+      </ul>
+    </section>
+    <section class="cover-image">
+      <h2>🎨 The EP Covers</h2>
+      <div class="cover-row">
+        <!-- Main Cover -->
+        <div class="cover-container">
+          <img src="/assets/music-assets/Some Of Ink EP Cover.png" alt="Some Of Ink EP Cover">
+          <p class="cover-caption">The official cover art for <b><em>Some Of Ink</em></b>, designed to reflect the creative chaos and evolution of the artist.<br>— Marina</p>
+        </div>
+        <!-- Alternate Cover -->
+        <div class="cover-container">
+          <img src="/assets/music-assets/Some Of Ink Alt Cover.png" alt="Some Of Ink Alternate Cover">
+          <p class="cover-caption">An alternate cover concept for <b><em>Some Of Ink</em></b>, showcasing a more abstract and experimental design.</p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h2>🎨 The Story Behind the EP Cover</h2>
+      <p>The EP cover has a special story behind it. <span class="toggle-button" onclick="toggleContent()">Read more...</span></p>
+      <div class="toggle-content" id="cover-story">
+        <p>One day, I was rambling to Marina about the idea of redoing my first album—but only some of it. As I shared my scattered thoughts, Marina sketched out a funny picture that perfectly captured my thought process.</p>
+        <p>That sketch became the foundation for the <em>Some Of Ink</em> cover art. It's a visual representation of the creative chaos that led to this project, and I couldn't be happier with how it turned out.</p>
+      </div>
+    </section>
+    <section>
+      <h2>🚀 Get Ready!</h2>
+      <p>✨ <em>Some Of Ink</em> is more than just music—it's an experience. It's a moment to reflect on how far I've come and to celebrate the journey. I'm thrilled to share this project with you and can't wait to hear your thoughts. Let's make this release unforgettable!</p>
+      <button class="presave-button" onclick="openPresaveModal()">🎧 Pre-Save Now</button>
+    </section>
+
+    <!-- Pre-Save Modal -->
+    <div id="presave-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-button" onclick="closePresaveModal()">&times;</span>
+        <h2>🎧 Pre-Save 'Some Of Ink'</h2>
+        <p>Be the first to listen to <em>Some Of Ink</em> when it drops! Click the button below to pre-save the EP.</p>
+        <a href="https://share.amuse.io/track/klense-some-of-ink" target="_blank" rel="noopener noreferrer" class="presave-link">Pre-Save on Amuse</a>
+      </div>
+    </div>
+  </article>
+  <script>
+    // Countdown Timer
+    function updateCountdown() {
+      const releaseDate = new Date("2025-04-10T00:00:00");
+      const now = new Date();
+      const diff = releaseDate - now;
+      if (diff <= 0) {
+        document.getElementById("countdown-timer").innerText = "The EP is out now!";
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById("countdown-timer").innerText = `${days} days, ${hours} hours, ${minutes} minutes remaining`;
+    }
+    setInterval(updateCountdown, 60000);
+    updateCountdown();
+
+    // Play Preview
+    function playPreview(track) {
+      alert(`Playing preview for: ${track}`);
+    }
+
+    // Toggle Content
+    function toggleContent() {
+      const content = document.getElementById("cover-story");
+      if (content.style.display === "none" || !content.style.display) {
+        content.style.display = "block";
+      } else {
+        content.style.display = "none";
+      }
+    }
+
+    // Open the modal and scroll to relevant content
+    function openPresaveModal() {
+      const modal = document.getElementById("presave-modal");
+      modal.style.display = "block";
+      modal.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Close the modal
+    function closePresaveModal() {
+      document.getElementById("presave-modal").style.display = "none";
+    }
+
+    // Close the modal when clicking outside of it
+    window.onclick = function (event) {
+      const modal = document.getElementById("presave-modal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
+  </script>
+</body>
+</html>
