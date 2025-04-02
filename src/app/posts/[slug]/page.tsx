@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
 import { SITE_NAME } from "@/lib/constants";
-import markdownToHtml from "@/lib/markdownToHtml";
+import ReactMarkdown from "react-markdown";
 import Alert from "@/app/_components/alert";
 import Container from "@/app/_components/container";
 import { PostBody } from "@/app/_components/post-body";
@@ -23,11 +23,8 @@ export default async function Post(props: Params) {
     return notFound();
   }
 
-  // Convert the markdown content to HTML or use HTML content directly
-  const content =
-    post.contentType === 'markdown'
-      ? await markdownToHtml(post.content || "")
-      : post.content;
+  // Pass raw markdown content directly to PostBody
+  const content = post.content;
 
   return (
     <main>
@@ -43,8 +40,8 @@ export default async function Post(props: Params) {
             date={post.date || ""}
             author={post.author}
           />
-          {/* Post body with the HTML content */}
-          <PostBody content={content} isHtml={post.contentType === 'html'} />
+          {/* Pass raw markdown content */}
+          <PostBody content={content} isMarkdown={post.contentType === 'markdown'} />
         </article>
       </Container>
     </main>
