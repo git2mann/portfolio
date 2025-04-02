@@ -1,14 +1,20 @@
 import { remark } from "remark";
 import html from "remark-html";
+import sanitize from "rehype-sanitize";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
 
 /**
- * Convert markdown string to HTML
- * @param {string} markdown - The markdown content to convert
- * @returns {Promise<string>} The HTML string converted from markdown
+ * Converts markdown content to sanitized HTML
+ * @param markdown - The markdown string to convert
+ * @returns {Promise<string>} - The converted and sanitized HTML string
  */
-export default async function markdownToHtml(markdown: string) {
-  // Process the markdown content using remark and remark-html
-  const result = await remark().use(html).process(markdown);
-  // Return the HTML string
+export default async function markdownToHtml(markdown: string): Promise<string> {
+  const result = await remark()
+    .use(remarkRehype) // Convert markdown to HTML-compatible syntax
+    .use(sanitize) // Sanitize the HTML output
+    .use(rehypeStringify) // Convert the syntax tree to an HTML string
+    .process(markdown);
+
   return result.toString();
 }
