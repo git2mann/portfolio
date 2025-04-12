@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Excited to announce my upcoming EP, 'Some Of Ink', releasing on April 10th. A reflective journey revisiting and reimagining tracks from my 2021 release, Son Of Ink.">
+  <meta property="og:title" content="Upcoming EP: 'Some Of Ink'">
+  <meta property="og:description" content="Excited to announce my upcoming EP, 'Some Of Ink', releasing on April 10th. A reflective journey revisiting and reimagining tracks from my 2021 release, Son Of Ink.">
+  <meta property="og:image" content="/assets/music-assets/Some Of Ink EP Cover.png">
+  <meta property="og:type" content="music.album">
   <title>Upcoming EP: 'Some Of Ink'</title>
   <script type="application/json" id="post-metadata">
     {
@@ -30,7 +35,14 @@
       background: rgba(var(--background-rgb), 0.8); /* Glassy effect for the entire page */
       backdrop-filter: blur(10px); /* Apply blur effect */
       color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
     }
+
+    .dark-mode body {
+      background: var(--dark-background-color);
+      color: var(--dark-text-color);
+    }
+
     .sticky-header {
       position: sticky;
       top: 64px; /* Adjust this value to match the height of the website's main header */
@@ -112,8 +124,9 @@
       transition: transform 0.3s, box-shadow 0.3s;
     }
     .tracklist li:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      background: var(--hover-background-color);
     }
     .tracklist strong {
       font-size: 1.2rem;
@@ -130,6 +143,7 @@
       padding: 10px;
       background: var(--card-background-color);
       border-left: 4px solid var(--accent-color);
+      transition: opacity 0.3s ease-in-out;
     }
     .toggle-button {
       cursor: pointer;
@@ -166,25 +180,32 @@
       text-align: center;
       font-style: italic;
     }
+
+    /* Pre-Save Button */
     .presave-button {
       display: inline-block;
       margin-top: 20px;
-      padding: 15px 25px;
+      padding: 15px 30px;
       font-size: 1.2rem;
       font-weight: 600;
-      color: var(--button-text-color); /* Use theme-aware text color */
-      background-color: var(--accent-color);
+      color: #ffffff; /* White text for better contrast */
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-hover-color)); /* Theme-aware gradient */
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
+      text-align: center;
+      text-decoration: none; /* Remove underline */
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     .presave-button:hover {
-      background-color: var(--accent-hover-color);
-      transform: scale(1.05);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(90deg, var(--accent-hover-color), var(--accent-color)); /* Reverse gradient on hover */
     }
 
+    /* Modal Overlay */
     .modal {
       display: none;
       position: fixed;
@@ -193,32 +214,40 @@
       top: 0;
       width: 100%;
       height: 100%;
-      overflow: auto;
-      background: rgba(0, 0, 0, 0.6); /* Darker overlay for emphasis */
-      backdrop-filter: blur(15px); /* Enhanced glassy effect for the modal */
+      background: rgba(255, 255, 255, 0.2); /* Light transparent overlay */
+      backdrop-filter: blur(10px); /* Apply blur effect */
+      -webkit-backdrop-filter: blur(10px); /* Safari support */
+      animation: fadeIn 0.3s ease-in-out;
     }
 
+    .modal:target {
+      display: block; /* Show the modal when targeted */
+    }
+
+    /* Modal Content */
     .modal-content {
-      background-color: var(--card-background-color);
+      background: var(--card-background-color); /* Theme-aware background */
       margin: 10% auto;
       padding: 30px;
-      border-radius: 12px;
+      border-radius: 16px; /* Softer corners */
       max-width: 500px;
       text-align: center;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 0.3s ease-in-out;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      animation: slideIn 0.4s ease-in-out;
+      border: 1px solid var(--border-color); /* Theme-aware border */
+      opacity: 0.95; /* Slight transparency for a modern look */
     }
 
     .modal-content h2 {
       font-size: 2rem;
       font-weight: 700;
       margin-bottom: 15px;
-      color: var(--text-color);
+      color: var(--text-color); /* Theme-aware text color */
     }
 
     .modal-content p {
       font-size: 1rem;
-      color: var(--secondary-text-color);
+      color: var(--secondary-text-color); /* Theme-aware secondary text color */
       margin-bottom: 20px;
     }
 
@@ -227,44 +256,58 @@
       padding: 15px 30px;
       font-size: 1.2rem;
       font-weight: 600;
-      color: var(--button-text-color); /* Use theme-aware text color */
-      background-color: var(--accent-color);
-      text-decoration: none;
+      color: #ffffff; /* White text for contrast */
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-hover-color)); /* Theme-aware gradient */
+      text-decoration: none; /* Remove underline */
       border-radius: 8px;
-      transition: background-color 0.3s, transform 0.2s;
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .presave-link:hover {
-      background-color: var(--accent-hover-color);
-      transform: scale(1.05);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      background: linear-gradient(90deg, var(--accent-hover-color), var(--accent-color)); /* Reverse gradient on hover */
     }
 
+    /* Close Button */
     .close-button {
       position: absolute;
       top: 10px;
       right: 20px;
       font-size: 1.5rem;
       font-weight: bold;
-      color: var(--text-color); /* Ensure it matches the theme */
+      color: var(--secondary-text-color); /* Theme-aware text color */
+      text-decoration: none; /* Remove underline */
       cursor: pointer;
       transition: color 0.3s;
     }
 
     .close-button:hover {
-      color: var(--accent-color);
+      color: var(--accent-color); /* Theme-aware hover color */
     }
 
+    /* Animations */
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: scale(0.9);
       }
       to {
         opacity: 1;
-        transform: scale(1);
       }
     }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
     .alternate-cover {
       margin-top: 30px;
       text-align: center;
@@ -310,7 +353,7 @@
       <h1>Upcoming EP: 'Some Of Ink' 🎧</h1>
       <div class="release-info">
         <p><strong>Release Date:</strong> April 10, 2025</p>
-        <div class="countdown" id="countdown-timer">Loading countdown...</div>
+        <div class="countdown" id="countdown-timer">The EP is out now!</div>
       </div>
     </div>
   </header>
@@ -319,7 +362,7 @@
       <p>🎉 <strong>Mark your calendars!</strong> My new EP, <em>Some Of Ink</em>, is dropping on <strong>April 10th</strong>. This project is a reflective journey—a chance to take a step back and see where I was in 2021 with <em>Son Of Ink</em>, and where I am now as an artist.</p>
     </section>
     <section>
-      <h2>🎵 Experience the Tracklist</h2>
+      <h2>🎵 The Tracklist</h2>
       <ul class="tracklist">
         <li>
           <strong>01. Back Again, Again</strong>
@@ -340,20 +383,20 @@
       <div class="cover-row">
         <!-- Main Cover -->
         <div class="cover-container">
-          <img src="/assets/music-assets/Some Of Ink EP Cover.png" alt="Some Of Ink EP Cover">
+          <img src="/assets/music-assets/Some Of Ink EP Cover.png" alt="Some Of Ink EP Cover" loading="lazy">
           <p class="cover-caption">The official cover art for <b><em>Some Of Ink</em></b>, designed to reflect the creative chaos and evolution of the artist.<br>— Marina</p>
         </div>
         <!-- Alternate Cover -->
         <div class="cover-container">
-          <img src="/assets/music-assets/Some Of Ink Alt Cover.png" alt="Some Of Ink Alternate Cover">
+          <img src="/assets/music-assets/Some Of Ink Alt Cover.png" alt="Some Of Ink Alternate Cover" loading="lazy">
           <p class="cover-caption">An alternate cover concept for <b><em>Some Of Ink</em></b>, showcasing a more abstract and experimental design.</p>
         </div>
       </div>
     </section>
     <section>
       <h2>🎨 The Story Behind the EP Cover</h2>
-      <p>The EP cover has a special story behind it. <span class="toggle-button" onclick="toggleContent()">Read more...</span></p>
-      <div class="toggle-content" id="cover-story">
+      <p>The EP cover has a special story behind it...</p>
+      <div>
         <p>One day, I was rambling to Marina about the idea of redoing my first album—but only some of it. As I shared my scattered thoughts, Marina sketched out a funny picture that perfectly captured my thought process.</p>
         <p>That sketch became the foundation for the <em>Some Of Ink</em> cover art. It's a visual representation of the creative chaos that led to this project, and I couldn't be happier with how it turned out.</p>
       </div>
@@ -361,13 +404,13 @@
     <section>
       <h2>🚀 Get Ready!</h2>
       <p>✨ <em>Some Of Ink</em> is more than just music—it's an experience. It's a moment to reflect on how far I've come and to celebrate the journey. I'm thrilled to share this project with you and can't wait to hear your thoughts. Let's make this release unforgettable!</p>
-      <button class="presave-button" onclick="openPresaveModal()">🎧 Pre-Save Now</button>
+      <a href="#presave-modal" class="presave-button">🎧 Pre-Save Now</a>
     </section>
 
     <!-- Pre-Save Modal -->
     <div id="presave-modal" class="modal">
       <div class="modal-content">
-        <span class="close-button" onclick="closePresaveModal()">&times;</span>
+        <a href="#" class="close-button" aria-label="Close modal">&times;</a>
         <h2>🎧 Pre-Save 'Some Of Ink'</h2>
         <p>Be the first to listen to <em>Some Of Ink</em> when it drops! Click the button below to pre-save the EP.</p>
         <a href="https://share.amuse.io/track/klense-some-of-ink" target="_blank" rel="noopener noreferrer" class="presave-link">Pre-Save on Amuse</a>
@@ -375,57 +418,60 @@
     </div>
   </article>
   <script>
-    // Countdown Timer
-    function updateCountdown() {
-      const releaseDate = new Date("2025-04-10T00:00:00");
-      const now = new Date();
-      const diff = releaseDate - now;
-      if (diff <= 0) {
-        document.getElementById("countdown-timer").innerText = "The EP is out now!";
-        return;
-      }
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      document.getElementById("countdown-timer").innerText = `${days} days, ${hours} hours, ${minutes} minutes remaining`;
-    }
-    setInterval(updateCountdown, 60000);
-    updateCountdown();
-
-    // Play Preview
-    function playPreview(track) {
-      alert(`Playing preview for: ${track}`);
-    }
+    document.addEventListener("DOMContentLoaded", () => {
+      const countdownElement = document.getElementById("countdown-timer");
+      countdownElement.innerText = "The EP is out now!";
+    });
 
     // Toggle Content
     function toggleContent() {
       const content = document.getElementById("cover-story");
       if (content.style.display === "none" || !content.style.display) {
         content.style.display = "block";
+        content.style.opacity = 0;
+        setTimeout(() => (content.style.opacity = 1), 10); // Fade-in effect
       } else {
-        content.style.display = "none";
+        content.style.opacity = 0;
+        setTimeout(() => (content.style.display = "none"), 300); // Fade-out effect
       }
     }
 
-    // Open the modal and scroll to relevant content
-    function openPresaveModal() {
+    // Initialize Pre-Save Modal
+    document.addEventListener("DOMContentLoaded", () => {
       const modal = document.getElementById("presave-modal");
-      modal.style.display = "block";
-      modal.scrollIntoView({ behavior: "smooth" });
-    }
+      const openButton = document.querySelector(".presave-button");
+      const closeButton = document.querySelector(".close-button");
 
-    // Close the modal
-    function closePresaveModal() {
-      document.getElementById("presave-modal").style.display = "none";
-    }
+      // Open the modal
+      openButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        modal.style.display = "block";
+        modal.setAttribute("aria-hidden", "false");
+      });
 
-    // Close the modal when clicking outside of it
-    window.onclick = function (event) {
-      const modal = document.getElementById("presave-modal");
-      if (event.target === modal) {
+      // Close the modal
+      closeButton.addEventListener("click", (event) => {
+        event.preventDefault();
         modal.style.display = "none";
-      }
-    };
+        modal.setAttribute("aria-hidden", "true");
+      });
+
+      // Close the modal when clicking outside of the modal content
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+          modal.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      // Close the modal with the Escape key
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal.style.display === "block") {
+          modal.style.display = "none";
+          modal.setAttribute("aria-hidden", "true");
+        }
+      });
+    });
   </script>
 </body>
 </html>
