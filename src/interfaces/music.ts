@@ -1,17 +1,20 @@
-
 export type Annotation = {
   id: string;
   text: string;
-  explanation: string;
+  explanation?: string;
 };
 
-export type Song = {
+export interface Song {
   id: string;
   title: string;
-  lyrics: Annotation[];
-  audioUrl?: string;
-  year: string;
-};
+  duration: string;
+  audioUrl: string;
+  lyrics: Array<{
+    id: string;
+    text: string;
+    explanation?: string;
+  }>;
+}
 
 export type Album = {
   id: string;
