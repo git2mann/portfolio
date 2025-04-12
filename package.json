@@ -10,7 +10,6 @@
     "date-fns": "^3.6.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.482.0",
-<<<<<<< HEAD
     "next": "^15.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -18,11 +17,6 @@
     "react-markdown": "^10.1.0",
     "rehype-sanitize": "^6.0.0",
     "rehype-stringify": "^10.0.1",
-=======
-    "next": "15.0.2",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
->>>>>>> 1ac4627 (feat: Update music albums and songs, add instructional popup, and enhance styles)
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "remark-rehype": "^11.1.2",
