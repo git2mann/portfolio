@@ -142,7 +142,7 @@ const eps = [
               "And dare anyone to trump mine",
               "Seein’ while they joke, bidin’ time",
             ],
-            explanation: "Issuing a challenge while observing others play it safe.",
+            explanation: "Issuing a challenge while observing others play it safe. Also a reference to the 'Trump' card (and cards in general, given how the last few lines are phrased with bluffing/jokers imagery), and the Trump and Biden (Joke/Joe, Bidin'/Biden) presidencies. Triple entendres are pretty nice, eh?",
           },
           {
             lines: [
