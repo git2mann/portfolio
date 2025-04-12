@@ -29,7 +29,7 @@ const albums = [
   }
 ];
 
-export const eps = [
+ const eps = [
   {
     id: "1",
     title: "Some Of Ink EP",
@@ -43,7 +43,7 @@ export const eps = [
   },
 ];
 
-export const singles = [
+ const singles = [
   {
     id: "1",
     title: "Allegory (Freestyle)",
