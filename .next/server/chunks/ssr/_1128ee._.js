@@ -36,126 +36,96 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
+'use client';
 ;
 ;
 function InstructionPopup() {
-    const [isVisible, setIsVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [isVisible, setIsVisible] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [scrollPosition, setScrollPosition] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        // Check if the popup has already been shown in this session
+        const hasSeenPopup = sessionStorage.getItem('hasSeenInstructionPopup');
+        if (!hasSeenPopup) {
+            setIsVisible(true);
+            sessionStorage.setItem('hasSeenInstructionPopup', 'true'); // Mark as shown
+        }
+        // Update the scroll position dynamically
+        const handleScroll = ()=>{
+            setScrollPosition(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return ()=>window.removeEventListener('scroll', handleScroll);
+    }, []);
     if (!isVisible) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50",
+        className: "fixed inset-0 flex items-start justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50 animate-fade-in",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg max-w-md text-center",
+            className: "bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg max-w-md text-center relative animate-slide-down mt-10 mx-auto",
             children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                    onClick: ()=>setIsVisible(false),
+                    className: "absolute top-3 right-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition",
+                    "aria-label": "Close",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        fill: "none",
+                        viewBox: "0 0 24 24",
+                        strokeWidth: 2,
+                        stroke: "currentColor",
+                        className: "w-6 h-6",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                            strokeLinecap: "round",
+                            strokeLinejoin: "round",
+                            d: "M6 18L18 6M6 6l12 12"
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/_components/InstructionPopup.tsx",
+                            lineNumber: 47,
+                            columnNumber: 7
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/_components/InstructionPopup.tsx",
+                        lineNumber: 39,
+                        columnNumber: 7
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/app/_components/InstructionPopup.tsx",
+                    lineNumber: 34,
+                    columnNumber: 7
+                }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                    className: "text-2xl font-bold mb-4 text-neutral-800 dark:text-neutral-100",
+                    className: "text-2xl font-bold mb-4 text-neutral-800 dark:text-neutral-100 gradient-text",
                     children: "How to Use the Lyrics Checker"
                 }, void 0, false, {
                     fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                    lineNumber: 11,
-                    columnNumber: 9
+                    lineNumber: 52,
+                    columnNumber: 7
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                    className: "text-neutral-600 dark:text-neutral-400 mb-4",
-                    children: "The lyrics checker allows you to explore the meaning behind each lyric. Simply click on a lyric to view its explanation."
+                    className: "text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed",
+                    children: "Click on a lyric to view its explanation. To select another lyric, deactivate the current one by clicking on it again."
                 }, void 0, false, {
                     fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                    lineNumber: 12,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex justify-center items-center gap-4 mb-4",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            fill: "none",
-                            viewBox: "0 0 24 24",
-                            strokeWidth: 2,
-                            stroke: "currentColor",
-                            className: "w-8 h-8 text-blue-500",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                strokeLinecap: "round",
-                                strokeLinejoin: "round",
-                                d: "M12 4v16m8-8H4"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                                lineNumber: 24,
-                                columnNumber: 13
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                            lineNumber: 16,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-neutral-600 dark:text-neutral-400",
-                            children: "Click on a lyric to reveal its explanation."
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                            lineNumber: 26,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                    lineNumber: 15,
-                    columnNumber: 9
-                }, this),
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "flex justify-center items-center gap-4",
-                    children: [
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            fill: "none",
-                            viewBox: "0 0 24 24",
-                            strokeWidth: 2,
-                            stroke: "currentColor",
-                            className: "w-8 h-8 text-green-500",
-                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                strokeLinecap: "round",
-                                strokeLinejoin: "round",
-                                d: "M5 13l4 4L19 7"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                                lineNumber: 37,
-                                columnNumber: 13
-                            }, this)
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                            lineNumber: 29,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-neutral-600 dark:text-neutral-400",
-                            children: "Enjoy exploring the deeper meaning of the lyrics!"
-                        }, void 0, false, {
-                            fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                            lineNumber: 39,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                    lineNumber: 28,
-                    columnNumber: 9
+                    lineNumber: 55,
+                    columnNumber: 7
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     onClick: ()=>setIsVisible(false),
-                    className: "mt-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition",
+                    className: "mt-6 px-6 py-3 bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-white rounded-lg shadow-md hover:opacity-90 transition",
                     children: "Got it!"
                 }, void 0, false, {
                     fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-                    lineNumber: 41,
-                    columnNumber: 9
+                    lineNumber: 58,
+                    columnNumber: 7
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-            lineNumber: 10,
+            lineNumber: 32,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/_components/InstructionPopup.tsx",
-        lineNumber: 9,
+        lineNumber: 29,
         columnNumber: 5
     }, this);
 }
@@ -218,183 +188,97 @@ const albums = [
                 lyrics: [
                     {
                         id: "1",
-                        text: "See myself in first place consequently, never shocked",
-                        explanation: "The artist expresses confidence in always being at the top, unshaken by challenges."
+                        lines: [
+                            "See myself in first place consequently, never shocked",
+                            "Make the whole world listen to me anytime I drop"
+                        ],
+                        explanation: "The artist expresses confidence in always being at the top."
                     },
                     {
                         id: "2",
-                        text: "Make the whole world listen to me anytime I drop, what you got?",
-                        explanation: "A rhetorical challenge to competitors, emphasizing the artist's global influence."
+                        lines: [
+                            "I swore the day I started this that I would always be a",
+                            "Thorn in the esophagus of anybody doubtin′ me and tryna diss",
+                            "And lyrically, tryna counter this back when I made Lazlo",
+                            "And I blessed you with my countenance"
+                        ],
+                        explanation: "This section emphasizes unwavering intent: to be a constant problem for doubters. The 'thorn in the esophagus' is an unusual twist on 'thorn in the side', suggesting something literally hard to swallow — a painful truth. 'Lazlo' is a reference to Klense's previous album of the same name.'Blessed you with my countenance' continues fleshing out this reference as the album cover for Lazlo features a digitally painted portrait of Klense's face... his countenance."
                     },
                     {
                         id: "3",
-                        text: "A couple feature verses that nobody even heard in",
-                        explanation: "A jab at other artists whose collaborations fail to gain attention."
+                        lines: [
+                            "I'm in your walls again; neighbours heard 'em bumpin′ this",
+                            "The fans keep on fallin′ in love, anytime I spit",
+                            "And oh, I guess when it comes to skill, yours are obelisks",
+                            "Taller than a hill but abruptly end at points in this"
+                        ],
+                        explanation: "The 'in your walls' metaphor suggests his music is everywhere — even hidden, hauntingly present. The 'obelisks' metaphor is brilliant wordplay: while tall and imposing, they end sharply, implying that rival skills look impressive but lack depth or longevity. The rhyming structure enhances the dismissiveness of the critique."
                     },
                     {
                         id: "4",
-                        text: "A wack attempt at bein′ me, homie, just keep on learnin'",
-                        explanation: "Criticism of imitators who fail to match the artist's originality."
+                        lines: [
+                            "Poisonous. I got bars that kill: missile ordnance",
+                            "Pointed at any target, I just set the coordinates",
+                            "I call 'em in as many times as needed ′til I'm bored of it",
+                            "Exhaust the list of MCs feelin′ conceited; morphine drips they—"
+                        ],
+                        explanation: "This group leans into war metaphors: his lyrics are as dangerous as missile strikes, precision-targeted and relentless. The idea of getting bored of dismantling rappers underscores his dominance. The final line hints at rivals needing sedation — 'morphine drips' — after facing his lyrical assaults."
                     },
                     {
                         id: "5",
-                        text: "I swore the day I started this that I would always be a",
-                        explanation: "A declaration of commitment to being a disruptive force in the industry."
+                        lines: [
+                            "Roast, tell ′em, tell 'em, roast!\nTell ′em, tell 'em, roast! Tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell 'em, roast! Tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell 'em, roast! Tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell 'em, tell ′em—tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell ′em, roast! Tell 'em—\nRoast, tell ′em, tell 'em, roast!\nTell 'em, tell ′em, roast! Tell 'em—\nRoast! Tell 'em, tell ′em, roast!\nTell 'em, tell ′em, roast! Tell 'em—\nRoast! Tell ′em, tell 'em roast!\nTell 'em, tell ′em, tell ′em—tell 'em roast!"
+                        ],
+                        explanation: "The repeated chant functions as both a battle cry and a ritualistic affirmation of lyrical destruction. The word 'Roast' ties into the theme of dismantling opponents with words. Its aggressive repetition builds energy and hypnotic intensity, almost like a crowd chant at a battle or protest."
                     },
                     {
                         id: "6",
-                        text: "Thorn in the esophagus of anybody doubtin′ me and tryna diss",
-                        explanation: "A vivid metaphor for being a persistent and painful challenge to critics."
+                        lines: [
+                            "I've been thinkin', I know that′s somethin′ you don't do",
+                            "Got my pen and my notebook, and my demos on Pro Tools",
+                            "Haters woeful ′cause I could kick it old school",
+                            "I'm beef, you′re tofu keep 'em wonderin′ who's better sit there like"
+                        ],
+                        explanation: "He contrasts his introspective, creative process with shallow thinking. 'Pen and notebook' shows authenticity; 'Pro Tools' nods to industry standards. 'Kick it old school' emphasizes range, while the 'beef/tofu' bar is a slick diss: he has substance and flavor, others are bland substitutes. It’s clever, dietary and philosophical."
                     },
                     {
                         id: "7",
-                        text: "And lyrically, tryna counter this back when I made Lazlo",
-                        explanation: "A reference to the artist's earlier work, showcasing their lyrical dominance."
+                        lines: [
+                            "Who used the loose pad to craft tracks that noobs can't produce?",
+                            "Recluse if they had the full plan, tryna make a copy of me",
+                            "In order to Stan, Bruce Lee copied on a beat: I call ′em Liu Kangs",
+                            "And I′m about 'ta mop the competition again"
+                        ],
+                        explanation: "'Loose pad' implies raw talent — writing without structure yet outclassing others. The recluse line implies that even with his blueprint, imitators can't capture his essence. The Bruce Lee/Liu Kang bar is rich: Liu Kang was modeled after Bruce, so he uses this to diss clones as second-rate versions. 'Mop the competition' is classic flex energy."
                     },
                     {
                         id: "8",
-                        text: "And I blessed you with my countenance",
-                        explanation: "A boast about the artist's presence and influence being a gift to the audience."
+                        lines: [
+                            "Yeah, you may be the one but Imma still be a 10",
+                            "And Imma keep it a hunnid guaranteed again and again",
+                            "Again and again; as we begin, this might be intense",
+                            "I′m never gonna give another MC thought"
+                        ],
+                        explanation: "This section is about self-worth and consistency. The 'one/ten' line plays with rankings, asserting superiority. 'Keep it a hunnid' blends authenticity and numeric wordplay. 'Again and again' preps listeners for intensity, and the last line is a brutal dismissal of rivals’ relevance."
                     },
                     {
                         id: "9",
-                        text: "I'm in your walls again; neighbours heard 'em bumpin′ this",
-                        explanation: "A metaphor for the artist's pervasive impact, with their music being played everywhere."
+                        lines: [
+                            "Put 'em under cover like an empty box",
+                            "When they tell me, 'Boss you ain′t gettin' hot!'",
+                            "I rebut that tell ′em when we drop",
+                            "Compare lyricism and then be shocked"
+                        ],
+                        explanation: "Putting 'em under cover like an empty box' implies burial without substance — a mock funeral. The next bars reference critics and doubters, with the rebuttal being the release itself. ‘Compare lyricism’ sets up an inevitable loss for any challenger — the shock is both dramatic and humiliating."
                     },
                     {
                         id: "10",
-                        text: "The fans keep on fallin′ in love, anytime I spit",
-                        explanation: "A nod to the artist's loyal fanbase and their consistent admiration."
-                    },
-                    {
-                        id: "11",
-                        text: "And oh, I guess when it comes to skill, yours are obelisks",
-                        explanation: "A clever comparison of others' skills to obelisks: tall but ending abruptly."
-                    },
-                    {
-                        id: "12",
-                        text: "Taller than a hill but abruptly end at points in this",
-                        explanation: "A continuation of the obelisk metaphor, highlighting the limitations of others' abilities."
-                    },
-                    {
-                        id: "13",
-                        text: "Poisonous. I got bars that kill: missile ordnance",
-                        explanation: "A metaphor comparing the artist's impactful lyrics to deadly weapons."
-                    },
-                    {
-                        id: "14",
-                        text: "Pointed at any target, I just set the coordinates",
-                        explanation: "A statement of precision and intent in delivering lyrical attacks."
-                    },
-                    {
-                        id: "15",
-                        text: "I call 'em in as many times as needed ′til I'm bored of it",
-                        explanation: "A display of dominance, suggesting the artist can outlast any competition."
-                    },
-                    {
-                        id: "16",
-                        text: "Exhaust the list of MCs feelin′ conceited; morphine drips they-",
-                        explanation: "A cutting remark about humbling arrogant rappers, leaving them metaphorically sedated."
-                    },
-                    {
-                        "id": "17",
-                        "text": "Roast, tell ′em, tell 'em, roast!\nTell ′em, tell 'em, roast! Tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell 'em, roast! Tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell 'em, roast! Tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell 'em, tell ′em—tell ′em—\nRoast, tell 'em, tell ′em, roast!\nTell 'em, tell ′em, roast! Tell 'em—\nRoast, tell ′em, tell 'em, roast!\nTell 'em, tell ′em, roast! Tell 'em—\nRoast! Tell 'em, tell ′em, roast!\nTell 'em, tell ′em, roast! Tell 'em—\nRoast! Tell ′em, tell 'em roast!\nTell 'em, tell ′em, tell ′em—tell 'em roast!",
-                        "explanation": "The hook emphasizes the theme of 'roasting' or lyrically dismantling opponents, serving as a rallying cry for the artist's confidence and dominance."
-                    },
-                    {
-                        id: "18",
-                        text: "I've been thinkin', I know that′s somethin′ you don't do",
-                        explanation: "A jab at competitors, implying they lack the introspection or creativity the artist possesses."
-                    },
-                    {
-                        id: "19",
-                        text: "Got my pen and my notebook, and my demos on Pro Tools",
-                        explanation: "A reference to the artist's dedication to their craft and use of professional tools to create music."
-                    },
-                    {
-                        id: "20",
-                        text: "Haters woeful ′cause I could kick it old school",
-                        explanation: "The artist highlights their versatility, being able to excel in both modern and traditional styles of rap."
-                    },
-                    {
-                        id: "21",
-                        text: "I'm beef, you′re tofu keep 'em wonderin′ who's better sit there like",
-                        explanation: "A clever wordplay contrasting the artist's substance ('beef') with their competitors' lack of it ('tofu')."
-                    },
-                    {
-                        id: "22",
-                        text: "Who used the loose pad to craft tracks that noobs can't produce?",
-                        explanation: "A rhetorical question emphasizing the artist's superior skill in creating music."
-                    },
-                    {
-                        id: "23",
-                        text: "Recluse if they had the full plan, tryna make a copy of me",
-                        explanation: "A critique of imitators who fail to replicate the artist's originality, even with a blueprint."
-                    },
-                    {
-                        id: "24",
-                        text: "In order to Stan, Bruce Lee copied on a beat: I call ′em Liu Kangs",
-                        explanation: "A reference to Bruce Lee and Liu Kang, comparing imitators to martial artists trying to emulate greatness."
-                    },
-                    {
-                        id: "25",
-                        text: "And I′m about 'ta mop the competition again",
-                        explanation: "A declaration of the artist's intent to dominate their rivals once more."
-                    },
-                    {
-                        id: "26",
-                        text: "Yeah, you may be the one but Imma still be a 10",
-                        explanation: "A clever play on numbers, asserting the artist's superiority over their competitors."
-                    },
-                    {
-                        id: "27",
-                        text: "And Imma keep it a hunnid guaranteed again and again",
-                        explanation: "A promise to maintain authenticity and excellence repeatedly."
-                    },
-                    {
-                        id: "28",
-                        text: "Again and again; as we begin, this might be intense",
-                        explanation: "A warning that the artist's performance will be powerful and impactful."
-                    },
-                    {
-                        id: "29",
-                        text: "I′m never gonna give another MC thought",
-                        explanation: "A dismissal of competitors, indicating they are not worth the artist's attention."
-                    },
-                    {
-                        id: "30",
-                        text: "Put 'em under cover like an empty box",
-                        explanation: "A metaphor for rendering rivals irrelevant or insignificant."
-                    },
-                    {
-                        id: "31",
-                        text: "When they tell me, 'Boss you ain′t gettin' hot!'",
-                        explanation: "A reference to critics doubting the artist's success or relevance."
-                    },
-                    {
-                        id: "32",
-                        text: "I rebut that tell ′em when we drop",
-                        explanation: "A confident response, asserting that the artist's work will prove the critics wrong."
-                    },
-                    {
-                        id: "33",
-                        text: "Compare lyricism and then be shocked",
-                        explanation: "A challenge to compare lyrical abilities, with the expectation that the artist will come out on top."
-                    },
-                    {
-                        id: "34",
-                        text: "Day you beat me's the day I stop",
-                        explanation: "A bold claim that the artist will only quit if they are ever defeated, implying it will never happen."
-                    },
-                    {
-                        id: "35",
-                        text: "The day I don't speak; hear the crowds still cheer",
-                        explanation: "A statement of the artist's enduring popularity, even in silence."
-                    },
-                    {
-                        id: "36",
-                        text: "As I draw near, see ′em when they flock!",
-                        explanation: "A vivid image of fans gathering around the artist, showcasing their magnetic presence."
+                        lines: [
+                            "Day you beat me's the day I stop",
+                            "The day I don't speak; hear the crowds still cheer",
+                            "As I draw near, see ′em when they flock!"
+                        ],
+                        explanation: "A poetic close that imagines the impossible — being beaten — as a trigger to silence. Yet, even in silence, his legacy and presence command love. The final line uses bird imagery (‘flock’) to illustrate fans drawn to him like a magnetic force."
                     }
                 ]
             },
@@ -584,14 +468,33 @@ function AlbumPage() {
     const params = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useParams"])();
     const [selectedSong, setSelectedSong] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [selectedLyric, setSelectedLyric] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [scrollProgress, setScrollProgress] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const album = albums.find((a)=>a.id === params.albumId);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const handleScroll = ()=>{
+            const scrollTop = window.scrollY;
+            const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = scrollTop / windowHeight * 100;
+            setScrollProgress(progress);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return ()=>window.removeEventListener("scroll", handleScroll);
+    }, []);
     if (!album) {
-        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            children: "Album not found"
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
+            className: "min-h-screen flex items-center justify-center",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                className: "text-lg text-gray-700 dark:text-gray-300",
+                children: "Album not found. Please check the URL or go back to the discography."
+            }, void 0, false, {
+                fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                lineNumber: 193,
+                columnNumber: 9
+            }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/music/[albumId]/page.tsx",
-            lineNumber: 257,
-            columnNumber: 12
+            lineNumber: 192,
+            columnNumber: 7
         }, this);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -599,266 +502,277 @@ function AlbumPage() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$_components$2f$InstructionPopup$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                lineNumber: 263,
+                lineNumber: 202,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$_components$2f$container$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "max-w-6xl mx-auto py-12",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: ()=>window.history.back(),
-                                className: "inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors mb-8",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                        xmlns: "http://www.w3.org/2000/svg",
-                                        fill: "none",
-                                        viewBox: "0 0 24 24",
-                                        strokeWidth: 2,
-                                        stroke: "currentColor",
-                                        className: "w-5 h-5 mr-2",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
-                                            strokeLinecap: "round",
-                                            strokeLinejoin: "round",
-                                            d: "M15 19l-7-7 7-7"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                            lineNumber: 282,
-                                            columnNumber: 17
-                                        }, this)
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$_components$2f$container$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "max-w-6xl mx-auto py-12",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: ()=>window.history.back(),
+                            className: "inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors mb-8",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
+                                    xmlns: "http://www.w3.org/2000/svg",
+                                    fill: "none",
+                                    viewBox: "0 0 24 24",
+                                    strokeWidth: 2,
+                                    stroke: "currentColor",
+                                    className: "w-5 h-5 mr-2",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
+                                        strokeLinecap: "round",
+                                        strokeLinejoin: "round",
+                                        d: "M15 19l-7-7 7-7"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                        lineNumber: 274,
+                                        lineNumber: 219,
                                         columnNumber: 15
-                                    }, this),
-                                    "Back to Albums"
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                lineNumber: 270,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "flex flex-col md:flex-row gap-8 items-start",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "relative w-full md:w-96 aspect-square",
-                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                            src: album.coverImage,
-                                            alt: album.title,
-                                            fill: true,
-                                            className: "object-cover rounded-lg shadow-xl",
-                                            sizes: "(max-width: 768px) 100vw, 384px"
-                                        }, void 0, false, {
-                                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                            lineNumber: 288,
-                                            columnNumber: 17
-                                        }, this)
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                    lineNumber: 211,
+                                    columnNumber: 13
+                                }, this),
+                                "Back to Discography"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                            lineNumber: 207,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex flex-col md:flex-row gap-8 items-start",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "relative w-full md:w-1/3 aspect-square rounded-lg overflow-hidden",
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                        src: album.coverImage,
+                                        alt: `Cover of ${album.title}`,
+                                        fill: true,
+                                        className: "object-cover"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                        lineNumber: 287,
+                                        lineNumber: 227,
                                         columnNumber: 15
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex-1",
-                                        onClick: (e)=>e.stopPropagation(),
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                                className: "text-4xl md:text-5xl font-bold mb-4",
-                                                children: album.title
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                lineNumber: 298,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-xl text-neutral-600 dark:text-neutral-400 mb-6",
-                                                children: album.releaseYear
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                lineNumber: 299,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-lg mb-8",
-                                                children: album.description
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                lineNumber: 300,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                className: "space-y-4",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                                        className: "text-2xl font-semibold mb-4",
-                                                        children: "Tracks"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                        lineNumber: 303,
-                                                        columnNumber: 19
-                                                    }, this),
-                                                    album.songs.map((song)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: `border-b border-neutral-200 dark:border-neutral-700 last:border-0 ${selectedSong === song.id ? "bg-neutral-100 dark:bg-slate-700" : ""}`,
-                                                            children: [
-                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                                    onClick: ()=>setSelectedSong(selectedSong === song.id ? null : song.id),
-                                                                    className: "w-full py-4 px-6 text-left hover:bg-neutral-100 dark:hover:bg-slate-700 rounded-lg transition-colors",
-                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "flex items-center justify-between",
-                                                                        children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "text-lg",
-                                                                                children: song.title
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                lineNumber: 316,
-                                                                                columnNumber: 27
-                                                                            }, this),
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                                className: "text-sm text-neutral-500",
-                                                                                children: song.duration
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                lineNumber: 317,
-                                                                                columnNumber: 27
-                                                                            }, this)
-                                                                        ]
-                                                                    }, void 0, true, {
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                    lineNumber: 226,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex-1 w-full",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "sticky top-20 z-10 animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 mb-8 w-full",
+                                            style: {
+                                                backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`
+                                            },
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "h-1 rounded",
+                                                    style: {
+                                                        backgroundColor: `var(--progress-bar-color)`,
+                                                        width: `${scrollProgress}%`
+                                                    }
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                    lineNumber: 243,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                                    className: "text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100",
+                                                    children: album.title
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                    lineNumber: 251,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-4",
+                                                    children: "By Klense"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                    lineNumber: 254,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-sm text-gray-600 dark:text-gray-400",
+                                                    children: album.releaseYear
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                    lineNumber: 257,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                    className: "text-sm text-gray-700 dark:text-gray-300",
+                                                    children: album.description
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                    lineNumber: 258,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                            lineNumber: 237,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                            className: "text-xl sm:text-2xl font-semibold mb-4",
+                                            children: "Tracklist"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                            lineNumber: 262,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "space-y-4 w-full",
+                                            children: album.songs.map((song)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "border-b border-gray-200 dark:border-gray-700 pb-4",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                                            onClick: ()=>{
+                                                                setSelectedSong(selectedSong === song.id ? null : song.id);
+                                                                setSelectedLyric(null); // Reset lyric state on track change
+                                                            },
+                                                            className: "w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition",
+                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "flex justify-between items-center",
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200",
+                                                                        children: song.title
+                                                                    }, void 0, false, {
                                                                         fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                        lineNumber: 315,
+                                                                        lineNumber: 275,
+                                                                        columnNumber: 25
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                                        className: "text-sm sm:text-base text-gray-500 dark:text-gray-400 italic",
+                                                                        children: song.duration
+                                                                    }, void 0, false, {
+                                                                        fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                                        lineNumber: 278,
                                                                         columnNumber: 25
                                                                     }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                                lineNumber: 274,
+                                                                columnNumber: 23
+                                                            }, this)
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                            lineNumber: 267,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        selectedSong === song.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                            className: "mt-4 space-y-4",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                                                    className: "text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 underline decoration-[var(--gradient-middle)] decoration-2 underline-offset-4",
+                                                                    children: "Lyrics"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                    lineNumber: 311,
-                                                                    columnNumber: 23
+                                                                    lineNumber: 287,
+                                                                    columnNumber: 25
                                                                 }, this),
-                                                                selectedSong === song.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                    className: "p-6 bg-neutral-50 dark:bg-slate-800 rounded-lg mb-4 flex flex-col md:flex-row gap-6",
-                                                                    onClick: (e)=>e.stopPropagation(),
-                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                        className: "flex-1",
+                                                                song.lyrics?.length > 0 ? song.lyrics.map((entry, index)=>{
+                                                                    const isActive = selectedLyric === index;
+                                                                    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: `space-y-2 p-4 rounded-lg transition-all cursor-pointer ${isActive ? "bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-[var(--text-primary)] shadow-lg" : "hover:bg-gray-100 dark:hover:bg-gray-700"}`,
+                                                                        onClick: ()=>setSelectedLyric(isActive ? null : index),
                                                                         children: [
-                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                                                className: "text-xl font-semibold mb-4 text-neutral-800 dark:text-neutral-200",
-                                                                                children: "Lyrics"
-                                                                            }, void 0, false, {
-                                                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                lineNumber: 328,
-                                                                                columnNumber: 29
-                                                                            }, this),
-                                                                            song.lyrics.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                className: "space-y-4",
-                                                                                children: song.lyrics.map((line)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                        className: "group relative flex items-start gap-4",
-                                                                                        onClick: (e)=>{
-                                                                                            e.stopPropagation(); // Prevent resetting when clicking on a lyric
-                                                                                            if (selectedLyric === line.explanation) {
-                                                                                                setSelectedLyric(null); // Deselect if the same
-                                                                                            } else {
-                                                                                                setSelectedLyric(line.explanation || null); // Always switch
-                                                                                            }
-                                                                                        },
-                                                                                        children: [
-                                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                                id: `lyric-${line.id}`,
-                                                                                                className: `leading-relaxed ${selectedLyric === line.explanation ? "bg-primary-light dark:bg-primary-dark text-accent-7 px-2 py-1 rounded cursor-pointer shadow-highlight" : line.explanation ? "bg-secondary-light dark:bg-secondary-dark text-accent-7 px-2 py-1 rounded cursor-pointer" : "text-neutral-700 dark:text-neutral-300"}`,
-                                                                                                children: line.text
-                                                                                            }, void 0, false, {
-                                                                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                                lineNumber: 346,
-                                                                                                columnNumber: 37
-                                                                                            }, this),
-                                                                                            selectedLyric === line.explanation && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                                                className: "bg-neutral-50 dark:bg-slate-800 p-4 rounded-lg shadow-lg",
-                                                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                                    className: "text-neutral-800 dark:text-neutral-100",
-                                                                                                    children: line.explanation
-                                                                                                }, void 0, false, {
-                                                                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                                    lineNumber: 360,
-                                                                                                    columnNumber: 41
-                                                                                                }, this)
-                                                                                            }, void 0, false, {
-                                                                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                                lineNumber: 359,
-                                                                                                columnNumber: 39
-                                                                                            }, this)
-                                                                                        ]
-                                                                                    }, line.id, true, {
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                className: "space-y-2",
+                                                                                children: Array.isArray(entry.lines) && entry.lines.map((line, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                        className: `text-sm sm:text-base font-medium leading-relaxed ${isActive ? "text-[var(--text-primary)]" : "text-gray-800 dark:text-gray-200"}`,
+                                                                                        children: line
+                                                                                    }, i, false, {
                                                                                         fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                        lineNumber: 332,
-                                                                                        columnNumber: 35
+                                                                                        lineNumber: 310,
+                                                                                        columnNumber: 39
                                                                                     }, this))
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                lineNumber: 330,
-                                                                                columnNumber: 31
-                                                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                                                className: "text-neutral-500 dark:text-neutral-400 italic",
-                                                                                children: "Lyrics not available for this track."
+                                                                                lineNumber: 307,
+                                                                                columnNumber: 33
+                                                                            }, this),
+                                                                            isActive && entry.explanation && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                className: "mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg",
+                                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                    className: "text-sm sm:text-base text-gray-700 dark:text-gray-300 italic",
+                                                                                    children: entry.explanation
+                                                                                }, void 0, false, {
+                                                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                                                    lineNumber: 326,
+                                                                                    columnNumber: 37
+                                                                                }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                                lineNumber: 367,
-                                                                                columnNumber: 31
+                                                                                lineNumber: 325,
+                                                                                columnNumber: 35
                                                                             }, this)
                                                                         ]
-                                                                    }, void 0, true, {
+                                                                    }, index, true, {
                                                                         fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                        lineNumber: 327,
-                                                                        columnNumber: 27
-                                                                    }, this)
+                                                                        lineNumber: 295,
+                                                                        columnNumber: 31
+                                                                    }, this);
+                                                                }) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                    className: "text-sm text-gray-500 italic",
+                                                                    children: "Lyrics not available."
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                                    lineNumber: 322,
-                                                                    columnNumber: 25
+                                                                    lineNumber: 335,
+                                                                    columnNumber: 27
                                                                 }, this)
                                                             ]
-                                                        }, song.id, true, {
+                                                        }, void 0, true, {
                                                             fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                            lineNumber: 305,
-                                                            columnNumber: 21
-                                                        }, this))
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                                lineNumber: 302,
-                                                columnNumber: 17
-                                            }, this)
-                                        ]
-                                    }, void 0, true, {
-                                        fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                        lineNumber: 297,
-                                        columnNumber: 15
-                                    }, this)
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                                lineNumber: 286,
-                                columnNumber: 13
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                        lineNumber: 269,
-                        columnNumber: 11
-                    }, this)
-                }, void 0, false, {
+                                                            lineNumber: 286,
+                                                            columnNumber: 23
+                                                        }, this)
+                                                    ]
+                                                }, song.id, true, {
+                                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                                    lineNumber: 265,
+                                                    columnNumber: 19
+                                                }, this))
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                            lineNumber: 263,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                                    lineNumber: 236,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/music/[albumId]/page.tsx",
+                            lineNumber: 224,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
                     fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                    lineNumber: 267,
+                    lineNumber: 205,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/music/[albumId]/page.tsx",
-                lineNumber: 266,
+                lineNumber: 204,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/music/[albumId]/page.tsx",
-        lineNumber: 261,
+        lineNumber: 201,
         columnNumber: 5
     }, this);
 }

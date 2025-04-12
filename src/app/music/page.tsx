@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Container from "@/app/_components/container";
-//import Header from "@/app/_components/header"; //Removed import
 
 const albums = [
   {
@@ -19,7 +18,7 @@ const albums = [
     title: "Lazlo",
     coverImage: "/assets/music-assets/Lazlo Album Cover (Final).jpeg",
     releaseYear: "2021",
-    description: "Rap inspired by a childhood classic"
+    description: "Rap inspired by a childhood classic."
   },
   {
     id: "3",
@@ -28,6 +27,44 @@ const albums = [
     releaseYear: "2021",
     description: "A journey through personal growth and awakening."
   }
+];
+
+export const eps = [
+  {
+    id: "1",
+    title: "Some Of Ink EP",
+    coverImage: "/assets/music-assets/Some Of Ink EP Cover.png", // Use the existing image
+    releaseYear: "2025",
+    tracks: [
+      { id: "1", title: "Back Again, Again", duration: "2:02" },
+      { id: "2", title: "Still Ultimate", duration: "2:49" },
+      { id: "3", title: "Just Words", duration: "2:36" },
+    ],
+  },
+];
+
+export const singles = [
+  {
+    id: "1",
+    title: "Allegory (Freestyle)",
+    coverImage: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg",
+    releaseYear: "2025",
+    duration: "1:13",
+  },
+  {
+    id: "2",
+    title: "Eye Kan",
+    coverImage: "/assets/music-assets/Eye Kan Single Cover.jpeg",
+    releaseYear: "2021",
+    duration: "1:35",
+  },
+  {
+    id: "3",
+    title: "First (Interlude)",
+    coverImage: "/assets/music-assets/First(Interlude) Single Cover.jpeg",
+    releaseYear: "2020",
+    duration: "2:33",
+  },
 ];
 
 const featuredPlaylists = [
@@ -68,7 +105,7 @@ export default function MusicPage() {
     <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
       <Container>
         {/* Hero Section */}
-        <section className="relative h-[60vh] mb-16 rounded-xl overflow-hidden">
+        <section className="relative h-[50vh] sm:h-[60vh] mb-16 rounded-xl overflow-hidden">
           <Image
             src="/assets/blog/blog-post-covers/jawz-9Ut0azurqg0-unsplash.jpg"
             alt="Music Hero"
@@ -77,21 +114,21 @@ export default function MusicPage() {
             sizes="100vw"
           />
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="text-center text-white">
-              <h1 className="text-5xl md:text-7xl font-bold mb-4">My Music</h1>
-              <p className="text-xl md:text-2xl">Exploring sound, pushing boundaries</p>
+            <div className="text-center text-white px-4">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">My Music</h1>
+              <p className="text-lg sm:text-xl md:text-2xl">Exploring sound, pushing boundaries</p>
             </div>
           </div>
         </section>
 
         {/* Navigation Tabs */}
         <div className="flex justify-center mb-12">
-          <nav className="flex space-x-4 bg-white dark:bg-slate-800 rounded-lg p-2">
+          <nav className="flex space-x-4 bg-white dark:bg-slate-800 rounded-lg p-2 px-4 overflow-x-auto scrollbar-hide">
             {['discography', 'featured', 'shows', 'videos', 'production'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 rounded-md transition-colors ${
+                className={`px-4 py-2 whitespace-nowrap rounded-md transition-colors ${
                   activeTab === tab
                     ? 'bg-black text-white dark:bg-white dark:text-black'
                     : 'hover:bg-gray-100 dark:hover:bg-slate-700'
@@ -107,35 +144,92 @@ export default function MusicPage() {
         <div className="space-y-16">
           {activeTab === 'discography' && (
             <section>
-              <h2 className="text-3xl md:text-4xl font-bold mb-8">Albums</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {albums.map((album) => (
-                  <Link
-                    href={`/music/${album.id}`}
-                    key={album.id}
-                    className="group relative"
-                    onMouseEnter={() => setHoveredAlbum(album.id)}
-                    onMouseLeave={() => setHoveredAlbum(null)}
-                  >
-                    <div className="relative aspect-square rounded-lg overflow-hidden">
-                      <Image
-                        src={album.coverImage}
-                        alt={album.title}
-                        fill
-                        className={`object-cover transition-transform duration-300 ${
-                          hoveredAlbum === album.id ? 'scale-110' : 'scale-100'
-                        }`}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                      <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <div className="text-white text-center p-4">
-                          <h3 className="text-xl font-bold mb-2">{album.title}</h3>
-                          <p>{album.releaseYear}</p>
-                        </div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center sm:text-left">Discography</h2>
+
+              {/* Albums Section */}
+              <div className="mb-16">
+                <h3 className="text-2xl font-semibold mb-6">Albums</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {albums.map((album) => (
+                    <Link
+                      href={`/music/${album.id}`}
+                      key={album.id}
+                      className="group relative rounded-lg overflow-hidden shadow-lg bg-white dark:bg-slate-800 transition-transform transform hover:scale-105 focus:scale-105 focus:outline-none"
+                    >
+                      <div className="relative aspect-square">
+                        <Image
+                          src={album.coverImage}
+                          alt={`Cover of ${album.title}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                       </div>
-                    </div>
-                  </Link>
-                ))}
+                      <div className="p-4">
+                        <h3 className="text-lg sm:text-xl font-bold mb-2">{album.title}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{album.releaseYear}</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">{album.description}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* EPs Section */}
+              <div className="mb-16">
+                <h3 className="text-2xl font-semibold mb-6">EPs</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {eps.map((ep) => (
+                    <Link
+                      href={`/music/eps/${ep.id}`}
+                      key={ep.id}
+                      className="group relative rounded-lg overflow-hidden shadow-lg bg-white dark:bg-slate-800 transition-transform transform hover:scale-105 focus:scale-105 focus:outline-none"
+                    >
+                      <div className="relative aspect-square">
+                        <Image
+                          src={ep.coverImage}
+                          alt={`Cover of ${ep.title}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg sm:text-xl font-bold mb-2">{ep.title}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{ep.releaseYear}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Singles Section */}
+              <div>
+                <h3 className="text-2xl font-semibold mb-6">Singles</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                  {singles.map((single) => (
+                    <Link
+                      href={`/music/singles/${single.id}`}
+                      key={single.id}
+                      className="group relative rounded-lg overflow-hidden shadow-lg bg-white dark:bg-slate-800 transition-transform transform hover:scale-105 focus:scale-105 focus:outline-none"
+                    >
+                      <div className="relative aspect-square">
+                        <Image
+                          src={single.coverImage}
+                          alt={`Cover of ${single.title}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg sm:text-xl font-bold mb-2">{single.title}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{single.releaseYear}</p>
+                        <p className="text-sm text-gray-700 dark:text-gray-300">{single.duration}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </section>
           )}
@@ -143,10 +237,10 @@ export default function MusicPage() {
           {activeTab === 'playlists' && (
             <section>
               <h2 className="text-3xl md:text-4xl font-bold mb-8">Featured Playlists</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 {featuredPlaylists.map((playlist, index) => (
                   <div key={index} className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-lg">
-                    <div className="relative h-48">
+                    <div className="relative h-40 sm:h-48">
                       <Image
                         src={playlist.image}
                         alt={playlist.title}
@@ -155,9 +249,9 @@ export default function MusicPage() {
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-2">{playlist.title}</h3>
-                      <p className="text-gray-600 dark:text-gray-400 mb-4">{playlist.description}</p>
+                    <div className="p-4 sm:p-6">
+                      <h3 className="text-lg sm:text-xl font-bold mb-2">{playlist.title}</h3>
+                      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-2">{playlist.description}</p>
                       <p className="text-sm">{playlist.songCount} songs</p>
                     </div>
                   </div>
@@ -241,11 +335,11 @@ export default function MusicPage() {
         </div>
 
         {/* Newsletter Section */}
-        <section className="mt-16 mb-16">
-          <div className="bg-black text-white dark:bg-white dark:text-black rounded-lg p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Stay Updated</h2>
-            <p className="mb-6">Subscribe for exclusive content and early access to new releases</p>
-            <form className="max-w-md mx-auto flex gap-4">
+        <section className="mt-16 mb-16 px-4">
+          <div className="bg-black text-white dark:bg-white dark:text-black rounded-lg p-6 sm:p-8 text-center">
+            <h2 className="text-xl sm:text-2xl font-bold mb-4">Stay Updated</h2>
+            <p className="text-sm sm:text-base mb-6">Subscribe for exclusive content and early access to new releases</p>
+            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Your email"

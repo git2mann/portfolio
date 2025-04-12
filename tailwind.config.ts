@@ -89,6 +89,12 @@ const config: Config = {
       transitionTimingFunction: {
         'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
       },
+
+      // Custom container settings
+      container: {
+        center: true,
+        padding: '1rem',
+      },
     },
   },
 

@@ -1,5 +1,21 @@
 {
   "pages": {
+    "/music/eps/[epId]/page": [
+      "static/chunks/[root of the server]__2b4d0a._.css",
+      "static/chunks/node_modules_9bd828._.js",
+      "static/chunks/src_app_3a3837._.js",
+      "static/chunks/src_app_layout_tsx_202b73._.js",
+      "static/chunks/_38bbad._.js",
+      "static/chunks/src_app_music_eps_[epId]_page_tsx_b23f93._.js",
+      "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
+      "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
+      "static/chunks/node_modules_next_dist_client_34bfc0._.js",
+      "static/chunks/node_modules_next_dist_d09de6._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636a._.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_2eec69._.js",
+      "static/chunks/_c4c472._.js",
+      "static/chunks/_25636b._.js"
+    ],
     "/page": [
       "static/chunks/[root of the server]__2b4d0a._.css",
       "static/chunks/node_modules_9bd828._.js",
@@ -16,13 +32,14 @@
       "static/chunks/_c4c472._.js",
       "static/chunks/_25636b._.js"
     ],
-    "/blog/page": [
+    "/posts/[slug]/page": [
       "static/chunks/[root of the server]__2b4d0a._.css",
       "static/chunks/node_modules_9bd828._.js",
       "static/chunks/src_app_3a3837._.js",
       "static/chunks/src_app_layout_tsx_202b73._.js",
-      "static/chunks/_1927be._.js",
-      "static/chunks/src_app_blog_page_tsx_b23f93._.js",
+      "static/chunks/src_app__components_markdown-styles_module_fe9f54.css",
+      "static/chunks/_3e0d34._.js",
+      "static/chunks/src_app_posts_[slug]_page_tsx_b23f93._.js",
       "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
       "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
       "static/chunks/node_modules_next_dist_client_34bfc0._.js",
@@ -48,6 +65,22 @@
       "static/chunks/_c4c472._.js",
       "static/chunks/_25636b._.js"
     ],
+    "/music/singles/[singleId]/page": [
+      "static/chunks/[root of the server]__2b4d0a._.css",
+      "static/chunks/node_modules_9bd828._.js",
+      "static/chunks/src_app_3a3837._.js",
+      "static/chunks/src_app_layout_tsx_202b73._.js",
+      "static/chunks/_b40815._.js",
+      "static/chunks/src_app_music_singles_[singleId]_page_tsx_b23f93._.js",
+      "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
+      "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
+      "static/chunks/node_modules_next_dist_client_34bfc0._.js",
+      "static/chunks/node_modules_next_dist_d09de6._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636a._.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_2eec69._.js",
+      "static/chunks/_c4c472._.js",
+      "static/chunks/_25636b._.js"
+    ],
     "/music/[albumId]/page": [
       "static/chunks/[root of the server]__2b4d0a._.css",
       "static/chunks/node_modules_9bd828._.js",
@@ -55,6 +88,20 @@
       "static/chunks/src_app_layout_tsx_202b73._.js",
       "static/chunks/_f01239._.js",
       "static/chunks/src_app_music_[albumId]_page_tsx_b23f93._.js",
+      "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
+      "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
+      "static/chunks/node_modules_next_dist_client_34bfc0._.js",
+      "static/chunks/node_modules_next_dist_d09de6._.js",
+      "static/chunks/node_modules_@swc_helpers_cjs_00636a._.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_2eec69._.js",
+      "static/chunks/_c4c472._.js",
+      "static/chunks/_25636b._.js"
+    ],
+    "/_not-found/page": [
+      "static/chunks/[root of the server]__2b4d0a._.css",
+      "static/chunks/node_modules_9bd828._.js",
+      "static/chunks/src_app_3a3837._.js",
+      "static/chunks/src_app_layout_tsx_202b73._.js",
       "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
       "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
       "static/chunks/node_modules_next_dist_client_34bfc0._.js",
