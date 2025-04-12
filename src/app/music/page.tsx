@@ -43,7 +43,7 @@ const albums = [
   },
 ];
 
- const singles = [
+export const singles = [
   {
     id: "1",
     title: "Allegory (Freestyle)",

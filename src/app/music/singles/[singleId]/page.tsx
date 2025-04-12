@@ -2,12 +2,20 @@
 
 import { useParams } from 'next/navigation';
 import Container from "@/app/_components/container";
-import { singles } from "@/app/music/page"; // Import the Singles data
+import { singles } from "@/app/music/page"; // Ensure `singles` is exported from music/page.tsx
 import { useState, useEffect } from "react";
 import InstructionPopup from "@/app/_components/InstructionPopup";
 import Image from "next/image";
 
-const lyricsData = {
+// Define types for lyricsData
+type LyricsGroup = {
+  lines: string[];
+  explanation: string;
+};
+
+type LyricsData = Record<string, LyricsGroup[]>;
+
+const lyricsData: LyricsData = {
   "1": [
     {
       lines: [
@@ -90,7 +98,7 @@ const lyricsData = {
 };
 
 export default function SinglePage() {
-  const { singleId } = useParams();
+  const { singleId } = useParams<{ singleId: string }>(); // Add type for useParams
   const single = singles.find((s) => s.id === singleId);
 
   const [selectedLyric, setSelectedLyric] = useState<number | null>(null);
@@ -112,7 +120,7 @@ export default function SinglePage() {
     return <div>Single not found</div>;
   }
 
-  const lyrics = singleId ? lyricsData[singleId as keyof typeof lyricsData] || [] : [];
+  const lyrics = lyricsData[singleId] || [];
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
@@ -180,14 +188,14 @@ export default function SinglePage() {
                 <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
                   {/* Spotify */}
                   <a
-                    href={`https://open.spotify.com/track/${single.id}`} // Replace with the actual Spotify link
+                    href={`https://open.spotify.com/track/${single.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Listen on Spotify"
                     className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
                   >
                     <img
-                      src="/assets/icons/icons8-spotify.svg" // Path to the Spotify logo
+                      src="/assets/icons/icons8-spotify.svg"
                       alt="Spotify"
                       className="h-8 w-auto mb-1"
                     />
@@ -196,14 +204,14 @@ export default function SinglePage() {
 
                   {/* Apple Music */}
                   <a
-                    href={`https://music.apple.com/us/album/${single.id}`} // Replace with the actual Apple Music link
+                    href={`https://music.apple.com/us/album/${single.id}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Listen on Apple Music"
                     className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
                   >
                     <img
-                      src="/assets/icons/icons8-apple-music.svg" // Path to the Apple Music logo
+                      src="/assets/icons/icons8-apple-music.svg"
                       alt="Apple Music"
                       className="h-8 w-auto mb-1"
                     />
@@ -212,14 +220,14 @@ export default function SinglePage() {
 
                   {/* YouTube */}
                   <a
-                    href={`https://www.youtube.com/results?search_query=${single.title}`} // Replace with the actual YouTube link
+                    href={`https://www.youtube.com/results?search_query=${single.title}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Listen on YouTube"
                     className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
                   >
                     <img
-                      src="/assets/icons/icons8-youtube.svg" // Path to the YouTube logo
+                      src="/assets/icons/icons8-youtube.svg"
                       alt="YouTube"
                       className="h-8 w-auto mb-1"
                     />
