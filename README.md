@@ -4,13 +4,16 @@ A modern, performant personal portfolio and blog built with Next.js, TypeScript,
 
 ## Features
 
-- **Blog Platform**: Markdown-based blog with support for rich content
+- **Blog Platform**: 
+  - Markdown-based blog with support for rich content.
+  - Posts grouped by year and displayed with featured images, excerpts, and tags.
+  - Dynamic routing for individual blog posts.
 - **Music Portfolio**: 
-  - Interactive audio player with waveform visualization
-  - Featured tracks with lyrics and annotations
-  - Discography and release showcase
-- **Art Gallery**: Showcase of visual artwork and exhibitions
-- **Projects Section**: Highlighting various creative and technical projects
+  - Interactive audio player with waveform visualization.
+  - Featured tracks with lyrics and annotations.
+  - Discography and release showcase with album details and song lyrics.
+- **Art Gallery**: A dedicated section for showcasing visual artwork and exhibitions.
+- **Projects Section**: Highlighting various creative and technical projects with detailed descriptions.
 - **Dark Mode & Theme Switcher**: Multiple theme options including:
   - Light Mode
   - Dark Mode
@@ -19,10 +22,10 @@ A modern, performant personal portfolio and blog built with Next.js, TypeScript,
   - Forest
   - Ocean
   - Sunset
-- **Responsive Design**: Optimized for all screen sizes
-- **Performance Optimized**: Built with Next.js for optimal loading speeds
-- **TypeScript**: Full type safety throughout the codebase
-- **Modern Styling**: Using Tailwind CSS for a clean, modern aesthetic
+- **Responsive Design**: Optimized for all screen sizes, ensuring a seamless experience on mobile, tablet, and desktop.
+- **Performance Optimized**: Built with Next.js for fast loading speeds and efficient rendering.
+- **TypeScript**: Full type safety throughout the codebase for better maintainability.
+- **Modern Styling**: Clean, modern aesthetic using Tailwind CSS.
 
 ## Technology Stack
 
@@ -35,19 +38,34 @@ A modern, performant personal portfolio and blog built with Next.js, TypeScript,
 
 ## Local Development
 
-```bash
-# Install dependencies
-npm install
+To set up the project locally, follow these steps:
 
-# Start development server
-npm run dev
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/your-username/portfolio.git
+   cd portfolio
+   ```
 
-# Build for production
-npm run build
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-# Start production server
-npm start
-```
+3. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+   This will start the development server at `http://localhost:3000`.
+
+4. **Build for production**:
+   ```bash
+   npm run build
+   ```
+
+5. **Start the production server**:
+   ```bash
+   npm start
+   ```
 
 ## Generating a Blog Post
 
@@ -61,14 +79,16 @@ Follow the prompts to enter the post title, excerpt, and cover image URL. If you
 
 ## Content Management
 
-Blog posts are stored in `/_posts` as Markdown files with front matter support. Adding a new Markdown file in there will automatically create a new blog post.
+Blog posts are stored in the `/_posts` directory as Markdown files with front matter support. Adding a new Markdown file in this directory will automatically create a new blog post.
 
 ### Blog Post Structure
+
+Each blog post is written in Markdown and includes front matter metadata. Below is an example structure:
 
 ```markdown
 ---
 title: "Post Title"
-excerpt: "Post excerpt"
+excerpt: "A brief summary of the post."
 coverImage: "/assets/blog/preview/cover.jpg"
 date: "2025-01-01T12:00:00.000Z"
 author:
@@ -76,10 +96,19 @@ author:
   picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/preview/cover.jpg"
+tags: ["Tag1", "Tag2"]
+contentType: "article" # Options: 'article', 'video', 'audio', 'gallery'
+mediaUrl: "/path/to/media" # Optional for audio or video posts
 ---
 
 Post content in Markdown...
 ```
+
+### Adding a New Blog Post
+
+1. Create a new Markdown file in the `/_posts` directory.
+2. Use the structure above to define the metadata and content.
+3. Save the file, and it will automatically appear on the blog page.
 
 ## Project Structure
 

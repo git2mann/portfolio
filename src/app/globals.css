@@ -18,6 +18,23 @@
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(255, 255, 0.5);
+  }
+}
+
+.glow {
+  animation: glow 1.5s infinite;
+  border-radius: 4px;
+}
+
 /* Base styles */
 html {
   scroll-behavior: smooth;
@@ -207,6 +224,11 @@ input, textarea {
 
 .animate-scale-in {
   animation: scaleIn 0.4s ease-out forwards;
+}
+
+.glow {
+  animation: glow 1.5s infinite;
+  border-radius: 4px;
 }
 
 /* Custom scrollbar */

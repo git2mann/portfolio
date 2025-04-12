@@ -11,21 +11,21 @@ const albums = [
     id: "1",
     title: "Squealer and the Aggressors of Peace",
     coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg",
-    releaseYear: "2023",
+    releaseYear: "2022",
     description: "A groundbreaking album that pushes boundaries and challenges conventions."
   },
   {
     id: "2",
-    title: "Midnight Echoes",
-    coverImage: "/assets/blog/hello-world/cover.jpg",
-    releaseYear: "2024",
-    description: "An exploration of urban life and digital existence."
+    title: "Lazlo",
+    coverImage: "/assets/music-assets/Lazlo Album Cover (Final).jpeg",
+    releaseYear: "2021",
+    description: "Rap inspired by a childhood classic"
   },
   {
     id: "3",
-    title: "Dawn Chorus",
-    coverImage: "/assets/blog/dynamic-routing/cover.jpg",
-    releaseYear: "2024",
+    title: "Son Of Ink",
+    coverImage: "/assets/music-assets/Son Of Ink Album Cover.jpeg",
+    releaseYear: "2021",
     description: "A journey through personal growth and awakening."
   }
 ];
@@ -169,24 +169,8 @@ export default function MusicPage() {
           {activeTab === 'shows' && (
             <section>
               <h2 className="text-3xl md:text-4xl font-bold mb-8">Upcoming Shows</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {upcomingEvents.map((event, index) => (
-                  <div key={index} className="bg-white dark:bg-slate-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
-                    <div className="flex justify-between items-start">
-                      <div>
-                        <h3 className="text-xl font-bold mb-2">{event.venue}</h3>
-                        <p className="text-neutral-600 dark:text-neutral-400 mb-1">{event.location}</p>
-                        <p className="text-neutral-600 dark:text-neutral-400">{event.date}</p>
-                      </div>
-                      <a
-                        href={event.ticketLink}
-                        className="bg-black text-white dark:bg-white dark:text-black px-4 py-2 rounded-full text-sm font-bold hover:opacity-80 transition-opacity"
-                      >
-                        Get Tickets
-                      </a>
-                    </div>
-                  </div>
-                ))}
+              <div className="flex items-center justify-center h-48 bg-gray-200 dark:bg-slate-700 rounded-lg">
+                <p className="text-gray-500 dark:text-gray-400">Coming Soon</p>
               </div>
             </section>
           )}
@@ -232,25 +216,8 @@ export default function MusicPage() {
           {activeTab === 'featured' && (
             <section>
               <h2 className="text-3xl md:text-4xl font-bold mb-8">Featured Tracks</h2>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {featuredPlaylists.map((playlist, index) => (
-                  <div key={index} className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-lg group">
-                    <div className="relative h-48">
-                      <Image
-                        src={playlist.image}
-                        alt={playlist.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-xl font-bold mb-2">{playlist.title}</h3>
-                      <p className="text-neutral-600 dark:text-neutral-400 mb-4">{playlist.description}</p>
-                      <p className="text-sm">{playlist.songCount} tracks</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="flex items-center justify-center h-48 bg-gray-200 dark:bg-slate-700 rounded-lg">
+                <p className="text-gray-500 dark:text-gray-400">Coming Soon</p>
               </div>
             </section>
           )}

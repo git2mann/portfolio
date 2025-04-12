@@ -27,6 +27,14 @@ const config: Config = {
         "accent-7": "#333",     // Dark gray for text
         success: "#0070f3",      // Blue for success messages
         cyan: "#79FFE1",        // Cyan for UI highlights
+        primary: {
+          light: '#FFD700', // Highlight color for light mode
+          dark: '#FF8C00', // Highlight color for dark mode
+        },
+        secondary: {
+          light: '#FFFACD', // Secondary color for light mode
+          dark: '#FFA500', // Secondary color for dark mode
+        },
       },
 
       // Additional spacing values for layout flexibility
