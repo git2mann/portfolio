@@ -18,6 +18,23 @@
   to { transform: scale(1); opacity: 1; }
 }
 
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 6s ease infinite;
+}
+
 @keyframes glow {
   0% {
     box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
@@ -38,9 +55,67 @@
 /* Base styles */
 html {
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+body {
+  @apply antialiased transition-colors duration-200;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  cursor: var(--cursor-url);
+  cursor: var(--cursor-default);
 }
 
 /* Theme Styles */
+
+:root {
+  /* Default Light Theme Grayscale Gradient */
+  --gradient-start: #e5e7eb; /* Light Gray */
+  --gradient-middle: #d1d5db; /* Medium Gray */
+  --gradient-end: #9ca3af; /* Darker Gray */
+  --progress-bar-color: #6b7280; /* Progress bar in medium gray */
+}
+
+.dark {
+  /* Default Dark Theme Grayscale Gradient */
+  --gradient-start: #4b5563; /* Dark Gray */
+  --gradient-middle: #374151; /* Darker Gray */
+  --gradient-end: #1f2937; /* Almost Black */
+  --progress-bar-color: #9ca3af; /* Progress bar in lighter gray */
+}
+
+/* Theme-specific colors for other themes */
+.theme-pastel {
+  --gradient-start: #fde2e4; /* Soft Pink */
+  --gradient-middle: #fad2e1; /* Light Rose */
+  --gradient-end: #fbcfe8;   /* Pastel Magenta */
+  --progress-bar-color: #f9a8d4; /* Light Pink */
+}
+
+.theme-forest {
+  --gradient-start: #10b981;
+  --gradient-middle: #059669;
+  --gradient-end: #047857;
+  --progress-bar-color: #10b981;
+}
+
+.theme-ocean {
+  --gradient-start: #38bdf8;
+  --gradient-middle: #0ea5e9;
+  --gradient-end: #0284c7;
+  --progress-bar-color: #38bdf8;
+}
+
+.theme-sunset {
+  --gradient-start: #f97316;
+  --gradient-middle: #ea580c;
+  --gradient-end: #c2410c;
+  --progress-bar-color: #f97316;
+}
+
+
 :root {
   --background-primary: #ffffff;
   --background-secondary: #f3f4f6;
@@ -110,7 +185,7 @@ html {
   --card-background: #f0f9ff;
   --hover-background: #e0f7ff;
   --cursor-url: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMkwyIDIyaDIwbC0xMC0yMHoiIGZpbGw9IiMwNzU5ODUiLz48L3N2Zz4='), auto;
-  --cursor-default: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iNCIgc3Ryb2tlPSIwNzU5ODUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIvPjwvc3ZnPg=='), auto;
+  --cursor-default: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iNCIgc3Ryb2tlPSIjMDY0ZTNiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4='), auto;
   --cursor-pointer: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiMwNzU5ODUiLz48L3N2Zz4='), auto;
   --cursor-text: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiMwNzU5ODUiLz48L3N2Zz4='), auto;
 }
@@ -131,14 +206,6 @@ html {
 }
 
 /* Apply theme colors */
-body {
-  @apply antialiased transition-colors duration-200;
-  background-color: var(--background-primary);
-  color: var(--text-primary);
-  cursor: var(--cursor-url);
-  cursor: var(--cursor-default);
-}
-
 a, button {
   cursor: var(--cursor-pointer);
 }
@@ -249,6 +316,14 @@ input, textarea {
   opacity: 0.8;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
 /* Gradient text */
 .gradient-text {
   @apply bg-clip-text text-transparent;
@@ -264,24 +339,70 @@ input, textarea {
   @apply transform scale-105;
 }
 
-/* Typewriter effect */
+/* Enhanced Typewriter Effect */
 .typewriter {
+  display: block; /* Ensure each line is treated as a block */
   overflow: hidden;
-  border-right: 0.15em solid var(--text-primary);
-  white-space: nowrap;
-  margin: 0 auto;
-  letter-spacing: 0.15em;
-  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+  white-space: pre-wrap; /* Preserve newlines and spaces */
+  animation: typing 2.5s steps(40, end), fade-in-scale 0.6s ease-out forwards;
+  font-weight: 600; /* Slightly bolder text for emphasis */
+  letter-spacing: 0.05em; /* Adjust spacing for better readability */
+  background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1rem; /* Default font size */
 }
 
+/* Adjust font size for smaller screens */
+@media (max-width: 640px) {
+  .typewriter {
+    font-size: 0.875rem; /* Smaller font size for mobile */
+  }
+}
+
+/* Typing animation */
 @keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
-@keyframes blink-caret {
-  from, to { border-color: transparent }
-  50% { border-color: var(--text-primary) }
+/* Fade-in and scale effect */
+@keyframes fade-in-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+/* Glow effect for active lyric */
+.typewriter-glow {
+  animation: glow 1.5s infinite;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
 }
 
 /* Glass effect */

@@ -105,7 +105,8 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 __turbopack_esm__({
     "getAllPosts": (()=>getAllPosts),
     "getPostBySlug": (()=>getPostBySlug),
-    "getPostSlugs": (()=>getPostSlugs)
+    "getPostSlugs": (()=>getPostSlugs),
+    "getPostsByCategory": (()=>getPostsByCategory)
 });
 var __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__ = __turbopack_import__("[externals]/ [external] (fs, cjs)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$gray$2d$matter$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/gray-matter/index.js [app-rsc] (ecmascript)");
@@ -119,28 +120,52 @@ function getPostSlugs() {
     return __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__["default"].readdirSync(postsDirectory);
 }
 function getPostBySlug(slug) {
-    // Remove .md extension from slug if present
-    const realSlug = slug.replace(/\.md$/, "");
-    // Construct the full path to the post file
-    const fullPath = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$path$2c$__cjs$29$__["join"])(postsDirectory, `${realSlug}.md`);
-    // Read the file contents
-    const fileContents = __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__["default"].readFileSync(fullPath, "utf8");
-    // Parse the frontmatter and content using gray-matter
-    const { data, content } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$gray$2d$matter$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"])(fileContents);
-    // Return the post data with the slug and content
+    const realSlug = slug.replace(/\.(md|html)$/, "");
+    const mdPath = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$path$2c$__cjs$29$__["join"])(postsDirectory, `${realSlug}.md`);
+    const htmlPath = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$path$2c$__cjs$29$__["join"])(postsDirectory, `${realSlug}.html`);
+    let fileContents;
+    let contentType;
+    if (__TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__["default"].existsSync(mdPath)) {
+        fileContents = __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__["default"].readFileSync(mdPath, "utf8");
+        contentType = 'markdown';
+    } else if (__TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__["default"].existsSync(htmlPath)) {
+        fileContents = __TURBOPACK__imported__module__$5b$externals$5d2f$__$5b$external$5d$__$28$fs$2c$__cjs$29$__["default"].readFileSync(htmlPath, "utf8");
+        contentType = 'html';
+    } else {
+        throw new Error(`Post not found: ${slug}`);
+    }
+    if (contentType === 'markdown') {
+        const { data, content } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$gray$2d$matter$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"])(fileContents);
+        return {
+            ...data,
+            slug: realSlug,
+            content,
+            contentType
+        };
+    }
+    // Extract metadata from the <script> tag in HTML
+    const metadataMatch = fileContents.match(/<script type="application\/json" id="post-metadata">([\s\S]*?)<\/script>/);
+    if (!metadataMatch) {
+        throw new Error(`Metadata not found in HTML post: ${slug}`);
+    }
+    const metadata = JSON.parse(metadataMatch[1]);
     return {
-        ...data,
+        ...metadata,
         slug: realSlug,
-        content
+        content: fileContents,
+        contentType
     };
 }
 function getAllPosts() {
-    // Get all post slugs
     const slugs = getPostSlugs();
-    // Map each slug to its post data
-    const posts = slugs.map((slug)=>getPostBySlug(slug))// Sort posts by date in descending order (newest first)
-    .sort((post1, post2)=>post1.date > post2.date ? -1 : 1);
-    return posts;
+    const posts = slugs.map((slug)=>getPostBySlug(slug)).sort((post1, post2)=>post1.date > post2.date ? -1 : 1);
+    return posts.map((post)=>({
+            ...post,
+            category: post.category || "Music"
+        }));
+}
+function getPostsByCategory(category) {
+    return getAllPosts().filter((post)=>post.category === category);
 }
 }}),
 "[project]/src/app/page.tsx [app-rsc] (ecmascript)": ((__turbopack_context__) => {
