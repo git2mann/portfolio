@@ -2,7 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import Container from "@/app/_components/container";
-import { singles } from "@/app/music/page"; // Ensure `singles` is exported from music/page.tsx
+import { singles } from "@/data/music"; // Corrected import path
 import { useState, useEffect } from "react";
 import InstructionPopup from "@/app/_components/InstructionPopup";
 import Image from "next/image";
@@ -98,7 +98,7 @@ const lyricsData: LyricsData = {
 };
 
 export default function SinglePage() {
-  const { singleId } = useParams<{ singleId: string }>(); // Add type for useParams
+  const { singleId } = useParams<{ singleId: string }>();
   const single = singles.find((s) => s.id === singleId);
 
   const [selectedLyric, setSelectedLyric] = useState<number | null>(null);
