@@ -201,57 +201,153 @@ export default function SinglePage() {
                 <p className="text-sm text-gray-700 dark:text-gray-300">{single.duration}</p>
               </div>
 
-              {/* Listen Now Section - Moved to sticky column */}
+              {/* Listen Now Section */}
               <div className="w-full">
                 <h2 className="text-xl font-semibold mb-4">Listen Now</h2>
                 <div className="grid grid-cols-3 gap-4">
-                  {/* Spotify */}
-                  <a
-                    href={`https://open.spotify.com/track/${single.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Listen on Spotify"
-                    className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                  >
-                    <img
-                      src="/assets/icons/icons8-spotify.svg"
-                      alt="Spotify"
-                      className="h-8 w-auto mb-1"
-                    />
-                    <span className="text-xs font-medium">Spotify</span>
-                  </a>
+                  {/* Allegory Freestyle */}
+                  {single.id === "1" && (
+                    <>
+                      <a
+                        href="https://song.link/allegory-freestyle-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Allegory Freestyle"
+                        className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-spotify.svg"
+                          alt="Spotify"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Spotify</span>
+                      </a>
+                      <a
+                        href="https://song.link/allegory-freestyle-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Allegory Freestyle"
+                        className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-apple-music.svg"
+                          alt="Apple Music"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Apple Music</span>
+                      </a>
+                      <a
+                        href="https://song.link/allegory-freestyle-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Allegory Freestyle"
+                        className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-youtube.svg"
+                          alt="YouTube"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">YouTube</span>
+                      </a>
+                    </>
+                  )}
 
-                  {/* Apple Music */}
-                  <a
-                    href={`https://music.apple.com/us/album/${single.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Listen on Apple Music"
-                    className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                  >
-                    <img
-                      src="/assets/icons/icons8-apple-music.svg"
-                      alt="Apple Music"
-                      className="h-8 w-auto mb-1"
-                    />
-                    <span className="text-xs font-medium">Apple Music</span>
-                  </a>
+                  {/* Eye Kan */}
+                  {single.id === "2" && (
+                    <>
+                      <a
+                        href="https://song.link/eye-kan-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Eye Kan"
+                        className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-spotify.svg"
+                          alt="Spotify"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Spotify</span>
+                      </a>
+                      <a
+                        href="https://song.link/eye-kan-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Eye Kan"
+                        className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-apple-music.svg"
+                          alt="Apple Music"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Apple Music</span>
+                      </a>
+                      <a
+                        href="https://song.link/eye-kan-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Eye Kan"
+                        className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-youtube.svg"
+                          alt="YouTube"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">YouTube</span>
+                      </a>
+                    </>
+                  )}
 
-                  {/* YouTube */}
-                  <a
-                    href={`https://www.youtube.com/results?search_query=${single.title}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Listen on YouTube"
-                    className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                  >
-                    <img
-                      src="/assets/icons/icons8-youtube.svg"
-                      alt="YouTube"
-                      className="h-8 w-auto mb-1"
-                    />
-                    <span className="text-xs font-medium">YouTube</span>
-                  </a>
+                  {/* First Interlude */}
+                  {single.id === "3" && (
+                    <>
+                      <a
+                        href="https://song.link/first-interlude-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to First Interlude"
+                        className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-spotify.svg"
+                          alt="Spotify"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Spotify</span>
+                      </a>
+                      <a
+                        href="https://song.link/first-interlude-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to First Interlude"
+                        className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-apple-music.svg"
+                          alt="Apple Music"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Apple Music</span>
+                      </a>
+                      <a
+                        href="https://song.link/first-interlude-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to First Interlude"
+                        className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-youtube.svg"
+                          alt="YouTube"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">YouTube</span>
+                      </a>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
