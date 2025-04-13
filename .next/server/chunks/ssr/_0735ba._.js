@@ -58,9 +58,9 @@ function InstructionPopup() {
     }, []);
     if (!isVisible) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed inset-0 flex items-start justify-center bg-black bg-opacity-50 backdrop-blur-md z-50 animate-fade-in",
+        className: "fixed inset-0 flex items-start justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50 animate-fade-in",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg max-w-md text-center relative animate-scale-in mt-16",
+            className: "bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg max-w-md text-center relative animate-slide-down mt-10 mx-auto",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                     onClick: ()=>setIsVisible(false),
@@ -144,7 +144,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$_components$2f
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$_components$2f$InstructionPopup$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/app/_components/InstructionPopup.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/image.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$parallax$2d$tilt$2f$dist$2f$modern$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/react-parallax-tilt/dist/modern/index.js [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -158,7 +160,7 @@ const eps = [
         coverImage: "/assets/music-assets/Some Of Ink EP Cover.png",
         releaseYear: "2025",
         duration: "7:27",
-        tracks: [
+        songs: [
             {
                 id: "1",
                 title: "Back Again, Again",
@@ -287,7 +289,7 @@ const eps = [
                             "And dare anyone to trump mine",
                             "Seein’ while they joke, bidin’ time"
                         ],
-                        explanation: "Issuing a challenge while observing others play it safe."
+                        explanation: "Issuing a challenge while observing others play it safe. Also a reference to the 'Trump' card (and cards in general, given how the last few lines are phrased with bluffing/jokers imagery), and the Trump and Biden (Joke/Joe, Bidin'/Biden) presidencies. Triple entendres are pretty nice, eh?"
                     },
                     {
                         lines: [
@@ -427,9 +429,11 @@ const eps = [
     }
 ];
 function EPPage() {
-    const { epId } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useParams"])();
+    const params = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useParams"])();
+    const epId = params?.epId;
     const [selectedTrack, setSelectedTrack] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [selectedLyric, setSelectedLyric] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [selectedNote, setSelectedNote] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [scrollProgress, setScrollProgress] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(0);
     const ep = eps.find((e)=>e.id === epId);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
@@ -447,7 +451,7 @@ function EPPage() {
             children: "EP not found"
         }, void 0, false, {
             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-            lineNumber: 304,
+            lineNumber: 307,
             columnNumber: 12
         }, this);
     }
@@ -456,7 +460,7 @@ function EPPage() {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$_components$2f$InstructionPopup$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                 fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                lineNumber: 309,
+                lineNumber: 312,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$_components$2f$container$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -480,46 +484,46 @@ function EPPage() {
                                         d: "M15 19l-7-7 7-7"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                        lineNumber: 324,
+                                        lineNumber: 328,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                    lineNumber: 316,
+                                    lineNumber: 320,
                                     columnNumber: 13
                                 }, this),
                                 "Back to Discography"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                            lineNumber: 312,
+                            lineNumber: 316,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex flex-col md:flex-row gap-8 items-start",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "relative aspect-square w-full md:w-1/3 rounded-lg overflow-hidden",
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-                                        src: ep.coverImage,
-                                        alt: `Cover of ${ep.title}`,
-                                        fill: true,
-                                        className: "object-cover"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                        lineNumber: 332,
-                                        columnNumber: 15
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                    lineNumber: 331,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex-1 w-full",
+                                    className: "md:sticky md:top-20 md:self-start flex flex-col gap-8 w-full md:w-1/3",
                                     children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$parallax$2d$tilt$2f$dist$2f$modern$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                            className: "aspect-square rounded-lg overflow-hidden shadow-lg",
+                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                                src: ep.coverImage,
+                                                alt: `Cover of ${ep.title}`,
+                                                fill: true,
+                                                className: "object-cover"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                lineNumber: 337,
+                                                columnNumber: 17
+                                            }, this)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                            lineNumber: 336,
+                                            columnNumber: 15
+                                        }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "sticky top-20 z-10 animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 mb-8 w-full",
+                                            className: "animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 w-full",
                                             style: {
                                                 backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`
                                             },
@@ -540,15 +544,7 @@ function EPPage() {
                                                     children: ep.title
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                    lineNumber: 359,
-                                                    columnNumber: 17
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                    className: "text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-4",
-                                                    children: "By Klense"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                    lineNumber: 362,
+                                                    lineNumber: 357,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -556,7 +552,7 @@ function EPPage() {
                                                     children: ep.releaseYear
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                    lineNumber: 365,
+                                                    lineNumber: 360,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -564,13 +560,133 @@ function EPPage() {
                                                     children: ep.duration
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                    lineNumber: 366,
+                                                    lineNumber: 361,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                            lineNumber: 343,
+                                            lineNumber: 344,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                    lineNumber: 335,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex-1 w-full",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "mb-8",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                                    className: "text-xl sm:text-2xl font-semibold mb-4",
+                                                    children: "Behind the EP"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                    lineNumber: 369,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "space-y-4",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "text-sm sm:text-base text-gray-700 dark:text-gray-300",
+                                                            children: [
+                                                                "The ",
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                                    children: "Some Of Ink EP"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                                    lineNumber: 372,
+                                                                    columnNumber: 25
+                                                                }, this),
+                                                                " takes its name from ",
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                                    children: "Son Of Ink"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                                    lineNumber: 372,
+                                                                    columnNumber: 77
+                                                                }, this),
+                                                                ", Klense's debut album. This latest project serves as a reimagining of select tracks from that album, blending the nostalgia of his early work with the growth and evolution he has experienced as an artist."
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                            lineNumber: 371,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "text-sm sm:text-base text-gray-700 dark:text-gray-300",
+                                                            children: [
+                                                                "Among the highlights of the EP are reworked versions of ",
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                                    children: "Back Again"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                                    lineNumber: 375,
+                                                                    columnNumber: 77
+                                                                }, this),
+                                                                " (now titled ",
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                                    children: "Back Again, Again"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                                    lineNumber: 375,
+                                                                    columnNumber: 117
+                                                                }, this),
+                                                                ") and ",
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                                    children: "Ultimate"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                                    lineNumber: 375,
+                                                                    columnNumber: 157
+                                                                }, this),
+                                                                " (now titled ",
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                                    children: "Still Ultimate"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                                    lineNumber: 375,
+                                                                    columnNumber: 195
+                                                                }, this),
+                                                                "). These tracks have been meticulously refined to reflect Klense's current style and perspective, while still preserving the essence that made them resonate with listeners in the first place."
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                            lineNumber: 374,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "text-sm sm:text-base text-gray-700 dark:text-gray-300",
+                                                            children: [
+                                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                                                    children: "Some Of Ink"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                                    lineNumber: 378,
+                                                                    columnNumber: 21
+                                                                }, this),
+                                                                " is more than just a collection of songs. It’s a reflection of Klense's journey as an artist, a celebration of his roots, and a bold statement about the future of his music."
+                                                            ]
+                                                        }, void 0, true, {
+                                                            fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                            lineNumber: 377,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                                    lineNumber: 370,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
+                                            lineNumber: 368,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -578,48 +694,48 @@ function EPPage() {
                                             children: "Tracklist"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                            lineNumber: 370,
+                                            lineNumber: 384,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "space-y-4 w-full",
-                                            children: ep.tracks.map((track)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "space-y-4",
+                                            children: ep.songs.map((song)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "border-b border-gray-200 dark:border-gray-700 pb-4",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                                            onClick: ()=>setSelectedTrack(selectedTrack === track.id ? null : track.id),
+                                                            onClick: ()=>setSelectedTrack(selectedTrack === song.id ? null : song.id),
                                                             className: "w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "flex justify-between items-center",
                                                                 children: [
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         className: "text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200",
-                                                                        children: track.title
+                                                                        children: song.title
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                        lineNumber: 380,
+                                                                        lineNumber: 393,
                                                                         columnNumber: 25
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                                        className: "text-sm sm:text-base text-gray-500 dark:text-gray-400 italic",
-                                                                        children: track.duration
+                                                                        className: "text-sm text-gray-500 dark:text-gray-400 italic",
+                                                                        children: song.duration
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                        lineNumber: 383,
+                                                                        lineNumber: 396,
                                                                         columnNumber: 25
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                lineNumber: 379,
+                                                                lineNumber: 392,
                                                                 columnNumber: 23
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                            lineNumber: 375,
+                                                            lineNumber: 388,
                                                             columnNumber: 21
                                                         }, this),
-                                                        selectedTrack === track.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        selectedTrack === song.id && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "mt-4 space-y-4",
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -627,10 +743,10 @@ function EPPage() {
                                                                     children: "Lyrics"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                    lineNumber: 392,
+                                                                    lineNumber: 403,
                                                                     columnNumber: 25
                                                                 }, this),
-                                                                track.lyrics.length > 0 ? track.lyrics.map((group, groupIndex)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                song.lyrics.length > 0 ? song.lyrics.map((group, groupIndex)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                         className: `space-y-2 p-4 rounded-lg transition-all ${selectedLyric === groupIndex ? "bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-[var(--text-primary)] shadow-lg" : "hover:bg-gray-100 dark:hover:bg-gray-700"}`,
                                                                         onClick: ()=>setSelectedLyric(selectedLyric === groupIndex ? null : groupIndex),
                                                                         children: [
@@ -640,91 +756,91 @@ function EPPage() {
                                                                                         className: `text-sm sm:text-base font-medium leading-relaxed ${selectedLyric === groupIndex ? "text-[var(--text-primary)]" : "text-gray-800 dark:text-gray-200"}`,
                                                                                         children: line || /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                                                                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                                            lineNumber: 419,
+                                                                                            lineNumber: 429,
                                                                                             columnNumber: 46
                                                                                         }, this)
                                                                                     }, lineIndex, false, {
                                                                                         fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                                        lineNumber: 411,
+                                                                                        lineNumber: 421,
                                                                                         columnNumber: 35
                                                                                     }, this))
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                                lineNumber: 409,
+                                                                                lineNumber: 419,
                                                                                 columnNumber: 31
                                                                             }, this),
                                                                             selectedLyric === groupIndex && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                                 className: "mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg",
-                                                                                children: group.explanation.split('\n').map((line, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                children: group.explanation.split("\n").map((line, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                                         className: "text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed",
                                                                                         children: line
                                                                                     }, index, false, {
                                                                                         fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                                        lineNumber: 428,
+                                                                                        lineNumber: 436,
                                                                                         columnNumber: 37
                                                                                     }, this))
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                                lineNumber: 426,
+                                                                                lineNumber: 434,
                                                                                 columnNumber: 33
                                                                             }, this)
                                                                         ]
                                                                     }, groupIndex, true, {
                                                                         fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                        lineNumber: 397,
+                                                                        lineNumber: 408,
                                                                         columnNumber: 29
                                                                     }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                     className: "text-sm text-gray-500 italic",
                                                                     children: "Lyrics not available."
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                                    lineNumber: 440,
+                                                                    lineNumber: 448,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                            lineNumber: 391,
+                                                            lineNumber: 402,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
-                                                }, track.id, true, {
+                                                }, song.id, true, {
                                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                                    lineNumber: 373,
+                                                    lineNumber: 387,
                                                     columnNumber: 19
                                                 }, this))
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                            lineNumber: 371,
+                                            lineNumber: 385,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                                    lineNumber: 341,
+                                    lineNumber: 366,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                            lineNumber: 329,
+                            lineNumber: 333,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                    lineNumber: 311,
+                    lineNumber: 314,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-                lineNumber: 310,
+                lineNumber: 313,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/music/eps/[epId]/page.tsx",
-        lineNumber: 308,
+        lineNumber: 311,
         columnNumber: 5
     }, this);
 }

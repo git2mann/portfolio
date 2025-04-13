@@ -5,6 +5,7 @@ import Container from "@/app/_components/container";
 import { useState, useEffect } from "react";
 import InstructionPopup from "@/app/_components/InstructionPopup";
 import Image from "next/image";
+import Tilt from 'react-parallax-tilt';
 
 const eps = [
   {
@@ -13,29 +14,21 @@ const eps = [
     coverImage: "/assets/music-assets/Some Of Ink EP Cover.png",
     releaseYear: "2025",
     duration: "7:27",
-    tracks: [
+    songs: [
       {
         id: "1",
         title: "Back Again, Again",
         duration: "2:02",
         lyrics: [
           {
-            lines: [
-              "I call this track a queue",
-              "The way you look at back again",
-            ],
+            lines: ["I call this track a queue", "The way you look at back again"],
             explanation: "Wordplay on 'queue' and 'cue', introducing the recurring theme of returning or re-emerging.",
           },
           {
-            lines: [
-              "Dan Kuso playin’ Bakugan",
-              "He’s back, look at Drago hand me a championship belt",
-              "The Son Of Ink,",
-              "How many guessed",
-            ],
+            lines: ["Dan Kuso playin’ Bakugan", "He’s back, look at Drago hand me a championship belt"],
             explanation: "Referencing childhood heroism and fantasy (Bakugan) to build a persona of comeback and earned recognition.",
           },
-          {
+{
             lines: [
               "He came to go ham",
               "When he said",
@@ -281,7 +274,8 @@ const eps = [
 ];
 
 export default function EPPage() {
-  const { epId } = useParams();
+  const params = useParams();
+  const epId = params?.epId as string | undefined;
   const [selectedTrack, setSelectedTrack] = useState<string | null>(null);
   const [selectedLyric, setSelectedLyric] = useState<number | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -308,45 +302,51 @@ export default function EPPage() {
     <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
       <InstructionPopup />
       <Container>
-        <div className="max-w-6xl mx-auto py-12">
-          <button
-            onClick={() => window.history.back()}
-            className="inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors mb-8"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-5 h-5 mr-2"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Discography
-          </button>
-
+        <div className="max-w-6xl mx-auto py-8 pt-0">
           <div className="flex flex-col md:flex-row gap-8 items-start">
-            {/* EP Cover */}
-            <div className="relative aspect-square w-full md:w-1/3 rounded-lg overflow-hidden">
-              <Image
-                src={ep.coverImage}
-                alt={`Cover of ${ep.title}`}
-                fill
-                className="object-cover"
-              />
-            </div>
-
-            {/* EP Details */}
-            <div className="flex-1 w-full">
-              {/* Sticky Section */}
+            {/* EP Cover with Tilt Effect - Now includes back button */}
+            <div className="md:sticky md:top-16 md:self-start flex flex-col gap-6 w-full md:w-1/3">
+              {/* Back button moved here */}
+              <button
+                onClick={() => window.history.back()}
+                className="inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-5 h-5 mr-2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Discography
+              </button>
+              
+              <Tilt
+                className="aspect-square rounded-lg overflow-hidden shadow-lg"
+                tiltMaxAngleX={15}
+                tiltMaxAngleY={15}
+                glareEnable={true}
+                glareMaxOpacity={0.6}
+                glareColor="#ffffff"
+                glarePosition="all"
+                transitionSpeed={250}
+              >
+                <Image
+                  src={ep.coverImage}
+                  alt={`Cover of ${ep.title}`}
+                  fill
+                  className="object-cover"
+                />
+              </Tilt>
               <div
-                className="sticky top-20 z-10 animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 mb-8 w-full"
+                className="animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 w-full"
                 style={{
                   backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`,
                 }}
               >
-                {/* Progress Bar */}
                 <div
                   className="h-1 rounded"
                   style={{
@@ -354,8 +354,6 @@ export default function EPPage() {
                     width: `${scrollProgress}%`,
                   }}
                 ></div>
-
-                {/* Title and Details */}
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">
                   {ep.title}
                 </h1>
@@ -365,35 +363,102 @@ export default function EPPage() {
                 <p className="text-sm text-gray-600 dark:text-gray-400">{ep.releaseYear}</p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">{ep.duration}</p>
               </div>
+              
+              {/* Listen Now Section */}
+              <div className="w-full">
+                <h2 className="text-xl font-semibold mb-4">Listen Now</h2>
+                <div className="grid grid-cols-3 gap-4">
+                  {/* Spotify */}
+                  <a
+                    href={`https://open.spotify.com/album/${ep.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Listen on Spotify"
+                    className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                  >
+                    <img
+                      src="/assets/icons/icons8-spotify.svg"
+                      alt="Spotify"
+                      className="h-8 w-auto mb-1"
+                    />
+                    <span className="text-xs font-medium">Spotify</span>
+                  </a>
+
+                  {/* Apple Music */}
+                  <a
+                    href={`https://music.apple.com/us/album/${ep.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Listen on Apple Music"
+                    className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                  >
+                    <img
+                      src="/assets/icons/icons8-apple-music.svg"
+                      alt="Apple Music"
+                      className="h-8 w-auto mb-1"
+                    />
+                    <span className="text-xs font-medium">Apple Music</span>
+                  </a>
+
+                  {/* YouTube */}
+                  <a
+                    href={`https://www.youtube.com/results?search_query=Klense+${ep.title}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Listen on YouTube"
+                    className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                  >
+                    <img
+                      src="/assets/icons/icons8-youtube.svg"
+                      alt="YouTube"
+                      className="h-8 w-auto mb-1"
+                    />
+                    <span className="text-xs font-medium">YouTube</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* EP Details */}
+            <div className="flex-1 w-full">
+              {/* Behind the EP */}
+              <div className="mb-8">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Behind the EP</h2>
+                <div className="space-y-4">
+                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                    The <strong>Some Of Ink EP</strong> takes its name from <strong>Son Of Ink</strong>, Klense's debut album. This latest project serves as a reimagining of select tracks from that album, blending the nostalgia of his early work with the growth and evolution he has experienced as an artist.
+                  </p>
+                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                    Among the highlights of the EP are reworked versions of <strong>Back Again</strong> (now titled <strong>Back Again, Again</strong>) and <strong>Ultimate</strong> (now titled <strong>Still Ultimate</strong>). These tracks have been meticulously refined to reflect Klense's current style and perspective, while still preserving the essence that made them resonate with listeners in the first place.
+                  </p>
+                </div>
+              </div>
 
               {/* Tracklist Section */}
               <h2 className="text-xl sm:text-2xl font-semibold mb-4">Tracklist</h2>
-              <div className="space-y-4 w-full">
-                {ep.tracks.map((track) => (
-                  <div key={track.id} className="border-b border-gray-200 dark:border-gray-700 pb-4">
-                    {/* Track Title */}
+              <div className="space-y-4">
+                {ep.songs.map((song) => (
+                  <div key={song.id} className="border-b border-gray-200 dark:border-gray-700 pb-4">
                     <button
-                      onClick={() => setSelectedTrack(selectedTrack === track.id ? null : track.id)}
+                      onClick={() => setSelectedTrack(selectedTrack === song.id ? null : song.id)}
                       className="w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
                     >
                       <div className="flex justify-between items-center">
                         <span className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">
-                          {track.title}
+                          {song.title}
                         </span>
-                        <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400 italic">
-                          {track.duration}
+                        <span className="text-sm text-gray-500 dark:text-gray-400 italic">
+                          {song.duration}
                         </span>
                       </div>
                     </button>
-                    
-                    {/* Lyrics Section */}
-                    {selectedTrack === track.id && (
+                    {selectedTrack === song.id && (
                       <div className="mt-4 space-y-4">
                         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 underline decoration-[var(--gradient-middle)] decoration-2 underline-offset-4">
                           Lyrics
                         </h3>
-                        {track.lyrics.length > 0 ? (
-                          track.lyrics.map((group, groupIndex) => (
+                        {song.lyrics.length > 0 ? (
+                          song.lyrics.map((group, groupIndex) => (
                             <div
                               key={groupIndex}
                               className={`space-y-2 p-4 rounded-lg transition-all ${
@@ -405,7 +470,6 @@ export default function EPPage() {
                                 setSelectedLyric(selectedLyric === groupIndex ? null : groupIndex)
                               }
                             >
-                              {/* Group of Lines */}
                               <div className="space-y-2">
                                 {group.lines.map((line, lineIndex) => (
                                   <p
@@ -420,11 +484,9 @@ export default function EPPage() {
                                   </p>
                                 ))}
                               </div>
-
-                              {/* Explanation */}
                               {selectedLyric === groupIndex && (
                                 <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
-                                  {group.explanation.split('\n').map((line, index) => (
+                                  {group.explanation.split("\n").map((line, index) => (
                                     <p
                                       key={index}
                                       className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed"
