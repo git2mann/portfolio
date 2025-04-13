@@ -256,12 +256,7 @@ const eps = [
         id: "2",
         title: "Still Ultimate",
         duration: "2:49",
-        lyrics: [
-          {
-            lines: ["Still the ultimate, no debate"],
-            explanation: "Klense asserts their dominance in the music industry.",
-          },
-        ],
+        lyrics: [],
       },
       {
         id: "3",
@@ -278,6 +273,7 @@ export default function EPPage() {
   const epId = params?.epId as string | undefined;
   const [selectedTrack, setSelectedTrack] = useState<string | null>(null);
   const [selectedLyric, setSelectedLyric] = useState<number | null>(null);
+  const [selectedNote, setSelectedNote] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const ep = eps.find((e) => e.id === epId);
@@ -500,6 +496,40 @@ export default function EPPage() {
                           ))
                         ) : (
                           <p className="text-sm text-gray-500 italic">Lyrics not available.</p>
+                        )}
+                        
+                        {/* Track Breakdown - Added to match Album page */}
+                        <button
+                          onClick={() => {
+                            const newSelectedNote = selectedNote === song.id ? null : song.id;
+                            setSelectedNote(newSelectedNote);
+                          }}
+                          className="mt-4 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition"
+                        >
+                          {selectedNote === song.id ? "Hide Track Breakdown" : "Show Track Breakdown"}
+                        </button>
+                        {selectedNote === song.id && (
+                          <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg space-y-4">
+                            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                              {ep.id === "1" && song.id === "1" ? (
+                                <>
+                                  <strong>Back Again, Again</strong> serves as a reimagined version of the original "Back Again" from Klense's debut album. This updated rendition preserves the core energy of the original while introducing new production elements and refined lyrics. The track encapsulates Klense's artistic growth since his early work, demonstrating how his technical abilities have evolved while maintaining his authentic voice.
+                                </>
+                              ) : ep.id === "1" && song.id === "2" ? (
+                                <>
+                                  <strong>Still Ultimate</strong> represents a fresh take on one of Klense's fan-favorite tracks. The reworked production creates a more immersive sonic landscape, while the updated lyrics reflect his current perspective. This track particularly showcases Klense's improved vocal delivery and more nuanced approach to wordplay. This track is a reimagining of the original 'Ultimate' from Klense's debut album.
+                                </>
+                              ) : ep.id === "1" && song.id === "3" ? (
+                                <>
+                                  <strong>Just Words</strong> is a technical display of lyrical skill at every turn, tapping into the spirit of what made <strong>The Son Of Ink</strong> album so memorable as a start for Klense. The production is busy and intricate, complementing the dense wordplay and showcasing his growth as an artist while staying true to his roots.
+                                </>
+                              ) : (
+                                <>
+                                  <strong>{song.title}</strong> is a standout track that highlights Klense's evolution as both a producer and lyricist. The production creates a distinctive atmosphere that enhances the thematic elements, while the vocal performance demonstrates his versatility and technical skill. This track effectively balances nostalgia for his earlier work with his current artistic approach.
+                                </>
+                              )}
+                            </p>
+                          </div>
                         )}
                       </div>
                     )}

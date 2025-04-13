@@ -265,13 +265,13 @@ export default function SinglePage() {
                   <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
                     <strong>{single.title}</strong> is a bold statement of Klense's artistry, blending intricate wordplay with a hard-hitting beat. This single showcases his ability to balance technical skill with raw emotion.
                   </p>
-                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
-                    The track dives into themes of [insert theme], offering listeners a glimpse into Klense's creative process and personal journey.
-                  </p>
+                    <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                    The track dives into themes of self-confidence, perseverance, and artistic growth, offering listeners a glimpse into Klense's creative process and personal journey.
+                    </p>
                 </div>
               </div>
 
-              {/* Lyrics Section - Updated to match album page style */}
+              {/* Lyrics Section */}
               <h2 className="text-xl sm:text-2xl font-semibold mb-4">Lyrics</h2>
               <div className="space-y-4">
                 {lyrics.map((group, index) => (
@@ -311,7 +311,7 @@ export default function SinglePage() {
                   </div>
                 ))}
                 
-                {/* Track Breakdown - Added from Album page */}
+                {/* Track Breakdown */}
                 <button
                   onClick={() => setSelectedNote(selectedNote === single.id ? null : single.id)}
                   className="mt-6 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition"
@@ -321,7 +321,7 @@ export default function SinglePage() {
                 {selectedNote === single.id && (
                   <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg space-y-4">
                     <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed">
-                      <strong>{single.title}</strong> features a production style that blends [style description] with Klense's signature flow. The instrumental's [describe elements] complements the lyrical content perfectly, creating a cohesive listening experience that showcases Klense's growth as an artist.
+                      <strong>{single.title}</strong> features a production style that blends intricate beats with Klense's signature flow. The instrumental's dynamic bassline and melodic undertones complement the lyrical content perfectly, creating a cohesive listening experience that showcases Klense's growth as an artist.
                     </p>
                   </div>
                 )}
