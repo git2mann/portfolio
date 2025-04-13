@@ -6,6 +6,7 @@ import { singles } from "@/data/music"; // Corrected import path
 import { useState, useEffect } from "react";
 import InstructionPopup from "@/app/_components/InstructionPopup";
 import Image from "next/image";
+import Tilt from 'react-parallax-tilt';
 
 // Define types for lyricsData
 type LyricsGroup = {
@@ -98,10 +99,12 @@ const lyricsData: LyricsData = {
 };
 
 export default function SinglePage() {
-  const { singleId } = useParams<{ singleId: string }>();
+  const params = useParams<{ singleId: string }>();
+  const singleId = params?.singleId;
   const single = singles.find((s) => s.id === singleId);
 
   const [selectedLyric, setSelectedLyric] = useState<number | null>(null);
+  const [selectedNote, setSelectedNote] = useState<string | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
@@ -117,54 +120,69 @@ export default function SinglePage() {
   }, []);
 
   if (!single) {
-    return <div>Single not found</div>;
+    return (
+      <main className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-gray-700 dark:text-gray-300">
+          Single not found. Please check the URL or go back to the discography.
+        </p>
+      </main>
+    );
   }
 
-  const lyrics = lyricsData[singleId] || [];
+  const lyrics = singleId ? lyricsData[singleId] || [] : [];
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
       <InstructionPopup />
       <Container>
-        <div className="max-w-6xl mx-auto py-12">
-          <button
-            onClick={() => window.history.back()}
-            className="inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors mb-8"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-5 h-5 mr-2"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to Discography
-          </button>
-
+        <div className="max-w-6xl mx-auto py-8">
           <div className="flex flex-col md:flex-row gap-8 items-start">
-            {/* Single Cover */}
-            <div className="relative aspect-square w-full md:w-1/3 rounded-lg overflow-hidden">
-              <Image
-                src={single.coverImage}
-                alt={`Cover of ${single.title}`}
-                fill
-                className="object-cover"
-              />
-            </div>
+            {/* Single Cover and Sticky Section Wrapper */}
+            <div className="md:sticky md:top-16 md:self-start flex flex-col gap-6 w-full md:w-1/3">
+              {/* Back Button - Moved to sticky section */}
+              <button
+                onClick={() => window.history.back()}
+                className="inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={2}
+                  stroke="currentColor"
+                  className="w-5 h-5 mr-2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to Discography
+              </button>
+              
+              {/* Single Cover with Tilt Effect */}
+              <Tilt
+                className="aspect-square rounded-lg overflow-hidden shadow-lg"
+                tiltMaxAngleX={15}
+                tiltMaxAngleY={15}
+                glareEnable={true}
+                glareMaxOpacity={0.6}
+                glareColor="#ffffff"
+                glarePosition="all"
+                transitionSpeed={250}
+              >
+                <Image
+                  src={single.coverImage}
+                  alt={`Cover of ${single.title}`}
+                  fill
+                  className="object-cover"
+                />
+              </Tilt>
 
-            {/* Single Details */}
-            <div className="flex-1">
-              {/* Sticky Section */}
+              {/* Sticky Info Section */}
               <div
-                className="sticky top-20 z-10 animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 mb-8"
+                className="animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 w-full"
                 style={{
                   backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`,
                 }}
               >
-                {/* Progress Bar */}
                 <div
                   className="h-1 rounded"
                   style={{
@@ -173,19 +191,20 @@ export default function SinglePage() {
                   }}
                 ></div>
 
-                {/* Title and Details */}
-                <h1 className="text-3xl md:text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">
                   {single.title}
                 </h1>
-                <p className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">By Klense</p>
+                <p className="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">
+                  By Klense
+                </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">{single.releaseYear}</p>
                 <p className="text-sm text-gray-700 dark:text-gray-300">{single.duration}</p>
               </div>
 
-              {/* Listen Now Section */}
-              <div className="mb-8">
+              {/* Listen Now Section - Moved to sticky column */}
+              <div className="w-full">
                 <h2 className="text-xl font-semibold mb-4">Listen Now</h2>
-                <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                   {/* Spotify */}
                   <a
                     href={`https://open.spotify.com/track/${single.id}`}
@@ -235,37 +254,77 @@ export default function SinglePage() {
                   </a>
                 </div>
               </div>
+            </div>
+
+            {/* Single Details - Right Column */}
+            <div className="flex-1 w-full">
+              {/* Behind the Single */}
+              <div className="mb-8">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Behind the Single</h2>
+                <div className="space-y-4">
+                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                    <strong>{single.title}</strong> is a bold statement of Klense's artistry, blending intricate wordplay with a hard-hitting beat. This single showcases his ability to balance technical skill with raw emotion.
+                  </p>
+                    <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                    The track dives into themes of self-confidence, perseverance, and artistic growth, offering listeners a glimpse into Klense's creative process and personal journey.
+                    </p>
+                </div>
+              </div>
 
               {/* Lyrics Section */}
-              <h2 className="text-2xl font-semibold mb-4">Lyrics</h2>
-              <div className="space-y-8">
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4">Lyrics</h2>
+              <div className="space-y-4">
                 {lyrics.map((group, index) => (
                   <div
                     key={index}
-                    className={`space-y-4 p-4 rounded-lg transition-all ${
+                    className={`space-y-2 p-4 rounded-lg transition-all ${
                       selectedLyric === index
-                        ? "bg-blue-100 dark:bg-blue-800 text-blue-900 dark:text-blue-100"
+                        ? "bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-[var(--text-primary)] shadow-lg"
                         : "hover:bg-gray-100 dark:hover:bg-gray-700"
                     }`}
                     onClick={() => setSelectedLyric(selectedLyric === index ? null : index)}
                   >
-                    {/* Group of 4 Lines */}
+                    {/* Group of Lines */}
                     <div className="space-y-2">
                       {group.lines.map((line, lineIndex) => (
-                        <p key={lineIndex} className="text-sm">
+                        <p
+                          key={lineIndex}
+                          className={`text-sm sm:text-base font-medium leading-relaxed ${
+                            selectedLyric === index
+                              ? "text-[var(--text-primary)]"
+                              : "text-gray-800 dark:text-gray-200"
+                          }`}
+                        >
                           {line || <br />}
                         </p>
                       ))}
                     </div>
 
-                    {/* Explanation for the Group */}
+                    {/* Explanation */}
                     {selectedLyric === index && (
                       <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{group.explanation}</p>
+                        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic">
+                          {group.explanation}
+                        </p>
                       </div>
                     )}
                   </div>
                 ))}
+                
+                {/* Track Breakdown */}
+                <button
+                  onClick={() => setSelectedNote(selectedNote === single.id ? null : single.id)}
+                  className="mt-6 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition"
+                >
+                  {selectedNote === single.id ? "Hide Track Breakdown" : "Show Track Breakdown"}
+                </button>
+                {selectedNote === single.id && (
+                  <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg space-y-4">
+                    <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                      <strong>{single.title}</strong> features a production style that blends intricate beats with Klense's signature flow. The instrumental's dynamic bassline and melodic undertones complement the lyrical content perfectly, creating a cohesive listening experience that showcases Klense's growth as an artist.
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
