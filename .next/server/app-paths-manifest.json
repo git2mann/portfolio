@@ -1,7 +1,0 @@
-{
-  "/page": "app/page.js",
-  "/music/page": "app/music/page.js",
-  "/music/eps/[epId]/page": "app/music/eps/[epId]/page.js",
-  "/music/[albumId]/page": "app/music/[albumId]/page.js",
-  "/music/singles/[singleId]/page": "app/music/singles/[singleId]/page.js"
-}
