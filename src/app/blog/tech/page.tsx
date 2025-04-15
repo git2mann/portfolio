@@ -7,17 +7,17 @@ import { Post } from "@/interfaces/post";
 export default async function TechBlogPage({
   searchParams,
 }: {
-  searchParams?: Record<string, string | undefined>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   // Get tag from search params
   const tag = searchParams?.tag;
   const pageParam = searchParams?.page;
-  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+  const currentPage = pageParam && typeof pageParam === 'string' ? parseInt(pageParam, 10) : 1;
 
   // Fetch posts filtered by tag if provided
-  const techPosts = tag 
-    ? getPostsByCategory("Tech", tag) 
-    : getPostsByCategory("Tech");
+  const techPosts = Array.isArray(tag)
+    ? getPostsByCategory("Tech", tag[0])
+    : getPostsByCategory("Tech", tag);
 
   // Get only tags that belong to Tech category posts
   const techTags = getTechTags();
@@ -76,54 +76,27 @@ export default async function TechBlogPage({
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Explore the latest in technology, programming, and digital innovation.
               </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/blog/tech"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    !searchParams?.category
-                      ? "bg-purple-600 text-white hover:bg-purple-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={!searchParams?.category ? "page" : undefined}
-                >
-                  All Posts
-                </Link>
-                <Link
-                  href="/blog/tech?category=programming"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    searchParams?.category === "programming"
-                      ? "bg-purple-600 text-white hover:bg-purple-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={searchParams?.category === "programming" ? "page" : undefined}
-                >
-                  Programming
-                </Link>
-                <Link
-                  href="/blog/tech?category=ai"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    searchParams?.category === "ai"
-                      ? "bg-purple-600 text-white hover:bg-purple-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={searchParams?.category === "ai" ? "page" : undefined}
-                >
-                  AI & ML
-                </Link>
-                <Link
-                  href="/blog/tech?category=webdev"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    searchParams?.category === "webdev"
-                      ? "bg-purple-600 text-white hover:bg-purple-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={searchParams?.category === "webdev" ? "page" : undefined}
-                >
-                  Web Dev
-                </Link>
-              </div>
             </div>
           </header>
+
+          {/* Search Bar */}
+          <div className="mb-12 max-w-xl mx-auto">
+            <div className="relative">
+              <form action="/search" method="GET">
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="Search tech articles..."
+                  className="w-full py-3 pl-12 pr-4 text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+              </form>
+            </div>
+          </div>
 
           {/* Tag Filtering - Only showing Tech Tags */}
           {techTags.length > 0 && (
@@ -156,25 +129,6 @@ export default async function TechBlogPage({
               </div>
             </div>
           )}
-
-          {/* Search Bar */}
-          <div className="mb-12 max-w-xl mx-auto">
-            <div className="relative">
-              <form action="/search" method="GET">
-                <input
-                  type="text"
-                  name="q"
-                  placeholder="Search tech articles..."
-                  className="w-full py-3 pl-12 pr-4 text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500"
-                />
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-              </form>
-            </div>
-          </div>
 
           {/* Enhanced Featured Post Section - Only show if not filtered or if filtered and has posts */}
           {featuredPost && (
@@ -216,13 +170,12 @@ export default async function TechBlogPage({
                           {featuredPost.tags && featuredPost.tags.length > 0 && (
                             <div className="flex flex-wrap gap-2 mr-auto">
                               {featuredPost.tags.map(tagItem => (
-                                <Link 
-                                  key={tagItem} 
-                                  href={`/blog/tech?tag=${tagItem}`}
-                                  className="px-2 py-1 text-xs font-medium bg-purple-500/50 hover:bg-purple-500/70 rounded-full transition-colors"
+                                <span 
+                                  key={tagItem}
+                                  className="px-2 py-1 text-xs font-medium bg-purple-500/50 rounded-full"
                                 >
                                   {tagItem}
-                                </Link>
+                                </span>
                               ))}
                             </div>
                           )}
@@ -296,14 +249,12 @@ export default async function TechBlogPage({
                       {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
                           {post.tags.map((tagItem: string) => (
-                          <Link 
-                            key={tagItem} 
-                            href={`/blog/tech?tag=${tagItem}`}
-                            className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-600 dark:bg-purple-700/30 dark:text-purple-200 rounded-full hover:bg-purple-200 dark:hover:bg-purple-600/40 transition-colors"
-                            onClick={(e: React.MouseEvent<HTMLAnchorElement>) => e.stopPropagation()}
+                          <span 
+                            key={tagItem}
+                            className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-600 dark:bg-purple-700/30 dark:text-purple-200 rounded-full"
                           >
                             {tagItem}
-                          </Link>
+                          </span>
                           ))}
                         </div>
                       )}

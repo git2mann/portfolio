@@ -7,17 +7,17 @@ import { Post } from "@/interfaces/post";
 export default async function MusicBlogPage({
   searchParams,
 }: {
-  searchParams?: Record<string, string | undefined>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   // Get tag from search params
   const tag = searchParams?.tag;
   const pageParam = searchParams?.page;
-  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
+  const currentPage = pageParam && typeof pageParam === 'string' ? parseInt(pageParam, 10) : 1;
 
   // Fetch posts filtered by tag if provided
-  const musicPosts = tag 
-    ? getPostsByCategory("Music", tag) 
-    : getPostsByCategory("Music");
+  const musicPosts = Array.isArray(tag)
+    ? getPostsByCategory("Music", tag[0]) // Use the first tag if multiple are provided
+    : getPostsByCategory("Music", tag);
 
   // Get only tags that belong to Music category posts
   const musicTags = getMusicTags();
@@ -76,54 +76,27 @@ export default async function MusicBlogPage({
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Discover the latest in music reviews, artist spotlights, and industry insights.
               </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <Link
-                  href="/blog/music"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    !searchParams?.category
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={!searchParams?.category ? "page" : undefined}
-                >
-                  All Posts
-                </Link>
-                <Link
-                  href="/blog/music?category=reviews"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    searchParams?.category === "reviews"
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={searchParams?.category === "reviews" ? "page" : undefined}
-                >
-                  Reviews
-                </Link>
-                <Link
-                  href="/blog/music?category=artists"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    searchParams?.category === "artists"
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={searchParams?.category === "artists" ? "page" : undefined}
-                >
-                  Artists
-                </Link>
-                <Link
-                  href="/blog/music?category=news"
-                  className={`px-4 py-2 rounded-full font-medium transition-colors ${
-                    searchParams?.category === "news"
-                      ? "bg-blue-600 text-white hover:bg-blue-700"
-                      : "bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700"
-                  }`}
-                  aria-current={searchParams?.category === "news" ? "page" : undefined}
-                >
-                  News
-                </Link>
-              </div>
             </div>
           </header>
+
+          {/* Search Bar */}
+          <div className="mb-12 max-w-xl mx-auto">
+            <div className="relative">
+              <form action="/search" method="GET">
+                <input
+                  type="text"
+                  name="q"
+                  placeholder="Search music articles..."
+                  className="w-full py-3 pl-12 pr-4 text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+              </form>
+            </div>
+          </div>
 
           {/* Tag Filtering - Only showing Music Tags */}
           {musicTags.length > 0 && (
@@ -156,25 +129,6 @@ export default async function MusicBlogPage({
               </div>
             </div>
           )}
-
-          {/* Search Bar */}
-          <div className="mb-12 max-w-xl mx-auto">
-            <div className="relative">
-              <form action="/search" method="GET">
-                <input
-                  type="text"
-                  name="q"
-                  placeholder="Search music articles..."
-                  className="w-full py-3 pl-12 pr-4 text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-              </form>
-            </div>
-          </div>
 
           {/* Enhanced Featured Post Section - Only show if not filtered or if filtered and has posts */}
           {featuredPost && (
@@ -295,14 +249,12 @@ export default async function MusicBlogPage({
                       {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
                           {post.tags.map((tagItem: string) => (
-                          <Link 
-                            key={tagItem} 
-                            href={`/blog/music?tag=${tagItem}`}
-                            className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-600 dark:bg-blue-700/30 dark:text-blue-200 rounded-full hover:bg-blue-200 dark:hover:bg-blue-600/40 transition-colors"
-
+                          <span 
+                            key={tagItem}
+                            className="px-2 py-0.5 text-xs font-medium bg-blue-100 text-blue-600 dark:bg-blue-700/30 dark:text-blue-200 rounded-full"
                           >
                             {tagItem}
-                          </Link>
+                          </span>
                           ))}
                         </div>
                       )}
