@@ -7,11 +7,13 @@ import { Post } from "@/interfaces/post";
 export default async function TechBlogPage({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<any> | undefined;
 }) {
-  // Get tag and page from search params
-  const tag = Array.isArray(searchParams?.tag) ? searchParams?.tag[0] : searchParams?.tag;
-  const pageParam = Array.isArray(searchParams?.page) ? searchParams?.page[0] : searchParams?.page;
+  const resolvedSearchParams = await searchParams;
+
+  // Get tag and page from resolved search params
+  const tag = Array.isArray(resolvedSearchParams?.tag) ? resolvedSearchParams?.tag[0] : resolvedSearchParams?.tag;
+  const pageParam = Array.isArray(resolvedSearchParams?.page) ? resolvedSearchParams?.page[0] : resolvedSearchParams?.page;
   const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
 
   // Fetch posts filtered by tag if provided
