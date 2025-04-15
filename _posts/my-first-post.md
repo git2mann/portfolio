@@ -8,7 +8,7 @@ author:
   picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/blog-post-covers/selina-farzaei-x2QHTVg2HqA-unsplash.jpg"
-tags: ["JavaScript", "Programming", "Tech"]
+tags: ["Introduction", "Music", "Art", "Projects"]
 category: "Tech"
 ---
 

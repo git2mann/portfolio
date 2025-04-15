@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A behind-the-scenes look at how I built my personal portfolio and blog using Next.js, TypeScript, and Tailwind CSS." />
+  <meta name="author" content="Leon Nduati" />
+  <meta name="keywords" content="Tech, Portfolio, Next.js, TypeScript, Tailwind CSS, Web Development, Tutorial" />
+  <title>Building My Portfolio: A Technical Deep Dive</title>
+  <link rel="stylesheet" href="/assets/styles/blog.css" />
+
+  <!-- Metadata for the post -->
+  <script type="application/json" id="post-metadata">
+    {
+      "title": "Building My Portfolio: A Technical Deep Dive",
+      "excerpt": "A behind-the-scenes look at how I built my personal portfolio and blog using Next.js, TypeScript, and Tailwind CSS.",
+      "coverImage": "/assets/blog/blog-post-covers/amsterdam-city-archives-URnyBZCnlIs-unsplash.jpg",
+      "date": "2025-04-15T12:00:00.000Z",
+      "author": {
+        "name": "Leon Nduati",
+        "picture": "/assets/blog/authors/IMG_7908.PNG"
+      },
+      "ogImage": {
+        "url": "/assets/blog/blog-post-covers/amsterdam-city-archives-URnyBZCnlIs-unsplash.jpg"
+      },
+      "tags": ["Tech", "Portfolio", "Next.js", "TypeScript", "Tailwind CSS", "Web Development", "Tutorial"],
+      "category": "Tech"
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      background-color: #f9fafb;
+      color: #111827;
+      margin: 0;
+    }
+    .post-content code {
+      font-family: 'Fira Code', monospace;
+      background-color: #e5e7eb;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.25rem;
+    }
+    .post-footer {
+      margin-top: 3rem;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <article class="blog-post">
+    <header class="post-header">
+      <h1 class="post-title">Building My Portfolio: A Technical Deep Dive</h1>
+      <p class="post-meta">
+        <span class="post-date">Published on April 15, 2025</span> | 
+        <span class="post-author">By Leon Nduati</span>
+      </p>
+      
+    </header>
+
+    <section class="post-content">
+      <p>
+        Creating a personal portfolio that blends music, visual art, and technology into one seamless experience was both thrilling and challenging. In this post, I’ll share the journey of building this site; from picking the stack to deploying it live.
+      </p>
+
+      <h2>Technology Stack</h2>
+      <p>
+        I built this portfolio with performance, flexibility, and aesthetics in mind:
+      </p>
+      <ul>
+        <li><strong>Framework:</strong> <a href="https://nextjs.org/" target="_blank">Next.js</a> (v15) for hybrid rendering and seamless routing.</li>
+        <li><strong>Language:</strong> <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a> to catch bugs early and improve dev speed.</li>
+        <li><strong>Styling:</strong> <a href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a> for utility-first styling and responsive design.</li>
+        <li><strong>Content:</strong> Markdown, powered by <a href="https://github.com/jonschlinkert/gray-matter" target="_blank">Gray Matter</a> for metadata and <code>remark</code> for rendering.</li>
+        <li><strong>Audio:</strong> <a href="https://wavesurfer-js.org/" target="_blank">WaveSurfer.js</a> for interactive, customizable audio players.</li>
+        <li><strong>Deployment:</strong> <a href="https://vercel.com/" target="_blank">Vercel</a> with GitHub integration for instant CI/CD workflows.</li>
+      </ul>
+
+      <h2>Key Features</h2>
+      <ul>
+        <li><strong>Markdown Blog:</strong> Dynamic routes, metadata support, and tag filtering.</li>
+        <li><strong>Music Section:</strong> Waveform audio previews, collapsible lyrics, and release metadata.</li>
+        <li><strong>Art Gallery:</strong> Responsive layouts showcasing digital and traditional works.</li>
+        <li><strong>Theme Toggle:</strong> Light, Dark, Ocean, and more—customized via Tailwind config.</li>
+        <li><strong>Fully Responsive:</strong> Tailored UI for mobile, tablet, and desktop users.</li>
+      </ul>
+
+      <h2>Development Process</h2>
+
+      <h3>1. Setting Up the Project</h3>
+      <pre><code>npx create-next-app@latest portfolio --typescript</code></pre>
+      <p>This bootstrapped a modern Next.js 15 project with TypeScript support right out of the gate.</p>
+
+      <h3>2. Styling with Tailwind CSS</h3>
+      <pre><code>npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init</code></pre>
+      <p>Then I extended the <code>tailwind.config.js</code> to include custom color themes and breakpoints.</p>
+
+      <h3>3. Blog Functionality</h3>
+      <p>Each post is written in Markdown with front matter:</p>
+      <pre><code>---
+title: "Post Title"
+excerpt: "Short description of the post."
+tags: ["Tag1", "Tag2"]
+category: "Category"
+---</code></pre>
+      <p><code>gray-matter</code> parses this data, while <code>remark</code> handles the rendering pipeline.</p>
+
+      <h3>4. Music Portfolio</h3>
+      <p>Using WaveSurfer.js, I added waveform-based audio players with custom themes:</p>
+      <pre><code>import WaveSurfer from "wavesurfer.js";
+
+const waveform = WaveSurfer.create({
+  container: "#waveform",
+  waveColor: "#7c3aed",
+  progressColor: "#9333ea",
+  height: 80,
+  responsive: true,
+});</code></pre>
+
+<p>I eventually deprecated this feature, but found it fun to implement at the time.</p>
+
+      <h3>5. Deployment with Vercel</h3>
+      <p>Integrated with GitHub for continuous deployment:</p>
+      <pre><code>git push origin main</code></pre>
+      <p>Each push triggers an automatic build and deploy on Vercel.</p>
+
+      <h2>Challenges and Lessons Learned</h2>
+      <ul>
+        <li><strong>Dynamic Routing:</strong> Next.js dynamic routes made things modular, but organizing slugs and file structures early was crucial.</li>
+        <li><strong>Type Safety:</strong> TypeScript's benefits really showed up in edge cases; worth the learning curve.</li>
+        <li><strong>Performance:</strong> Lazy loading images and audio components helped keep things snappy, even on slower connections.</li>
+        <li><strong>Content Management:</strong> Writing posts in Markdown worked well, but abstracting logic for front matter handling saved me headaches later.</li>
+      </ul>
+
+      <h2>Conclusion</h2>
+      <p>
+        This portfolio is more than a website; it's a reflection of my work, identity, and growth. Whether you're a developer, artist, or curious visitor, I hope this breakdown helps you craft something of your own.
+      </p>
+      <p>
+        Dive into the <a href="https://github.com/git2mann/portfolio" target="_blank" rel="noopener noreferrer">source code on GitHub</a>, remix it, or reach out if you'd like to chat more.
+      </p>
+    </section>
+
+    <footer class="post-footer">
+      <p>Thanks for reading! Stay tuned for more behind-the-scenes looks at my work and process.</p>
+      <p>— <b>Leon Nduati</b> <em><br>(You may also know me as <b><code>git2mann</code></b>)</em>.</p>
+    </footer>
+  </article>
+</body>
+</html>

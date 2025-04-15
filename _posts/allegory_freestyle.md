@@ -8,7 +8,7 @@ author:
   picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg"
-tags: ["Music", "New Release", "Hip-Hop", "Freestyle"]
+tags: ["Announcement", "Single", "New Release", "Hip-Hop", "Freestyle", "Rap"]
 contentType: "audio"
 mediaUrl: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg"
 ---
