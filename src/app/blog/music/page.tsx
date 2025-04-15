@@ -1,5 +1,5 @@
 import Container from "@/app/_components/container";
-import { getAllTags, getAllPosts } from "@/lib/api";
+import { getAllPosts } from "@/lib/api";
 import Link from "next/link";
 import Image from "next/image";
 import { Post } from "@/interfaces/post";
@@ -9,15 +9,13 @@ export default async function MusicBlogPage({
 }: {
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  // Get tag from search params
-  const tag = searchParams?.tag;
-  const pageParam = searchParams?.page;
-  const currentPage = pageParam && typeof pageParam === 'string' ? parseInt(pageParam, 10) : 1;
+  // Get tag and page from search params
+  const tag = Array.isArray(searchParams?.tag) ? searchParams?.tag[0] : searchParams?.tag;
+  const pageParam = Array.isArray(searchParams?.page) ? searchParams?.page[0] : searchParams?.page;
+  const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
 
   // Fetch posts filtered by tag if provided
-  const musicPosts = Array.isArray(tag)
-    ? getPostsByCategory("Music", tag[0]) // Use the first tag if multiple are provided
-    : getPostsByCategory("Music", tag);
+  const musicPosts = getPostsByCategory("Music", tag);
 
   // Get only tags that belong to Music category posts
   const musicTags = getMusicTags();
@@ -27,26 +25,20 @@ export default async function MusicBlogPage({
   const totalPages = Math.ceil((musicPosts.length - 1) / postsPerPage);
 
   // Get featured post (first post)
-  const featuredPost: { tags: string[]; [key: string]: any } = {
-    ...musicPosts[0],
-    tags: musicPosts[0]?.tags || [],
-  };
+  const featuredPost: Post | undefined = musicPosts[0];
 
   // Get paginated posts (excluding featured post)
   const startIndex = (currentPage - 1) * postsPerPage;
   const paginatedPosts = musicPosts.slice(1).slice(startIndex, startIndex + postsPerPage);
 
   // Generate array of page numbers
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <Container>
         <div className="max-w-6xl mx-auto py-12">
-          {/* Back Button - Using Link instead of button with onClick */}
+          {/* Back Button */}
           <div className="mb-8">
             <Link
               href="/blog"
@@ -65,13 +57,13 @@ export default async function MusicBlogPage({
               Back to Blog Menu
             </Link>
           </div>
-        
+
           {/* Enhanced Header */}
           <header className="mb-16">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight mb-6 text-center text-gray-800 dark:text-white animate-fade-in">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight mb-6 text-center text-gray-800 dark:text-white">
               Music Blog
             </h1>
-            
+
             <div className="max-w-3xl mx-auto text-center">
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
                 Discover the latest in music reviews, artist spotlights, and industry insights.
@@ -79,26 +71,7 @@ export default async function MusicBlogPage({
             </div>
           </header>
 
-          {/* Search Bar */}
-          <div className="mb-12 max-w-xl mx-auto">
-            <div className="relative">
-              <form action="/search" method="GET">
-                <input
-                  type="text"
-                  name="q"
-                  placeholder="Search music articles..."
-                  className="w-full py-3 pl-12 pr-4 text-gray-700 dark:text-gray-300 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-              </form>
-            </div>
-          </div>
-
-          {/* Tag Filtering - Only showing Music Tags */}
+          {/* Tag Filtering */}
           {musicTags.length > 0 && (
             <div className="mb-12">
               <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Tags</h2>
@@ -130,7 +103,7 @@ export default async function MusicBlogPage({
             </div>
           )}
 
-          {/* Enhanced Featured Post Section - Only show if not filtered or if filtered and has posts */}
+          {/* Featured Post */}
           {featuredPost && (
             <div className="mb-16">
               <Link href={`/posts/${featuredPost.slug}`} className="block group">
@@ -353,8 +326,9 @@ function getMusicTags(): string[] {
   return Array.from(new Set(tags)); // Remove duplicates
 }
 
+// Helper function to get posts by category and optionally filter by tag
 function getPostsByCategory(category: string, tag?: string): Post[] {
-  return getAllPosts().filter((post) => 
-    post.category === category && (!tag || post.tags?.includes(tag))
+  return getAllPosts().filter(
+    (post) => post.category === category && (!tag || post.tags?.includes(tag))
   );
 }
