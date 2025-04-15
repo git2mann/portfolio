@@ -8,6 +8,7 @@ author:
   picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/blog-post-covers/jawz-9Ut0azurqg0-unsplash.jpg"
+tags: ["Inspiration", "Independent Artist", "Creativity", "Motivation", "Tips"]
 ---
 
 # How to Stay Inspired as an Independent Artist

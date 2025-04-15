@@ -8,6 +8,7 @@ author:
   picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/blog-post-covers/jabber-visuals-PlUQQyIMO8U-unsplash.jpg"
+tags: ["Creativity", "Inspiration", "Process", "Productivity", "Tips"]
 ---
 
 # Finding Inspiration: My Creative Process

@@ -8,6 +8,7 @@ author:
   picture: "/assets/blog/authors/IMG_7908.PNG"
 ogImage:
   url: "/assets/blog/blog-post-covers/ivan-jermakov-N1I6IgDOGJs-unsplash.jpg"
+tags: ["Production", "Tips", "Beginners", "Creativity", "Growth"]
 ---
 
 # 5 Essential Music Production Tips for Beginners
