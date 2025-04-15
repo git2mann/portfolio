@@ -39,7 +39,7 @@ export function getPostBySlug(slug: string) {
 
   if (contentType === 'markdown') {
     const { data, content } = matter(fileContents);
-    return { ...data, slug: realSlug, content, contentType } as Post;
+    return { ...data, slug: realSlug, content, contentType, tags: data.tags || [], } as Post;
   }
 
   // Extract metadata from the <script> tag in HTML
@@ -74,4 +74,14 @@ export function getAllPosts(): Post[] {
  */
 export function getPostsByCategory(category: string): Post[] {
   return getAllPosts().filter((post) => post.category === category);
+}
+
+/**
+ * Get all unique tags from posts
+ * @returns {string[]} Array of unique tags
+ */
+export function getAllTags(): string[] {
+  const posts = getAllPosts();
+  const tags = posts.flatMap((post) => post.tags || []);
+  return Array.from(new Set(tags)); // Remove duplicates
 }

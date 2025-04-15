@@ -501,3 +501,21 @@ input[type="range"]:focus {
 input[type="range"]:focus::-webkit-slider-thumb {
   box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
 }
+
+/* Theme-specific container styles */
+/*
+.theme-light .container {
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+.theme-dark .container {
+  background-color: var(--background-secondary);
+  color: var(--text-secondary);
+}
+
+.theme-pastel .container {
+  background-color: var(--card-background);
+  color: var(--text-primary);
+}
+*/

@@ -53,7 +53,7 @@ export default function RootLayout({
       >
         <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 via-gray-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-slate-900"></div>
         <Header />
-        <div className="min-h-screen pt-20 animate-fade-in">{children}</div>
+        <div className="animate-fade-in">{children}</div>
         <Footer />
       </body>
     </html>

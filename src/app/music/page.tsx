@@ -5,42 +5,55 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Container from "@/app/_components/container";
 import { albums, eps, singles } from "@/data/music";
+import { FiHeadphones, FiCalendar, FiClock } from 'react-icons/fi';
 
 export default function MusicPage() {
   const [hoveredAlbum, setHoveredAlbum] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('discography');
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
-      <Container>
-        {/* Hero Section */}
-        <section className="relative h-[50vh] sm:h-[60vh] mb-16 rounded-xl overflow-hidden">
+    <main className="min-h-screen">
+      {/* Hero Section with Parallax Effect */}
+      <div className="relative h-[60vh] overflow-hidden">
+        <div className="absolute inset-0">
           <Image
             src="/assets/blog/blog-post-covers/jawz-9Ut0azurqg0-unsplash.jpg"
             alt="Music Hero"
             fill
-            className="object-cover"
-            sizes="100vw"
+            className="object-cover transform scale-105"
+            style={{
+              transform: 'scale(1.1)',
+              filter: 'brightness(0.7)'
+            }}
+            priority
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="text-center text-white px-4">
-              <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-4">My Music</h1>
-              <p className="text-lg sm:text-xl md:text-2xl">Exploring sound, pushing boundaries</p>
+        </div>
+        <Container>
+          <div className="relative h-full flex items-center">
+            <div className="max-w-3xl">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
+                My Music
+              </h1>
+              <p className="text-xl md:text-2xl text-gray-200 animate-fade-in delay-200">
+                Exploring sound, pushing boundaries, and creating experiences through music.
+              </p>
             </div>
           </div>
-        </section>
+        </Container>
+      </div>
 
+      <Container>
         {/* Navigation Tabs */}
-        <div className="flex justify-center mb-12">
-          <nav className="flex space-x-4 bg-white dark:bg-slate-800 rounded-lg p-2 px-4 overflow-x-auto scrollbar-hide">
+        <div className="sticky top-16 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg py-4 -mt-16 rounded-lg shadow-lg">
+          <nav className="flex flex-wrap justify-center gap-2 md:space-x-4">
             {['discography', 'featured', 'shows', 'videos', 'production'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 whitespace-nowrap rounded-md transition-colors ${
+                className={`px-4 py-2 rounded-full transition-all duration-300 ${
                   activeTab === tab
-                    ? 'bg-black text-white dark:bg-white dark:text-black'
-                    : 'hover:bg-gray-100 dark:hover:bg-slate-700'
+                    ? 'bg-black text-white dark:bg-white dark:text-black scale-105'
+                    : 'hover:bg-gray-100 dark:hover:bg-slate-800'
                 }`}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -50,97 +63,134 @@ export default function MusicPage() {
         </div>
 
         {/* Dynamic Content Based on Active Tab */}
-        <div className="space-y-16">
+        <div className="mt-12 space-y-16">
           {activeTab === 'discography' && (
-            <section>
-              <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center sm:text-left">Discography</h2>
-
+            <>
               {/* Albums Section */}
-              <div className="mb-16">
-                <h3 className="text-2xl font-semibold mb-6">Albums</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <section>
+                <h2 className="text-3xl md:text-4xl font-bold mb-8">Albums</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {albums.map((album) => (
                     <Link
                       href={`/music/${album.id}`}
                       key={album.id}
-                      className="group relative rounded-lg overflow-hidden shadow-lg bg-white dark:bg-slate-800 transition-transform transform hover:scale-105 focus:scale-105 focus:outline-none"
+                      className="group relative bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                      onMouseEnter={() => setHoveredAlbum(album.id)}
+                      onMouseLeave={() => setHoveredAlbum(null)}
                     >
-                      <div className="relative aspect-square">
+                      <div className="relative aspect-square overflow-hidden rounded-t-xl">
                         <Image
                           src={album.coverImage}
                           alt={`Cover of ${album.title}`}
                           fill
-                          className="object-cover"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
+                        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                          <FiHeadphones className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
                       </div>
-                      <div className="p-4">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">{album.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{album.releaseYear}</p>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{album.description}</p>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {album.title}
+                        </h3>
+                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-3">
+                          <FiCalendar className="mr-2" />
+                          {album.releaseYear}
+                        </div>
+                        <p className="text-gray-700 dark:text-gray-300">{album.description}</p>
                       </div>
                     </Link>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* EPs Section */}
-              <div className="mb-16">
-                <h3 className="text-2xl font-semibold mb-6">EPs</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <section>
+                <h2 className="text-3xl md:text-4xl font-bold mb-8">EPs</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {eps.map((ep) => (
                     <Link
                       href={`/music/eps/${ep.id}`}
                       key={ep.id}
-                      className="group relative rounded-lg overflow-hidden shadow-lg bg-white dark:bg-slate-800 transition-transform transform hover:scale-105 focus:scale-105 focus:outline-none"
+                      className="group relative bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                     >
-                      <div className="relative aspect-square">
+                      <div className="relative aspect-square overflow-hidden rounded-t-xl">
                         <Image
                           src={ep.coverImage}
                           alt={`Cover of ${ep.title}`}
                           fill
-                          className="object-cover"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
+                        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                          <FiHeadphones className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
                       </div>
-                      <div className="p-4">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">{ep.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{ep.releaseYear}</p>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {ep.title}
+                        </h3>
+                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                          <FiCalendar className="mr-2" />
+                          {ep.releaseYear}
+                        </div>
                       </div>
                     </Link>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Singles Section */}
-              <div>
-                <h3 className="text-2xl font-semibold mb-6">Singles</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              <section className="mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-8">Singles</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {singles.map((single) => (
                     <Link
                       href={`/music/singles/${single.id}`}
                       key={single.id}
-                      className="group relative rounded-lg overflow-hidden shadow-lg bg-white dark:bg-slate-800 transition-transform transform hover:scale-105 focus:scale-105 focus:outline-none"
+                      className="group relative bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                     >
-                      <div className="relative aspect-square">
+                      <div className="relative aspect-square overflow-hidden rounded-t-xl">
                         <Image
                           src={single.coverImage}
                           alt={`Cover of ${single.title}`}
                           fill
-                          className="object-cover"
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
+                        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                          <FiHeadphones className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </div>
                       </div>
-                      <div className="p-4">
-                        <h3 className="text-lg sm:text-xl font-bold mb-2">{single.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">{single.releaseYear}</p>
-                        <p className="text-sm text-gray-700 dark:text-gray-300">{single.duration}</p>
+                      <div className="p-6">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {single.title}
+                        </h3>
+                        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                          <div className="flex items-center">
+                            <FiCalendar className="mr-2" />
+                            {single.releaseYear}
+                          </div>
+                          <div className="flex items-center">
+                            <FiClock className="mr-2" />
+                            {single.duration}
+                          </div>
+                        </div>
                       </div>
                     </Link>
                   ))}
                 </div>
-              </div>
-            </section>
+              </section>
+            </>
+          )}
+
+          {activeTab !== 'discography' && (
+            <div className="flex items-center justify-center h-64">
+              <p className="text-lg text-gray-600 dark:text-gray-400">
+                Coming soon! Check back later for {activeTab} content.
+              </p>
+            </div>
           )}
         </div>
       </Container>
