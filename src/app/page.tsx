@@ -20,7 +20,7 @@ export default function Index() {
         
         {/* Hero Section - Main welcome area */}
         <section className="mb-16">
-          <div className="bg-neutral-100 dark:bg-slate-800 rounded-lg p-8 md:p-12">
+          <div className="bg-neutral-100 dark:bg-[var(--background-primary)] rounded-lg p-8 md:p-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-6">Welcome to My Creative Space</h2>
             <p className="text-lg md:text-xl mb-6">
               I'm a creative individual passionate about music, art, and various projects. 
@@ -46,7 +46,7 @@ export default function Index() {
         {/* Featured Sections - Quick links to main content areas */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {/* Music Section */}
-          <div className="border border-neutral-200 dark:border-slate-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+          <div className="border border-neutral-200 dark:border-[var(--border-color)] rounded-lg p-6 hover:shadow-md transition-shadow">
             <h3 className="text-2xl font-bold mb-4">Music</h3>
             <p className="mb-4">Check out my latest musical creations, releases, and performances.</p>
             <Link href="/music" className="font-bold hover:underline">
@@ -55,7 +55,7 @@ export default function Index() {
           </div>
           
           {/* Art Section */}
-          <div className="border border-neutral-200 dark:border-slate-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+          <div className="border border-neutral-200 dark:border-[var(--border-color)] rounded-lg p-6 hover:shadow-md transition-shadow">
             <h3 className="text-2xl font-bold mb-4">Art</h3>
             <p className="mb-4">Explore my artwork, illustrations, and creative visual projects.</p>
             <Link href="/art" className="font-bold hover:underline">
@@ -64,7 +64,7 @@ export default function Index() {
           </div>
           
           {/* Projects Section */}
-          <div className="border border-neutral-200 dark:border-slate-700 rounded-lg p-6 hover:shadow-md transition-shadow">
+          <div className="border border-neutral-200 dark:border-[var(--border-color)] rounded-lg p-6 hover:shadow-md transition-shadow">
             <h3 className="text-2xl font-bold mb-4">Projects</h3>
             <p className="mb-4">Discover various projects I've been working on across different domains.</p>
             <Link href="/projects" className="font-bold hover:underline">
@@ -78,7 +78,7 @@ export default function Index() {
           <h2 className="text-4xl md:text-5xl font-bold mb-8">Recent Posts</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {allPosts.map((post) => (
-              <div key={post.slug} className="border border-neutral-200 dark:border-slate-700 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+              <div key={post.slug} className="border border-neutral-200 dark:border-[var(--border-color)] rounded-lg overflow-hidden hover:shadow-md transition-shadow">
                 <Link href={`/posts/${post.slug}`}>
                   <Image
                     src={post.coverImage}
@@ -94,7 +94,7 @@ export default function Index() {
                       {post.title}
                     </Link>
                   </h3>
-                  <p className="text-sm mb-4 text-gray-500 dark:text-gray-400">
+                  <p className="text-sm mb-4 text-gray-500 dark:text-[var(--text-secondary)]">
                     {new Date(post.date).toLocaleDateString('en-US', {
                       year: 'numeric',
                       month: 'long',

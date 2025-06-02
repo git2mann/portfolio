@@ -209,8 +209,8 @@ export default function AlbumPage() {
 
   if (!album) {
     return (
-      <main className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-gray-700 dark:text-gray-300">
+      <main className="min-h-screen flex items-center justify-center bg-[var(--background-primary)]">
+        <p className="text-lg text-[var(--text-secondary)]">
           Album not found. Please check the URL or go back to the discography.
         </p>
       </main>
@@ -218,7 +218,7 @@ export default function AlbumPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
+    <main className="min-h-screen bg-[var(--background-primary)]">
       <InstructionPopup />
 
       <Container>
@@ -229,7 +229,7 @@ export default function AlbumPage() {
               {/* Back Button - Moved to sticky section */}
               <button
                 onClick={() => window.history.back()}
-                className="inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+                className="inline-flex items-center text-blue-500 hover:text-blue-600 font-medium transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +265,7 @@ export default function AlbumPage() {
 
               {/* Sticky Section */}
               <div
-                className="animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 w-full"
+                className="animate-gradient-x backdrop-blur-md border border-[var(--border-color)] rounded-lg shadow-lg p-6 w-full"
                 style={{
                   backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`,
                 }}
@@ -278,19 +278,19 @@ export default function AlbumPage() {
                   }}
                 ></div>
 
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-[var(--text-primary)]">
                   {album.title}
                 </h1>
-                <p className="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-base sm:text-lg font-medium text-[var(--text-secondary)] mb-4">
                   By Klense
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{album.releaseYear}</p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">{albumDuration}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{album.releaseYear}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{albumDuration}</p>
               </div>
               
               {/* Listen Now Section */}
               <div className="w-full">
-                <h2 className="text-xl font-semibold mb-4">Listen Now</h2>
+                <h2 className="text-xl font-semibold mb-4 text-[var(--text-primary)]">Listen Now</h2>
                 <div className="grid grid-cols-3 gap-4">
                   {/* Spotify, Apple Music, and YouTube Links */}
                   {album.id === "1" && (
@@ -439,7 +439,7 @@ export default function AlbumPage() {
             <div className="flex-1 w-full">
               {/* Behind the Album */}
               <div className="mb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Behind the Album</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Behind the Album</h2>
                 <div className="space-y-4">
                   {album.id === "squealer" ? (
                     <>
@@ -506,20 +506,20 @@ export default function AlbumPage() {
               </div>
 
               {/* Tracklist Section */}
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4">Tracklist</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Tracklist</h2>
               <div className="space-y-4 w-full">
                 {album.songs.map((song) => (
-                  <div key={song.id} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <div key={song.id} className="border-b border-[var(--border-color)] pb-4">
                     {/* Track Title */}
                     <button
                       onClick={() => setSelectedTrack(selectedTrack === song.id ? null : song.id)}
-                      className="w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
+                      className="w-full text-left py-2 px-4 hover:bg-[var(--hover-background)] rounded-lg transition"
                     >
                       <div className="flex justify-between items-center">
-                        <span className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">
+                        <span className="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">
                           {song.title}
                         </span>
-                        <span className="text-sm sm:text-base text-gray-500 dark:text-gray-400 italic">
+                        <span className="text-sm sm:text-base text-[var(--text-secondary)] italic">
                           {song.duration}
                         </span>
                       </div>
@@ -528,7 +528,7 @@ export default function AlbumPage() {
                     {/* Lyrics Section */}
                     {selectedTrack === song.id && (
                       <div className="mt-4 space-y-4">
-                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 underline decoration-[var(--gradient-middle)] decoration-2 underline-offset-4">
+                        <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] underline decoration-[var(--gradient-middle)] decoration-2 underline-offset-4">
                           Lyrics
                         </h3>
                         {song.lyrics?.length > 0 ? (
@@ -538,7 +538,7 @@ export default function AlbumPage() {
                               className={`space-y-2 p-4 rounded-lg transition-all ${
                                 selectedLyric === index
                                   ? "bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-[var(--text-primary)] shadow-lg"
-                                  : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                                  : "hover:bg-[var(--hover-background)]"
                               }`}
                               onClick={() => setSelectedLyric(selectedLyric === index ? null : index)}
                             >
@@ -550,7 +550,7 @@ export default function AlbumPage() {
                                     className={`text-sm sm:text-base font-medium leading-relaxed ${
                                       selectedLyric === index
                                         ? "text-[var(--text-primary)]"
-                                        : "text-gray-800 dark:text-gray-200"
+                                        : "text-[var(--text-primary)]"
                                     }`}
                                   >
                                     {line || <br />}
@@ -560,8 +560,8 @@ export default function AlbumPage() {
 
                               {/* Explanation */}
                               {selectedLyric === index && (
-                                <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
-                                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic">
+                                <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg">
+                                  <p className="text-sm sm:text-base text-[var(--text-secondary)] italic">
                                     {entry.explanation}
                                   </p>
                                 </div>
@@ -569,19 +569,19 @@ export default function AlbumPage() {
                             </div>
                           ))
                         ) : (
-                          <p className="text-sm text-gray-500 italic">Lyrics not available.</p>
+                          <p className="text-sm text-[var(--text-secondary)] italic">Lyrics not available.</p>
                         )}
 
                         {/* Track Breakdown */}
                         <button
                           onClick={() => setSelectedNote(selectedNote === song.id ? null : song.id)}
-                          className="mt-4 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition"
+                          className="mt-4 text-blue-500 hover:text-blue-600 font-medium transition"
                         >
                           {selectedNote === song.id ? "Hide Track Breakdown" : "Show Track Breakdown"}
                         </button>
                         {selectedNote === song.id && (
-                          <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg space-y-4">
-                            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                          <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg space-y-4">
+                            <p className="text-sm sm:text-base text-[var(--text-secondary)] italic leading-relaxed">
                               {album.id === "squealer" && song.id === "1" ? (
                                 <>
                                   <strong>{song.title}</strong> serves as the opening track for the album, introducing the central characters and establishing the allegorical framework. The production features atmospheric elements that create tension while Klense's lyrics set the stage for the narrative to unfold. This track is crucial for understanding the conceptual foundation of the entire project.

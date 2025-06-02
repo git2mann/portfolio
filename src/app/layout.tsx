@@ -1,3 +1,4 @@
+import * as React from "react";
 import Footer from "@/app/_components/footer";
 import Header from "@/app/_components/header";
 import { SITE_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
@@ -48,10 +49,10 @@ export default function RootLayout({
         className={cn(
           inter.className,
           playfair.variable,
-          "bg-white text-gray-900 dark:bg-slate-900 dark:text-slate-400 transition-colors duration-300"
+          "bg-[var(--background-primary)] text-[var(--text-primary)] transition-colors duration-300"
         )}
       >
-        <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 via-gray-50 to-white dark:from-gray-900 dark:via-gray-900 dark:to-slate-900"></div>
+        <div className="fixed inset-0 -z-10 bg-[var(--background-primary)]"></div>
         <Header />
         <div className="animate-fade-in">{children}</div>
         <Footer />

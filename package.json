@@ -6,8 +6,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "classnames": "^2.5.1",
     "date-fns": "^3.6.0",
+    "emailjs-com": "^3.2.0",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.482.0",
     "next": "^15.0.2",

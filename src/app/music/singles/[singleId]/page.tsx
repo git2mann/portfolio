@@ -121,8 +121,8 @@ export default function SinglePage() {
 
   if (!single) {
     return (
-      <main className="min-h-screen flex items-center justify-center">
-        <p className="text-lg text-gray-700 dark:text-gray-300">
+      <main className="min-h-screen flex items-center justify-center bg-[var(--background-primary)]">
+        <p className="text-lg text-[var(--text-secondary)]">
           Single not found. Please check the URL or go back to the discography.
         </p>
       </main>
@@ -132,17 +132,17 @@ export default function SinglePage() {
   const lyrics = singleId ? lyricsData[singleId] || [] : [];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
+    <main className="min-h-screen bg-[var(--background-primary)]">
       <InstructionPopup />
       <Container>
         <div className="max-w-6xl mx-auto py-8">
           <div className="flex flex-col md:flex-row gap-8 items-start">
             {/* Single Cover and Sticky Section Wrapper */}
             <div className="md:sticky md:top-16 md:self-start flex flex-col gap-6 w-full md:w-1/3">
-              {/* Back Button - Moved to sticky section */}
+              {/* Back Button */}
               <button
                 onClick={() => window.history.back()}
-                className="inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+                className="inline-flex items-center text-blue-500 hover:text-blue-600 font-medium transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +178,7 @@ export default function SinglePage() {
 
               {/* Sticky Info Section */}
               <div
-                className="animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 w-full"
+                className="animate-gradient-x backdrop-blur-md border border-[var(--border-color)] rounded-lg shadow-lg p-6 w-full"
                 style={{
                   backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`,
                 }}
@@ -191,19 +191,19 @@ export default function SinglePage() {
                   }}
                 ></div>
 
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-[var(--text-primary)]">
                   {single.title}
                 </h1>
-                <p className="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-base sm:text-lg font-medium text-[var(--text-secondary)] mb-4">
                   By Klense
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{single.releaseYear}</p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">{single.duration}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{single.releaseYear}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{single.duration}</p>
               </div>
 
               {/* Listen Now Section */}
               <div className="w-full">
-                <h2 className="text-xl font-semibold mb-4">Listen Now</h2>
+                <h2 className="text-xl font-semibold mb-4 text-[var(--text-primary)]">Listen Now</h2>
                 <div className="grid grid-cols-3 gap-4">
                   {/* Allegory Freestyle */}
                   {single.id === "1" && (
@@ -356,19 +356,19 @@ export default function SinglePage() {
             <div className="flex-1 w-full">
               {/* Behind the Single */}
               <div className="mb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Behind the Single</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Behind the Single</h2>
                 <div className="space-y-4">
-                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)]">
                     <strong>{single.title}</strong> is a bold statement of Klense's artistry, blending intricate wordplay with a hard-hitting beat. This single showcases his ability to balance technical skill with raw emotion.
                   </p>
-                    <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)]">
                     The track dives into themes of self-confidence, perseverance, and artistic growth, offering listeners a glimpse into Klense's creative process and personal journey.
-                    </p>
+                  </p>
                 </div>
               </div>
 
               {/* Lyrics Section */}
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4">Lyrics</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Lyrics</h2>
               <div className="space-y-4">
                 {lyrics.map((group, index) => (
                   <div
@@ -376,7 +376,7 @@ export default function SinglePage() {
                     className={`space-y-2 p-4 rounded-lg transition-all ${
                       selectedLyric === index
                         ? "bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-[var(--text-primary)] shadow-lg"
-                        : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                        : "hover:bg-[var(--hover-background)]"
                     }`}
                     onClick={() => setSelectedLyric(selectedLyric === index ? null : index)}
                   >
@@ -385,11 +385,7 @@ export default function SinglePage() {
                       {group.lines.map((line, lineIndex) => (
                         <p
                           key={lineIndex}
-                          className={`text-sm sm:text-base font-medium leading-relaxed ${
-                            selectedLyric === index
-                              ? "text-[var(--text-primary)]"
-                              : "text-gray-800 dark:text-gray-200"
-                          }`}
+                          className={`text-sm sm:text-base font-medium leading-relaxed text-[var(--text-primary)]`}
                         >
                           {line || <br />}
                         </p>
@@ -398,8 +394,8 @@ export default function SinglePage() {
 
                     {/* Explanation */}
                     {selectedLyric === index && (
-                      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
-                        <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic">
+                      <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg">
+                        <p className="text-sm sm:text-base text-[var(--text-secondary)] italic">
                           {group.explanation}
                         </p>
                       </div>
@@ -410,13 +406,13 @@ export default function SinglePage() {
                 {/* Track Breakdown */}
                 <button
                   onClick={() => setSelectedNote(selectedNote === single.id ? null : single.id)}
-                  className="mt-6 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition"
+                  className="mt-6 text-blue-500 hover:text-blue-600 font-medium transition"
                 >
                   {selectedNote === single.id ? "Hide Track Breakdown" : "Show Track Breakdown"}
                 </button>
                 {selectedNote === single.id && (
-                  <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg space-y-4">
-                    <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                  <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg space-y-4">
+                    <p className="text-sm sm:text-base text-[var(--text-secondary)] italic leading-relaxed">
                       <strong>{single.title}</strong> features a production style that blends intricate beats with Klense's signature flow. The instrumental's dynamic bassline and melodic undertones complement the lyrical content perfectly, creating a cohesive listening experience that showcases Klense's growth as an artist.
                     </p>
                   </div>
