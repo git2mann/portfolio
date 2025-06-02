@@ -90,36 +90,34 @@ export default function BlogPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-slate-900 dark:to-slate-800">
+    <main className="min-h-screen bg-[var(--background-primary)]">
       {/* Hero Section with enhanced background */}
-      <div className="relative bg-white dark:bg-slate-900 py-16 sm:py-20 md:py-32 overflow-hidden">
+      <div className="relative bg-[var(--background-primary)] py-16 sm:py-20 md:py-32 overflow-hidden">
         {/* Simple yet effective grid background with subtle animation */}
         <div className="absolute inset-0 overflow-hidden">
           {/* Responsive grid pattern */}
           <div
-            className="absolute inset-0 opacity-5 dark:opacity-10 transition-opacity duration-500"
+            className="absolute inset-0 opacity-5 transition-opacity duration-500"
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.4' fill-rule='evenodd'%3E%3Cpath d='M0 0h40v40H0V0zm20 20h20v20H20V20zM0 20h20v20H0V20z'/%3E%3C/g%3E%3C/svg%3E")`,
               backgroundSize: 'clamp(30px, 2.5vw, 40px)'
             }}
           />
           
-          {/* Simple gradient overlay with very subtle animation */}
+          {/* Remove or neutralize the blue gradient overlay */}
           <div 
-            className="absolute inset-0 opacity-15 dark:opacity-20"
+            className="absolute inset-0 opacity-10"
             style={{
-              background: 'linear-gradient(135deg, rgba(125, 125, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%, rgba(125, 255, 255, 0.2) 100%)',
+              background: 'linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%)',
               animation: 'simplePulse 10s ease-in-out infinite'
             }}
           />
 
-          {/* CSS animation - extremely subtle and lightweight */}
           <style jsx>{`
             @keyframes simplePulse {
-              0%, 100% { opacity: 0.15; }
-              50% { opacity: 0.2; }
+              0%, 100% { opacity: 0.10; }
+              50% { opacity: 0.15; }
             }
-            
             @media (prefers-reduced-motion: reduce) {
               div[style*="animation"] {
                 animation: none !important;
@@ -132,28 +130,28 @@ export default function BlogPage() {
           <div className="max-w-6xl mx-auto relative px-4 sm:px-6">
             <section className="text-center">
               <div className={`mb-4 ${fadeInUpClass(100)}`}>
-                <span className="inline-block px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-xs sm:text-sm font-semibold tracking-wider shadow-lg shadow-blue-500/20 dark:shadow-blue-500/10">
+                <span className="inline-block px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-gradient-to-r from-[var(--background-secondary)] to-[var(--card-background)] text-[var(--text-primary)] text-xs sm:text-sm font-semibold tracking-wider shadow-lg shadow-black/20">
                   BLOG & INSIGHTS
                 </span>
               </div>
               
               <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight 
                              mb-6 sm:mb-8 ${fadeInUpClass(200)}`}>
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300">
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] to-[var(--text-secondary)]">
                   Welcome to the Blog
                 </span>
               </h1>
               
-              <p className={`text-lg sm:text-xl md:text-2xl font-medium text-gray-700 dark:text-gray-300 
+              <p className={`text-lg sm:text-xl md:text-2xl font-medium text-[var(--text-secondary)] 
                            max-w-3xl mx-auto px-4 sm:px-0 ${fadeInUpClass(300)}`}>
                 Discover stories, tutorials, and insights from{" "}
-                <span className="font-bold text-blue-600 dark:text-blue-400 relative">
+                <span className="font-bold text-blue-600 relative">
                   Music
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-blue-600/30 dark:bg-blue-400/30 rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-blue-600/30 rounded-full"></span>
                 </span> and{" "}
-                <span className="font-bold text-purple-600 dark:text-purple-400 relative">
+                <span className="font-bold text-purple-600 relative">
                   Tech
-                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-purple-600/30 dark:bg-purple-400/30 rounded-full"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-1 bg-purple-600/30 rounded-full"></span>
                 </span>.
               </p>
               
@@ -173,9 +171,9 @@ export default function BlogPage() {
               >
                 <Link
                   href={link}
-                  className="group relative block bg-white dark:bg-slate-800/80 rounded-2xl overflow-hidden 
+                  className="group relative block bg-[var(--card-background)] rounded-2xl overflow-hidden 
                            shadow-xl hover:shadow-2xl transform hover:-translate-y-2 hover:rotate-1
-                           transition duration-500 ease-in-out border border-gray-100 dark:border-slate-700"
+                           transition duration-500 ease-in-out border border-[var(--border-color)]"
                 >
                   {/* Feature ribbon */}
                   <div className={`absolute top-3 sm:top-5 right-3 sm:right-5 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-semibold 
@@ -228,7 +226,7 @@ export default function BlogPage() {
                 </Link>
                 
                 <div className="mt-6 sm:mt-8 px-2 sm:px-4">
-                  <p className="text-base sm:text-lg md:text-xl font-medium text-gray-700 dark:text-gray-300">
+                  <p className="text-base sm:text-lg md:text-xl font-medium text-[var(--text-secondary)]">
                     {description}
                   </p>
                   

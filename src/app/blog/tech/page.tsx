@@ -37,14 +37,14 @@ export default async function TechBlogPage({
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-slate-900">
+    <main className="min-h-screen bg-[var(--background-primary)]">
       <Container>
         <div className="max-w-6xl mx-auto py-12">
           {/* Back Button */}
           <div className="mb-8">
             <Link
               href="/blog"
-              className="inline-flex items-center text-purple-500 hover:text-purple-600 dark:text-purple-400 dark:hover:text-purple-300 font-medium transition-colors"
+              className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,13 +62,13 @@ export default async function TechBlogPage({
 
           {/* Enhanced Header */}
           <header className="mb-16">
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight mb-6 text-center text-gray-800 dark:text-white">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight mb-6 text-center text-[var(--text-primary)]">
               Tech Blog
             </h1>
 
             <div className="max-w-3xl mx-auto text-center">
-              <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-                Explore the latest in technology, programming, and digital innovation.
+              <p className="text-xl text-[var(--text-secondary)] mb-8">
+                Explore the latest in technology, coding tutorials, and industry news.
               </p>
             </div>
           </header>
@@ -76,14 +76,14 @@ export default async function TechBlogPage({
           {/* Tag Filtering */}
           {techTags.length > 0 && (
             <div className="mb-12">
-              <h2 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Tags</h2>
+              <h2 className="text-2xl font-bold mb-4 text-[var(--text-primary)]">Tags</h2>
               <div className="flex flex-wrap gap-2">
                 <Link
                   href="/blog/tech"
                   className={`px-3 py-1 text-sm font-medium rounded-full transition-colors ${
                     !tag
                       ? "bg-purple-600 text-white"
-                      : "text-purple-600 bg-purple-100 dark:bg-purple-700/30 dark:text-purple-200 hover:bg-purple-200 dark:hover:bg-purple-600/40"
+                      : "text-purple-600 bg-purple-100 hover:bg-purple-200"
                   }`}
                 >
                   All
@@ -95,7 +95,7 @@ export default async function TechBlogPage({
                     className={`px-3 py-1 text-sm font-medium rounded-full transition-colors ${
                       tag === tagItem
                         ? "bg-purple-600 text-white"
-                        : "text-purple-600 bg-purple-100 dark:bg-purple-700/30 dark:text-purple-200 hover:bg-purple-200 dark:hover:bg-purple-600/40"
+                        : "text-purple-600 bg-purple-100 hover:bg-purple-200"
                     }`}
                   >
                     {tagItem}
@@ -109,7 +109,7 @@ export default async function TechBlogPage({
           {featuredPost && (
             <div className="mb-16">
               <Link href={`/posts/${featuredPost.slug}`} className="block group">
-                <article className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 relative">
+                <article className="bg-[var(--card-background)] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 relative border border-[var(--border-color)]">
                   <div className="relative h-96 md:h-[500px]">
                     <Image
                       src={featuredPost.coverImage}
@@ -168,7 +168,7 @@ export default async function TechBlogPage({
 
           {/* Page indicator */}
           {totalPages > 1 && (
-            <div className="mb-6 text-gray-600 dark:text-gray-400">
+            <div className="mb-6 text-[var(--text-secondary)]">
               Page {currentPage} of {totalPages}
             </div>
           )}
@@ -178,7 +178,7 @@ export default async function TechBlogPage({
             {paginatedPosts.map((post) => (
               <article
                 key={post.slug}
-                className="bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-md hover:shadow-lg transform hover:translate-y-[-8px] transition duration-300 ease-in-out flex flex-col h-full"
+                className="bg-[var(--card-background)] rounded-lg overflow-hidden shadow-md hover:shadow-lg transform hover:translate-y-[-8px] transition duration-300 ease-in-out flex flex-col h-full border border-[var(--border-color)]"
               >
                 <Link href={`/posts/${post.slug}`} className="block group h-full">
                   <div className="relative h-64 overflow-hidden">
@@ -192,19 +192,19 @@ export default async function TechBlogPage({
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-xl font-semibold mb-2 text-[var(--text-primary)] group-hover:text-purple-600 transition-colors">
                       {post.title}
                     </h3>
                     {post.excerpt && (
-                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 flex-grow">
+                      <p className="text-[var(--text-secondary)] mb-4 line-clamp-3 flex-grow">
                         {post.excerpt}
                       </p>
                     )}
-                    <div className="flex flex-col gap-2 mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
+                    <div className="flex flex-col gap-2 mt-auto pt-4 border-t border-[var(--border-color)]">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           {post.date && (
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                            <p className="text-sm text-[var(--text-secondary)]">
                               {new Date(post.date).toLocaleDateString('en-US', {
                                 year: 'numeric',
                                 month: 'short',
@@ -212,21 +212,21 @@ export default async function TechBlogPage({
                               })}
                             </p>
                           )}
-                          <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
+                          <span className="text-sm text-[var(--text-secondary)] flex items-center">
                             <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             {'5 min'} read
                           </span>
                         </div>
-                        <span className="text-sm text-purple-600 dark:text-purple-400 font-medium">Read more</span>
+                        <span className="text-sm text-purple-600 font-medium">Read more</span>
                       </div>
                       {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
                           {post.tags.map((tagItem: string) => (
                           <span 
                             key={tagItem}
-                            className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-600 dark:bg-purple-700/30 dark:text-purple-200 rounded-full"
+                            className="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-600 rounded-full"
                           >
                             {tagItem}
                           </span>
@@ -243,8 +243,8 @@ export default async function TechBlogPage({
           {/* No Results Message */}
           {paginatedPosts.length === 0 && !featuredPost && (
             <div className="text-center py-12">
-              <h3 className="text-2xl font-bold text-gray-700 dark:text-gray-300 mb-4">No posts found</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-6">
+              <h3 className="text-2xl font-bold text-[var(--text-primary)] mb-4">No posts found</h3>
+              <p className="text-[var(--text-secondary)] mb-6">
                 {tag ? `No posts found with the tag "${tag}".` : "No posts available at the moment."}
               </p>
               <Link 
@@ -264,9 +264,9 @@ export default async function TechBlogPage({
                   href={`/blog/tech?page=${Math.max(1, currentPage - 1)}${tag ? `&tag=${tag}` : ''}`}
                   className={`px-3 py-2 rounded-l-md font-medium border border-r-0 ${
                     currentPage === 1
-                      ? 'bg-gray-100 dark:bg-slate-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
-                      : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
-                  } border-gray-200 dark:border-slate-700`}
+                      ? 'bg-[var(--background-secondary)] text-[var(--text-secondary)] cursor-not-allowed'
+                      : 'bg-[var(--card-background)] text-[var(--text-primary)] hover:bg-[var(--hover-background)]'
+                  } border-[var(--border-color)]`}
                   aria-disabled={currentPage === 1}
                   tabIndex={currentPage === 1 ? -1 : 0}
                 >
@@ -280,8 +280,8 @@ export default async function TechBlogPage({
                     href={`/blog/tech?page=${number}${tag ? `&tag=${tag}` : ''}`}
                     className={`px-4 py-2 font-medium border border-r-0 ${
                       currentPage === number 
-                        ? 'bg-purple-600 text-white border-purple-600 dark:border-purple-600'
-                        : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700 border-gray-200 dark:border-slate-700'
+                        ? 'bg-purple-600 text-white border-purple-600'
+                        : 'bg-[var(--card-background)] text-[var(--text-primary)] hover:bg-[var(--hover-background)] border-[var(--border-color)]'
                     }`}
                     aria-current={currentPage === number ? 'page' : undefined}
                   >
@@ -293,9 +293,9 @@ export default async function TechBlogPage({
                   href={`/blog/tech?page=${Math.min(totalPages, currentPage + 1)}${tag ? `&tag=${tag}` : ''}`}
                   className={`px-3 py-2 rounded-r-md font-medium border ${
                     currentPage === totalPages
-                      ? 'bg-gray-100 dark:bg-slate-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'
-                      : 'bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700'
-                  } border-gray-200 dark:border-slate-700`}
+                      ? 'bg-[var(--background-secondary)] text-[var(--text-secondary)] cursor-not-allowed'
+                      : 'bg-[var(--card-background)] text-[var(--text-primary)] hover:bg-[var(--hover-background)]'
+                  } border-[var(--border-color)]`}
                   aria-disabled={currentPage === totalPages}
                   tabIndex={currentPage === totalPages ? -1 : 0}
                 >
@@ -306,12 +306,12 @@ export default async function TechBlogPage({
             </div>
           )}
 
-          {/* Scroll to top - This would need to be a client component */}
+          {/* Scroll to top */}
           <Link 
             href="#top"
-            className="fixed bottom-6 right-6 p-3 bg-white dark:bg-slate-800 rounded-full shadow-lg z-10 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+            className="fixed bottom-6 right-6 p-3 bg-[var(--card-background)] rounded-full shadow-lg z-10 hover:bg-[var(--hover-background)] transition-colors"
           >
-            <svg className="h-6 w-6 text-gray-700 dark:text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="h-6 w-6 text-[var(--text-primary)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
             </svg>
           </Link>

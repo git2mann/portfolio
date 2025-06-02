@@ -599,7 +599,7 @@ const eps = [
             "We been do or die,",
             "We been do or die"
           ],
-          explanation: "The accumulated repetition now functions almost mantra-like, resembling both religious chants that influenced gospel-rap crossovers like Kanye's 'Jesus Walks' and hypnotic elements of southern production pioneered by DJ Screw. The 'wait your turn' hierarchy connects to broader conversations about paying dues in hip-hop, as discussed in documentaries like 'The Art of Rap.' The relationship framing through 'Baby, you and I' creates tension between romantic and competitive contexts similar to how Eminem's 'Kim' and 'Superman' blur these boundaries to disturbing effect. The 'do or die' mentality connects to both street code ethics documented by sociologists like Elijah Anderson and the commercial pressures of debut albums described by J. Cole in '2014 Forest Hills Drive.'"
+          explanation: "The accumulated repetition now functions almost mantra-like, resembling both religious chants that influenced gospel-rap crossovers like Kanye's 'Jesus Walks' and hypnotic elements of southern production pioneered by DJ Screw. The 'wait your turn' hierarchy connects to broader conversations about paying dues in hip-hop, as discussed in documentaries like 'The Art of Rap.' The relationship framing through 'Baby, you and I' creates emotional complexity beyond simple aggression, similar to how 2Pac balanced vulnerability and strength throughout his discography. This section demonstrates the musical concept of development through repetition mastered by producers like 9th Wonder."
         },
         {
           lines: [
@@ -659,17 +659,17 @@ export default function EPPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-neutral-100 to-white dark:from-slate-900 dark:to-slate-800">
+    <main className="min-h-screen bg-[var(--background-primary)]">
       <InstructionPopup />
       <Container>
         <div className="max-w-6xl mx-auto py-8 pt-0">
           <div className="flex flex-col md:flex-row gap-8 items-start">
             {/* EP Cover with Tilt Effect - Now includes back button */}
             <div className="md:sticky md:top-16 md:self-start flex flex-col gap-6 w-full md:w-1/3">
-              {/* Back button moved here */}
+              {/* Back button */}
               <button
                 onClick={() => window.history.back()}
-                className="inline-flex items-center text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
+                className="inline-flex items-center text-blue-500 hover:text-blue-600 font-medium transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -702,7 +702,7 @@ export default function EPPage() {
                 />
               </Tilt>
               <div
-                className="animate-gradient-x backdrop-blur-md border border-gray-200 dark:border-slate-700 rounded-lg shadow-lg p-6 w-full"
+                className="animate-gradient-x backdrop-blur-md border border-[var(--border-color)] rounded-lg shadow-lg p-6 w-full"
                 style={{
                   backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`,
                 }}
@@ -714,19 +714,19 @@ export default function EPPage() {
                     width: `${scrollProgress}%`,
                   }}
                 ></div>
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-gray-900 dark:text-gray-100">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-[var(--text-primary)]">
                   {ep.title}
                 </h1>
-                <p className="text-base sm:text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">
+                <p className="text-base sm:text-lg font-medium text-[var(--text-secondary)] mb-4">
                   By Klense
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{ep.releaseYear}</p>
-                <p className="text-sm text-gray-700 dark:text-gray-300">{ep.duration}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{ep.releaseYear}</p>
+                <p className="text-sm text-[var(--text-secondary)]">{ep.duration}</p>
               </div>
               
               {/* Listen Now Section */}
               <div className="w-full">
-                <h2 className="text-xl font-semibold mb-4">Listen Now</h2>
+                <h2 className="text-xl font-semibold mb-4 text-[var(--text-primary)]">Listen Now</h2>
                 <div className="grid grid-cols-3 gap-4">
                   {/* Spotify, Apple Music, and YouTube Links */}
                   {ep.id === "1" && (
@@ -783,38 +783,38 @@ export default function EPPage() {
             <div className="flex-1 w-full">
               {/* Behind the EP */}
               <div className="mb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold mb-4">Behind the EP</h2>
+                <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Behind the EP</h2>
                 <div className="space-y-4">
-                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)]">
                     The <strong>Some Of Ink EP</strong> takes its name from <strong>Son Of Ink</strong>, Klense's debut album. This latest project serves as a reimagining of select tracks from that album, blending the nostalgia of his early work with the growth and evolution he has experienced as an artist.
                   </p>
-                  <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                  <p className="text-sm sm:text-base text-[var(--text-secondary)]">
                     Among the highlights of the EP are reworked versions of <strong>Back Again</strong> (now titled <strong>Back Again, Again</strong>) and <strong>Ultimate</strong> (now titled <strong>Still Ultimate</strong>). These tracks have been meticulously refined to reflect Klense's current style and perspective, while still preserving the essence that made them resonate with listeners in the first place.
                   </p>
                 </div>
               </div>
 
               {/* Tracklist Section */}
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4">Tracklist</h2>
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Tracklist</h2>
               <div className="space-y-4">
                 {ep.songs.map((song) => (
-                  <div key={song.id} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+                  <div key={song.id} className="border-b border-[var(--border-color)] pb-4">
                     <button
                       onClick={() => setSelectedTrack(selectedTrack === song.id ? null : song.id)}
-                      className="w-full text-left py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition"
+                      className="w-full text-left py-2 px-4 hover:bg-[var(--hover-background)] rounded-lg transition"
                     >
                       <div className="flex justify-between items-center">
-                        <span className="text-lg sm:text-xl font-semibold text-gray-800 dark:text-gray-200">
+                        <span className="text-lg sm:text-xl font-semibold text-[var(--text-primary)]">
                           {song.title}
                         </span>
-                        <span className="text-sm text-gray-500 dark:text-gray-400 italic">
+                        <span className="text-sm text-[var(--text-secondary)] italic">
                           {song.duration}
                         </span>
                       </div>
                     </button>
                     {selectedTrack === song.id && (
                       <div className="mt-4 space-y-4">
-                        <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 underline decoration-[var(--gradient-middle)] decoration-2 underline-offset-4">
+                        <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] underline decoration-[var(--gradient-middle)] decoration-2 underline-offset-4">
                           Lyrics
                         </h3>
                         {song.lyrics.length > 0 ? (
@@ -824,7 +824,7 @@ export default function EPPage() {
                               className={`space-y-2 p-4 rounded-lg transition-all ${
                                 selectedLyric === groupIndex
                                   ? "bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-[var(--text-primary)] shadow-lg"
-                                  : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                                  : "hover:bg-[var(--hover-background)]"
                               }`}
                               onClick={() =>
                                 setSelectedLyric(selectedLyric === groupIndex ? null : groupIndex)
@@ -834,22 +834,18 @@ export default function EPPage() {
                                 {group.lines.map((line, lineIndex) => (
                                   <p
                                     key={lineIndex}
-                                    className={`text-sm sm:text-base font-medium leading-relaxed ${
-                                      selectedLyric === groupIndex
-                                        ? "text-[var(--text-primary)]"
-                                        : "text-gray-800 dark:text-gray-200"
-                                    }`}
+                                    className={`text-sm sm:text-base font-medium leading-relaxed text-[var(--text-primary)]`}
                                   >
                                     {line || <br />}
                                   </p>
                                 ))}
                               </div>
                               {selectedLyric === groupIndex && (
-                                <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg">
+                                <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg">
                                   {group.explanation.split("\n").map((line, index) => (
                                     <p
                                       key={index}
-                                      className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed"
+                                      className="text-sm sm:text-base text-[var(--text-secondary)] italic leading-relaxed"
                                     >
                                       {line}
                                     </p>
@@ -859,7 +855,7 @@ export default function EPPage() {
                             </div>
                           ))
                         ) : (
-                          <p className="text-sm text-gray-500 italic">Lyrics not available.</p>
+                          <p className="text-sm text-[var(--text-secondary)] italic">Lyrics not available.</p>
                         )}
                         
                         {/* Track Breakdown - Added to match Album page */}
@@ -868,13 +864,13 @@ export default function EPPage() {
                             const newSelectedNote = selectedNote === song.id ? null : song.id;
                             setSelectedNote(newSelectedNote);
                           }}
-                          className="mt-4 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition"
+                          className="mt-4 text-blue-500 hover:text-blue-600 font-medium transition"
                         >
                           {selectedNote === song.id ? "Hide Track Breakdown" : "Show Track Breakdown"}
                         </button>
                         {selectedNote === song.id && (
-                          <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-lg space-y-4">
-                            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300 italic leading-relaxed">
+                          <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg space-y-4">
+                            <p className="text-sm sm:text-base text-[var(--text-secondary)] italic leading-relaxed">
                               {ep.id === "1" && song.id === "1" ? (
                                 <>
                                   <strong>Back Again, Again</strong> serves as a reimagined version of the original "Back Again" from Klense's debut album. This updated rendition preserves the core energy of the original while introducing new production elements and refined lyrics. The track encapsulates Klense's artistic growth since his early work, demonstrating how his technical abilities have evolved while maintaining his authentic voice.

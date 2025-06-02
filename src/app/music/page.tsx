@@ -12,7 +12,7 @@ export default function MusicPage() {
   const [activeTab, setActiveTab] = useState('discography');
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[var(--background-primary)]">
       {/* Hero Section with Parallax Effect */}
       <div className="relative h-[60vh] overflow-hidden">
         <div className="absolute inset-0">
@@ -44,7 +44,7 @@ export default function MusicPage() {
 
       <Container>
         {/* Navigation Tabs */}
-        <div className="sticky top-16 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg py-4 -mt-16 rounded-lg shadow-lg">
+        <div className="sticky top-16 z-10 bg-[var(--background-primary)]/80 backdrop-blur-lg py-4 -mt-16 rounded-lg shadow-lg">
           <nav className="flex flex-wrap justify-center gap-2 md:space-x-4">
             {['discography', 'featured', 'shows', 'videos', 'production'].map((tab) => (
               <button
@@ -52,8 +52,8 @@ export default function MusicPage() {
                 onClick={() => setActiveTab(tab)}
                 className={`px-4 py-2 rounded-full transition-all duration-300 ${
                   activeTab === tab
-                    ? 'bg-black text-white dark:bg-white dark:text-black scale-105'
-                    : 'hover:bg-gray-100 dark:hover:bg-slate-800'
+                    ? 'bg-[var(--card-background)] text-[var(--text-primary)] scale-105'
+                    : 'hover:bg-[var(--hover-background)] text-[var(--text-secondary)]'
                 }`}
               >
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -68,13 +68,13 @@ export default function MusicPage() {
             <>
               {/* Albums Section */}
               <section>
-                <h2 className="text-3xl md:text-4xl font-bold mb-8">Albums</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)]">Albums</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {albums.map((album) => (
                     <Link
                       href={`/music/${album.id}`}
                       key={album.id}
-                      className="group relative bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                      className="group relative bg-[var(--card-background)] border border-[var(--border-color)] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                       onMouseEnter={() => setHoveredAlbum(album.id)}
                       onMouseLeave={() => setHoveredAlbum(null)}
                     >
@@ -91,14 +91,14 @@ export default function MusicPage() {
                         </div>
                       </div>
                       <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--text-accent)] transition-colors">
                           {album.title}
                         </h3>
-                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400 mb-3">
+                        <div className="flex items-center text-sm text-[var(--text-secondary)] mb-3">
                           <FiCalendar className="mr-2" />
                           {album.releaseYear}
                         </div>
-                        <p className="text-gray-700 dark:text-gray-300">{album.description}</p>
+                        <p className="text-[var(--text-secondary)]">{album.description}</p>
                       </div>
                     </Link>
                   ))}
@@ -107,13 +107,13 @@ export default function MusicPage() {
 
               {/* EPs Section */}
               <section>
-                <h2 className="text-3xl md:text-4xl font-bold mb-8">EPs</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)]">EPs</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {eps.map((ep) => (
                     <Link
                       href={`/music/eps/${ep.id}`}
                       key={ep.id}
-                      className="group relative bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                      className="group relative bg-[var(--card-background)] border border-[var(--border-color)] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                     >
                       <div className="relative aspect-square overflow-hidden rounded-t-xl">
                         <Image
@@ -128,10 +128,10 @@ export default function MusicPage() {
                         </div>
                       </div>
                       <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--text-accent)] transition-colors">
                           {ep.title}
                         </h3>
-                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center text-sm text-[var(--text-secondary)]">
                           <FiCalendar className="mr-2" />
                           {ep.releaseYear}
                         </div>
@@ -143,13 +143,13 @@ export default function MusicPage() {
 
               {/* Singles Section */}
               <section className="mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-8">Singles</h2>
+                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)]">Singles</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                   {singles.map((single) => (
                     <Link
                       href={`/music/singles/${single.id}`}
                       key={single.id}
-                      className="group relative bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                      className="group relative bg-[var(--card-background)] border border-[var(--border-color)] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                     >
                       <div className="relative aspect-square overflow-hidden rounded-t-xl">
                         <Image
@@ -164,10 +164,10 @@ export default function MusicPage() {
                         </div>
                       </div>
                       <div className="p-6">
-                        <h3 className="text-xl font-bold mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--text-accent)] transition-colors">
                           {single.title}
                         </h3>
-                        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+                        <div className="flex items-center justify-between text-sm text-[var(--text-secondary)]">
                           <div className="flex items-center">
                             <FiCalendar className="mr-2" />
                             {single.releaseYear}
@@ -181,13 +181,15 @@ export default function MusicPage() {
                     </Link>
                   ))}
                 </div>
+                {/* Add extra space after singles */}
+                <div className="h-12" />
               </section>
             </>
           )}
 
           {activeTab !== 'discography' && (
             <div className="flex items-center justify-center h-64">
-              <p className="text-lg text-gray-600 dark:text-gray-400">
+              <p className="text-lg text-[var(--text-secondary)]">
                 Coming soon! Check back later for {activeTab} content.
               </p>
             </div>
