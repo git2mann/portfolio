@@ -42,9 +42,9 @@ export default function MusicPage() {
         </Container>
       </div>
 
-      <Container>
-        {/* Navigation Tabs */}
-        <div className="sticky top-16 z-10 bg-[var(--background-primary)]/80 backdrop-blur-lg py-4 -mt-16 rounded-lg shadow-lg">
+      {/* Navigation Tabs - Full width sticky bar */}
+      <div className="sticky top-16 z-10 w-full bg-[var(--background-primary)]/80 backdrop-blur-lg py-4 -mt-16 rounded-lg shadow-lg border-b border-[var(--border-color)]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <nav className="flex flex-wrap justify-center gap-2 md:space-x-4">
             {['discography', 'featured', 'shows', 'videos', 'production'].map((tab) => (
               <button
@@ -61,7 +61,9 @@ export default function MusicPage() {
             ))}
           </nav>
         </div>
+      </div>
 
+      <Container>
         {/* Dynamic Content Based on Active Tab */}
         <div className="mt-12 space-y-16">
           {activeTab === 'discography' && (
