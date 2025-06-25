@@ -38,7 +38,7 @@
 [data-mode="dark"] .switch {
   box-shadow: calc(var(--size) / 4) calc(var(--size) / -4) calc(var(--size) / 8) inset #fff;
   border: none;
-  background: transparent;
+  background: #000 !important;
   animation: moonPhase 0.5s ease-in-out;
 }
 

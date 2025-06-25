@@ -122,7 +122,12 @@ export default function Index() {
             {allPosts.map((post) => (
               <article
                 key={post.slug}
-                className="group relative rounded-xl overflow-hidden shadow-xl border border-neutral-200 dark:border-slate-700 bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-200 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 hover:scale-[1.015] hover:shadow-2xl transition-transform duration-300 flex flex-col h-full"
+                className="group relative rounded-xl overflow-hidden shadow-xl border"
+                style={{
+                  borderColor: 'var(--border-color)',
+                  background: 'linear-gradient(135deg, var(--background-primary) 60%, var(--background-secondary) 100%)',
+                  transition: 'background 0.3s, border-color 0.3s',
+                }}
               >
                 <div className="relative overflow-hidden h-56">
                   <Link href={`/posts/${post.slug}`} aria-label={`Read post: ${post.title}`}>
