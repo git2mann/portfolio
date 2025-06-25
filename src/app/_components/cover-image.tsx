@@ -23,6 +23,10 @@ const CoverImage = ({ title, src, slug }: Props) => {
       })}
       width={1300}
       height={630}
+      priority // Add priority loading for the main image
+      quality={70} // Add this line for better compression
+      placeholder="blur" // Optional: use blur-up placeholder
+      blurDataURL="/assets/placeholder.png" // Optional: add a tiny placeholder image
     />
   );
   

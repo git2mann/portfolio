@@ -1,4 +1,3 @@
-
 'use client';
 
 import Image from 'next/image';
@@ -19,6 +18,10 @@ export default function AlbumSection({ album }: { album: Album }) {
             fill
             className="object-cover rounded-lg"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={false}
+            quality={70}
+            placeholder="blur"
+            blurDataURL="/assets/placeholder.png"
           />
         </div>
         <div>

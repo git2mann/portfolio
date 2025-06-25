@@ -24,6 +24,7 @@ export default function ProjectsPage() {
               filter: 'brightness(0.7)'
             }}
             priority
+            sizes="100vw"
           />
         </div>
         <div className="relative h-full flex items-center w-full mx-auto">
