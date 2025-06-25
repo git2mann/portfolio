@@ -20,26 +20,23 @@ export default function MusicPage() {
             src="/assets/blog/blog-post-covers/jawz-9Ut0azurqg0-unsplash.jpg"
             alt="Music Hero"
             fill
-            className="object-cover transform scale-105"
+            className="object-cover w-full h-full transform scale-105"
             style={{
-              transform: 'scale(1.1)',
               filter: 'brightness(0.7)'
             }}
             priority
           />
         </div>
-        <Container>
-          <div className="relative h-full flex items-center">
-            <div className="max-w-3xl">
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
-                My Music
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-200 animate-fade-in delay-200">
-                Exploring sound, pushing boundaries, and creating experiences through music.
-              </p>
-            </div>
+        <div className="relative h-full flex items-center w-full mx-auto">
+          <div className="max-w-3xl">
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
+              My Music
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-200 animate-fade-in delay-200">
+              Exploring sound, pushing boundaries, and creating experiences through music.
+            </p>
           </div>
-        </Container>
+        </div>
       </div>
 
       {/* Navigation Tabs - Full width sticky bar */}

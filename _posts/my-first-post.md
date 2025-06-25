@@ -45,3 +45,7 @@ Feel free to explore the site, leave comments on posts that resonate with you, a
 Stay creative,
 
 Klense.
+
+<p>
+  <a href="/">Back to Home</a>
+</p>

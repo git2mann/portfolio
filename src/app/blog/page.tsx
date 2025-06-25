@@ -30,7 +30,7 @@ export default function BlogPage() {
   ];
   return (
     <main className="min-h-screen bg-[var(--background-primary)]">
-      {/* Hero Section with Parallax Effect - Similar to Music Page */}
+      {/* Hero Section (With Parallax Effect) */}
       <div className="relative h-[60vh] overflow-hidden">
         <div className="absolute inset-0">
           <img
@@ -40,7 +40,7 @@ export default function BlogPage() {
             style={{ filter: 'brightness(0.7)' }}
           />
         </div>
-        <div className="relative h-full flex items-center container mx-auto">
+        <div className="relative h-full flex items-center w-full mx-auto">
           <div className="max-w-3xl">
             <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
               Blog & Insights

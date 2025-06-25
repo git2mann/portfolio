@@ -30,56 +30,7 @@ The track features:
 - A raw, unfiltered mix to retain its freestyle essence
 - An audio excerpt from a friend at the end. He was spittin' lowkey too 🔥
 
-## Lyrics
-```
-Uh, I could show you the ropes
-But I’m too busy bein’ me
-On a phenomenal roll
-This song here isn’t even deep
 
-I just want you to know 
-That as far as things go
-If I never said it before
-That I know I’m always the GOAT
-
-And I’m back with the finest streak, freestylin’ these
-Finally, I’m with the high elite
-Why are we talkin’ ‘bout hirin’ me?
-Irony? I’m at a higher peak
-
-I was the one you would hide, and seek-
-Out, and now when I ride a beat
-How could you even ride with me?
-I’m in the “Fiery” list and category
-
-My life is an allegory of always lookin’ up
-Better step right out of my territory 
-My options were very borin’
-I’d rather make music
-
-Than listen to your generic story
-Of how you made nothin’
-And passed it off like you found your calling
-I’m callin’ you out
-
-
-I just took my first breath in that verse since that little shout, at the beginnin’
-I’m binnin’ a rapper; an MC’s final chapter
-Quit hirin’ ghostwriters
-Your material’s Casper
-
-
-\\\\\
-
-
-(This… this is not planted in the house…
-This is outside… this is the corridor
-Unless Leon knows how to float
-
-Bro thinks this is “IT”
-But unless Leon knows how to float…
-
-…It’s, it’s, it’s, yes…
-Th- This is the… This is the…
-The… The… The risk-to-reward ratio right here) 
-```
+<p>
+  <a href="/">Back to Home</a>
+</p>
