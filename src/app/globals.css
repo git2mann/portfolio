@@ -56,7 +56,6 @@
 html {
   scroll-behavior: smooth;
   width: 100%;
-  max-width: 100%;
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
@@ -203,6 +202,277 @@ body {
   --cursor-default: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iNCIgc3Ryb2tlPSIjOWEzNDEyIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4='), auto;
   --cursor-pointer: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiM5YTM0MTIiLz48L3N2Zz4='), auto;
   --cursor-text: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiM5YTM0MTIiLz48L3N2Zz4='), auto;
+}
+
+/* Add this to your existing CSS after the sunset theme */
+
+.theme-metallic {
+  --gradient-start: #8e8e93; /* Space Grey Light */
+  --gradient-middle: #636366; /* Space Grey Medium */
+  --gradient-end: #48484a;   /* Space Grey Dark */
+  --progress-bar-color: #007aff; /* Apple Blue accent */
+}
+
+/* Metallic sheen animation */
+@keyframes metallic-sheen {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.metallic-sheen {
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.1) 35%,
+    rgba(255, 255, 255, 0.3) 45%,
+    rgba(255, 255, 255, 0.1) 55%,
+    transparent 65%
+  );
+  background-size: 200% 100%;
+  animation: metallic-sheen 3s ease-in-out infinite;
+}
+
+/* Metallic Space Grey theme - Dark Steel */
+.theme-metallic {
+  --background-primary: #1a1a1c;
+  --background-secondary: #0f0f10;
+  --text-primary: #ffffff;
+  --text-secondary: #ffffff;
+  --border-color: #2d2d30;
+  --card-background: #1e1e20;
+  --hover-background: #2d2d30;
+  --cursor-url: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMkwyIDIyaDIwbC0xMC0yMHoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4='), auto;
+  --cursor-default: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iNCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4='), auto;
+  --cursor-pointer: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4='), auto;
+  --cursor-text: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4='), auto;
+}
+
+/* Metallic theme specific enhancements */
+.theme-metallic .glass {
+  backdrop-filter: blur(20px) saturate(180%);
+  background-color: rgba(30, 30, 32, 0.9);
+  border: 1px solid rgba(45, 45, 48, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-metallic .glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.1) 35%,
+    rgba(255, 255, 255, 0.3) 45%,
+    rgba(255, 255, 255, 0.1) 55%,
+    transparent 65%
+  );
+  background-size: 200% 100%;
+  animation: metallic-sheen 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.theme-metallic .btn-primary {
+  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
+  color: white;
+  box-shadow: 0 4px 15px 0 rgba(0, 122, 255, 0.3);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-metallic .btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.2) 45%,
+    transparent 65%
+  );
+  animation: metallic-sheen 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.theme-metallic .btn-primary:hover {
+  background: linear-gradient(135deg, #0056cc 0%, #004499 100%);
+  box-shadow: 0 6px 20px 0 rgba(0, 122, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.theme-metallic .btn-secondary {
+  background: rgba(30, 30, 32, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(45, 45, 48, 0.8);
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-metallic .btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.1) 45%,
+    transparent 65%
+  );
+  animation: metallic-sheen 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.theme-metallic .btn-secondary:hover {
+  background: rgba(45, 45, 48, 0.9);
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Metallic card styling with subtle shadows */
+.theme-metallic .border {
+  border-color: rgba(45, 45, 48, 0.8) !important;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.5), 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-metallic .border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.05) 45%,
+    transparent 65%
+  );
+  animation: metallic-sheen 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.theme-metallic .bg-white, 
+.theme-metallic .bg-gray-50,
+.theme-metallic .bg-gray-100,
+.theme-metallic .bg-neutral-100 {
+  background-color: rgba(30, 30, 32, 0.95) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Override any light backgrounds */
+.theme-metallic .bg-slate-50,
+.theme-metallic .bg-slate-100,
+.theme-metallic .bg-stone-50,
+.theme-metallic .bg-stone-100 {
+  background-color: rgba(30, 30, 32, 0.95) !important;
+}
+
+/* Metallic scrollbar */
+.theme-metallic ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #98989d 0%, #636366 100%);
+  border-radius: 10px;
+}
+
+.theme-metallic ::-webkit-scrollbar-track {
+  background-color: rgba(28, 28, 30, 0.8);
+}
+
+/* Force all text to be white in metallic theme */
+.theme-metallic * {
+  color: #ffffff !important;
+}
+
+.theme-metallic .text-gray-500, 
+.theme-metallic .text-gray-400,
+.theme-metallic .text-gray-600,
+.theme-metallic .text-gray-700,
+.theme-metallic .text-gray-800,
+.theme-metallic .text-gray-900,
+.theme-metallic .dark\:text-gray-400,
+.theme-metallic .dark\:text-gray-300 {
+  color: #ffffff !important;
+}
+
+/* Override hover backgrounds to be dark */
+.theme-metallic .hover\:bg-gray-100:hover,
+.theme-metallic .hover\:bg-gray-50:hover,
+.theme-metallic .hover\:bg-slate-100:hover,
+.theme-metallic .dark\:hover\:bg-slate-700:hover {
+  background-color: rgba(45, 45, 48, 0.8) !important;
+}
+
+/* Theme switcher specific overrides */
+.theme-metallic .theme-switcher-button {
+  background-color: rgba(30, 30, 32, 0.9) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(45, 45, 48, 0.8) !important;
+}
+
+.theme-metallic .theme-switcher-menu {
+  background-color: rgba(30, 30, 32, 0.95) !important;
+  border: 1px solid rgba(45, 45, 48, 0.8) !important;
+  color: #ffffff !important;
+}
+
+.theme-metallic .theme-option {
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+
+.theme-metallic .theme-option:hover {
+  background-color: rgba(45, 45, 48, 0.8) !important;
+  color: #ffffff !important;
+}
+
+/* Metallic gradient text enhancement */
+.theme-metallic .gradient-text {
+  background-image: linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #cccccc 100%);
+}
+
+/* Metallic typewriter effect with Apple-like polish */
+.theme-metallic .typewriter {
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.theme-metallic .typewriter::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.3) 45%,
+    transparent 65%
+  );
+  animation: metallic-sheen 2.5s ease-in-out infinite;
+  pointer-events: none;
 }
 
 /* Apply theme colors */
@@ -517,5 +787,15 @@ input[type="range"]:focus::-webkit-slider-thumb {
 .theme-pastel .container {
   background-color: var(--card-background);
   color: var(--text-primary);
+}
+*/
+
+/* REMOVE OR COMMENT OUT THIS PROBLEMATIC RULE AT THE END OF THE CSS: */
+/*
+.theme-metallic .bg-white:hover,
+.theme-metallic .hover\:bg-white:hover,
+.theme-metallic .btn-primary:hover,
+.theme-metallic .btn-secondary:hover {
+  color: #111827 !important;
 }
 */

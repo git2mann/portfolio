@@ -96,3 +96,7 @@ This reflective practice helps ensure that each creative project builds on the l
 Creativity isn't about waiting for lightning to strike—it's about building a practice that welcomes inspiration when it arrives while continuing to work when it doesn't. By establishing routines, capturing ideas effectively, and developing strategies to overcome blocks, I've found that creativity becomes more reliable and sustainable.
 
 What does your creative process look like? I'd love to hear about your approaches to staying inspired and productive.
+
+<p>
+  <a href="/">Back to Home</a>
+</p>

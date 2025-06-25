@@ -174,7 +174,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
           )}
         </div>
 
-        {/* Categories Section - Enhanced */}
+        {/* Categories Section */}
         {activeTab === "featured" && (
           <section className="mt-20">
             <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-[var(--text-primary)]">
