@@ -11,7 +11,8 @@ const navLinks = [
 	{ href: "/blog", label: "Blog" },
 	{ href: "/music", label: "Music" },
 	{ href: "/art", label: "Art" },
-	{ href: "/projects", label: "Projects" }
+	{ href: "/projects", label: "Projects" },
+	{ href: "/contact", label: "Contact Me" }
 ];
 
 const Header = () => {
