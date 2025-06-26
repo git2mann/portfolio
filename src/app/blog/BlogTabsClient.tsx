@@ -194,6 +194,9 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                       sizes="(max-width: 768px) 100vw, 50vw"
+                      quality={70}
+                      placeholder="blur"
+                      blurDataURL="/assets/placeholder.png"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20 group-hover:from-black/80 transition-all duration-300 flex flex-col items-center justify-center p-6">
                       <div className={`w-20 h-20 rounded-full backdrop-blur-md flex items-center justify-center mb-4 bg-gradient-to-br ${color} border-2 border-white/20 shadow-lg group-hover:scale-110 transition-all duration-300`}>

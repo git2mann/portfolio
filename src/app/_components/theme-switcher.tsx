@@ -25,7 +25,12 @@ const themes: Theme[] = [
   { id: "forest", name: "Forest", icon: "🌲", class: "theme-forest" },
   { id: "ocean", name: "Ocean", icon: "🌊", class: "theme-ocean" },
   { id: "sunset", name: "Sunset", icon: "🌅", class: "theme-sunset" },
-  { id: "metallic", name: "Space Grey", icon: "📱", class: "theme-metallic" }
+  {
+    id: "metallic-silver",
+    name: "Metallic Silver",
+    icon: "💿",
+    class: "theme-metallic-silver"
+  }
 ];
 
 export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
@@ -105,69 +110,47 @@ const ThemeSelector = () => {
     window.updateDOM?.();
   }, [currentTheme, mounted]);
 
-  // Add blur effect to entire page when menu is open
+  // Add blur effect to elements beneath the menu when menu is open
   useEffect(() => {
     if (isOpen) {
-      // Get the current theme to handle Space Grey differently
-      const currentThemeClass = document.documentElement.className;
-      const isSpaceGrey = currentThemeClass.includes('theme-metallic');
-      
-      if (isSpaceGrey) {
-        // For Space Grey theme, be more selective about what gets blurred
-        const elementsToBlur = document.querySelectorAll('main > *, [data-main-content] > *, #app > *, #root > *:not(header):not(nav)');
-        elementsToBlur.forEach(element => {
-          if (!element.contains(containerRef.current!) && 
-              element.tagName !== 'SCRIPT' && 
-              element.tagName !== 'STYLE') {
-            (element as HTMLElement).style.filter = 'blur(3px) saturate(110%)';
-            (element as HTMLElement).style.transition = 'filter 300ms ease-out';
-          }
-        });
-      } else {
-        // For other themes, use the original approach
-        const mainContent = document.querySelector('main, #__next, [data-reactroot]') as HTMLElement;
-        if (mainContent && !mainContent.contains(containerRef.current)) {
-          mainContent.style.filter = 'blur(4px) saturate(120%)';
-          mainContent.style.transition = 'filter 300ms ease-out';
-        } else {
-          // Alternative: blur all direct children of body except our container
-          const bodyChildren = Array.from(document.body.children);
-          bodyChildren.forEach(child => {
-            if (!child.contains(containerRef.current!) && 
-                child.tagName !== 'SCRIPT' && 
-                child.tagName !== 'STYLE') {
-              (child as HTMLElement).style.filter = 'blur(4px) saturate(120%)';
-              (child as HTMLElement).style.transition = 'filter 300ms ease-out';
-            }
-          });
+      // Blur all direct children of body except the theme switcher container and overlays
+      const bodyChildren = Array.from(document.body.children);
+      bodyChildren.forEach((child) => {
+        // Do not blur the theme switcher container or overlays/modals
+        if (
+          containerRef.current &&
+          (child === containerRef.current || child.contains(containerRef.current))
+        ) {
+          return;
         }
-      }
+        // Do not blur overlays (modals, dialogs, etc.)
+        if (
+          child.classList.contains('modal') ||
+          child.classList.contains('theme-switcher-menu') ||
+          child.classList.contains('theme-switcher-button')
+        ) {
+          return;
+        }
+        if (child.tagName !== 'SCRIPT' && child.tagName !== 'STYLE') {
+          (child as HTMLElement).style.filter = 'blur(4px) saturate(120%)';
+          (child as HTMLElement).style.transition = 'filter 300ms ease-out';
+        }
+      });
     } else {
       // Remove blur effect from all possible elements
-      const allPossibleElements = [
-        ...Array.from(document.querySelectorAll('main > *, [data-main-content] > *, #app > *, #root > *')),
-        ...Array.from(document.body.children),
-        document.querySelector('main, #__next, [data-reactroot]')
-      ].filter(Boolean);
-      
-      allPossibleElements.forEach(element => {
-        if (element && element.tagName !== 'SCRIPT' && element.tagName !== 'STYLE') {
-          (element as HTMLElement).style.filter = '';
+      const bodyChildren = Array.from(document.body.children);
+      bodyChildren.forEach((child) => {
+        if (child.tagName !== 'SCRIPT' && child.tagName !== 'STYLE') {
+          (child as HTMLElement).style.filter = '';
         }
       });
     }
-
     return () => {
       // Cleanup on unmount - remove blur from all possible elements
-      const allPossibleElements = [
-        ...Array.from(document.querySelectorAll('main > *, [data-main-content] > *, #app > *, #root > *')),
-        ...Array.from(document.body.children),
-        document.querySelector('main, #__next, [data-reactroot]')
-      ].filter(Boolean);
-      
-      allPossibleElements.forEach(element => {
-        if (element && element.tagName !== 'SCRIPT' && element.tagName !== 'STYLE') {
-          (element as HTMLElement).style.filter = '';
+      const bodyChildren = Array.from(document.body.children);
+      bodyChildren.forEach((child) => {
+        if (child.tagName !== 'SCRIPT' && child.tagName !== 'STYLE') {
+          (child as HTMLElement).style.filter = '';
         }
       });
     };

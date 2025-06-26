@@ -99,11 +99,17 @@ export default function ContactPage() {
           <h1 className="text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-4 text-gray-900 dark:text-white">
             Contact
           </h1>
-          <p className="text-xl text-gray-700 dark:text-gray-300 mb-12">
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-2">
             Let's start a conversation
           </p>
+          <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 max-w-2xl">
+            Whether you have a project in mind, want to collaborate, or just want to say hello, I'd love to hear from you. Fill out the form below or reach out via email or social media.
+          </p>
         </div>
-        
+
+        {/* Divider */}
+        <div className="w-full h-px bg-gradient-to-r from-blue-400/30 via-purple-400/30 to-pink-400/30 mb-12" />
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-32">
           {/* Contact Information */}
           <div className="space-y-8 animate-slide-in-left">
@@ -116,9 +122,22 @@ export default function ContactPage() {
                 Drop me a line and let's discuss how we can work together.
               </p>
             </div>
-            
+            {/* FAQ/Encouragement Section */}
+            <div className="bg-[var(--background-secondary)] rounded-xl p-6 border border-[var(--border-color)] shadow-sm mb-6">
+              <h3 className="text-xl font-semibold mb-2 text-[var(--text-primary)]">Not sure what to say?</h3>
+              <ul className="list-disc pl-5 text-[var(--text-secondary)] text-base space-y-1">
+                <li>Share your project idea or vision</li>
+                <li>Ask about collaboration or commissions</li>
+                <li>Request a quote or consultation</li>
+                <li>Just say hi or give feedback!</li>
+              </ul>
+              <p className="mt-3 text-sm text-[var(--text-secondary)]">
+                All messages are welcome. I usually reply within 1-2 business days.
+              </p>
+            </div>
+            {/* Contact Info Cards */}
             <div className="space-y-6">
-              <div className="group">
+              <div className="group bg-[var(--background-secondary)] rounded-xl p-6 border border-[var(--border-color)] shadow-sm">
                 <h3 className="text-xl font-bold mb-3 flex items-center text-gray-900 dark:text-white">
                   <span className="mr-3 text-2xl">📧</span>
                   Email
@@ -133,7 +152,7 @@ export default function ContactPage() {
                 </p>
               </div>
               
-              <div>
+              <div className="bg-[var(--background-secondary)] rounded-xl p-6 border border-[var(--border-color)] shadow-sm">
                 <h3 className="text-xl font-bold mb-3 flex items-center text-gray-900 dark:text-white">
                   <span className="mr-3 text-2xl">🌐</span>
                   Social Media

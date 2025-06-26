@@ -1,6 +1,7 @@
 import { getAllPosts } from "@/lib/api";
 import { Post } from "@/interfaces/post";
 import BlogTabsClient, { CategoryItem } from "./BlogTabsClient";
+import Image from "next/image";
 
 export default function BlogPage() {
   const posts: Post[] = getAllPosts();
@@ -33,11 +34,14 @@ export default function BlogPage() {
       {/* Hero Section (With Parallax Effect) */}
       <div className="relative h-[60vh] overflow-hidden">
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/assets/blog/blog-post-covers/mr-cup-fabien-barral-Mwuod2cm8g4-unsplash.jpg"
             alt="Blog Hero"
+            fill
             className="object-cover w-full h-full transform scale-105"
             style={{ filter: 'brightness(0.7)' }}
+            priority
+            sizes="100vw"
           />
         </div>
         <div className="relative h-full flex items-center w-full mx-auto">

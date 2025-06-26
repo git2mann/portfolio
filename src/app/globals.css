@@ -43,7 +43,7 @@
     box-shadow: 0 0 20px rgba(255, 255, 0.8);
   }
   100% {
-    box-shadow: 0 0 5px rgba(255, 255, 0.5);
+    box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
   }
 }
 
@@ -204,275 +204,171 @@ body {
   --cursor-text: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiM5YTM0MTIiLz48L3N2Zz4='), auto;
 }
 
-/* Add this to your existing CSS after the sunset theme */
-
-.theme-metallic {
-  --gradient-start: #8e8e93; /* Space Grey Light */
-  --gradient-middle: #636366; /* Space Grey Medium */
-  --gradient-end: #48484a;   /* Space Grey Dark */
-  --progress-bar-color: #007aff; /* Apple Blue accent */
+/* --- Improved Metallic Silver Theme --- */
+.theme-metallic-silver {
+  --gradient-start: #e3e4e8;
+  --gradient-middle: #bfc2c7;
+  --gradient-end: #8b8e94;
+  --progress-bar-color: #bfc2c7;
+  --background-primary: #f5f6fa;
+  --background-secondary: #e3e4e8;
+  --text-primary: #23272b;
+  --text-secondary: #5c5f66;
+  --border-color: #bfc2c7;
+  --card-background: #f8fafc;
+  --hover-background: #e3e4e8;
+  --cursor-url: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgZmlsbD0iIzIzMjcyYiIvPjwvc3ZnPg=="), auto;
+  --cursor-default: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iNCIgc3Ryb2tlPSIjMjMyNzJiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4="), auto;
+  --cursor-pointer: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiMyMzI3MmIiLz48L3N2Zz4="), auto;
+  --cursor-text: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiMyMzI3MmIiLz48L3N2Zz4="), auto;
+  background-image: 
+    linear-gradient(135deg, #e3e4e8 0%, #bfc2c7 50%, #8b8e94 100%),
+    repeating-linear-gradient(120deg, #e3e4e8 0px, #e3e4e8 2px, #bfc2c7 4px, #bfc2c7 6px);
+  background-blend-mode: overlay;
 }
 
-/* Metallic sheen animation */
-@keyframes metallic-sheen {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
-.metallic-sheen {
-  background: linear-gradient(
-    110deg,
-    transparent 25%,
-    rgba(255, 255, 255, 0.1) 35%,
-    rgba(255, 255, 255, 0.3) 45%,
-    rgba(255, 255, 255, 0.1) 55%,
-    transparent 65%
-  );
-  background-size: 200% 100%;
-  animation: metallic-sheen 3s ease-in-out infinite;
-}
-
-/* Metallic Space Grey theme - Dark Steel */
-.theme-metallic {
-  --background-primary: #1a1a1c;
-  --background-secondary: #0f0f10;
-  --text-primary: #ffffff;
-  --text-secondary: #ffffff;
-  --border-color: #2d2d30;
-  --card-background: #1e1e20;
-  --hover-background: #2d2d30;
-  --cursor-url: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMkwyIDIyaDIwbC0xMC0yMHoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4='), auto;
-  --cursor-default: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48Y2lyY2xlIGN4PSI1IiBjeT0iNSIgcj0iNCIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiLz48L3N2Zz4='), auto;
-  --cursor-pointer: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4='), auto;
-  --cursor-text: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj48cGF0aCBkPSJNNSAyTDIgOGg2TDUgMnoiIGZpbGw9IiNmZmZmZmYiLz48L3N2Zz4='), auto;
-}
-
-/* Metallic theme specific enhancements */
-.theme-metallic .glass {
-  backdrop-filter: blur(20px) saturate(180%);
-  background-color: rgba(30, 30, 32, 0.9);
-  border: 1px solid rgba(45, 45, 48, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+.theme-metallic-silver .glass {
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  backdrop-filter: blur(18px) saturate(180%);
+  background-color: #e3e4e8cc;
+  border: 1px solid #bfc2c7;
+  box-shadow: 0 8px 32px #bfc2c755, 0 1.5px 0.5px #bfc2c7;
   position: relative;
   overflow: hidden;
 }
 
-.theme-metallic .glass::before {
-  content: '';
+.theme-metallic-silver .glass:before {
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    110deg,
-    transparent 25%,
-    rgba(255, 255, 255, 0.1) 35%,
-    rgba(255, 255, 255, 0.3) 45%,
-    rgba(255, 255, 255, 0.1) 55%,
-    transparent 65%
-  );
+  background: linear-gradient(110deg, #0000 25%, #bfc2c733 35%, #e3e4e84d 45%, #bfc2c733 55%, #0000 65%);
   background-size: 200% 100%;
-  animation: metallic-sheen 4s ease-in-out infinite;
+  animation: 4s ease-in-out infinite metallic-sheen;
   pointer-events: none;
 }
 
-.theme-metallic .btn-primary {
-  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
-  color: white;
-  box-shadow: 0 4px 15px 0 rgba(0, 122, 255, 0.3);
+.theme-metallic-silver .btn-primary {
+  background: linear-gradient(135deg, #bfc2c7 0%, #23272b 100%);
+  color: #23272b;
+  box-shadow: 0 4px 15px #bfc2c733;
   border: none;
   position: relative;
   overflow: hidden;
 }
 
-.theme-metallic .btn-primary::before {
-  content: '';
+.theme-metallic-silver .btn-primary:before {
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    110deg,
-    transparent 25%,
-    rgba(255, 255, 255, 0.2) 45%,
-    transparent 65%
-  );
-  animation: metallic-sheen 3s ease-in-out infinite;
+  background: linear-gradient(110deg, #0000 25%, #e3e4e833 45%, #0000 65%);
+  animation: 3s ease-in-out infinite metallic-sheen;
   pointer-events: none;
 }
 
-.theme-metallic .btn-primary:hover {
-  background: linear-gradient(135deg, #0056cc 0%, #004499 100%);
-  box-shadow: 0 6px 20px 0 rgba(0, 122, 255, 0.4);
+.theme-metallic-silver .btn-primary:hover {
+  background: linear-gradient(135deg, #23272b 0%, #bfc2c7 100%);
+  box-shadow: 0 6px 20px #bfc2c766;
   transform: translateY(-1px);
 }
 
-.theme-metallic .btn-secondary {
-  background: rgba(30, 30, 32, 0.9);
+.theme-metallic-silver .btn-secondary {
+  background: #e3e4e8cc;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(45, 45, 48, 0.8);
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.4);
-  color: #ffffff;
+  border: 1px solid #bfc2c7;
+  box-shadow: 0 2px 10px #bfc2c755;
+  color: #23272b;
   position: relative;
   overflow: hidden;
 }
 
-.theme-metallic .btn-secondary::before {
-  content: '';
+.theme-metallic-silver .btn-secondary:before {
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    110deg,
-    transparent 25%,
-    rgba(255, 255, 255, 0.1) 45%,
-    transparent 65%
-  );
-  animation: metallic-sheen 3.5s ease-in-out infinite;
+  background: linear-gradient(110deg, #0000 25%, #bfc2c733 45%, #0000 65%);
+  animation: 3.5s ease-in-out infinite metallic-sheen;
   pointer-events: none;
 }
 
-.theme-metallic .btn-secondary:hover {
-  background: rgba(45, 45, 48, 0.9);
-  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.5);
+.theme-metallic-silver .btn-secondary:hover {
+  background: #bfc2c7cc;
+  box-shadow: 0 4px 15px #bfc2c7aa;
   transform: translateY(-1px);
 }
 
-/* Metallic card styling with subtle shadows */
-.theme-metallic .border {
-  border-color: rgba(45, 45, 48, 0.8) !important;
-  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.5), 0 1px 4px 0 rgba(0, 0, 0, 0.4);
+.theme-metallic-silver .border {
+  box-shadow: 0 2px 8px #bfc2c755, 0 1px 4px #bfc2c7;
   position: relative;
   overflow: hidden;
+  border-color: #bfc2c7 !important;
 }
 
-.theme-metallic .border::before {
-  content: '';
+.theme-metallic-silver .border:before {
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    110deg,
-    transparent 25%,
-    rgba(255, 255, 255, 0.05) 45%,
-    transparent 65%
-  );
-  animation: metallic-sheen 5s ease-in-out infinite;
+  background: linear-gradient(110deg, #0000 25%, #e3e4e81a 45%, #0000 65%);
+  animation: 5s ease-in-out infinite metallic-sheen;
   pointer-events: none;
 }
 
-.theme-metallic .bg-white, 
-.theme-metallic .bg-gray-50,
-.theme-metallic .bg-gray-100,
-.theme-metallic .bg-neutral-100 {
-  background-color: rgba(30, 30, 32, 0.95) !important;
-  backdrop-filter: blur(10px);
+.theme-metallic-silver .gradient-text {
+  background-image: linear-gradient(135deg, #23272b 0%, #bfc2c7 50%, #e3e4e8 100%);
 }
 
-/* Override any light backgrounds */
-.theme-metallic .bg-slate-50,
-.theme-metallic .bg-slate-100,
-.theme-metallic .bg-stone-50,
-.theme-metallic .bg-stone-100 {
-  background-color: rgba(30, 30, 32, 0.95) !important;
-}
-
-/* Metallic scrollbar */
-.theme-metallic ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #98989d 0%, #636366 100%);
-  border-radius: 10px;
-}
-
-.theme-metallic ::-webkit-scrollbar-track {
-  background-color: rgba(28, 28, 30, 0.8);
-}
-
-/* Force all text to be white in metallic theme */
-.theme-metallic * {
-  color: #ffffff !important;
-}
-
-.theme-metallic .text-gray-500, 
-.theme-metallic .text-gray-400,
-.theme-metallic .text-gray-600,
-.theme-metallic .text-gray-700,
-.theme-metallic .text-gray-800,
-.theme-metallic .text-gray-900,
-.theme-metallic .dark\:text-gray-400,
-.theme-metallic .dark\:text-gray-300 {
-  color: #ffffff !important;
-}
-
-/* Override hover backgrounds to be dark */
-.theme-metallic .hover\:bg-gray-100:hover,
-.theme-metallic .hover\:bg-gray-50:hover,
-.theme-metallic .hover\:bg-slate-100:hover,
-.theme-metallic .dark\:hover\:bg-slate-700:hover {
-  background-color: rgba(45, 45, 48, 0.8) !important;
-}
-
-/* Theme switcher specific overrides */
-.theme-metallic .theme-switcher-button {
-  background-color: rgba(30, 30, 32, 0.9) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(45, 45, 48, 0.8) !important;
-}
-
-.theme-metallic .theme-switcher-menu {
-  background-color: rgba(30, 30, 32, 0.95) !important;
-  border: 1px solid rgba(45, 45, 48, 0.8) !important;
-  color: #ffffff !important;
-}
-
-.theme-metallic .theme-option {
-  background-color: transparent !important;
-  color: #ffffff !important;
-}
-
-.theme-metallic .theme-option:hover {
-  background-color: rgba(45, 45, 48, 0.8) !important;
-  color: #ffffff !important;
-}
-
-/* Metallic gradient text enhancement */
-.theme-metallic .gradient-text {
-  background-image: linear-gradient(135deg, #ffffff 0%, #e0e0e0 50%, #cccccc 100%);
-}
-
-/* Metallic typewriter effect with Apple-like polish */
-.theme-metallic .typewriter {
-  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+.theme-metallic-silver .typewriter {
+  background: linear-gradient(135deg, #23272b 0%, #bfc2c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px #bfc2c755;
   position: relative;
 }
 
-.theme-metallic .typewriter::after {
-  content: '';
+.theme-metallic-silver .typewriter:after {
+  content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    110deg,
-    transparent 25%,
-    rgba(255, 255, 255, 0.3) 45%,
-    transparent 65%
-  );
-  animation: metallic-sheen 2.5s ease-in-out infinite;
+  background: linear-gradient(110deg, #0000 25%, #e3e4e84d 45%, #0000 65%);
+  animation: 2.5s ease-in-out infinite metallic-sheen;
   pointer-events: none;
+}
+
+.theme-metallic-silver .theme-switcher-button {
+  background-color: #e3e4e8cc !important;
+  color: #23272b !important;
+  border: 1px solid #bfc2c7 !important;
+}
+
+.theme-metallic-silver .theme-switcher-menu {
+  background-color: #e3e4e8e6 !important;
+  border: 1px solid #bfc2c7 !important;
+  color: #23272b !important;
+}
+
+.theme-metallic-silver .theme-option {
+  background-color: #f5f6fa !important;
+  color: #23272b !important;
+}
+
+.theme-metallic-silver .theme-option:hover {
+  background-color: #bfc2c7 !important;
+  color: #23272b !important;
 }
 
 /* Apply theme colors */
