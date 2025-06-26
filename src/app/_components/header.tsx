@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 import { useState, useRef, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const navLinks = [
 	{ href: "/blog", label: "Blog" },
@@ -46,7 +47,14 @@ const Header = () => {
 								: "text-[var(--text-primary)] hover:text-[var(--text-secondary)]"
 						}`}
 					>
-						🏡
+						<Image
+							src="/assets/blog/authors/IMG_7908.PNG"
+							alt="Home"
+							width={40}
+							height={40}
+							className="rounded-full border border-[var(--border-color)] shadow-sm"
+							priority
+						/>
 					</Link>
 
 					{/* Desktop Navigation */}
