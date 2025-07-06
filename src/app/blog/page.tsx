@@ -30,7 +30,7 @@ export default function BlogPage() {
     },
   ];
   return (
-    <main className="min-h-screen bg-[var(--background-primary)]">
+    <main className="min-h-screen bg-[var(--background-primary)] px-4 sm:px-0 overflow-visible">
       {/* Hero Section (With Parallax Effect) */}
       <div className="relative h-[60vh] overflow-hidden">
         <div className="absolute inset-0">

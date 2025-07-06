@@ -91,7 +91,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
         {/* Dynamic Content Based on Active Tab */}
         <div className="mt-12 space-y-16">
           {activeTab === "featured" && featuredPost && (
-            <>
+            <div className="w-full mb-8">
               <HeroPost
                 title={featuredPost.title}
                 coverImage={featuredPost.coverImage}
@@ -101,7 +101,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                 excerpt={featuredPost.excerpt}
               />
               {moreStories.length > 0 && <MoreStories posts={moreStories} />}
-            </>
+            </div>
           )}
 
           {(activeTab === "all" || activeTab === "music" || activeTab === "tech") && (
