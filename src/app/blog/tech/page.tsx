@@ -37,7 +37,7 @@ export default async function TechBlogPage({
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <main className="min-h-screen bg-[var(--background-primary)]">
+    <main className="min-h-screen bg-[var(--background-primary)] px-4 sm:px-0 overflow-visible">
       <Container>
         <div className="max-w-6xl mx-auto py-12">
           {/* Back Button */}
@@ -110,7 +110,7 @@ export default async function TechBlogPage({
             <div className="mb-16">
               <Link href={`/posts/${featuredPost.slug}`} className="block group">
                 <article className="bg-[var(--card-background)] rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 relative border border-[var(--border-color)]">
-                  <div className="relative h-96 md:h-[500px]">
+                  <div className="relative aspect-[4/3] sm:aspect-[2/1] md:aspect-[3/1]">
                     <Image
                       src={featuredPost.coverImage}
                       alt={`Cover Image for ${featuredPost.title}`}
@@ -119,45 +119,48 @@ export default async function TechBlogPage({
                       sizes="(max-width: 1200px) 100vw, 1200px"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                      <div className="absolute bottom-0 left-0 right-0 p-8 transform transition-transform duration-300 group-hover:translate-y-[-8px]">
-                        <span className="inline-block px-3 py-1 text-sm font-medium text-white bg-purple-600 rounded-full mb-4">
-                          Featured Post
-                        </span>
-                        <h3 className="text-3xl md:text-4xl font-bold mb-4 text-white">
-                          {featuredPost.title}
-                        </h3>
-                        {featuredPost.excerpt && (
-                          <p className="text-lg text-gray-100 mb-4 max-w-3xl">
-                            {featuredPost.excerpt}
-                          </p>
-                        )}
-                        <div className="flex flex-wrap items-center text-sm text-gray-300">
-                          {featuredPost.date && (
-                            <span className="mr-2">
-                              {new Date(featuredPost.date).toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                              })}
-                            </span>
-                          )}
-                          {featuredPost.tags && featuredPost.tags.length > 0 && (
-                            <div className="flex flex-wrap gap-2 mr-auto">
-                              {featuredPost.tags.map(tagItem => (
-                                <span 
-                                  key={tagItem}
-                                  className="px-2 py-1 text-xs font-medium bg-purple-500/50 rounded-full"
-                                >
-                                  {tagItem}
-                                </span>
-                              ))}
-                            </div>
-                          )}
-                          <span className="inline-block ml-auto px-4 py-2 text-white bg-purple-600/80 rounded-md group-hover:bg-purple-500 transition-colors">
-                            Read Article
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-4 sm:p-8"
+                      style={{
+                        maxHeight: '100%',
+                        overflow: 'auto',
+                      }}
+                    >
+                      <span className="inline-block px-3 py-1 text-sm font-medium text-white bg-purple-600 rounded-full mb-2 sm:mb-4">
+                        Featured Post
+                      </span>
+                      <h3 className="text-xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 text-white break-words leading-tight">
+                        {featuredPost.title}
+                      </h3>
+                      {featuredPost.excerpt && (
+                        <p className="text-base sm:text-lg text-gray-100 mb-2 sm:mb-4 max-w-3xl line-clamp-3">
+                          {featuredPost.excerpt}
+                        </p>
+                      )}
+                      <div className="flex flex-wrap items-center text-xs sm:text-sm text-gray-300 gap-2">
+                        {featuredPost.date && (
+                          <span>
+                            {new Date(featuredPost.date).toLocaleDateString('en-US', {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric'
+                            })}
                           </span>
-                        </div>
+                        )}
+                        {featuredPost.tags && featuredPost.tags.length > 0 && (
+                          <div className="flex flex-wrap gap-1">
+                            {featuredPost.tags.map(tagItem => (
+                              <span 
+                                key={tagItem}
+                                className="px-2 py-1 text-xs font-medium bg-purple-500/50 rounded-full"
+                              >
+                                {tagItem}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <span className="inline-block ml-auto px-4 py-2 text-white bg-purple-600/80 rounded-md group-hover:bg-purple-500 transition-colors">
+                          Read Article
+                        </span>
                       </div>
                     </div>
                   </div>

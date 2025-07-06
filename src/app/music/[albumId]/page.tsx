@@ -287,7 +287,7 @@ export default function AlbumPage() {
                     src={album.coverImage}
                     alt={`Cover of ${album.title}`}
                     fill
-                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110 rounded-2xl"
+                    className="object-cover w-full h-full transition-transform duration-500 rounded-2xl"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 420px, 420px"
                     priority
                   />
