@@ -57,11 +57,12 @@ html {
   scroll-behavior: smooth;
   width: 100%;
   overflow-x: hidden; /* Prevent horizontal scrolling */
+  background-color: var(--background-primary) !important;
 }
 
 body {
   @apply antialiased transition-colors duration-200;
-  background-color: var(--background-primary);
+  background-color: var(--background-primary) !important;
   color: var(--text-primary);
   cursor: var(--cursor-url);
   cursor: var(--cursor-default);
@@ -695,3 +696,9 @@ input[type="range"]:focus::-webkit-slider-thumb {
   color: #111827 !important;
 }
 */
+
+/* Fix: Force true black background for .dark .min-h-screen (Half Thoughts page and others) */
+.dark .min-h-screen,
+.dark main.min-h-screen {
+  background-color: #000 !important;
+}

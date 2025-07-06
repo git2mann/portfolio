@@ -46,12 +46,12 @@ export default function FeaturedTrack({ song }: FeaturedTrackProps) {
       </div>
 
       {/* Lyrics Annotation */}
-      <div className="bg-white dark:bg-slate-900 rounded-lg p-6 mb-6">
+      <div className="bg-[var(--card-background)] rounded-lg p-6 mb-6">
         <h3 className="text-xl font-bold mb-4">Behind the Lyrics</h3>
         {song.annotations.map((annotation, index) => (
           <div key={index} className="mb-4">
             <p className="font-semibold mb-2">"{annotation.line}"</p>
-            <p className="text-neutral-600 dark:text-neutral-400">{annotation.explanation}</p>
+            <p className="text-[var(--text-secondary)]">{annotation.explanation}</p>
           </div>
         ))}
       </div>

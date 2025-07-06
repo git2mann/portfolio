@@ -1,5 +1,12 @@
 export const albums = [
   {
+    id: "4",
+    title: "Half Thoughts",
+    coverImage: "/assets/music-assets/HalfThoughts1Cover.png",
+    releaseYear: "2025",
+    description: "A sonic diary of incomplete ideas that found their voice. Across 16 tracks and 34 minutes, Klense weaves together alternative rock, jazz-tinged saxophone, alternative Hip-Hop, and ambient textures that feel both intimate and expansive.",
+  },
+  {
     id: "1",
     title: "Squealer and the Aggressors of Peace",
     coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg",

@@ -73,6 +73,16 @@ const Header = () => {
 								{label}
 							</Link>
 						))}
+						{/* Special Free Download Button */}
+						<Link
+							href="/releases/half-thoughts"
+							className="ml-4 px-5 py-2 rounded-full font-bold text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 shadow-lg border-2 border-pink-300/40 relative animate-download-glow hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-pink-400"
+							style={{ letterSpacing: "0.04em" }}
+							aria-label="Free Download: Half Thoughts"
+						>
+							<span className="relative z-10">Download Half Thoughts '25</span>
+							<span className="absolute inset-0 rounded-full pointer-events-none download-glow" />
+						</Link>
 					</nav>
 
 					{/* Theme Switcher & Mobile Menu Button */}
@@ -110,9 +120,35 @@ const Header = () => {
 								{label}
 							</Link>
 						))}
+						{/* Special Free Download Button in mobile menu */}
+						<Link
+							href="/releases/half-thoughts"
+							className="mt-2 px-5 py-3 rounded-full font-bold text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 shadow-lg border-2 border-pink-300/40 animate-download-glow focus:outline-none focus:ring-4 focus:ring-pink-400 text-center"
+							style={{ letterSpacing: "0.04em" }}
+							aria-label="Free Download: Half Thoughts"
+							onClick={() => setMenuOpen(false)}
+						>
+							Free Download
+						</Link>
 					</nav>
 				</div>
 			)}
+			<style jsx global>{`
+				@keyframes download-glow {
+					0% {
+						box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7), 0 0 8px 2px #f472b6;
+					}
+					70% {
+						box-shadow: 0 0 0 12px rgba(236, 72, 153, 0), 0 0 16px 4px #f472b6;
+					}
+					100% {
+						box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.7), 0 0 8px 2px #f472b6;
+					}
+				}
+				.animate-download-glow {
+					animation: download-glow 2.2s infinite;
+				}
+			`}</style>
 		</header>
 	);
 };
