@@ -7,102 +7,102 @@ import { FaPlay } from "react-icons/fa";
 import Tilt from "react-parallax-tilt";
 
 const TRACKS = [
-  {
-    title: "The Evening Dispatch!",
-    filename: "01 The Evening Dispatch!.m4a",
-    duration: "2:05",
-    theme: "Jazz",
-  },
-  {
-    title: "Saxophone",
-    filename: "02 Saxophone.m4a",
-    duration: "2:05",
-    theme: "Jazz, Hip-Hop",
-  },
-  {
-    title: "Oze II",
-    filename: "03 Oze II.m4a",
-    duration: "2:09",
-    theme: "Songwriting",
-  },
-  {
-    title: "Oze",
-    filename: "04 Oze.m4a",
-    duration: "2:19",
-    theme: "Alternative",
-  },
-  {
-    title: "Wish Ya Told Me!",
-    filename: "05 Wish Ya Told Me!.m4a",
-    duration: "1:33",
-    theme: "Breakcore",
-  },
-  {
-    title: "Intermission IV",
-    filename: "06 Intermission IV.m4a",
-    duration: "2:11",
-    theme: "Ambient",
-  },
-  {
-    title: "You Are The Reason",
-    filename: "07 You Are The Reason.m4a",
-    duration: "1:53",
-    theme: "Songwriting",
-  },
-  {
-    title: "Blue Salmon",
-    filename: "08 Blue Salmon.m4a",
-    duration: "1:18",
-    theme: "Alternative",
-  },
-  {
-    title: "Deglupta",
-    filename: "09 Deglupta.m4a",
-    duration: "1:37",
-    theme: "Rock",
-  },
-  {
-    title: "Kept You Waiting",
-    filename: "10 Kept You Waiting.m4a",
-    duration: "1:36",
-    theme: "Alternative Rap, Hip-Hop",
-  },
-  {
-    title: "Karl Draisack",
-    filename: "11 Karl Draisack.m4a",
-    duration: "2:37",
-    theme: "Alternative",
-  },
-  {
-    title: "Forbo",
-    filename: "12 Forbo.m4a",
-    duration: "1:57",
-    theme: "Alternative",
-  },
-  {
-    title: "Garble Surmount",
-    filename: "13 Garble Surmount.m4a",
-    duration: "2:33",
-    theme: "Alternative",
-  },
-  {
-    title: "Impromptu",
-    filename: "14 Impromptu.m4a",
-    duration: "3:05",
-    theme: "Alternative",
-  },
-  {
-    title: "Addis Abeba",
-    filename: "15 Addis Abeba.m4a",
-    duration: "2:42",
-    theme: "Alternative",
-  },
-  {
-    title: "Abide by Klense",
-    filename: "16 Abide by Klense.m4a",
-    duration: "2:03",
-    theme: "Alternative",
-  },
+	{
+		title: "The Evening Dispatch!",
+		filename: "01 The Evening Dispatch!.m4a",
+		duration: "2:05",
+		theme: "Jazz",
+	},
+	{
+		title: "Saxophone",
+		filename: "02 Saxophone.m4a",
+		duration: "2:05",
+		theme: "Jazz, Hip-Hop",
+	},
+	{
+		title: "Oze II",
+		filename: "03 Oze II.m4a",
+		duration: "2:09",
+		theme: "Songwriting",
+	},
+	{
+		title: "Oze",
+		filename: "04 Oze.m4a",
+		duration: "2:19",
+		theme: "Alternative",
+	},
+	{
+		title: "Wish Ya Told Me!",
+		filename: "05 Wish Ya Told Me!.m4a",
+		duration: "1:33",
+		theme: "Breakcore",
+	},
+	{
+		title: "Intermission IV",
+		filename: "06 Intermission IV.m4a",
+		duration: "2:11",
+		theme: "Ambient",
+	},
+	{
+		title: "You Are The Reason",
+		filename: "07 You Are The Reason.m4a",
+		duration: "1:53",
+		theme: "Songwriting",
+	},
+	{
+		title: "Blue Salmon",
+		filename: "08 Blue Salmon.m4a",
+		duration: "1:18",
+		theme: "Alternative",
+	},
+	{
+		title: "Deglupta",
+		filename: "09 Deglupta.m4a",
+		duration: "1:37",
+		theme: "Rock",
+	},
+	{
+		title: "Kept You Waiting",
+		filename: "10 Kept You Waiting.m4a",
+		duration: "1:36",
+		theme: "Alternative Rap, Hip-Hop",
+	},
+	{
+		title: "Karl Draisack",
+		filename: "11 Karl Draisack.m4a",
+		duration: "2:37",
+		theme: "Alternative",
+	},
+	{
+		title: "Forbo",
+		filename: "12 Forbo.m4a",
+		duration: "1:57",
+		theme: "Alternative",
+	},
+	{
+		title: "Garble Surmount",
+		filename: "13 Garble Surmount.m4a",
+		duration: "2:33",
+		theme: "Alternative",
+	},
+	{
+		title: "Impromptu",
+		filename: "14 Impromptu.m4a",
+		duration: "3:05",
+		theme: "Alternative",
+	},
+	{
+		title: "Addis Abeba",
+		filename: "15 Addis Abeba.m4a",
+		duration: "2:42",
+		theme: "Alternative",
+	},
+	{
+		title: "Abide by Klense",
+		filename: "16 Abide by Klense.m4a",
+		duration: "2:03",
+		theme: "Alternative",
+	},
 ];
 
 /* const TRACK_NOTES = [
@@ -285,7 +285,8 @@ function Sparkle({ className = "", style = {} }: { className?: string; style?: R
 
 // Utility to split and animate heading letters
 function AnimatedHeading() {
-	const heading = "HALF THOUGHTS";
+	const headingTop = "HALF";
+	const headingBottom = "THOUGHTS";
 	const year = "'25";
 	const colors = [
 		"text-pink-500",
@@ -302,31 +303,52 @@ function AnimatedHeading() {
 		"text-blue-600",
 	];
 	return (
-		<h1
-			className="text-5xl md:text-7xl font-extrabold tracking-wide mb-3 drop-shadow-lg gradient-text-glow text-gray-900 dark:text-white flex justify-center gap-1 select-none animated-heading"
-			style={{ letterSpacing: "0.18em" }}
+		<div
+			className="animated-heading font-extrabold tracking-wide mb-3 drop-shadow-lg gradient-text-glow text-gray-900 dark:text-white flex flex-col items-center select-none"
+			style={{
+				fontSize: "clamp(2rem, 8vw, 4.5rem)",
+				letterSpacing: "0.12em",
+				lineHeight: 1.1,
+			}}
 			aria-label="HALF THOUGHTS '25"
 		>
-			{heading.split("").map((char, i) =>
-				char === " " ? (
-					<span className="inline-block w-3 md:w-5" key={i} />
-				) : (
-					<span
-						className={`inline-block animated-letter ${colors[i % colors.length]}`}
-						style={{ animationDelay: `${i * 0.06 + 0.1}s` }}
-						key={i}
-					>
-						{char}
-					</span>
-				)
-			)}
-			<span
-				className="inline-block animated-letter special-year ml-2"
-				style={{ animationDelay: `${heading.length * 0.06 + 0.2}s` }}
-			>
-				{year}
-			</span>
-		</h1>
+			<div className="flex justify-center gap-1">
+				{headingTop.split("").map((char, i) =>
+					char === " " ? (
+						<span className="inline-block w-2 xs:w-3 md:w-5" key={i} />
+					) : (
+						<span
+							className={`inline-block animated-letter ${colors[i % colors.length]}`}
+							style={{ animationDelay: `${i * 0.06 + 0.1}s` }}
+							key={i}
+						>
+							{char}
+						</span>
+					)
+				)}
+			</div>
+			<div className="flex justify-center gap-1">
+				{headingBottom.split("").map((char, i) =>
+					char === " " ? (
+						<span className="inline-block w-2 xs:w-3 md:w-5" key={i} />
+					) : (
+						<span
+							className={`inline-block animated-letter ${colors[(i + headingTop.length) % colors.length]}`}
+							style={{ animationDelay: `${(i + headingTop.length) * 0.06 + 0.1}s` }}
+							key={i}
+						>
+							{char}
+						</span>
+					)
+				)}
+				<span
+					className="inline-block animated-letter special-year ml-2"
+					style={{ animationDelay: `${(headingTop.length + headingBottom.length) * 0.06 + 0.2}s` }}
+				>
+					{year}
+				</span>
+			</div>
+		</div>
 	);
 }
 
@@ -849,9 +871,6 @@ export default function HalfThoughtsPage() {
 					0% { opacity: 0; filter: blur(4px);}
 					60% { opacity: 1; filter: blur(0);}
 					100% { opacity: 1; filter: blur(0);}
-				}
-				@media (width <= 600px) {
-					.animated-heading .animated-letter { font-size: 1.2em; }
 				}
 			`}</style>
 		</main>
