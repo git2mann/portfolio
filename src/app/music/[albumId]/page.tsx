@@ -166,6 +166,33 @@ const albums = [
       { id: "8", title: "Local (Outro)", duration: "1:51", audioUrl: "/assets/music/son-of-ink-klense-mp3s/Local (Outro) - Klense.mp3", lyrics: [] }
     ],
   },
+  {
+    id: "4",
+    title: "Half Thoughts",
+    coverImage: "/assets/music-assets/HalfThoughts1Cover.png",
+    releaseYear: "2025",
+    description: `A sonic diary of incomplete ideas that found their voice. Across 16 tracks and 34 minutes, Klense weaves together alternative rock, jazz-tinged saxophone, alternative Hip-Hop, and ambient textures that feel both intimate and expansive.
+
+This collection lives in the spaces between thoughts, where "The Evening Dispatch!" opens with urgent energy, "Saxophone" brings warmth to the chaos, and tracks like "Intermission IV" offer breathing room in the beautiful mess. Each song is a fragment that somehow feels complete, capturing those moments when your mind is everywhere and nowhere at once.`,
+    songs: [
+      { id: "1", title: "The Evening Dispatch!", duration: "2:05", audioUrl: "", lyrics: [] },
+      { id: "2", title: "Saxophone", duration: "2:05", audioUrl: "", lyrics: [] },
+      { id: "3", title: "Oze II", duration: "2:09", audioUrl: "", lyrics: [] },
+      { id: "4", title: "Oze", duration: "2:19", audioUrl: "", lyrics: [] },
+      { id: "5", title: "Wish Ya Told Me!", duration: "1:33", audioUrl: "", lyrics: [] },
+      { id: "6", title: "Intermission IV", duration: "2:11", audioUrl: "", lyrics: [] },
+      { id: "7", title: "You Are The Reason", duration: "1:53", audioUrl: "", lyrics: [] },
+      { id: "8", title: "Blue Salmon", duration: "1:18", audioUrl: "", lyrics: [] },
+      { id: "9", title: "Deglupta", duration: "1:37", audioUrl: "", lyrics: [] },
+      { id: "10", title: "Kept You Waiting", duration: "1:36", audioUrl: "", lyrics: [] },
+      { id: "11", title: "Karl Draisack", duration: "2:37", audioUrl: "", lyrics: [] },
+      { id: "12", title: "Forbo", duration: "1:57", audioUrl: "", lyrics: [] },
+      { id: "13", title: "Garble Surmount", duration: "2:33", audioUrl: "", lyrics: [] },
+      { id: "14", title: "Impromptu", duration: "3:05", audioUrl: "", lyrics: [] },
+      { id: "15", title: "Addis Abeba", duration: "2:42", audioUrl: "", lyrics: [] },
+      { id: "16", title: "Abide by Klense", duration: "2:03", audioUrl: "", lyrics: [] },
+    ],
+  },
 ];
 
 export default function AlbumPage() {
@@ -245,23 +272,27 @@ export default function AlbumPage() {
               </button>
               
               {/* Album Cover */}
-              <Tilt
-                className="aspect-square rounded-lg overflow-hidden shadow-lg"
-                tiltMaxAngleX={15}
-                tiltMaxAngleY={15}
-                glareEnable={true}
-                glareMaxOpacity={0.6}
-                glareColor="#ffffff"
-                glarePosition="all"
-                transitionSpeed={250}
-              >
-                <Image
-                  src={album.coverImage}
-                  alt={`Cover of ${album.title}`}
-                  fill
-                  className="object-cover transition-transform duration-300"
-                />
-              </Tilt>
+              <div className="relative aspect-square w-full max-w-[420px] mx-auto overflow-hidden rounded-2xl shadow-2xl group transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                <Tilt
+                  className="w-full h-full"
+                  tiltMaxAngleX={15}
+                  tiltMaxAngleY={15}
+                  glareEnable={true}
+                  glareMaxOpacity={0.6}
+                  glareColor="#ffffff"
+                  glarePosition="all"
+                  transitionSpeed={250}
+                >
+                  <Image
+                    src={album.coverImage}
+                    alt={`Cover of ${album.title}`}
+                    fill
+                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110 rounded-2xl"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 420px, 420px"
+                    priority
+                  />
+                </Tilt>
+              </div>
 
               {/* Sticky Section */}
               <div
@@ -484,6 +515,15 @@ export default function AlbumPage() {
                       </p>
                       <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
                         The project stands as one of Klense's most cohesive bodies of work, with interconnected themes and motifs that weave throughout the tracklist. From the opening track to the finale, there's a deliberate progression that invites listeners to engage with the album as a complete artistic statement rather than a collection of individual songs.
+                      </p>
+                    </>
+                  ) : album.id === "4" ? (
+                    <>
+                      <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                        A sonic diary of incomplete ideas that found their voice. Across 16 tracks and 34 minutes, Klense weaves together alternative rock, jazz-tinged saxophone, alternative Hip-Hop, and ambient textures that feel both intimate and expansive.
+                      </p>
+                      <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+                        This collection lives in the spaces between thoughts, where "The Evening Dispatch!" opens with urgent energy, "Saxophone" brings warmth to the chaos, and tracks like "Intermission IV" offer breathing room in the beautiful mess. Each song is a fragment that somehow feels complete, capturing those moments when your mind is everywhere and nowhere at once.
                       </p>
                     </>
                   ) : (
