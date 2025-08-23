@@ -73,16 +73,6 @@ const Header = () => {
 								{label}
 							</Link>
 						))}
-						{/* Special Free Download Button */}
-						<Link
-							href="/releases/half-thoughts"
-							className="ml-4 px-5 py-2 rounded-full font-bold text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 shadow-lg border-2 border-pink-300/40 relative animate-download-glow hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-pink-400"
-							style={{ letterSpacing: "0.04em" }}
-							aria-label="Free Download: Half Thoughts"
-						>
-							<span className="relative z-10">Download Half Thoughts '25</span>
-							<span className="absolute inset-0 rounded-full pointer-events-none download-glow" />
-						</Link>
 					</nav>
 
 					{/* Theme Switcher & Mobile Menu Button */}
@@ -98,6 +88,9 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
+
+			{/* 8-bit Lanton's Ant background overlay */}
+			<div className="lanton-ant-bg pointer-events-none" aria-hidden="true" />
 
 			{/* Mobile Navigation */}
 			{menuOpen && (

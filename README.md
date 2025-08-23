@@ -22,10 +22,12 @@ A modern, performant personal portfolio and blog built with Next.js, TypeScript,
   - Forest
   - Ocean
   - Sunset
+  - **Metallic Silver** (realistic metallic sheen, glassy menus, and subtle highlights)
+  - **8-Bit Sunset** (retro pixel look with Lanton's Ant 8-bit grid overlay)
 - **Responsive Design**: Optimized for all screen sizes, ensuring a seamless experience on mobile, tablet, and desktop.
 - **Performance Optimized**: Built with Next.js for fast loading speeds and efficient rendering.
 - **TypeScript**: Full type safety throughout the codebase for better maintainability.
-- **Modern Styling**: Clean, modern aesthetic using Tailwind CSS.
+- **Modern Styling**: Clean, modern aesthetic using Tailwind CSS and custom themes.
 
 ## Technology Stack
 

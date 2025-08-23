@@ -339,11 +339,6 @@ body {
 }
 
 .theme-metallic-silver .typewriter:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
   height: 100%;
   background: linear-gradient(110deg, #0000 25%, #e3e4e84d 45%, #0000 65%);
   animation: 2.5s ease-in-out infinite metallic-sheen;
@@ -354,22 +349,273 @@ body {
   background-color: #e3e4e8cc !important;
   color: #23272b !important;
   border: 1px solid #bfc2c7 !important;
+  box-shadow: 0 2px 8px #bfc2c733, 0 1px 2px #bfc2c7;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+
+.theme-metallic-silver .theme-switcher-button:hover,
+.theme-metallic-silver .theme-switcher-button:focus {
+  background: linear-gradient(110deg, #e3e4e8cc 80%, #f5f6fa 100%);
+  box-shadow: 0 4px 16px #bfc2c766, 0 2px 4px #bfc2c7;
 }
 
 .theme-metallic-silver .theme-switcher-menu {
   background-color: #e3e4e8e6 !important;
   border: 1px solid #bfc2c7 !important;
   color: #23272b !important;
+  box-shadow: 0 8px 32px #bfc2c755, 0 1.5px .5px #bfc2c7;
+  backdrop-filter: blur(16px) saturate(160%);
 }
 
 .theme-metallic-silver .theme-option {
   background-color: #f5f6fa !important;
   color: #23272b !important;
+  transition: background 0.2s, color 0.2s;
 }
 
-.theme-metallic-silver .theme-option:hover {
+.theme-metallic-silver .theme-option:hover,
+.theme-metallic-silver .theme-option:focus {
   background-color: #bfc2c7 !important;
   color: #23272b !important;
+  box-shadow: 0 2px 8px #bfc2c733;
+}
+
+@keyframes metallic-sheen {
+  0% {
+    left: -100%;
+  }
+  60% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* --- 8-Bit Sunset Purple Theme --- */
+.theme-8bit {
+  --gradient-start: #ffb6ff;
+  --gradient-middle: #b28dff;
+  --gradient-end: #6c3cff;
+  --progress-bar-color: #ffb6ff;
+  --background-primary: #2d1836;
+  --background-secondary: #3a2150;
+  --text-primary: #ffe6ff;
+  --text-secondary: #b28dff;
+  --border-color: #6c3cff;
+  --card-background: #3a2150;
+  --hover-background: #44225e;
+  --cursor-url: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' fill='%236c3cff'/%3E%3Crect x='4' y='4' width='16' height='16' fill='%23ffb6ff'/%3E%3C/svg%3E"), auto;
+  --cursor-default: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='10' height='10' fill='%23b28dff'/%3E%3C/svg%3E"), auto;
+  --cursor-pointer: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='10' height='10' fill='%23ffb6ff'/%3E%3C/svg%3E"), auto;
+  --cursor-text: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='10' height='10' fill='%236c3cff'/%3E%3C/svg%3E"), auto;
+  image-rendering: pixelated;
+  font-family: 'Press Start 2P', 'VT323', 'Courier New', Courier, monospace !important;
+  background-image: 
+    repeating-linear-gradient(135deg, #6c3cff 0px, #6c3cff 8px, #3a2150 8px, #3a2150 16px),
+    linear-gradient(135deg, #ffb6ff 0%, #b28dff 50%, #6c3cff 100%);
+  background-blend-mode: multiply;
+}
+
+/* 8-bit pixel border for cards and buttons */
+.theme-8bit .border,
+.theme-8bit .btn,
+.theme-8bit .btn-primary,
+.theme-8bit .btn-secondary,
+.theme-8bit .theme-switcher-button,
+.theme-8bit .theme-switcher-menu,
+.theme-8bit .theme-option,
+.theme-8bit .glass {
+  border: 4px solid #6c3cff !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 2px #b28dff, 0 0 0 6px #2d1836;
+  image-rendering: pixelated;
+  font-family: inherit;
+  position: relative;
+}
+
+/* 8-bit blocky shadow for popups and cards */
+.theme-8bit .glass,
+.theme-8bit .theme-switcher-menu,
+.theme-8bit .skeleton,
+.theme-8bit .btn,
+.theme-8bit .btn-primary,
+.theme-8bit .btn-secondary {
+  box-shadow: 8px 8px 0 0 #44225e, 0 0 0 2px #b28dff;
+}
+
+/* 8-bit font for headings and buttons */
+.theme-8bit h1,
+.theme-8bit h2,
+.theme-8bit h3,
+.theme-8bit h4,
+.theme-8bit h5,
+.theme-8bit h6,
+.theme-8bit .btn,
+.theme-8bit .btn-primary,
+.theme-8bit .btn-secondary,
+.theme-8bit .theme-switcher-button,
+.theme-8bit .theme-option {
+  font-family: 'Press Start 2P', 'VT323', 'Courier New', Courier, monospace !important;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* 8-bit pixel art background using Lanton's Ant (simple 8-bit grid) */
+.theme-8bit .lanton-ant-bg {
+  mix-blend-mode: soft-light; /* or overlay, try both */
+  opacity: 0.05;
+}
+
+
+/* 8-bit pixel hover effect */
+.theme-8bit .btn-primary:hover,
+.theme-8bit .btn-secondary:hover,
+.theme-8bit .theme-option:hover {
+  background-color: #ffb6ff !important;
+  color: #2d1836 !important;
+  box-shadow: 0 0 0 2px #ffb6ff, 8px 8px 0 0 #b28dff;
+  filter: brightness(1.1);
+}
+
+/* 8-bit pixel focus effect */
+.theme-8bit .btn:focus,
+.theme-8bit .btn-primary:focus,
+.theme-8bit .btn-secondary:focus,
+.theme-8bit .theme-switcher-button:focus,
+.theme-8bit .theme-option:focus {
+  outline: 2px dashed #ffb6ff;
+  outline-offset: 2px;
+}
+
+/* 8-bit pixel gradient text */
+.theme-8bit .gradient-text,
+.theme-8bit .typewriter,
+.theme-8bit .typewriter-text {
+  background-image: linear-gradient(90deg, #ffb6ff, #b28dff, #6c3cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 0 #2d1836;
+  font-family: inherit;
+}
+
+/* 8-bit pixel selection */
+.theme-8bit ::selection {
+  background: #ffb6ff;
+  color: #2d1836;
+}
+
+/* 8-bit pixel scrollbars */
+.theme-8bit ::-webkit-scrollbar {
+  width: 16px;
+  background: #3a2150;
+}
+.theme-8bit ::-webkit-scrollbar-thumb {
+  background: #b28dff;
+  border: 4px solid #6c3cff;
+  border-radius: 0;
+}
+.theme-8bit ::-webkit-scrollbar-thumb:hover {
+  background: #ffb6ff;
+}
+
+/* 8-bit pixel input fields */
+.theme-8bit input,
+.theme-8bit textarea {
+  border: 4px solid #b28dff !important;
+  border-radius: 0 !important;
+  background: #2d1836 !important;
+  color: #ffb6ff !important;
+  font-family: inherit;
+  box-shadow: 4px 4px 0 0 #6c3cff;
+}
+
+.theme-8bit input:focus,
+.theme-8bit textarea:focus {
+  border-color: #ffb6ff !important;
+  outline: 2px dashed #ffb6ff;
+}
+
+/* 8-bit pixel effect for links */
+.theme-8bit a {
+  color: #ffb6ff;
+  text-decoration: underline dotted #b28dff 2px;
+  font-family: inherit;
+}
+.theme-8bit a:hover {
+  color: #6c3cff;
+  background: #ffb6ff;
+  text-shadow: 2px 2px 0 #2d1836;
+}
+
+/* 8-bit pixel effect for code blocks */
+.theme-8bit pre,
+.theme-8bit code {
+  background: #3a2150 !important;
+  color: #ffb6ff !important;
+  border: 4px solid #b28dff !important;
+  border-radius: 0 !important;
+  font-family: 'Press Start 2P', 'VT323', 'Courier New', Courier, monospace !important;
+  box-shadow: 4px 4px 0 0 #6c3cff;
+  padding: 0.5em 1em;
+}
+
+/* 8-bit pixel effect for skeleton loaders */
+.theme-8bit .skeleton {
+  background: repeating-linear-gradient(
+    135deg,
+    #b28dff 0 8px,
+    #6c3cff 8px 16px
+  );
+  border: 4px solid #6c3cff;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 0 #b28dff;
+}
+
+/* 8-bit pixel effect for waveform player */
+.theme-8bit input[type="range"]::-webkit-slider-thumb {
+  background: #ffb6ff;
+  border: 4px solid #6c3cff;
+  border-radius: 0;
+  box-shadow: 2px 2px 0 0 #b28dff;
+}
+
+/* 8-bit pixel effect for main container */
+.theme-8bit main,
+.theme-8bit .container {
+  background: #2d1836 !important;
+  color: #ffe6ff !important;
+  font-family: inherit;
+  position: relative;
+  z-index: 1;
+}
+
+/* 8-bit pixel effect for modal overlays */
+.theme-8bit .modal,
+.theme-8bit .theme-switcher-menu {
+  background: #3a2150 !important;
+  border: 4px solid #b28dff !important;
+  box-shadow: 8px 8px 0 0 #44225e;
+  border-radius: 0 !important;
+}
+
+/* 8-bit pixel effect for popup close button */
+.theme-8bit .close-btn {
+  background: #b28dff;
+  color: #2d1836;
+  border: 2px solid #6c3cff;
+  border-radius: 0;
+  font-family: inherit;
+  box-shadow: 2px 2px 0 0 #ffb6ff;
+}
+
+/* 8-bit pixel animation for Lanton's Ant (simple pixel crawl) */
+@keyframes lanton-ant-crawl {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 16px 16px, 16px 16px; }
+}
+.theme-8bit .lanton-ant-bg {
+  animation: lanton-ant-crawl 8s linear infinite;
 }
 
 /* Apply theme colors */
@@ -414,7 +660,7 @@ input, textarea {
 
 .btn-secondary {
   background-color: var(--background-secondary);
-  color: var (--text-primary);
+  color: var(--text-primary);
   border: 1px solid var(--border-color);
 }
 
@@ -444,7 +690,7 @@ input, textarea {
 
 .theme-option:hover {
   background-color: var(--hover-background);
-  color: var(--text-hover);
+  color: var(--text-primary); /* Fix: use a defined variable */
 }
 
 /* Animated elements */
@@ -701,4 +947,8 @@ input[type="range"]:focus::-webkit-slider-thumb {
 .dark .min-h-screen,
 .dark main.min-h-screen {
   background-color: #000 !important;
+}
+
+.theme-8bit .text-\[var\(--text-secondary\)\] {
+  color: #ffe6ff !important;
 }
