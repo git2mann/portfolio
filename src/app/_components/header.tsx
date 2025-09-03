@@ -114,6 +114,7 @@ const Header = () => {
 							</Link>
 						))}
 						{/* Special Free Download Button in mobile menu */}
+						{/*
 						<Link
 							href="/releases/half-thoughts"
 							className="mt-2 px-5 py-3 rounded-full font-bold text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 shadow-lg border-2 border-pink-300/40 animate-download-glow focus:outline-none focus:ring-4 focus:ring-pink-400 text-center"
@@ -123,6 +124,7 @@ const Header = () => {
 						>
 							Free Download
 						</Link>
+						*/}
 					</nav>
 				</div>
 			)}
