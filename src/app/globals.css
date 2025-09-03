@@ -63,6 +63,7 @@ html {
 body {
   @apply antialiased transition-colors duration-200;
   background-color: var(--background-primary) !important;
+  background-image: none !important;
   color: var(--text-primary);
   cursor: var(--cursor-url);
   cursor: var(--cursor-default);
@@ -398,12 +399,12 @@ body {
   --gradient-middle: #b28dff;
   --gradient-end: #6c3cff;
   --progress-bar-color: #ffb6ff;
-  --background-primary: #2d1836;
-  --background-secondary: #3a2150;
-  --text-primary: #ffe6ff;
-  --text-secondary: #b28dff;
+  --background-primary: #1a1022; /* darker for contrast */
+  --background-secondary: #271a33;
+  --text-primary: #fff; /* high contrast */
+  --text-secondary: #fff; /* high contrast */
   --border-color: #6c3cff;
-  --card-background: #3a2150;
+  --card-background: #271a33;
   --hover-background: #44225e;
   --cursor-url: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' fill='%236c3cff'/%3E%3Crect x='4' y='4' width='16' height='16' fill='%23ffb6ff'/%3E%3C/svg%3E"), auto;
   --cursor-default: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='10' height='10' fill='%23b28dff'/%3E%3C/svg%3E"), auto;
@@ -411,11 +412,58 @@ body {
   --cursor-text: url("data:image/svg+xml,%3Csvg width='10' height='10' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='10' height='10' fill='%236c3cff'/%3E%3C/svg%3E"), auto;
   image-rendering: pixelated;
   font-family: 'Press Start 2P', 'VT323', 'Courier New', Courier, monospace !important;
+}
+
+/* Remove the 8-bit background boxes (lanton-ant-bg) */
+.theme-8bit .lanton-ant-bg {
+  background: none !important;
+  background-image: none !important;
+  animation: none !important;
+  opacity: 0 !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Smaller grid pattern for .lanton-ant-bg */
+.theme-8bit .lanton-ant-bg {
   background-image: 
-    repeating-linear-gradient(135deg, #6c3cff 0px, #6c3cff 8px, #3a2150 8px, #3a2150 16px),
+    repeating-linear-gradient(135deg, #6c3cff 0px, #6c3cff 2px, #271a33 2px, #271a33 4px),
     linear-gradient(135deg, #ffb6ff 0%, #b28dff 50%, #6c3cff 100%);
   background-blend-mode: multiply;
+  mix-blend-mode: soft-light;
+  opacity: 0.07;
+  animation: lanton-ant-crawl 8s linear infinite;
+  /* grid is now 4px, was 8px */
 }
+
+/* Remove or restrict this problematic rule: */
+/*
+.theme-8bit,
+.theme-8bit * {
+  color: #fff !important;
+  text-shadow: 1px 1px 0 #2d1836;
+}
+*/
+
+/* Instead, target only headings, paragraphs, and links for color override: */
+.theme-8bit h1,
+.theme-8bit h2,
+.theme-8bit h3,
+.theme-8bit h4,
+.theme-8bit h5,
+.theme-8bit h6,
+.theme-8bit p,
+.theme-8bit a,
+.theme-8bit span,
+.theme-8bit label,
+.theme-8bit li,
+.theme-8bit th,
+.theme-8bit td {
+  color: #fff !important;
+  text-shadow: 1px 1px 0 #2d1836;
+}
+
+/* Remove duplicate .theme-8bit .lanton-ant-bg rule (keep only one, with correct grid size): */
+/* ...keep only one .theme-8bit .lanton-ant-bg rule... */
 
 /* 8-bit pixel border for cards and buttons */
 .theme-8bit .border,
@@ -564,8 +612,8 @@ body {
 .theme-8bit .skeleton {
   background: repeating-linear-gradient(
     135deg,
-    #b28dff 0 8px,
-    #6c3cff 8px 16px
+    #b28dff 0 4px,
+    #6c3cff 4px 8px
   );
   border: 4px solid #6c3cff;
   border-radius: 0;
@@ -583,7 +631,7 @@ body {
 /* 8-bit pixel effect for main container */
 .theme-8bit main,
 .theme-8bit .container {
-  background: #2d1836 !important;
+  background-color: var(--background-primary) !important;
   color: #ffe6ff !important;
   font-family: inherit;
   position: relative;
@@ -612,10 +660,7 @@ body {
 /* 8-bit pixel animation for Lanton's Ant (simple pixel crawl) */
 @keyframes lanton-ant-crawl {
   0% { background-position: 0 0, 0 0; }
-  100% { background-position: 16px 16px, 16px 16px; }
-}
-.theme-8bit .lanton-ant-bg {
-  animation: lanton-ant-crawl 8s linear infinite;
+  100% { background-position: 8px 8px, 8px 8px; }
 }
 
 /* Apply theme colors */
@@ -826,8 +871,14 @@ input, textarea {
 
 /* Loading skeleton */
 .skeleton {
-  background-color: var(--background-secondary);
-  @apply animate-pulse rounded;
+  background: repeating-linear-gradient(
+    135deg,
+    #b28dff 0 4px,
+    #6c3cff 4px 8px
+  );
+  border: 4px solid #6c3cff;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 0 #b28dff;
 }
 
 /* Sleek sword light sweep effect on featured lyric */
