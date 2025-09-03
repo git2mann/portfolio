@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import InstructionPopup from "@/app/_components/InstructionPopup";
 import Tilt from "react-parallax-tilt";
+import Link from "next/link";
 
 const albums = [
   {
@@ -462,10 +463,67 @@ export default function AlbumPage() {
                       </a>
                     </>
                   )}
+                  {album.id === "4" && (
+                    <>
+                      <a
+                        href="https://album.link/half-thoughts-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Half Thoughts on Spotify"
+                        className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-spotify.svg"
+                          alt="Spotify"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Spotify</span>
+                      </a>
+                      <a
+                        href="https://album.link/half-thoughts-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Half Thoughts on Apple Music"
+                        className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-apple-music.svg"
+                          alt="Apple Music"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">Apple Music</span>
+                      </a>
+                      <a
+                        href="https://album.link/half-thoughts-klense"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Listen to Half Thoughts on YouTube"
+                        className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
+                      >
+                        <img
+                          src="/assets/icons/icons8-youtube.svg"
+                          alt="YouTube"
+                          className="h-8 w-auto mb-1"
+                        />
+                        <span className="text-xs font-medium">YouTube</span>
+                      </a>
+                    </>
+                  )}
                 </div>
+                {/* Special Free Download Button for Half Thoughts */}
+                {album.id === "4" && (
+                  <Link
+                    href="/releases/half-thoughts"
+                    className="mt-4 flex items-center justify-center px-5 py-2 rounded-full font-bold text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 shadow-lg border-2 border-pink-300/40 relative animate-download-glow hover:scale-105 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-pink-400"
+                    style={{ letterSpacing: "0.04em" }}
+                    aria-label="Free Download: Half Thoughts"
+                  >
+                    <span className="relative z-10">Download Half Thoughts '25</span>
+                    <span className="absolute inset-0 rounded-full pointer-events-none download-glow" />
+                  </Link>
+                )}
               </div>
             </div>
-
             {/* Album Details */}
             <div className="flex-1 w-full">
               {/* Behind the Album */}

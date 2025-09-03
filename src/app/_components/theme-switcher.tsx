@@ -30,6 +30,12 @@ const themes: Theme[] = [
     name: "Metallic Silver",
     icon: "💿",
     class: "theme-metallic-silver"
+  },
+  {
+    id: "8bit",
+    name: "8-Bit Sunset",
+    icon: "🕹️",
+    class: "theme-8bit"
   }
 ];
 
@@ -54,27 +60,83 @@ export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
     const theme = localStorage.getItem(storageKey) ?? "system";
     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     const resolvedTheme = theme === "system" ? systemTheme : theme;
-    
+
+    // Remove all theme classes except 'system' and 'light'
     const allThemeClasses = themeList
       .map(t => t.class)
       .filter(c => c !== "system" && c !== "light");
-    
+
     document.documentElement.classList.remove(...allThemeClasses);
-    
+
+    // Add the correct theme class
     if (resolvedTheme !== "light" && resolvedTheme !== "system") {
       const themeObj = themeList.find(t => t.id === resolvedTheme);
       if (themeObj) {
         document.documentElement.classList.add(themeObj.class);
       }
     }
-    
+
     document.documentElement.setAttribute("data-theme", theme);
+
+    // --- 8-Bit Theme Font & Overlay ---
+    // Remove any previous 8-bit font/overlay
+    document.documentElement.style.fontFamily = "";
+    const existingOverlay = document.getElementById("eight-bit-overlay");
+    if (existingOverlay) existingOverlay.remove();
+
+    if (resolvedTheme === "8bit") {
+      // Inject 8-bit font if not present
+      if (!document.getElementById("eight-bit-font-link")) {
+        const fontLink = document.createElement("link");
+        fontLink.id = "eight-bit-font-link";
+        fontLink.rel = "stylesheet";
+        fontLink.href = "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap";
+        document.head.appendChild(fontLink);
+      }
+      document.documentElement.style.fontFamily = "'Press Start 2P', 'VT323', monospace";
+
+      // Add 8-bit overlay grid
+      const overlay = document.createElement("div");
+      overlay.id = "eight-bit-overlay";
+      overlay.style.position = "fixed";
+      overlay.style.top = "0";
+      overlay.style.left = "0";
+      overlay.style.width = "100vw";
+      overlay.style.height = "100vh";
+      overlay.style.pointerEvents = "none";
+      overlay.style.zIndex = "9999";
+      overlay.style.opacity = "0.18";
+      overlay.style.backgroundImage =
+        "repeating-linear-gradient(0deg, #ffb7ec 0 2px, transparent 2px 16px), repeating-linear-gradient(90deg, #a78bfa 0 2px, transparent 2px 16px)";
+      overlay.style.backgroundBlendMode = "multiply";
+      document.body.appendChild(overlay);
+    } else {
+      // Remove overlay if not 8bit
+      const overlay = document.getElementById("eight-bit-overlay");
+      if (overlay) overlay.remove();
+      document.documentElement.style.fontFamily = "";
+    }
+
+    // --- Sunset Theme: purple-pink gradient background ---
+    if (resolvedTheme === "sunset") {
+      document.body.style.background =
+        "linear-gradient(120deg, #6d28d9 0%, #f472b6 100%)";
+      document.body.style.backgroundAttachment = "fixed";
+    } else if (resolvedTheme === "8bit") {
+      document.body.style.background =
+        "linear-gradient(135deg, #ffb7ec 0%, #a78bfa 100%)";
+      document.body.style.backgroundAttachment = "fixed";
+    } else {
+      document.body.style.background = "";
+      document.body.style.backgroundAttachment = "";
+    }
+
     restoreTransitions();
   };
 
   window.updateDOM = updateDOM;
   window.updateDOM();
-  
+
   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", window.updateDOM);
 };
 
