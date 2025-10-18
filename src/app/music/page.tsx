@@ -7,6 +7,18 @@ import Container from "@/app/_components/container";
 import { albums, eps, singles } from "@/data/music";
 import { FiHeadphones, FiCalendar, FiClock } from 'react-icons/fi';
 
+const liveAlbums = [
+  {
+    id: "live-1",
+    title: "Squealer and the Aggressors of Peace (Live)",
+    coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg",
+    releaseYear: "2025",
+    description:
+      "The electrifying live album from Klense, capturing the raw energy, improvisation, and crowd connection of Squealer and the Aggressors of Peace. Featuring all-new live arrangements, and extended solos.",
+    link: "/music/sataop-live",
+  },
+];
+
 export default function MusicPage() {
   const [hoveredAlbum, setHoveredAlbum] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('discography');
@@ -180,11 +192,48 @@ export default function MusicPage() {
                     </Link>
                   ))}
                 </div>
-                {/* Add extra space after singles */}
-                <div className="h-12" />
               </section>
             </>
           )}
+
+          {/* --- Live Albums Section --- */}
+          <section>
+            <h2 className="text-3xl md:text-4xl font-bold mb-8 text-[var(--text-primary)]">Live Albums</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {liveAlbums.map((album) => (
+                <Link
+                  href={album.link}
+                  key={album.id}
+                  className="group relative bg-[var(--card-background)] border border-[var(--border-color)] rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col"
+                >
+                  <div className="relative aspect-square overflow-hidden rounded-t-xl">
+                    <Image
+                      src={album.coverImage}
+                      alt={`Cover of ${album.title}`}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                    <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                      <FiHeadphones className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--text-accent)] transition-colors">
+                      {album.title}
+                    </h3>
+                    <div className="flex items-center text-sm text-[var(--text-secondary)] mb-3">
+                      <FiCalendar className="mr-2" />
+                      {album.releaseYear}
+                    </div>
+                    <p className="text-[var(--text-secondary)] flex-1">{album.description}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            {/* Add extra space after singles */}
+            <div className="h-12" />
+          </section>
 
           {activeTab !== 'discography' && (
             <div className="flex items-center justify-center h-64">
