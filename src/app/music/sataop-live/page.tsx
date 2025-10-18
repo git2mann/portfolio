@@ -754,6 +754,16 @@ export default function SataopLivePage() {
           </p>
           <div className="flex flex-wrap justify-center gap-6 mb-6">
             <a
+              href="https://klense.gumroad.com/l/sataop-live-album-klense"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center p-4 bg-white text-black rounded-lg shadow hover:shadow-xl hover:scale-105 transition-transform"
+            >
+              <span className="text-3xl font-medium">Purchase on Gumroad</span>
+            </a>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 mb-6">
+            <a
               href="https://album.link/sataop-live-klense"
               target="_blank"
               rel="noopener noreferrer"
