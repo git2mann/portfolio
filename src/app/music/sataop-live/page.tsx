@@ -748,10 +748,20 @@ export default function SataopLivePage() {
 
       {/* Pre-Save / Streaming Links */}
       <Container>
-        <section id="pre-save" className="max-w-2xl mx-auto mb-24 text-center">
+        <section id="pre-save" className="max-w-3xl mx-auto mt-16 mb-12 bg-black/60 rounded-2xl shadow-xl p-8 border border-fuchsia-900/40 backdrop-blur-md">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Be First to Hear It</h2>
+          {/* Pre-save Link (To remove after Halloween) */}
           <p className="mb-6 text-white">
-            Pre-save the album and get notified the moment it drops on your favorite platform.
+            <a
+              href="https://share.amuse.io/album/klense-squealer-and-the-aggressors-of-peace-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-4 py-2 rounded-full bg-red-700 text-white font-semibold shadow hover:bg-red-800 transition-colors mr-2"
+              style={{ verticalAlign: "middle" }}
+            >
+              Pre-save
+            </a>
+            the album and get notified the moment it drops on your favorite platform.
           </p>
           <div className="flex flex-wrap justify-center gap-6 mb-6">
             <a
