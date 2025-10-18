@@ -119,17 +119,16 @@ const Header = () => {
 							</Link>
 						))}
 						{/* Special Free Download Button in mobile menu */}
-						{/*
 						<Link
-							href="/releases/half-thoughts"
-							className="mt-2 px-5 py-3 rounded-full font-bold text-white bg-gradient-to-r from-pink-500 via-fuchsia-500 to-purple-600 shadow-lg border-2 border-pink-300/40 animate-download-glow focus:outline-none focus:ring-4 focus:ring-pink-400 text-center"
-							style={{ letterSpacing: "0.04em" }}
-							aria-label="Free Download: Half Thoughts"
+							href="/music/sataop-live"
+							className="inline-flex self-start shrink-0 font-semibold px-4 py-2 rounded-md bg-red-800 text-white shadow hover:bg-red-900 transition-all duration-200"
+							style={{ letterSpacing: '0.04em' }}
+							aria-label="Purchase My Latest Album"
 							onClick={() => setMenuOpen(false)}
-						>
-							Free Download
+							>
+							My Latest Album
 						</Link>
-						*/}
+
 					</nav>
 				</div>
 			)}
