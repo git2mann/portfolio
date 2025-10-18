@@ -59,7 +59,7 @@ const Header = () => {
 					</Link>
 
 					{/* Desktop Navigation */}
-					<nav className="hidden md:flex items-center space-x-10">
+					<nav className="hidden lg:flex items-center space-x-10">
 						{navLinks.map(({ href, label }) => (
 							<Link
 								key={href}
@@ -80,13 +80,12 @@ const Header = () => {
 							Purchase My Latest Album
 						</Link>
 					</nav>
-
 					{/* Theme Switcher & Mobile Menu Button */}
 					<div className="flex items-center space-x-6">
 						<ThemeSwitcher />
 						<button
 							onClick={() => setMenuOpen(!menuOpen)}
-							className="md:hidden p-2 rounded-md hover:bg-[var(--hover-background)] transition"
+							className="lg:hidden p-2 rounded-md hover:bg-[var(--hover-background)] transition"
 							aria-label="Toggle Menu"
 						>
 							{menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -98,11 +97,11 @@ const Header = () => {
 			{/* 8-bit Lanton's Ant background overlay */}
 			<div className="lanton-ant-bg pointer-events-none" aria-hidden="true" />
 
-			{/* Mobile Navigation */}
+			{/* Mobile/iPad Navigation */}
 			{menuOpen && (
 				<div
 					ref={menuRef}
-					className="md:hidden bg-[var(--background-primary)] border-t border-[var(--border-color)] shadow-lg"
+					className="lg:hidden bg-[var(--background-primary)] border-t border-[var(--border-color)] shadow-lg"
 				>
 					<nav className="flex flex-col space-y-4 p-6">
 						{navLinks.map(({ href, label }) => (

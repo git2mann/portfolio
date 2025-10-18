@@ -219,13 +219,13 @@ function VinylSleeve3D({
   size?: number;
 }) {
   // Use CSS variable for background so it matches the selected theme
-  const vinylMiddleStyle = { background: "var(--vinyl-middle-gradient)" };
+  const vinylMiddleStyle = { background: "gray" };
   return (
     <div
       className={`vinyl-sleeve ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* Multiple middle layers for actual thickness, themed via CSS variable */}
+      {/* Multiple middle layers for actual thickness, themed via CSS variable*/}
       <div className="vinyl-middle" style={vinylMiddleStyle} />
       <div className="vinyl-middle-1" style={vinylMiddleStyle} />
       <div className="vinyl-middle-2" style={vinylMiddleStyle} />
@@ -233,6 +233,7 @@ function VinylSleeve3D({
       <div className="vinyl-middle-4" style={vinylMiddleStyle} />
       <div className="vinyl-middle-5" style={vinylMiddleStyle} />
       <div className="vinyl-middle-6" style={vinylMiddleStyle} />
+      
       {/* Front cover */}
       <div className="vinyl-cover">
         <Image
@@ -271,7 +272,7 @@ export default function SataopLivePage() {
   const [showTracklist, setShowTracklist] = useState(false);
 
   return (
-    <main className="min-h-screen bg-transparent text-white relative overflow-x-hidden">
+    <main className="min-h-screen bg-transparent text-white relative overflow-x-hidden pt-32 lg:pt-40">
       {/* Blurred Album Cover Background */}
       <div
         className="fixed inset-0 z-0 pointer-events-none bg-pulse-glow"
@@ -305,7 +306,31 @@ export default function SataopLivePage() {
 
       {/* Hero Section */}
       <div className="relative h-[70vh] flex items-center justify-center z-10">
-        <div className="mb-8 drop-shadow-2xl relative flex justify-center items-center">
+        {/* Mobile & iPad Hero */}
+        <div className="md:hidden flex flex-col items-center w-full px-4 pt-8">
+          <div className="relative w-48 h-48 mb-4 sm:w-64 sm:h-64">
+            <VinylSleeve3D size={192} />
+            <span className="vinyl-pulse-ring" aria-hidden="true" />
+            {/* Decorative flowers/hummingbirds for mobile/iPad */}
+            <Flower className="absolute -left-4 -top-4 flower-anim" style={{ animationDelay: "0.2s" }} />
+            <Hummingbird className="absolute right-0 -top-6 hummingbird-anim" style={{ animationDelay: "0.7s" }} />
+            <Flower className="absolute left-1/2 -bottom-4 flower-anim" style={{ animationDelay: "1.1s" }} />
+          </div>
+          <AnimatedHeading />
+        </div>
+        {/* iPad (tablet) Hero */}
+        <div className="hidden md:flex lg:hidden flex-col items-center w-full px-8 pt-12">
+          <div className="relative w-64 h-64 mb-6">
+            <VinylSleeve3D size={256} />
+            <span className="vinyl-pulse-ring" aria-hidden="true" />
+            <Flower className="absolute -left-6 -top-6 flower-anim" style={{ animationDelay: "0.2s" }} />
+            <Hummingbird className="absolute right-0 -top-8 hummingbird-anim" style={{ animationDelay: "0.7s" }} />
+            <Flower className="absolute left-1/2 -bottom-6 flower-anim" style={{ animationDelay: "1.1s" }} />
+          </div>
+          <AnimatedHeading />
+        </div>
+        {/* Desktop Hero */}
+        <div className="hidden lg:flex mb-8 drop-shadow-2xl relative justify-center items-center">
           {/* Flowers and hummingbirds around album cover */}
           <Flower className="absolute -left-8 -top-6 flower-anim" style={{ animationDelay: "0.2s" }} />
           <Hummingbird className="absolute right-0 -top-10 hummingbird-anim" style={{ animationDelay: "0.7s" }} />
@@ -317,7 +342,9 @@ export default function SataopLivePage() {
             <span className="vinyl-pulse-ring" aria-hidden="true" />
           </div>
         </div>
-        <AnimatedHeading />
+        <div className="hidden lg:block">
+          <AnimatedHeading />
+        </div>
         {/* Floating Glow & Animations */}
         <style jsx global>{`
           @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&display=swap');
@@ -537,6 +564,143 @@ export default function SataopLivePage() {
             60% { opacity: 0.32; }
             100% { opacity: 0.18; }
           }
+          /* --- Mobile & iPad Optimizations --- */
+          @media (max-width: 1024px) {
+            .animated-heading {
+              font-size: clamp(1.5rem, 7vw, 2.6rem) !important;
+              line-height: 1.13;
+              margin-bottom: 0.7rem;
+            }
+            .vinyl-sleeve {
+              width: 256px !important;
+              height: 256px !important;
+              min-width: 256px !important;
+              min-height: 256px !important;
+            }
+            .vinyl-pulse-ring {
+              inset: -14px !important;
+              border-width: 3px !important;
+            }
+            .flower-anim, .hummingbird-anim {
+              width: 36px !important;
+              height: 36px !important;
+            }
+            .floater-flower, .floater-hummingbird {
+              width: 28px !important;
+              height: 28px !important;
+            }
+            .max-w-3xl, .max-w-2xl {
+              max-width: 98vw !important;
+            }
+            .p-8 {
+              padding: 1.5rem !important;
+            }
+            .rounded-2xl, .rounded-xl {
+              border-radius: 1.1rem !important;
+            }
+            .text-3xl, .md\\:text-3xl, .text-4xl, .md\\:text-4xl {
+              font-size: 1.7rem !important;
+            }
+            .text-2xl, .md\\:text-2xl {
+              font-size: 1.25rem !important;
+            }
+            .p-6 {
+              padding: 1.2rem !important;
+            }
+            .mb-12, .mb-16, .mb-20, .mb-24 {
+              margin-bottom: 2.2rem !important;
+            }
+            .mt-16, .mt-10, .mt-12 {
+              margin-top: 1.7rem !important;
+            }
+            .gap-3, .gap-4, .gap-6 {
+              gap: 1rem !important;
+            }
+            .flex-wrap {
+              flex-wrap: wrap !important;
+            }
+            .text-lg {
+              font-size: 1.1rem !important;
+            }
+            .shadow-xl, .shadow-lg {
+              box-shadow: 0 2px 16px 0 #0004 !important;
+            }
+            .border, .border-fuchsia-900\\/40, .border-fuchsia-800\\/40 {
+              border-width: 1.5px !important;
+            }
+            .px-4, .px-6 {
+              padding-left: 1.2rem !important;
+              padding-right: 1.2rem !important;
+            }
+          }
+          @media (max-width: 768px) {
+            .animated-heading {
+              font-size: clamp(1.3rem, 7vw, 2.2rem) !important;
+              line-height: 1.12;
+              margin-bottom: 0.5rem;
+            }
+            .vinyl-sleeve {
+              width: 192px !important;
+              height: 192px !important;
+              min-width: 192px !important;
+              min-height: 192px !important;
+            }
+            .vinyl-pulse-ring {
+              inset: -10px !important;
+              border-width: 2px !important;
+            }
+            .flower-anim, .hummingbird-anim {
+              width: 28px !important;
+              height: 28px !important;
+            }
+            .floater-flower, .floater-hummingbird {
+              width: 24px !important;
+              height: 24px !important;
+            }
+            .max-w-3xl, .max-w-2xl {
+              max-width: 98vw !important;
+            }
+            .p-8 {
+              padding: 1.25rem !important;
+            }
+            .rounded-2xl, .rounded-xl {
+              border-radius: 1rem !important;
+            }
+            .text-3xl, .md\\:text-3xl, .text-4xl, .md\\:text-4xl {
+              font-size: 1.4rem !important;
+            }
+            .text-2xl, .md\\:text-2xl {
+              font-size: 1.1rem !important;
+            }
+            .p-6 {
+              padding: 1rem !important;
+            }
+            .mb-12, .mb-16, .mb-20, .mb-24 {
+              margin-bottom: 2rem !important;
+            }
+            .mt-16, .mt-10, .mt-12 {
+              margin-top: 1.5rem !important;
+            }
+            .gap-3, .gap-4, .gap-6 {
+              gap: 0.75rem !important;
+            }
+            .flex-wrap {
+              flex-wrap: wrap !important;
+            }
+            .text-lg {
+              font-size: 1rem !important;
+            }
+            .shadow-xl, .shadow-lg {
+              box-shadow: 0 2px 12px 0 #0004 !important;
+            }
+            .border, .border-fuchsia-900\\/40, .border-fuchsia-800\\/40 {
+              border-width: 1px !important;
+            }
+            .px-4, .px-6 {
+              padding-left: 1rem !important;
+              padding-right: 1rem !important;
+            }
+          }
         `}</style>
       </div>
 
@@ -591,6 +755,16 @@ export default function SataopLivePage() {
           </p>
           <div className="flex flex-wrap justify-center gap-6 mb-6">
             <a
+              href="https://klense.gumroad.com/l/sataop-live-album-klense"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col items-center justify-center p-4 bg-white text-black rounded-lg shadow hover:shadow-xl hover:scale-105 transition-transform"
+            >
+              <span className="text-3xl font-medium">Purchase on Gumroad</span>
+            </a>
+          </div>
+          <div className="flex flex-wrap justify-center gap-6 mb-6">
+            <a
               href="https://album.link/sataop-live-klense"
               target="_blank"
               rel="noopener noreferrer"
@@ -623,9 +797,6 @@ export default function SataopLivePage() {
           </div>
         </section>
       </Container>
-
-      {/* Floating Glow & Animations */}
-      {/* Move global styles outside of <main> to avoid nested styled-jsx error */}
     </main>
   );
 }
