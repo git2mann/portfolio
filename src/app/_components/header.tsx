@@ -73,6 +73,12 @@ const Header = () => {
 								{label}
 							</Link>
 						))}
+						<Link
+							href="/music/sataop-live"
+							className="font-semibold px-4 py-2 rounded-md bg-red-800 text-white shadow hover:bg-red-900 transition-all duration-200"
+						>
+							Purchase My Latest Album
+						</Link>
 					</nav>
 
 					{/* Theme Switcher & Mobile Menu Button */}
