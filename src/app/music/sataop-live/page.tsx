@@ -219,13 +219,13 @@ function VinylSleeve3D({
   size?: number;
 }) {
   // Use CSS variable for background so it matches the selected theme
-  const vinylMiddleStyle = { background: "var(--vinyl-middle-gradient)" };
+  const vinylMiddleStyle = { background: "gray" };
   return (
     <div
       className={`vinyl-sleeve ${className}`}
       style={{ width: size, height: size }}
     >
-      {/* Multiple middle layers for actual thickness, themed via CSS variable
+      {/* Multiple middle layers for actual thickness, themed via CSS variable*/}
       <div className="vinyl-middle" style={vinylMiddleStyle} />
       <div className="vinyl-middle-1" style={vinylMiddleStyle} />
       <div className="vinyl-middle-2" style={vinylMiddleStyle} />
@@ -233,6 +233,7 @@ function VinylSleeve3D({
       <div className="vinyl-middle-4" style={vinylMiddleStyle} />
       <div className="vinyl-middle-5" style={vinylMiddleStyle} />
       <div className="vinyl-middle-6" style={vinylMiddleStyle} />
+      
       {/* Front cover */}
       <div className="vinyl-cover">
         <Image
