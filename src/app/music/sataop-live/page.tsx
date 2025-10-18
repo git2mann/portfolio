@@ -353,10 +353,13 @@ export default function SataopLivePage() {
           .heading-shine-letter {
             position: relative;
             z-index: 3;
-            background: linear-gradient(90deg, #fff2 0%, #fff8 50%, #fff2 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
+            /* Remove background-clip to avoid white outline on Windows */
+            /* background: linear-gradient(90deg, #fff2 0%, #fff8 50%, #fff2 100%); */
+            /* background-clip: text; */
+            /* -webkit-background-clip: text; */
             color: #7f1d1d !important;
+            /* Add a subtle text-shadow for glow, but no outline */
+            text-shadow: 0 0 8px #fff2, 0 2px 8px #7f1d1d22;
             animation: letterShineAnim 2.8s cubic-bezier(.4,0,.2,1) infinite;
           }
           @keyframes letterShineAnim {
