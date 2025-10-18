@@ -748,7 +748,7 @@ export default function SataopLivePage() {
 
       {/* Pre-Save / Streaming Links */}
       <Container>
-        <section id="pre-save" className="max-w-2xl mx-auto mb-24 text-center">
+        <section id="pre-save" className="max-w-3xl mx-auto mt-16 mb-12 bg-black/60 rounded-2xl shadow-xl p-8 border border-fuchsia-900/40 backdrop-blur-md">
           <h2 className="text-2xl md:text-3xl font-bold mb-6 text-white">Be First to Hear It</h2>
           {/* Pre-save Link (To remove after Halloween) */}
           <p className="mb-6 text-white">
