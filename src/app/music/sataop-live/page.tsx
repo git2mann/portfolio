@@ -709,7 +709,7 @@ export default function SataopLivePage() {
         <section className="max-w-3xl mx-auto mt-16 mb-12 bg-black/60 rounded-2xl shadow-xl p-8 border border-fuchsia-900/40 backdrop-blur-md">
           <h2 className="text-3xl font-bold mb-4 text-white">From Klense, For You...</h2>
           <p className="mb-4 text-lg text-white">
-            <strong>Squealer and the Aggressors of Peace (Live)</strong> captures the raw energy, improvisation, and crowd connection of Klense's most ambitious project to date. Experience every lyric, every riff, and every
+            <strong>Squealer and the Aggressors of Peace (Live)</strong> captures the raw energy, improvisation, and crowd connection of Klense's most ambitious project to date. Experience every lyric and every riff!
           </p>
           <p className="mb-4 text-white">
             Featuring all-new live arrangements, extended solos, and exclusive on-stage banter, this album brings a new dimension to the original studio release. Whether you were there in person or are hearing it for the first time, this is Klense at his most electrifying.
