@@ -3,13 +3,8 @@ import Footer from "@/app/_components/footer";
 import Header from "@/app/_components/header";
 import { SITE_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
-import cn from "classnames";
 
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
-const playfair = Playfair_Display({ subsets: ["latin"], variable: '--font-playfair' });
 
 export const metadata: Metadata = {
   title: SITE_NAME,
@@ -46,11 +41,9 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body
-        className={cn(
-          inter.className,
-          playfair.variable,
-          "bg-[var(--background-primary)] text-[var(--text-primary)] transition-colors duration-300"
-        )}
+        className={
+          "font-noto-serif-jp-condensed bg-[var(--background-primary)] text-[var(--text-primary)] transition-colors duration-300"
+        }
       >
         <div className="fixed inset-0 -z-10 bg-[var(--background-primary)]"></div>
         <Header />

@@ -14,6 +14,12 @@ const config: Config = {
 
   theme: {
     extend: {
+      fontFamily: {
+        'noto-serif-jp-condensed': [
+          'Noto Serif JP',
+          'serif',
+        ],
+      },
       // Custom background gradients
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
