@@ -1,12 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import React, { forwardRef } from "react";
+import dynamic from "next/dynamic";
 
 const SlickSlider = dynamic(() => import("react-slick"), { ssr: false });
 
-const ForwardedClientSlider = forwardRef<any, any>((props, ref) => (
-  <SlickSlider {...props} ref={ref} />
-));
+const ForwardedClientSlider = forwardRef<any, any>((props, ref) => {
+  // @ts-ignore
+  return <SlickSlider {...props} innerRef={ref} />;
+});
 
 export default ForwardedClientSlider;
