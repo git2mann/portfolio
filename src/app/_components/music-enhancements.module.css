@@ -13,3 +13,23 @@
 .slick-list {
   margin: 0 -8px;
 }
+
+@media (max-width: 640px) {
+  .slick-slide {
+    padding: 0 2vw;
+  }
+  .music-card {
+    max-width: 98vw;
+    min-width: 0;
+    padding: 0.5rem 0.25rem;
+  }
+  .music-card h3 {
+    font-size: 1.1rem;
+  }
+  .music-card .p-6 {
+    padding: 1rem 0.5rem;
+  }
+  .slick-list {
+    margin: 0 -2vw;
+  }
+}
