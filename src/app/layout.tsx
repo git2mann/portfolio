@@ -47,7 +47,7 @@ export default function RootLayout({
         }
       >
         {/* Inject theme script as the very first element in body to avoid hydration mismatch */}
-        {typeof window !== 'undefined' && <ThemeScript />}
+        <ThemeScript />
         <div className="fixed inset-0 -z-10 bg-[var(--background-primary)]"></div>
         <Header />
         <div className="animate-fade-in">{children}</div>
