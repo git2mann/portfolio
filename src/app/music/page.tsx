@@ -1,6 +1,17 @@
 'use client';
 
-import { useState, useRef } from 'react'; // <-- Added useRef
+import { useState, useRef, useEffect } from 'react';
+// Simple mobile detection hook
+function useIsMobile(breakpoint = 640) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= breakpoint);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, [breakpoint]);
+  return isMobile;
+}
 import dynamic from 'next/dynamic';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -8,7 +19,7 @@ import styles from '../_components/music-enhancements.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import Container from "@/app/_components/container";
-import { albums, eps, singles } from "@/data/music"; // Restored original import structure
+import { albums, eps, singles as originalSingles } from "@/data/music"; // Restored original import structure
 
 import { FiHeadphones, FiCalendar, FiClock, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
@@ -45,7 +56,21 @@ function ManualNavButton({ children, onClick, label }: { children: React.ReactNo
 }
 
 
+// Move 'Goodbye Song (Demo)' to the top of the singles list
+const singles = (() => {
+  if (!originalSingles || !Array.isArray(originalSingles)) return [];
+  const idx = originalSingles.findIndex(s => s.title && s.title.toLowerCase().includes('goodbye song'));
+  if (idx > 0) {
+    const arr = [...originalSingles];
+    const [goodbye] = arr.splice(idx, 1);
+    arr.unshift(goodbye);
+    return arr;
+  }
+  return originalSingles;
+})();
+
 export default function MusicPage() {
+  const isMobile = useIsMobile();
   const [hoveredAlbum, setHoveredAlbum] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState('discography');
 
@@ -119,7 +144,7 @@ export default function MusicPage() {
                 {/* Manual control buttons placed next to the title */}
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Albums</h2>
-                  {albums.length > 1 && (
+                  {albums.length > 1 && !isMobile && (
                     <div className="flex gap-2 text-[var(--text-primary)]">
                       <ManualNavButton onClick={() => albumSliderRef.current?.slickPrev()} label="Previous Album">
                           <FiChevronLeft className="w-7 h-7 hover:text-[var(--text-accent)]" />
@@ -131,36 +156,23 @@ export default function MusicPage() {
                   )}
                 </div>
                 {albums.length > 1 ? (
-                  <ForwardedClientSlider
-                    ref={albumSliderRef}
-                    dots={true}
-                    infinite={albums.length > 3}
-                    speed={350}
-                    slidesToShow={Math.min(3, albums.length)}
-                    slidesToScroll={1}
-                    responsive={[
-                      { breakpoint: 1024, settings: { slidesToShow: Math.min(2, albums.length) } },
-                      { breakpoint: 640, settings: { slidesToShow: 1 } },
-                    ]}
-                    arrows={false} // Disable default react-slick arrows
-                    autoplay={true}
-                    autoplaySpeed={2500} // Increased speed for testing
-                  >
-                    {albums.map((album) => (
-                      <div key={album.id} className="p-2">
+                  isMobile ? (
+                    <div className="flex flex-col gap-4">
+                      {albums.map((album) => (
                         <Link
+                          key={album.id}
                           href={`/music/${album.id}`}
                           className={`group relative bg-[var(--card-background)] rounded-xl shadow-lg ${styles['music-card']} block h-full`}
                           onMouseEnter={() => setHoveredAlbum(album.id)}
                           onMouseLeave={() => setHoveredAlbum(null)}
                         >
-                          <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[260px] md:min-h-[220px]">
+                          <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[220px]">
                             <Image
                               src={album.coverImage}
                               alt={`Cover of ${album.title}`}
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-110"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              sizes="100vw"
                               onError={(e) => {
                                 e.currentTarget.src = `https://placehold.co/400x400/333333/FFFFFF?text=${album.title.replace(/\s/g, '+')}`;
                                 e.currentTarget.alt = `Placeholder for ${album.title}`;
@@ -181,9 +193,63 @@ export default function MusicPage() {
                             <p className="text-[var(--text-secondary)]">{album.description}</p>
                           </div>
                         </Link>
-                      </div>
-                    ))}
-                  </ForwardedClientSlider>
+                      ))}
+                    </div>
+                  ) : (
+                    <ForwardedClientSlider
+                      ref={albumSliderRef}
+                      dots={true}
+                      infinite={albums.length > 3}
+                      speed={350}
+                      slidesToShow={Math.min(3, albums.length)}
+                      slidesToScroll={1}
+                      responsive={[
+                        { breakpoint: 1024, settings: { slidesToShow: Math.min(2, albums.length) } },
+                        { breakpoint: 640, settings: { slidesToShow: 1 } },
+                      ]}
+                      arrows={false}
+                      autoplay={true}
+                      autoplaySpeed={2500}
+                    >
+                      {albums.map((album) => (
+                        <div key={album.id} className="p-2">
+                          <Link
+                            href={`/music/${album.id}`}
+                            className={`group relative bg-[var(--card-background)] rounded-xl shadow-lg ${styles['music-card']} block h-full`}
+                            onMouseEnter={() => setHoveredAlbum(album.id)}
+                            onMouseLeave={() => setHoveredAlbum(null)}
+                          >
+                            <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[260px] md:min-h-[220px]">
+                              <Image
+                                src={album.coverImage}
+                                alt={`Cover of ${album.title}`}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                onError={(e) => {
+                                  e.currentTarget.src = `https://placehold.co/400x400/333333/FFFFFF?text=${album.title.replace(/\s/g, '+')}`;
+                                  e.currentTarget.alt = `Placeholder for ${album.title}`;
+                                }}
+                              />
+                              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                                <FiHeadphones className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              </div>
+                            </div>
+                            <div className="p-6">
+                              <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--text-accent)] transition-colors">
+                                {album.title}
+                              </h3>
+                              <div className="flex items-center text-sm text-[var(--text-secondary)] mb-3">
+                                <FiCalendar className="mr-2" />
+                                {album.releaseYear}
+                              </div>
+                              <p className="text-[var(--text-secondary)]">{album.description}</p>
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                    </ForwardedClientSlider>
+                  )
                 ) : (
                   // Single item rendering logic remains the same
                   <div className="flex max-w-xs">
@@ -229,46 +295,33 @@ export default function MusicPage() {
                 {/* Manual control buttons placed next to the title */}
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">EPs</h2>
-                  {eps.length > 1 && (
+                    {eps.length > 1 && !isMobile && (
                     <div className="flex gap-2 text-[var(--text-primary)]">
-                        <ManualNavButton onClick={() => epsSliderRef.current?.slickPrev()} label="Previous EP">
-                            <FiChevronLeft className="w-7 h-7 hover:text-[var(--text-accent)]" />
-                        </ManualNavButton>
-                        <ManualNavButton onClick={() => epsSliderRef.current?.slickNext()} label="Next EP">
-                            <FiChevronRight className="w-7 h-7 hover:text-[var(--text-accent)]" />
-                        </ManualNavButton>
+                      <ManualNavButton onClick={() => epsSliderRef.current?.slickPrev()} label="Previous EP">
+                        <FiChevronLeft className="w-7 h-7 hover:text-[var(--text-accent)]" />
+                      </ManualNavButton>
+                      <ManualNavButton onClick={() => epsSliderRef.current?.slickNext()} label="Next EP">
+                        <FiChevronRight className="w-7 h-7 hover:text-[var(--text-accent)]" />
+                      </ManualNavButton>
                     </div>
-                  )}
+                    )}
                 </div>
                 {eps.length > 1 ? (
-                  <ForwardedClientSlider
-                    ref={epsSliderRef}
-                    dots={true}
-                    infinite={eps.length > 3}
-                    speed={350}
-                    slidesToShow={Math.min(3, eps.length)}
-                    slidesToScroll={1}
-                    responsive={[
-                      { breakpoint: 1024, settings: { slidesToShow: Math.min(2, eps.length) } },
-                      { breakpoint: 640, settings: { slidesToShow: 1 } },
-                    ]}
-                    arrows={false} // Disable default react-slick arrows
-                    autoplay={true}
-                    autoplaySpeed={2500}
-                  >
-                    {eps.map((ep) => (
-                      <div key={ep.id} className="p-2">
+                  isMobile ? (
+                    <div className="flex flex-col gap-4">
+                      {eps.map((ep) => (
                         <Link
+                          key={ep.id}
                           href={`/music/eps/${ep.id}`}
                           className={`group relative bg-[var(--card-background)] rounded-xl shadow-lg ${styles['music-card']} block h-full`}
                         >
-                          <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[260px] md:min-h-[220px]">
+                          <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[220px]">
                             <Image
                               src={ep.coverImage}
                               alt={`Cover of ${ep.title}`}
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-110"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              sizes="100vw"
                               onError={(e) => {
                                 e.currentTarget.src = `https://placehold.co/400x400/333333/FFFFFF?text=${ep.title.replace(/\s/g, '+')}`;
                                 e.currentTarget.alt = `Placeholder for ${ep.title}`;
@@ -288,9 +341,60 @@ export default function MusicPage() {
                             </div>
                           </div>
                         </Link>
-                      </div>
-                    ))}
-                  </ForwardedClientSlider>
+                      ))}
+                    </div>
+                  ) : (
+                    <ForwardedClientSlider
+                      ref={epsSliderRef}
+                      dots={true}
+                      infinite={eps.length > 3}
+                      speed={350}
+                      slidesToShow={Math.min(3, eps.length)}
+                      slidesToScroll={1}
+                      responsive={[
+                        { breakpoint: 1024, settings: { slidesToShow: Math.min(2, eps.length) } },
+                        { breakpoint: 640, settings: { slidesToShow: 1 } },
+                      ]}
+                      arrows={false}
+                      autoplay={true}
+                      autoplaySpeed={2500}
+                    >
+                      {eps.map((ep) => (
+                        <div key={ep.id} className="p-2">
+                          <Link
+                            href={`/music/eps/${ep.id}`}
+                            className={`group relative bg-[var(--card-background)] rounded-xl shadow-lg ${styles['music-card']} block h-full`}
+                          >
+                            <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[260px] md:min-h-[220px]">
+                              <Image
+                                src={ep.coverImage}
+                                alt={`Cover of ${ep.title}`}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                onError={(e) => {
+                                  e.currentTarget.src = `https://placehold.co/400x400/333333/FFFFFF?text=${ep.title.replace(/\s/g, '+')}`;
+                                  e.currentTarget.alt = `Placeholder for ${ep.title}`;
+                                }}
+                              />
+                              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                                <FiHeadphones className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              </div>
+                            </div>
+                            <div className="p-6">
+                              <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--text-accent)] transition-colors">
+                                {ep.title}
+                              </h3>
+                              <div className="flex items-center text-sm text-[var(--text-secondary)]">
+                                <FiCalendar className="mr-2" />
+                                {ep.releaseYear}
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                    </ForwardedClientSlider>
+                  )
                 ) : (
                   // Single item rendering logic remains the same
                   <div className="flex max-w-xs">
@@ -333,46 +437,33 @@ export default function MusicPage() {
                 {/* Manual control buttons placed next to the title */}
                 <div className="flex items-center justify-between mb-8">
                   <h2 className="text-3xl md:text-4xl font-bold text-[var(--text-primary)]">Singles</h2>
-                  {singles.length > 1 && (
+                    {singles.length > 1 && !isMobile && (
                     <div className="flex gap-2 text-[var(--text-primary)]">
-                        <ManualNavButton onClick={() => singlesSliderRef.current?.slickPrev()} label="Previous Single">
-                            <FiChevronLeft className="w-7 h-7 hover:text-[var(--text-accent)]" />
-                        </ManualNavButton>
-                        <ManualNavButton onClick={() => singlesSliderRef.current?.slickNext()} label="Next Single">
-                            <FiChevronRight className="w-7 h-7 hover:text-[var(--text-accent)]" />
-                        </ManualNavButton>
+                      <ManualNavButton onClick={() => singlesSliderRef.current?.slickPrev()} label="Previous Single">
+                        <FiChevronLeft className="w-7 h-7 hover:text-[var(--text-accent)]" />
+                      </ManualNavButton>
+                      <ManualNavButton onClick={() => singlesSliderRef.current?.slickNext()} label="Next Single">
+                        <FiChevronRight className="w-7 h-7 hover:text-[var(--text-accent)]" />
+                      </ManualNavButton>
                     </div>
-                  )}
+                    )}
                 </div>
                 {singles.length > 1 ? (
-                  <ForwardedClientSlider
-                    ref={singlesSliderRef}
-                    dots={true}
-                    infinite={singles.length > 3}
-                    speed={350}
-                    slidesToShow={Math.min(3, singles.length)}
-                    slidesToScroll={1}
-                    responsive={[
-                      { breakpoint: 1024, settings: { slidesToShow: Math.min(2, singles.length) } },
-                      { breakpoint: 640, settings: { slidesToShow: 1 } },
-                    ]}
-                    arrows={false} // Disable default react-slick arrows
-                    autoplay={true}
-                    autoplaySpeed={2500}
-                  >
-                    {singles.map((single) => (
-                      <div key={single.id} className="p-2">
+                  isMobile ? (
+                    <div className="flex flex-col gap-4">
+                      {singles.map((single) => (
                         <Link
+                          key={single.id}
                           href={`/music/singles/${single.id}`}
                           className={`group relative bg-[var(--card-background)] rounded-xl shadow-lg ${styles['music-card']} block h-full`}
                         >
-                          <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[260px] md:min-h-[220px]">
+                          <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[220px]">
                             <Image
                               src={single.coverImage}
                               alt={`Cover of ${single.title}`}
                               fill
                               className="object-cover transition-transform duration-500 group-hover:scale-110"
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              sizes="100vw"
                               onError={(e) => {
                                 e.currentTarget.src = `https://placehold.co/400x400/333333/FFFFFF?text=${single.title.replace(/\s/g, '+')}`;
                                 e.currentTarget.alt = `Placeholder for ${single.title}`;
@@ -398,9 +489,66 @@ export default function MusicPage() {
                             </div>
                           </div>
                         </Link>
-                      </div>
-                    ))}
-                  </ForwardedClientSlider>
+                      ))}
+                    </div>
+                  ) : (
+                    <ForwardedClientSlider
+                      ref={singlesSliderRef}
+                      dots={true}
+                      infinite={singles.length > 3}
+                      speed={350}
+                      slidesToShow={Math.min(3, singles.length)}
+                      slidesToScroll={1}
+                      responsive={[
+                        { breakpoint: 1024, settings: { slidesToShow: Math.min(2, singles.length) } },
+                        { breakpoint: 640, settings: { slidesToShow: 1 } },
+                      ]}
+                      arrows={false}
+                      autoplay={true}
+                      autoplaySpeed={2500}
+                    >
+                      {singles.map((single) => (
+                        <div key={single.id} className="p-2">
+                          <Link
+                            href={`/music/singles/${single.id}`}
+                            className={`group relative bg-[var(--card-background)] rounded-xl shadow-lg ${styles['music-card']} block h-full`}
+                          >
+                            <div className="relative aspect-square overflow-hidden rounded-t-xl min-h-[260px] md:min-h-[220px]">
+                              <Image
+                                src={single.coverImage}
+                                alt={`Cover of ${single.title}`}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                onError={(e) => {
+                                  e.currentTarget.src = `https://placehold.co/400x400/333333/FFFFFF?text=${single.title.replace(/\s/g, '+')}`;
+                                  e.currentTarget.alt = `Placeholder for ${single.title}`;
+                                }}
+                              />
+                              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 group-hover:bg-opacity-60 transition-all duration-300 flex items-center justify-center">
+                                <FiHeadphones className="text-white text-4xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                              </div>
+                            </div>
+                            <div className="p-6">
+                              <h3 className="text-xl font-bold mb-2 group-hover:text-[var(--text-accent)] transition-colors">
+                                {single.title}
+                              </h3>
+                              <div className="flex items-center justify-between text-sm text-[var(--text-secondary)]">
+                                <div className="flex items-center">
+                                  <FiCalendar className="mr-2" />
+                                  {single.releaseYear}
+                                </div>
+                                <div className="flex items-center">
+                                  <FiClock className="mr-2" />
+                                  {single.duration}
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                    </ForwardedClientSlider>
+                  )
                 ) : (
                   // Single item rendering logic remains the same
                   <div className="flex max-w-xs">
