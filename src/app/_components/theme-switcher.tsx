@@ -379,7 +379,7 @@ const ThemeSelector = () => {
   );
 };
 
-const Script = memo(() => (
+export const Script = memo(() => (
   <script
     dangerouslySetInnerHTML={{
       __html: `
