@@ -1,0 +1,19 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Install react-slick and slick-carousel",
+			"type": "shell",
+			"command": "npm install react-slick slick-carousel",
+			"isBackground": false,
+			"group": "build"
+		},
+		{
+			"label": "Install @types/react-slick",
+			"type": "shell",
+			"command": "npm install --save-dev @types/react-slick",
+			"isBackground": false,
+			"group": "build"
+		}
+	]
+}

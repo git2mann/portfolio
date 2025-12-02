@@ -1,3 +1,5 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -53,11 +55,15 @@
 }
 
 /* Base styles */
+
 html {
   scroll-behavior: smooth;
   width: 100%;
   overflow-x: hidden; /* Prevent horizontal scrolling */
   background-color: var(--background-primary) !important;
+  font-family: 'Noto Serif JP', serif !important;
+  font-stretch: condensed;
+  font-weight: 300;
 }
 
 body {
@@ -67,6 +73,9 @@ body {
   color: var(--text-primary);
   cursor: var(--cursor-url);
   cursor: var(--cursor-default);
+  font-family: 'Noto Serif JP', serif !important;
+  font-stretch: condensed;
+  font-weight: 300;
 }
 
 /* Theme Styles */

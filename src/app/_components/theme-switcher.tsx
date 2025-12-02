@@ -393,9 +393,11 @@ const Script = memo(() => (
 Script.displayName = "ThemeScript";
 
 export const ThemeSwitcher = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   return (
     <>
-      <Script />
+      {mounted && <Script />}
       <ThemeSelector />
     </>
   );

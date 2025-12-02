@@ -65,4 +65,11 @@ export const singles = [
     releaseYear: "2020",
     duration: "2:33",
   },
+  {
+    id: "4",
+    title: "Goodbye Song (Demo)",
+    coverImage: "/assets/music-assets/GoodbyeSongSingleCover.png",
+    releaseYear: "2025",
+    // No duration provided
+  },
 ];
