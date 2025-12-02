@@ -132,7 +132,7 @@ export default function MusicPage() {
                 </div>
                 {albums.length > 1 ? (
                   <ForwardedClientSlider
-                    innerRef={albumSliderRef}
+                    ref={albumSliderRef}
                     dots={true}
                     infinite={albums.length > 3}
                     speed={350}
@@ -242,7 +242,7 @@ export default function MusicPage() {
                 </div>
                 {eps.length > 1 ? (
                   <ForwardedClientSlider
-                    innerRef={epsSliderRef}
+                    ref={epsSliderRef}
                     dots={true}
                     infinite={eps.length > 3}
                     speed={350}
@@ -346,7 +346,7 @@ export default function MusicPage() {
                 </div>
                 {singles.length > 1 ? (
                   <ForwardedClientSlider
-                    innerRef={singlesSliderRef}
+                    ref={singlesSliderRef}
                     dots={true}
                     infinite={singles.length > 3}
                     speed={350}
@@ -464,7 +464,7 @@ export default function MusicPage() {
             </div>
             {liveAlbums.length > 1 ? (
               <ForwardedClientSlider
-                innerRef={liveAlbumsSliderRef}
+                ref={liveAlbumsSliderRef}
                 dots={true}
                 infinite={liveAlbums.length > 3}
                 speed={350}
