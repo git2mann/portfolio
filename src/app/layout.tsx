@@ -1,4 +1,5 @@
 import * as React from "react";
+import ModalBlurOverlayWrapper from "@/app/_components/ModalBlurOverlayWrapper";
 import { Script as ThemeScript } from "@/app/_components/theme-switcher";
 import Footer from "@/app/_components/footer";
 import Header from "@/app/_components/header";
@@ -48,6 +49,8 @@ export default function RootLayout({
       >
         {/* Inject theme script as the very first element in body to avoid hydration mismatch */}
         <ThemeScript />
+        {/* Strong blur overlay when modal is open */}
+        <ModalBlurOverlayWrapper />
         <div className="fixed inset-0 -z-10 bg-[var(--background-primary)]"></div>
         <Header />
         <div className="animate-fade-in">{children}</div>
