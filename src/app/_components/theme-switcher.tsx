@@ -1,6 +1,7 @@
 "use client";
 
 import { memo, useEffect, useState, useRef } from "react";
+import dynamic from "next/dynamic";
 
 declare global {
   interface Window {
@@ -17,7 +18,8 @@ type Theme = {
 
 const STORAGE_KEY = "theme";
 
-const themes: Theme[] = [
+// Define themes at the top level to ensure static, serializable data for SSR/CSR parity
+export const themes: Theme[] = [
   { id: "system", name: "Auto", icon: "🔄", class: "system" },
   { id: "light", name: "Light", icon: "☀️", class: "light" },
   { id: "dark", name: "Dark Ocean", icon: "🌑", class: "dark" },
@@ -39,7 +41,8 @@ const themes: Theme[] = [
   }
 ];
 
-export const NoFOUCScript = (storageKey: string, themeList: Theme[]) => {
+// Define NoFOUCScript at the top level for serialization
+export function NoFOUCScript(storageKey: string, themeList: Theme[]) {
   const updateDOM = () => {
     const modifyTransition = () => {
       const css = document.createElement("style");
@@ -379,6 +382,8 @@ const ThemeSelector = () => {
   );
 };
 
+
+// Memoized Script component that injects static, serializable data
 export const Script = memo(() => (
   <script
     dangerouslySetInnerHTML={{
@@ -392,12 +397,16 @@ export const Script = memo(() => (
 
 Script.displayName = "ThemeScript";
 
+
+// Dynamically import Script so it only renders on the client
+const ClientScript = dynamic(() => Promise.resolve(Script), { ssr: false });
+
 export const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   return (
     <>
-      {mounted && <Script />}
+      {mounted && <ClientScript />}
       <ThemeSelector />
     </>
   );
