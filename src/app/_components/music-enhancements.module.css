@@ -1,12 +1,6 @@
 .music-card {
   transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s cubic-bezier(0.4,0,0.2,1), border-color 0.4s cubic-bezier(0.4,0,0.2,1);
 }
-.music-card:hover {
-  transform: scale(1.045) rotate(-1deg) translateY(-6px);
-  box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18), 0 1.5px 6px 0 rgba(0,0,0,0.10);
-  border-color: var(--text-accent);
-  z-index: 2;
-}
 .slick-slide {
   padding: 0 8px;
 }
