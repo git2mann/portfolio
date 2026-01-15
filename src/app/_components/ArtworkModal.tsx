@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
+import styles from "./artwork-modal.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Share2, Download, Maximize2, Minimize2 } from "lucide-react";
 
@@ -102,7 +103,7 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center"
+          className={`fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center ${styles["artwork-modal-mobile"]}`}
         >
           {/* --- 1. THE VOID BACKGROUND --- */}
           {/* This uses the image itself, scaled up massively and blurred to create the color atmosphere */}
@@ -120,7 +121,7 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
 
           {/* --- 2. MAIN ARTWORK --- */}
           <div
-            className={`relative z-10 w-full h-full ${isZoomed ? 'flex items-center justify-center p-0 m-0' : 'flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 px-2 md:px-0'}`}
+            className={`relative z-10 w-full h-full ${isZoomed ? 'flex items-center justify-center p-0 m-0' : 'flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 px-2 md:px-0'} main-artwork`}
             style={isZoomed ? { padding: 0, margin: 0 } : {}}
           >
             <motion.div
@@ -141,7 +142,7 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
             {/* Only show writeup if not zoomed */}
             {!isZoomed && writeup && (
               <div
-                className="w-full md:max-w-lg bg-black/60 rounded-lg p-4 md:p-8 text-white/90 shadow-xl backdrop-blur-lg mt-4 md:mt-0"
+                className="w-full md:max-w-lg bg-black/60 rounded-lg p-4 md:p-8 text-white/90 shadow-xl backdrop-blur-lg mt-4 md:mt-0 artwork-writeup"
                 style={{ maxHeight: '40vh', overflowY: 'auto' }}
               >
                 <div className="text-base md:text-lg font-semibold mb-2">{title}</div>
@@ -156,7 +157,7 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: showUI ? 1 : 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-between p-6 md:p-12"
+            className="absolute inset-0 z-20 pointer-events-none flex flex-col justify-between p-6 md:p-12 floating-ui"
           >
             {/* TOP BAR */}
             <div className="flex justify-between items-start">

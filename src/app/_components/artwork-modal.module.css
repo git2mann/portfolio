@@ -1,0 +1,36 @@
+.artwork-modal-mobile {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: black;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+@media (max-width: 640px) {
+  .artwork-modal-mobile {
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  .artwork-modal-mobile .main-artwork {
+    width: 100vw !important;
+    height: 60vh !important;
+    max-width: 100vw !important;
+    max-height: 60vh !important;
+  }
+  .artwork-modal-mobile .artwork-writeup {
+    max-width: 95vw !important;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 1rem;
+  }
+  .artwork-modal-mobile .floating-ui {
+    padding: 1rem !important;
+  }
+}
