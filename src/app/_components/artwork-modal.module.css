@@ -1,3 +1,9 @@
+/* Blur background when modal is open */
+.artwork-modal-blur #__next > *:not(.artwork-modal-mobile),
+.artwork-modal-blur body > *:not(.artwork-modal-mobile) {
+  filter: blur(8px) !important;
+  transition: filter 0.3s;
+}
 .artwork-modal-mobile {
   position: fixed;
   inset: 0;
@@ -17,20 +23,46 @@
     max-height: 100vh;
     border-radius: 0 !important;
     padding: 0 !important;
+    align-items: stretch;
+    justify-content: flex-start;
   }
   .artwork-modal-mobile .main-artwork {
     width: 100vw !important;
-    height: 60vh !important;
+    height: 45vh !important;
     max-width: 100vw !important;
-    max-height: 60vh !important;
+    max-height: 45vh !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    padding: 0 !important;
+  }
+  .artwork-modal-mobile img {
+    max-width: 100vw !important;
+    max-height: 45vh !important;
+    object-fit: contain !important;
+    border-radius: 0 !important;
   }
   .artwork-modal-mobile .artwork-writeup {
-    max-width: 95vw !important;
-    margin-top: 1rem;
-    padding: 1rem;
-    font-size: 1rem;
+    max-width: 98vw !important;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.98rem;
+    border-radius: 0.5rem;
+    background: rgba(0,0,0,0.7);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   }
   .artwork-modal-mobile .floating-ui {
-    padding: 1rem !important;
+    padding: 0.5rem 0.5rem 0.75rem 0.5rem !important;
+    gap: 0.5rem !important;
+  }
+  .artwork-modal-mobile .floating-ui h2 {
+    font-size: 1.1rem !important;
+  }
+  .artwork-modal-mobile .floating-ui span {
+    font-size: 0.7rem !important;
+  }
+  .artwork-modal-mobile .floating-ui button, .artwork-modal-mobile .floating-ui a {
+    padding: 0.5rem !important;
+    min-width: 36px;
+    min-height: 36px;
   }
 }
