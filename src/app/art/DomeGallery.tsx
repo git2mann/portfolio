@@ -84,6 +84,9 @@ interface DomeGalleryProps {
 }
 
 export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps) {
+  // Prevent hydration mismatch: only render after mount
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => { setHasMounted(true); }, []);
   // Show drag info on mobile after entering
   const [showMobileDragInfo, setShowMobileDragInfo] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -287,11 +290,30 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
   };
 
   // -- RENDER HELPERS --
-  const baseItems = useMemo(() => {
-    const rows = isMobileMode ? 7 : 12; 
-    const cols = isMobileMode ? 10 : 14; 
+  // Precompute random values for each item, stable across renders (fixes hydration)
+  const randomValuesRef = useRef<{ scaleMultiplier: number; randomSpeed: number; randomPhase: number }[]>([]);
+  useEffect(() => {
+    const rows = isMobileMode ? 7 : 12;
+    const cols = isMobileMode ? 10 : 14;
     const totalItems = rows * cols;
+    if (randomValuesRef.current.length !== totalItems) {
+      // Only generate if not already generated for this grid size
+      randomValuesRef.current = Array.from({ length: totalItems }).map(() => {
+        const rand = Math.random();
+        let scaleMultiplier = rand > 0.85 ? 1.6 : rand > 0.6 ? 1.2 : 0.6;
+        return {
+          scaleMultiplier,
+          randomSpeed: 0.5 + Math.random() * 0.5,
+          randomPhase: Math.random() * Math.PI * 2,
+        };
+      });
+    }
+  }, [isMobileMode]);
 
+  const baseItems = useMemo(() => {
+    const rows = isMobileMode ? 7 : 12;
+    const cols = isMobileMode ? 10 : 14;
+    const totalItems = rows * cols;
     return Array.from({ length: totalItems }).map((_, index) => {
       const row = Math.floor(index / cols); const col = index % cols;
       const phi = (row - (rows - 1) / 2) * 0.22;
@@ -300,12 +322,13 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
       const y = Math.sin(phi);
       const z = Math.cos(theta) * Math.cos(phi);
       const item = ART_ASSETS[index % ART_ASSETS.length];
-      const rand = Math.random();
-      let scaleMultiplier = rand > 0.85 ? 1.6 : rand > 0.6 ? 1.2 : 0.6;
-      return { 
-          id: index, unitX: x, unitY: y, unitZ: z, 
-          src: item.src, title: item.title, artist: item.artist, description: item.description,
-          scaleMultiplier, randomSpeed: 0.5 + Math.random() * 0.5, randomPhase: Math.random() * Math.PI * 2 
+      const randoms = randomValuesRef.current[index] || { scaleMultiplier: 1, randomSpeed: 1, randomPhase: 0 };
+      return {
+        id: index, unitX: x, unitY: y, unitZ: z,
+        src: item.src, title: item.title, artist: item.artist, description: item.description,
+        scaleMultiplier: randoms.scaleMultiplier,
+        randomSpeed: randoms.randomSpeed,
+        randomPhase: randoms.randomPhase,
       };
     });
   }, [isMobileMode]);
@@ -324,6 +347,8 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
   if (isActive) containerClass += ` ${styles.active}`;
   if (isActive && isMobileMode) containerClass += ` ${styles.mobileOverlay}`;
   if (selectedItem) containerClass += ` ${styles.containerBlurred}`;
+
+  if (!hasMounted) return null;
 
   return (
     <div 
