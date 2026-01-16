@@ -84,6 +84,8 @@ interface DomeGalleryProps {
 }
 
 export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps) {
+  // Show drag info on mobile after entering
+  const [showMobileDragInfo, setShowMobileDragInfo] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   // -- PHYSICS & STATE --
   // Start with y: 180 to show the opposite side (fewer pictures)
@@ -130,7 +132,11 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     physics.current.isActive = nextState;
 
     if (nextState) {
-      if (isMobileMode) document.body.style.overflow = 'hidden';
+      if (isMobileMode) {
+        document.body.style.overflow = 'hidden';
+        setShowMobileDragInfo(true);
+        setTimeout(() => setShowMobileDragInfo(false), 3500);
+      }
       else if (containerRef.current?.requestFullscreen) containerRef.current.requestFullscreen().catch(() => {});
       setTimeout(() => containerRef.current?.focus(), 50);
     } else {
@@ -396,17 +402,27 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
             </div>
           </div>
         )}
+        {/* Mobile: Exit button and drag info */}
         {!selectedItem && isActive && isMobileMode && (
-          <div className={styles.instructions}>
-            <div
-              className={styles.instrContent}
-              onClick={(e) => { e.stopPropagation(); toggleActive(); }}
-              style={{ display: isActive ? undefined : 'none' }}
-            >
-              <span className={styles.icon}>✦</span>
-              <span className={styles.mobileText}>Exit</span>
+          <>
+            <div className={styles.instructions}>
+              <div
+                className={styles.instrContent}
+                onClick={(e) => { e.stopPropagation(); toggleActive(); }}
+                style={{ display: isActive ? undefined : 'none' }}
+              >
+                <span className={styles.icon}>✦</span>
+                <span className={styles.mobileText}>Exit</span>
+              </div>
             </div>
-          </div>
+            {showMobileDragInfo && (
+              <div className={styles.instructions} style={{ top: '38%', left: '50%', transform: 'translate(-50%, 0)', bottom: 'auto', pointerEvents: 'none' }}>
+                <div className={styles.instrContent} style={{ pointerEvents: 'none', opacity: 0.5, fontSize: '1.05em', cursor: 'default' }}>
+                  <span className={styles.mobileText}>Drag to move around the space</span>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 
