@@ -84,6 +84,11 @@ interface DomeGalleryProps {
 }
 
 export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps) {
+  // Prevent hydration mismatch: only render after mount
+  const [hasMounted, setHasMounted] = useState(false);
+  useEffect(() => { setHasMounted(true); }, []);
+  // Show drag info on mobile after entering
+  const [showMobileDragInfo, setShowMobileDragInfo] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   // -- PHYSICS & STATE --
   // Start with y: 180 to show the opposite side (fewer pictures)
@@ -130,7 +135,11 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     physics.current.isActive = nextState;
 
     if (nextState) {
-      if (isMobileMode) document.body.style.overflow = 'hidden';
+      if (isMobileMode) {
+        document.body.style.overflow = 'hidden';
+        setShowMobileDragInfo(true);
+        setTimeout(() => setShowMobileDragInfo(false), 3500);
+      }
       else if (containerRef.current?.requestFullscreen) containerRef.current.requestFullscreen().catch(() => {});
       setTimeout(() => containerRef.current?.focus(), 50);
     } else {
@@ -281,11 +290,30 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
   };
 
   // -- RENDER HELPERS --
-  const baseItems = useMemo(() => {
-    const rows = isMobileMode ? 7 : 12; 
-    const cols = isMobileMode ? 10 : 14; 
+  // Precompute random values for each item, stable across renders (fixes hydration)
+  const randomValuesRef = useRef<{ scaleMultiplier: number; randomSpeed: number; randomPhase: number }[]>([]);
+  useEffect(() => {
+    const rows = isMobileMode ? 7 : 12;
+    const cols = isMobileMode ? 10 : 14;
     const totalItems = rows * cols;
+    if (randomValuesRef.current.length !== totalItems) {
+      // Only generate if not already generated for this grid size
+      randomValuesRef.current = Array.from({ length: totalItems }).map(() => {
+        const rand = Math.random();
+        let scaleMultiplier = rand > 0.85 ? 1.6 : rand > 0.6 ? 1.2 : 0.6;
+        return {
+          scaleMultiplier,
+          randomSpeed: 0.5 + Math.random() * 0.5,
+          randomPhase: Math.random() * Math.PI * 2,
+        };
+      });
+    }
+  }, [isMobileMode]);
 
+  const baseItems = useMemo(() => {
+    const rows = isMobileMode ? 7 : 12;
+    const cols = isMobileMode ? 10 : 14;
+    const totalItems = rows * cols;
     return Array.from({ length: totalItems }).map((_, index) => {
       const row = Math.floor(index / cols); const col = index % cols;
       const phi = (row - (rows - 1) / 2) * 0.22;
@@ -294,12 +322,13 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
       const y = Math.sin(phi);
       const z = Math.cos(theta) * Math.cos(phi);
       const item = ART_ASSETS[index % ART_ASSETS.length];
-      const rand = Math.random();
-      let scaleMultiplier = rand > 0.85 ? 1.6 : rand > 0.6 ? 1.2 : 0.6;
-      return { 
-          id: index, unitX: x, unitY: y, unitZ: z, 
-          src: item.src, title: item.title, artist: item.artist, description: item.description,
-          scaleMultiplier, randomSpeed: 0.5 + Math.random() * 0.5, randomPhase: Math.random() * Math.PI * 2 
+      const randoms = randomValuesRef.current[index] || { scaleMultiplier: 1, randomSpeed: 1, randomPhase: 0 };
+      return {
+        id: index, unitX: x, unitY: y, unitZ: z,
+        src: item.src, title: item.title, artist: item.artist, description: item.description,
+        scaleMultiplier: randoms.scaleMultiplier,
+        randomSpeed: randoms.randomSpeed,
+        randomPhase: randoms.randomPhase,
       };
     });
   }, [isMobileMode]);
@@ -318,6 +347,8 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
   if (isActive) containerClass += ` ${styles.active}`;
   if (isActive && isMobileMode) containerClass += ` ${styles.mobileOverlay}`;
   if (selectedItem) containerClass += ` ${styles.containerBlurred}`;
+
+  if (!hasMounted) return null;
 
   return (
     <div 
@@ -396,17 +427,27 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
             </div>
           </div>
         )}
+        {/* Mobile: Exit button and drag info */}
         {!selectedItem && isActive && isMobileMode && (
-          <div className={styles.instructions}>
-            <div
-              className={styles.instrContent}
-              onClick={(e) => { e.stopPropagation(); toggleActive(); }}
-              style={{ display: isActive ? undefined : 'none' }}
-            >
-              <span className={styles.icon}>✦</span>
-              <span className={styles.mobileText}>Exit</span>
+          <>
+            <div className={styles.instructions}>
+              <div
+                className={styles.instrContent}
+                onClick={(e) => { e.stopPropagation(); toggleActive(); }}
+                style={{ display: isActive ? undefined : 'none' }}
+              >
+                <span className={styles.icon}>✦</span>
+                <span className={styles.mobileText}>Exit</span>
+              </div>
             </div>
-          </div>
+            {showMobileDragInfo && (
+              <div className={styles.instructions} style={{ top: '38%', left: '50%', transform: 'translate(-50%, 0)', bottom: 'auto', pointerEvents: 'none' }}>
+                <div className={styles.instrContent} style={{ pointerEvents: 'none', opacity: 0.5, fontSize: '1.05em', cursor: 'default' }}>
+                  <span className={styles.mobileText}>Drag to move around the space</span>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 
