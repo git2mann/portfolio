@@ -23,8 +23,9 @@ export default async function Post(props: Params) {
     return notFound();
   }
 
-  // Pass raw markdown content directly to PostBody
+  // Pass raw content and contentType to PostBody
   const content = post.content;
+  const contentType = post.contentType;
 
   return (
     <main>
@@ -40,8 +41,8 @@ export default async function Post(props: Params) {
             date={post.date || ""}
             author={post.author}
           />
-          {/* Pass raw markdown content */}
-          <PostBody content={content} isMarkdown={post.contentType === 'markdown'} />
+          {/* Pass content and contentType to PostBody */}
+          <PostBody content={content} isMarkdown={contentType === 'markdown'} contentType={contentType} />
         </article>
       </Container>
     </main>

@@ -1,40 +1,102 @@
+
 .markdown {
-  @apply text-lg leading-relaxed;
+  @apply text-lg leading-relaxed font-bold;
+  font-family: 'Montserrat', 'Futura', 'Noto Serif JP', sans-serif;
+  color: var(--text-primary);
 }
 
 .markdown p {
   @apply my-6;
+  color: var(--text-primary);
 }
 
 .markdown h1 {
-  @apply text-4xl font-bold mt-8 mb-4;
+  @apply text-5xl font-extrabold mt-10 mb-6 uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 6px solid #111;
+  padding-bottom: 0.25em;
+  background: linear-gradient(90deg, #f4d35e 60%, #ee2e31 100%);
+  color: #111;
 }
 
 .markdown h2 {
-  @apply text-3xl font-bold mt-6 mb-4;
+  @apply text-3xl font-bold mt-8 mb-4 uppercase;
+  letter-spacing: 0.03em;
+  border-left: 8px solid #ee2e31;
+  padding-left: 0.5em;
+  color: #111;
+  background: linear-gradient(90deg, #f4d35e 40%, #fff 100%);
 }
 
 .markdown h3 {
-  @apply text-2xl font-bold mt-4 mb-2;
+  @apply text-2xl font-bold mt-6 mb-2 uppercase;
+  letter-spacing: 0.02em;
+  border-left: 6px solid #0081a7;
+  padding-left: 0.5em;
+  color: #111;
 }
 
 .markdown ul,
 .markdown ol {
   @apply list-disc list-inside my-6;
+  padding-left: 1.5em;
 }
 
 .markdown blockquote {
-  @apply border-l-4 border-gray-300 pl-4 italic my-6;
+  @apply my-6 font-bold;
+  border-left: 8px solid #0081a7;
+  background: #f4d35e22;
+  color: #111;
+  padding: 1em 1.5em;
+  margin-left: 0;
+  border-radius: 0;
+  font-style: normal;
 }
 
 .markdown strong {
-  @apply font-bold;
+  @apply font-extrabold;
+  color: #ee2e31;
 }
 
 .markdown em {
   @apply italic;
+  color: #0081a7;
 }
 
 .markdown a {
-  @apply text-blue-600 underline hover:text-blue-800;
+  color: #ee2e31;
+  text-decoration: underline wavy #f4d35e 2px;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+.markdown a:hover {
+  color: #0081a7;
+}
+
+.markdown img {
+  border: 4px solid #111;
+  border-radius: 0;
+  margin: 2em auto;
+  display: block;
+  max-width: 100%;
+  background: #fff;
+}
+
+.markdown hr {
+  border: none;
+  border-top: 4px solid #111;
+  margin: 2em 0;
+}
+
+.markdown code, .markdown pre {
+  background: #f4d35e;
+  color: #111;
+  border-radius: 0;
+  font-family: 'Fira Mono', 'Menlo', 'Monaco', monospace;
+  padding: 0.2em 0.4em;
+  font-size: 1em;
+}
+.markdown pre {
+  padding: 1em;
+  overflow-x: auto;
 }

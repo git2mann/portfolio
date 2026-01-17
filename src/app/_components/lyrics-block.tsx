@@ -22,7 +22,7 @@ export default function LyricsBlock({ lyrics }: LyricsBlockProps) {
             }`}
             onClick={() => setSelectedAnnotation(annotation.id === selectedAnnotation ? null : annotation.id)}
           >
-            {annotation.text}
+                {annotation.lines.join(' ')}
           </div>
           {selectedAnnotation === annotation.id && (
             <div className="mt-2 p-4 bg-neutral-50 dark:bg-slate-800 rounded-lg">

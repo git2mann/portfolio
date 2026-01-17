@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect, useMemo, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styles from "./dome.module.css";
+import { Maximize2, X, Move, MousePointer2 } from "lucide-react";
 
 // Use all images from public/assets/art-assets/batch-2
 const BATCH2_IMAGES = [
@@ -18,60 +19,23 @@ const BATCH2_IMAGES = [
 ];
 
 const BATCH2_TITLES = [
-  "Amber Labyrinth",
-  "Reverie by the Water",
-  "Petal Geometry",
-  "Sunlit Spiral",
-  "Crimson Bloom",
-  "Golden Hour Petals",
-  "Verdant Dream",
-  "Twilight Veil",
-  "Opaline Whorl",
-  "Saffron Embrace",
-  "Cerulean Mist",
-  "Radiant Core",
-  "Velvet Cascade",
-  "Eclipse in Bloom",
-  "Luminous Fold",
-  "Silent Harmony",
-  "Gilded Edge",
-  "Blushing Dawn",
-  "Emerald Pulse",
-  "Dusky Halo",
-  "Ivory Tangle",
-  "Frosted Veins",
-  "Auburn Drift",
-  "Celestial Petal",
-  "Obsidian Heart",
-  "Roseate Spiral",
-  "Azure Whisper",
-  "Sunset Mosaic",
-  "Opal Bloom",
-  "Shadowed Silk",
-  "Gossamer Trace",
-  "Violet Echo",
-  "Coral Mirage",
-  "Golden Spiral",
-  "Indigo Veil",
-  "Pearl Radiance",
-  "Scarlet Thread",
-  "Mosslight",
-  "Citrine Veins",
-  "Dewdrop Prism",
-  "Sable Bloom",
-  "Lush Reverie",
-  "Orchid Veil",
-  "Sunflare",
-  "Petal Prism",
-  "Twilight Bloom",
-  "Aurora Spiral"
+  "Amber Labyrinth", "Reverie by the Water", "Petal Geometry", "Sunlit Spiral", "Crimson Bloom",
+  "Golden Hour Petals", "Verdant Dream", "Twilight Veil", "Opaline Whorl", "Saffron Embrace",
+  "Cerulean Mist", "Radiant Core", "Velvet Cascade", "Eclipse in Bloom", "Luminous Fold",
+  "Silent Harmony", "Gilded Edge", "Blushing Dawn", "Emerald Pulse", "Dusky Halo",
+  "Ivory Tangle", "Frosted Veins", "Auburn Drift", "Celestial Petal", "Obsidian Heart",
+  "Roseate Spiral", "Azure Whisper", "Sunset Mosaic", "Opal Bloom", "Shadowed Silk",
+  "Gossamer Trace", "Violet Echo", "Coral Mirage", "Golden Spiral", "Indigo Veil",
+  "Pearl Radiance", "Scarlet Thread", "Mosslight", "Citrine Veins", "Dewdrop Prism",
+  "Sable Bloom", "Lush Reverie", "Orchid Veil", "Sunflare", "Petal Prism",
+  "Twilight Bloom", "Aurora Spiral"
 ];
 
 const ART_ASSETS = BATCH2_IMAGES.map((filename, idx) => ({
   src: `/assets/art-assets/batch-2/${filename}`,
   title: BATCH2_TITLES[idx] || `Untitled #${idx + 1}`,
-  artist: undefined,
-  description: undefined
+  artist: "Klense",
+  description: "Visual Research / 2026"
 }));
 
 interface ArtItemData {
@@ -84,14 +48,12 @@ interface DomeGalleryProps {
 }
 
 export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps) {
-  // Prevent hydration mismatch: only render after mount
   const [hasMounted, setHasMounted] = useState(false);
   useEffect(() => { setHasMounted(true); }, []);
-  // Show drag info on mobile after entering
+  
   const [showMobileDragInfo, setShowMobileDragInfo] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  // -- PHYSICS & STATE --
-  // Start with y: 180 to show the opposite side (fewer pictures)
+  
   const physics = useRef({
     rotation: { x: 0, y: 180 },
     velocity: { x: 0, y: 0 },
@@ -102,19 +64,16 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
 
   const keysPressed = useRef(new Set<string>());
   const lastPointer = useRef({ x: 0, y: 0 });
-  const isDragging = useRef(false); // Track dragging state
+  const isDragging = useRef(false);
   
   const [isMobileMode, setIsMobileMode] = useState(false);
-  const isMobileRef = useRef(false); // Ref for loop access
+  const isMobileRef = useRef(false);
   
-  // isActive and setIsActive are now props
   const [selectedItem, setSelectedItem] = useState<ArtItemData | null>(null);
-  
   const [, setTick] = useState(0);
   const requestRef = useRef<number>();
   const [radius, setRadius] = useState(1000); 
 
-  // -- DETECT PLATFORM & RESIZE --
   useEffect(() => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
@@ -127,7 +86,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // -- ACTIVATION LOGIC --
   const toggleActive = () => {
     if (selectedItem) { handleCloseModal(); return; }
     const nextState = !isActive;
@@ -170,7 +128,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     if (isActive) physics.current.isActive = true;
   };
 
-  // -- ANIMATION LOOP --
   const animate = useCallback(() => {
     if (selectedItem) {
         requestRef.current = requestAnimationFrame(animate);
@@ -179,10 +136,7 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
 
     physics.current.phase += 0.01;
 
-    // Apply Momentum & Inputs
     if (physics.current.isActive) {
-      
-      // DESKTOP: Keyboard Acceleration
       if (!isMobileRef.current) {
         const k = keysPressed.current;
         const keyThrust = 0.3;
@@ -191,11 +145,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
         if (k.has("ArrowLeft") || k.has("a") || k.has("A")) physics.current.velocity.x += keyThrust;
         if (k.has("ArrowRight") || k.has("d") || k.has("D")) physics.current.velocity.x -= keyThrust;
       }
-      
-      // MOBILE: 
-      // If dragging, we DO NOT apply velocity to rotation here.
-      // Rotation is handled directly in handlePointerMove for 1:1 control.
-      // We only apply friction/inertia when the user is NOT dragging.
     }
 
     if (!isDragging.current) {
@@ -210,7 +159,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
       }
     }
 
-    // Idle Rotation
     if (!physics.current.isActive && Math.abs(physics.current.velocity.x) < 0.05) {
         physics.current.rotation.y -= 0.03; 
     }
@@ -224,7 +172,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     return () => { if (requestRef.current) cancelAnimationFrame(requestRef.current); };
   }, [animate]);
 
-  // -- INPUT HANDLERS --
   const handleKeyDown = (e: KeyboardEvent) => {
     if (selectedItem && e.key === "Escape") { handleCloseModal(); return; }
     if (physics.current.isActive && ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) e.preventDefault();
@@ -242,13 +189,9 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     };
   }, [selectedItem, isActive]);
 
-  // --- TOUCH / MOUSE INTERACTION ---
-
   const handlePointerDown = (e: React.PointerEvent) => {
     if(selectedItem) return;
     containerRef.current?.focus();
-    
-    // Stop momentum immediately on touch (Catch the ball)
     physics.current.velocity = { x: 0, y: 0 };
     isDragging.current = true;
     lastPointer.current = { x: e.clientX, y: e.clientY };
@@ -269,7 +212,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     const sensitivity = isMobileMode ? 0.28 : 0.06;
 
     if (isMobileMode) {
-      // Smoothing: keep a buffer of last 3 deltas
       physics.current.deltaBuffer.push({dx: deltaX, dy: deltaY});
       if (physics.current.deltaBuffer.length > 3) physics.current.deltaBuffer.shift();
       const avg = physics.current.deltaBuffer.reduce((acc, d) => ({dx: acc.dx + d.dx, dy: acc.dy + d.dy}), {dx:0, dy:0});
@@ -278,7 +220,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
       const smoothDY = avg.dy / count;
       physics.current.rotation.y += smoothDX * sensitivity;
       physics.current.rotation.x += smoothDY * sensitivity;
-      // More inertia for mobile
       physics.current.velocity.x = -(smoothDX * sensitivity * 0.7);
       physics.current.velocity.y = smoothDY * sensitivity * 0.7;
     } else {
@@ -289,15 +230,12 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
     }
   };
 
-  // -- RENDER HELPERS --
-  // Precompute random values for each item, stable across renders (fixes hydration)
   const randomValuesRef = useRef<{ scaleMultiplier: number; randomSpeed: number; randomPhase: number }[]>([]);
   useEffect(() => {
     const rows = isMobileMode ? 7 : 12;
     const cols = isMobileMode ? 10 : 14;
     const totalItems = rows * cols;
     if (randomValuesRef.current.length !== totalItems) {
-      // Only generate if not already generated for this grid size
       randomValuesRef.current = Array.from({ length: totalItems }).map(() => {
         const rand = Math.random();
         let scaleMultiplier = rand > 0.85 ? 1.6 : rand > 0.6 ? 1.2 : 0.6;
@@ -343,142 +281,192 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
   };
 
   const { rotation, phase } = physics.current;
-  let containerClass = styles.container;
-  if (isActive) containerClass += ` ${styles.active}`;
-  if (isActive && isMobileMode) containerClass += ` ${styles.mobileOverlay}`;
-  if (selectedItem) containerClass += ` ${styles.containerBlurred}`;
+  let containerClass = styles.container + (isActive ? " cursor-none" : "");
 
   if (!hasMounted) return null;
 
   return (
-    <div 
-      ref={containerRef} 
-      className={containerClass} 
+    <div
+      ref={containerRef}
+      className={containerClass}
       tabIndex={0}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}      // Critical for inertia
-      onPointerLeave={handlePointerUp}   // Critical for inertia
-      onPointerCancel={handlePointerUp}  // Critical for inertia
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerUp}
+      onPointerCancel={handlePointerUp}
     >
-      <div className={`${styles.galleryContent} ${selectedItem ? styles.blurred : ''}`}>
-        <div className={styles.dome}>
+      {/* 3D SCENE CONTAINER */}
+      <div className={`w-full h-full absolute inset-0 perspective-[1200px] preserve-3d ${selectedItem ? 'blur-sm brightness-50 transition-all duration-500' : 'transition-all duration-500'}`}>
+        <div className="w-full h-full absolute transform-style-3d flex items-center justify-center">
           {baseItems.map((item) => {
             const actualX = item.unitX * radius;
             const actualY = item.unitY * radius;
             const actualZ = item.unitZ * radius;
             const pos = rotatePoint(actualX, actualY, actualZ, rotation.x, rotation.y);
+            
+            // Calculate scale and visibility
             const pulse = Math.sin(phase * item.randomSpeed + item.randomPhase) * 0.08;
             const depthFactor = (pos.z + (radius * 2)) / (radius * 2); 
             const finalScale = item.scaleMultiplier * depthFactor * (1 + pulse);
-            const opacity = Math.max(0.15, Math.min(1, (pos.z + radius) / radius));
-            const blurRadius = isMobileMode ? 0 : Math.max(0, ( -pos.z - (radius * 0.1) ) / 150); 
-            const filter = isMobileMode ? `brightness(${opacity})` : `blur(${blurRadius}px) brightness(${opacity})`;
+            
+            // Simpler visibility logic for Bauhaus crispness
+            const opacity = Math.max(0, Math.min(1, (pos.z + radius) / (radius * 1.2)));
+            const isVisible = opacity > 0.1;
 
-            // Intense bokeh for all except selected when modal is open
-            let cardClass = styles.cardWrapper;
-            const isBokeh = selectedItem && item.id !== selectedItem.id;
-            if (isBokeh) cardClass += ` ${styles.bokeh}`;
-            const cardStyle = isBokeh
-              ? { transform: `translate3d(${pos.x}px, ${pos.y}px, ${pos.z}px) scale(${finalScale})`, opacity, zIndex: Math.floor(pos.z) }
-              : { transform: `translate3d(${pos.x}px, ${pos.y}px, ${pos.z}px) scale(${finalScale})`, filter, opacity, zIndex: Math.floor(pos.z) };
+            if (!isVisible) return null;
+
             return (
               <div
-                key={item.id} className={cardClass}
-                style={cardStyle}
-                onPointerDown={(e) => {
-                  if (!isMobileMode) e.stopPropagation();
+                key={item.id}
+                className="absolute transform-3d will-change-transform cursor-pointer group"
+                style={{ 
+                  transform: `translate3d(${pos.x}px, ${pos.y}px, ${pos.z}px) scale(${finalScale})`,
+                  zIndex: Math.floor(pos.z)
                 }}
+                onPointerDown={(e) => { if (!isMobileMode) e.stopPropagation(); }}
                 onClick={(e) => handleCardClick(e, item)}
               >
-                <div className={styles.cardInner}>
-                  <img src={item.src} alt={item.title} loading="lazy" />
-                  <div className={styles.shine} />
-                  <div className={styles.overlay} />
-                  <div className={styles.label}><span>{item.title}</span></div>
+                {/* THE CARD: Hard edges, borders, no soft shadows */}
+                <div className="relative bg-white border-2 border-white overflow-hidden transition-colors duration-200 group-hover:border-[#FF3B30] w-[120px] h-[160px] md:w-[200px] md:h-[260px]">
+                  <img 
+                    src={item.src} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300"
+                    loading="lazy" 
+                  />
+                  
+                  {/* Hover Overlay Title */}
+                  <div className="absolute inset-0 bg-[#FF3B30]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center p-2 text-center">
+                    <span className="font-mono text-[10px] uppercase font-bold text-black bg-white px-1">
+                      {item.title}
+                    </span>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
-        
-        {/* INSTRUCTIONS */}
-        {/* Show the enter button only if not active and not selected */}
-        {!selectedItem && !isActive && (
-          <div className={styles.instructions}>
-            <div
-              className={styles.instrContent}
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleActive();
-              }}
-              style={{ display: isActive ? 'none' : undefined }}
-            >
-              <span className={styles.icon}>✦</span>
-              <span className={styles.desktopText}>Click to Enter Fullscreen</span>
-              <span className={styles.mobileText}>Tap to Explore</span>
-            </div>
-          </div>
-        )}
-        {!selectedItem && isActive && !isMobileMode && (
-          <div className={styles.instructions}>
-            <div className={styles.instrContent} onClick={(e) => { e.stopPropagation(); toggleActive(); }}>
-              Use Arrows to Move • Click to Exit
-            </div>
-          </div>
-        )}
-        {/* Mobile: Exit button and drag info */}
-        {!selectedItem && isActive && isMobileMode && (
-          <>
-            <div className={styles.instructions}>
-              <div
-                className={styles.instrContent}
-                onClick={(e) => { e.stopPropagation(); toggleActive(); }}
-                style={{ display: isActive ? undefined : 'none' }}
-              >
-                <span className={styles.icon}>✦</span>
-                <span className={styles.mobileText}>Exit</span>
-              </div>
-            </div>
-            {showMobileDragInfo && (
-              <div className={styles.instructions} style={{ top: '38%', left: '50%', transform: 'translate(-50%, 0)', bottom: 'auto', pointerEvents: 'none' }}>
-                <div className={styles.instrContent} style={{ pointerEvents: 'none', opacity: 0.5, fontSize: '1.05em', cursor: 'default' }}>
-                  <span className={styles.mobileText}>Drag to move around the space</span>
-                </div>
-              </div>
-            )}
-          </>
-        )}
       </div>
+      
+      {/* --- HUD / CONTROLS (Bauhaus Style) --- */}
+      
+      {/* Center "Reticle" Prompt */}
+      {!selectedItem && !isActive && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
+          <div 
+            className="flex flex-col items-center gap-4 pointer-events-auto cursor-pointer group"
+            onClick={(e) => { e.stopPropagation(); toggleActive(); }}
+          >
+            {/* Geometric Button */}
+            <div className="w-24 h-24 border-4 border-white bg-black/50 backdrop-blur-sm flex items-center justify-center group-hover:bg-[#FF3B30] group-hover:border-black transition-colors duration-300">
+               <Maximize2 className="w-10 h-10 text-white group-hover:text-black" />
+            </div>
+            
+            <div className="bg-black text-white border-2 border-white px-4 py-2 font-mono text-xs uppercase tracking-widest group-hover:bg-white group-hover:text-black group-hover:border-black transition-colors">
+               {isMobileMode ? "Tap to Enter" : "Enter Gallery"}
+            </div>
+          </div>
+        </div>
+      )}
 
-      {/* MODAL */}
+      {/* Active State Controls */}
+      {!selectedItem && isActive && (
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-50 flex gap-4 pointer-events-none">
+           <div 
+              className="bg-white border-2 border-black px-6 py-3 pointer-events-auto cursor-pointer hover:bg-[#FF3B30] hover:text-white transition-colors flex items-center gap-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+              onClick={(e) => { e.stopPropagation(); toggleActive(); }}
+           >
+              <X className="w-4 h-4" />
+              <span className="font-mono text-xs font-bold uppercase tracking-widest">Exit View</span>
+           </div>
+           
+           {!isMobileMode && (
+             <div className="bg-black text-white px-6 py-3 border-2 border-white font-mono text-xs uppercase tracking-widest flex items-center gap-3 opacity-80">
+                <Move className="w-4 h-4" /> Drag / Keys to Navigate
+             </div>
+           )}
+        </div>
+      )}
+
+      {/* Mobile Drag Hint */}
+      {isActive && isMobileMode && showMobileDragInfo && (
+         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#2B4592] text-white px-6 py-4 border-2 border-white shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] font-mono text-xs font-bold uppercase text-center animate-in fade-in zoom-in duration-300 z-50 pointer-events-none">
+            Drag to Rotate<br/>Axis
+         </div>
+      )}
+
+      {/* MODAL (Bauhaus Detail View) */}
       <AnimatePresence>
         {selectedItem && (
           <motion.div
-            className={styles.detailModal}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 bg-black/80 backdrop-blur-md"
             onClick={handleCloseModal}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.28 }}
+            transition={{ duration: 0.2 }}
           >
             <motion.div
-              className={styles.modalContent}
+              className="relative w-full max-w-5xl bg-[#F4F3EF] border-4 border-black shadow-[16px_16px_0px_0px_rgba(255,255,255,0.2)] overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, scale: 0.92, y: 40 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.92, y: 40 }}
-              transition={{ duration: 0.36, ease: [0.4, 0, 0.2, 1] }}
+              initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
             >
-              <button className={styles.closeModalBtn} onClick={handleCloseModal}>×</button>
-              <motion.div className={styles.modalImageWrapper} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}>
-                <img src={selectedItem.src} alt={selectedItem.title} className={styles.modalImage} />
-              </motion.div>
-              <div className={styles.modalDetails}>
-                <motion.h2 className={styles.modalTitle} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>{selectedItem.title}</motion.h2>
-                <motion.h3 className={styles.modalArtist} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>{selectedItem.artist}</motion.h3>
-                <motion.div className={styles.modalDivider} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.3 }} />
-                <motion.p className={styles.modalDescription} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>{selectedItem.description}</motion.p>
+              
+              {/* Close Button */}
+              <button 
+                className="absolute top-0 right-0 z-20 w-16 h-16 bg-[#FF3B30] text-white flex items-center justify-center hover:bg-black transition-colors"
+                onClick={handleCloseModal}
+              >
+                <X className="w-8 h-8" />
+              </button>
+
+              {/* Image Section */}
+              <div className="w-full md:w-2/3 bg-black flex items-center justify-center relative overflow-hidden border-b-4 md:border-b-0 md:border-r-4 border-black group">
+                 {/* Checkerboard Pattern */}
+                 <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+                 
+                 <img 
+                    src={selectedItem.src} 
+                    alt={selectedItem.title} 
+                    className="max-h-full max-w-full object-contain shadow-2xl"
+                 />
               </div>
+
+              {/* Info Section */}
+              <div className="w-full md:w-1/3 p-8 flex flex-col justify-between bg-white">
+                 <div>
+                    <div className="mb-6 border-b-2 border-black pb-4">
+                       <span className="bg-black text-white px-2 py-1 font-mono text-[10px] uppercase tracking-widest mb-2 inline-block">
+                          Figure {selectedItem.id.toString().padStart(3, '0')}
+                       </span>
+                       <h2 className="text-4xl font-black uppercase leading-[0.9] tracking-tighter">
+                          {selectedItem.title}
+                       </h2>
+                    </div>
+                    
+                    <div className="space-y-4">
+                       <div>
+                          <h3 className="font-mono text-xs uppercase text-gray-500 mb-1">Artist</h3>
+                          <p className="font-bold text-lg">{selectedItem.artist || "Klense"}</p>
+                       </div>
+                       <div>
+                          <h3 className="font-mono text-xs uppercase text-gray-500 mb-1">Context</h3>
+                          <p className="font-medium text-sm leading-relaxed border-l-2 border-[#2B4592] pl-3">
+                             {selectedItem.description || "No data available."}
+                          </p>
+                       </div>
+                    </div>
+                 </div>
+
+                 {/* Decorative Footer in Modal */}
+                 <div className="mt-8 pt-8 border-t-4 border-black flex gap-2">
+                    <div className="w-8 h-8 bg-[#FF3B30] rounded-full border-2 border-black"></div>
+                    <div className="w-8 h-8 bg-[#2B4592] border-2 border-black"></div>
+                    <div className="w-8 h-8 bg-[#F4B400] rotate-45 border-2 border-black"></div>
+                 </div>
+              </div>
+
             </motion.div>
-            {/* Art and label under modal (hidden when modal is open) */}
-            {/* (Removed as per user request) */}
           </motion.div>
         )}
       </AnimatePresence>

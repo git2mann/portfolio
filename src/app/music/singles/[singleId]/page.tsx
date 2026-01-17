@@ -4,419 +4,161 @@ import { useParams } from 'next/navigation';
 import Container from "@/app/_components/container";
 import { singles } from "@/data/music"; // Corrected import path
 import { useState, useEffect } from "react";
+import LyricsComponent from "@/app/_components/LyricsComponent";
+import { singleLyrics } from "@/data/lyrics/singles";
 import InstructionPopup from "@/app/_components/InstructionPopup";
 import Image from "next/image";
 import Tilt from 'react-parallax-tilt';
 
-// Define types for lyricsData
-type LyricsGroup = {
-  lines: string[];
-  explanation: string;
-};
 
-type LyricsData = Record<string, LyricsGroup[]>;
-
-const lyricsData: LyricsData = {
-  "1": [
-    {
-      lines: [
-        "Uh, I could show you the ropes",
-        "But I'm too busy bein' me",
-        "On a phenomenal roll",
-        "This song here isn't even deep",
-      ],
-      explanation: "Klense begins with confidence, stating they could teach others but prefer to focus on their own success. They acknowledge the freestyle's casual nature, emphasizing their current creative momentum."
-    },
-    {
-      lines: [
-        "I just want you to know",
-        "That as far as things go",
-        "If I never said it before",
-        "That I know I'm always the GOAT",
-      ],
-      explanation: "Here, Klense directly addresses the audience, declaring themselves the 'Greatest of All Time' with unwavering self-assurance."
-    },
-    {
-      lines: [
-        "And I'm back with the finest streak, freestylin' these",
-        "Finally, I'm with the high elite",
-        "Why are we talkin' 'bout hirin' me?",
-        "Irony? I'm at a higher peak",
-      ],
-      explanation: "Klense reflects on their creative streak and their rise to the top tier of their field, questioning why anyone would doubt their worth."
-    },
-    {
-      lines: [
-        "I was the one you would hide, and seek-",
-        "Out, and now when I ride a beat",
-        "How could you even ride with me?",
-        "I'm in the 'Fiery' list and category",
-      ],
-      explanation: "Klense recalls being overlooked in the past but now asserts their dominance, placing themselves among the most passionate and impactful creators."
-    },
-    {
-      lines: [
-        "My life is an allegory of always lookin' up",
-        "Better step right out of my territory",
-        "My options were very borin'",
-        "I'd rather make music",
-      ],
-      explanation: "Klense describes their life as a metaphor for perseverance and optimism, choosing creativity over mundane options."
-    },
-    {
-      lines: [
-        "Than listen to your generic story",
-        "Of how you made nothin'",
-        "And passed it off like you found your calling",
-        "I'm callin' you out",
-      ],
-      explanation: "Klense critiques unoriginal narratives and false claims of success, directly confronting their critics."
-    },
-    {
-      lines: [
-        "I just took my first breath in that verse",
-        "Since that little shout, at the beginnin'",
-        "I'm binnin' a rapper; an MC's final chapter",
-        "Quit hirin' ghostwriters, your material's Casper",
-      ],
-      explanation: "Klense highlights their effortless delivery while criticizing others for using ghostwriters, calling their work insubstantial."
-    },
-    {
-      lines: [
-        "This... this is not planted in the house",
-        "This is outside... this is the corridor",
-        "Unless Leon knows how to float",
-        "Bro thinks this is 'IT'",
-        "",
-        "But unless Leon knows how to float",
-        "...It's, it's, it's, yes",
-        "Th- This is the... This is the",
-        "The... The... The risk-to-reward ratio right here",
-      ],
-      explanation: "A skit based on a voice note to Klense, humorously taken out of context to joke about effort and success."
-    },
-  ],
-};
 
 export default function SinglePage() {
   const params = useParams<{ singleId: string }>();
   const singleId = params?.singleId;
   const single = singles.find((s) => s.id === singleId);
-
-  const [selectedLyric, setSelectedLyric] = useState<number | null>(null);
+  const lyrics = singleId && singleLyrics[singleId] ? singleLyrics[singleId] : [];
   const [selectedNote, setSelectedNote] = useState<string | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (scrollTop / windowHeight) * 100;
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   if (!single) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-[var(--background-primary)]">
-        <p className="text-lg text-[var(--text-secondary)]">
-          Single not found. Please check the URL or go back to the discography.
-        </p>
+      <main className="min-h-screen flex items-center justify-center bg-bgPrimary dark:bg-[#181818]">
+        <div className="border-4 border-borderPrimary dark:border-[#222] p-12 bg-bgPanel dark:bg-[#222] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] text-center">
+           <h1 className="text-4xl font-black uppercase mb-4 text-textPrimary dark:text-white">404: Not Found</h1>
+           <p className="font-mono text-sm uppercase tracking-widest text-textSecondary dark:text-gray-400 mb-8">
+             The requested record does not exist in the archives.
+           </p>
+           <button onClick={() => window.history.back()} className="bg-black text-white px-8 py-3 font-bold uppercase tracking-widest hover:bg-accentPrimary transition-colors">
+              Return to Grid
+           </button>
+        </div>
       </main>
     );
   }
-
-  const lyrics = singleId ? lyricsData[singleId] || [] : [];
-
   return (
-    <main className="min-h-screen bg-[var(--background-primary)]">
+    <main className="min-h-screen bg-bgPrimary text-textPrimary selection:bg-accentPrimary selection:text-white dark:bg-[#181818] dark:text-white">
       <InstructionPopup />
+      {/* --- HEADER STRIP --- */}
+      <div className="sticky top-0 z-50 bg-bgPrimary border-b-4 border-borderPrimary px-4 py-3 flex justify-between items-center dark:bg-[#181818] dark:border-[#222]">
+         <button
+            onClick={() => window.history.back()}
+            className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest hover:bg-black hover:text-white px-3 py-1 transition-colors border border-transparent hover:border-black dark:hover:bg-white dark:hover:text-black dark:hover:border-white"
+         >
+            <span className="inline-block mr-2">&#8592;</span> Back to Archive
+         </button>
+         <div className="hidden md:block font-mono text-[10px] uppercase tracking-[0.2em] text-textSecondary dark:text-gray-400">
+            SEC. SNG-{single.id.padStart(3, '0')} // AUDIO_FILE
+         </div>
+      </div>
       <Container>
-        <div className="max-w-6xl mx-auto py-8">
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            {/* Single Cover and Sticky Section Wrapper */}
-            <div className="md:sticky md:top-16 md:self-start flex flex-col gap-6 w-full md:w-1/3">
-              {/* Back Button */}
-              <button
-                onClick={() => window.history.back()}
-                className="inline-flex items-center text-blue-500 hover:text-blue-600 font-medium transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="w-5 h-5 mr-2"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-                Back to Discography
-              </button>
-              
-              {/* Single Cover with Tilt Effect */}
-              <Tilt
-                className="aspect-square rounded-lg overflow-hidden shadow-lg"
-                tiltMaxAngleX={15}
-                tiltMaxAngleY={15}
-                glareEnable={true}
-                glareMaxOpacity={0.6}
-                glareColor="#ffffff"
-                glarePosition="all"
-                transitionSpeed={250}
-              >
+        <div className="max-w-[1600px] mx-auto py-12 px-4 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[450px_1fr] gap-12 items-start">
+            {/* --- LEFT COLUMN: THE MONOLITH (Single Metadata) --- */}
+            <div className="lg:sticky lg:top-24 flex flex-col gap-0 border-4 border-borderPrimary bg-bgPanel shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] dark:border-[#222] dark:bg-[#222]">
+              {/* Cover Image */}
+              <div className="relative aspect-square w-full border-b-4 border-borderPrimary bg-black group overflow-hidden dark:border-[#222]">
                 <Image
                   src={single.coverImage}
                   alt={`Cover of ${single.title}`}
                   fill
                   className="object-cover"
+                  priority
                 />
-              </Tilt>
-
-              {/* Sticky Info Section */}
-              <div
-                className="animate-gradient-x backdrop-blur-md border border-[var(--border-color)] rounded-lg shadow-lg p-6 w-full"
-                style={{
-                  backgroundImage: `linear-gradient(to right, var(--gradient-start), var(--gradient-middle), var(--gradient-end))`,
-                }}
-              >
-                <div
-                  className="h-1 rounded"
-                  style={{
-                    backgroundColor: `var(--progress-bar-color)`,
-                    width: `${scrollProgress}%`,
-                  }}
-                ></div>
-
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 text-[var(--text-primary)]">
+                {/* Vinyl Texture Overlay */}
+                <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('/assets/noise.png')]" />
+                {/* Play Button Overlay */}
+                <a 
+                   href={`https://song.link/${single.id === '1' ? 'allegory-freestyle-klense' : single.id === '2' ? 'eye-kan-klense' : 'first-interlude-klense'}`}
+                   target="_blank"
+                   rel="noreferrer"
+                   className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-black/20"
+                >
+                   <div className="w-20 h-20 bg-accentPrimary border-4 border-borderPrimary flex items-center justify-center hover:scale-110 transition-transform cursor-pointer dark:bg-[#FF3B30] dark:border-black">
+                      <span className="text-white text-3xl font-black">▶</span>
+                   </div>
+                </a>
+              </div>
+              {/* Single Data Panel */}
+              <div className="p-8 bg-bgSubtle dark:bg-[#181818]">
+                <div className="flex justify-between items-start mb-6">
+                   <div className="flex flex-col gap-1">
+                      <span className="bg-black text-white px-2 py-0.5 text-[10px] font-mono uppercase tracking-widest inline-block w-fit dark:bg-white dark:text-black">
+                         Official Release
+                      </span>
+                      <span className="font-mono text-xs text-textSecondary uppercase tracking-widest dark:text-gray-400">
+                         Ref: {single.releaseYear}
+                      </span>
+                   </div>
+                   <span className="w-8 h-8 text-accentSecondary animate-[spin_10s_linear_infinite] dark:text-[#2B4592] text-3xl">●</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-black uppercase leading-[0.9] tracking-tighter mb-6">
                   {single.title}
                 </h1>
-                <p className="text-base sm:text-lg font-medium text-[var(--text-secondary)] mb-4">
-                  By Klense
-                </p>
-                <p className="text-sm text-[var(--text-secondary)]">{single.releaseYear}</p>
-                <p className="text-sm text-[var(--text-secondary)]">{single.duration}</p>
-              </div>
-
-              {/* Listen Now Section */}
-              <div className="w-full">
-                <h2 className="text-xl font-semibold mb-4 text-[var(--text-primary)]">Listen Now</h2>
-                <div className="grid grid-cols-3 gap-4">
-                  {/* Allegory Freestyle */}
-                  {single.id === "1" && (
-                    <>
-                      <a
-                        href="https://song.link/allegory-freestyle-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to Allegory Freestyle"
-                        className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-spotify.svg"
-                          alt="Spotify"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">Spotify</span>
-                      </a>
-                      <a
-                        href="https://song.link/allegory-freestyle-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to Allegory Freestyle"
-                        className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-apple-music.svg"
-                          alt="Apple Music"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">Apple Music</span>
-                      </a>
-                      <a
-                        href="https://song.link/allegory-freestyle-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to Allegory Freestyle"
-                        className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-youtube.svg"
-                          alt="YouTube"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">YouTube</span>
-                      </a>
-                    </>
-                  )}
-
-                  {/* Eye Kan */}
-                  {single.id === "2" && (
-                    <>
-                      <a
-                        href="https://song.link/eye-kan-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to Eye Kan"
-                        className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-spotify.svg"
-                          alt="Spotify"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">Spotify</span>
-                      </a>
-                      <a
-                        href="https://song.link/eye-kan-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to Eye Kan"
-                        className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-apple-music.svg"
-                          alt="Apple Music"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">Apple Music</span>
-                      </a>
-                      <a
-                        href="https://song.link/eye-kan-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to Eye Kan"
-                        className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-youtube.svg"
-                          alt="YouTube"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">YouTube</span>
-                      </a>
-                    </>
-                  )}
-
-                  {/* First Interlude */}
-                  {single.id === "3" && (
-                    <>
-                      <a
-                        href="https://song.link/first-interlude-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to First Interlude"
-                        className="flex flex-col items-center justify-center p-2 bg-[#1DB954] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-spotify.svg"
-                          alt="Spotify"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">Spotify</span>
-                      </a>
-                      <a
-                        href="https://song.link/first-interlude-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to First Interlude"
-                        className="flex flex-col items-center justify-center p-2 bg-black text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-apple-music.svg"
-                          alt="Apple Music"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">Apple Music</span>
-                      </a>
-                      <a
-                        href="https://song.link/first-interlude-klense"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Listen to First Interlude"
-                        className="flex flex-col items-center justify-center p-2 bg-[#FF0000] text-white rounded-md shadow hover:shadow-md hover:scale-105 transition-transform"
-                      >
-                        <img
-                          src="/assets/icons/icons8-youtube.svg"
-                          alt="YouTube"
-                          className="h-8 w-auto mb-1"
-                        />
-                        <span className="text-xs font-medium">YouTube</span>
-                      </a>
-                    </>
-                  )}
+                <div className="grid grid-cols-2 gap-4 border-t-2 border-borderPrimary pt-6 mb-6 dark:border-[#222]">
+                   <div>
+                      <p className="font-mono text-[10px] uppercase text-textSecondary mb-1 dark:text-gray-400">Duration</p>
+                      <p className="text-xl font-bold flex items-center gap-2">{single.duration}</p>
+                   </div>
+                   <div>
+                      <p className="font-mono text-[10px] uppercase text-textSecondary mb-1 dark:text-gray-400">Release Year</p>
+                      <p className="text-xl font-bold">{single.releaseYear}</p>
+                   </div>
                 </div>
+                <div className="prose prose-sm prose-p:font-medium prose-p:leading-relaxed text-textSecondary border-l-4 border-accentPrimary pl-4 dark:text-gray-300 dark:border-[#FF3B30]">
+                   <p><strong>{single.title}</strong> is a bold statement of Klense's artistry, blending intricate wordplay with a hard-hitting beat. This single showcases his ability to balance technical skill with raw emotion. The track dives into themes of self-confidence, perseverance, and artistic growth, offering listeners a glimpse into Klense's creative process and personal journey.</p>
+                </div>
+              </div>
+              {/* Streaming Links Footer */}
+              <div className="grid grid-cols-3 border-t-4 border-borderPrimary divide-x-2 divide-borderPrimary bg-black dark:border-[#222] dark:divide-[#222]">
+                 <a href="#" className="h-12 flex items-center justify-center bg-bgPanel hover:bg-[#1DB954] hover:text-white transition-colors group dark:bg-[#222]">
+                    <span className="font-bold uppercase text-xs tracking-widest group-hover:hidden">Spotify</span>
+                    <img src="/assets/icons/icons8-spotify.svg" className="w-5 h-5 hidden group-hover:block filter brightness-0 invert" alt=""/>
+                 </a>
+                 <a href="#" className="h-12 flex items-center justify-center bg-bgPanel hover:bg-[#FA243C] hover:text-white transition-colors group dark:bg-[#222]">
+                    <span className="font-bold uppercase text-xs tracking-widest group-hover:hidden">Apple</span>
+                    <img src="/assets/icons/icons8-apple-music.svg" className="w-5 h-5 hidden group-hover:block filter brightness-0 invert" alt=""/>
+                 </a>
+                 <a href="#" className="h-12 flex items-center justify-center bg-bgPanel hover:bg-[#FF0000] hover:text-white transition-colors group dark:bg-[#222]">
+                    <span className="font-bold uppercase text-xs tracking-widest group-hover:hidden">YouTube</span>
+                    <img src="/assets/icons/icons8-youtube.svg" className="w-5 h-5 hidden group-hover:block filter brightness-0 invert" alt=""/>
+                 </a>
               </div>
             </div>
-
-            {/* Single Details - Right Column */}
-            <div className="flex-1 w-full">
-              {/* Behind the Single */}
-              <div className="mb-8">
-                <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Behind the Single</h2>
-                <div className="space-y-4">
-                  <p className="text-sm sm:text-base text-[var(--text-secondary)]">
-                    <strong>{single.title}</strong> is a bold statement of Klense's artistry, blending intricate wordplay with a hard-hitting beat. This single showcases his ability to balance technical skill with raw emotion.
-                  </p>
-                  <p className="text-sm sm:text-base text-[var(--text-secondary)]">
-                    The track dives into themes of self-confidence, perseverance, and artistic growth, offering listeners a glimpse into Klense's creative process and personal journey.
-                  </p>
-                </div>
+            {/* --- RIGHT COLUMN: LYRICS & BREAKDOWN --- */}
+            <div className="w-full">
+              <div className="flex items-end gap-4 mb-8 border-b-4 border-borderPrimary pb-4 dark:border-[#222]">
+                 <h2 className="text-6xl font-black uppercase tracking-tighter leading-none">Lyrics</h2>
+                 <span className="font-mono text-xs uppercase tracking-widest mb-2 text-accentSecondary dark:text-[#2B4592]">/// Single_File</span>
               </div>
-
-              {/* Lyrics Section */}
-              <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-[var(--text-primary)]">Lyrics</h2>
-              <div className="space-y-4">
-                {lyrics.map((group, index) => (
-                  <div
-                    key={index}
-                    className={`space-y-2 p-4 rounded-lg transition-all ${
-                      selectedLyric === index
-                        ? "bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-[var(--text-primary)] shadow-lg"
-                        : "hover:bg-[var(--hover-background)]"
-                    }`}
-                    onClick={() => setSelectedLyric(selectedLyric === index ? null : index)}
-                  >
-                    {/* Group of Lines */}
-                    <div className="space-y-2">
-                      {group.lines.map((line, lineIndex) => (
-                        <p
-                          key={lineIndex}
-                          className={`text-sm sm:text-base font-medium leading-relaxed text-[var(--text-primary)]`}
-                        >
-                          {line || <br />}
-                        </p>
-                      ))}
+              <div className="flex flex-col border-t-2 border-borderPrimary dark:border-[#222]">
+                <div className="group border-b-2 border-borderPrimary bg-bgSubtle hover:bg-bgPanel transition-colors duration-200 dark:border-[#222] dark:bg-[#181818] dark:hover:bg-[#222]">
+                  {/* Expandable Content Area (always open for single) */}
+                  <div className="p-4 md:p-8 bg-bgPanel dark:bg-[#222]">
+                    {/* Inner Tabs / Controls */}
+                    <div className="flex gap-4 mb-8">
+                       <button className="bg-black text-white px-4 py-2 font-mono text-xs uppercase tracking-widest hover:bg-accentPrimary transition-colors dark:bg-white dark:text-black dark:hover:bg-[#FF3B30] dark:hover:text-white">
+                          Lyrics_Mode
+                       </button>
+                       <button 
+                          onClick={() => setSelectedNote(selectedNote === single.id ? null : single.id)}
+                          className="border-2 border-borderPrimary px-4 py-2 font-mono text-xs uppercase tracking-widest hover:bg-black hover:text-white transition-colors dark:border-white dark:hover:bg-white dark:hover:text-black"
+                       >
+                          {selectedNote === single.id ? 'Hide_Data' : 'View_Data'}
+                       </button>
                     </div>
-
-                    {/* Explanation */}
-                    {selectedLyric === index && (
-                      <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg">
-                        <p className="text-sm sm:text-base text-[var(--text-secondary)] italic">
-                          {group.explanation}
-                        </p>
-                      </div>
+                    {/* Lyrics Component Injection */}
+                    <div className="relative pl-4 md:pl-8 border-l-4 border-accentSecondary dark:border-[#2B4592]">
+                       <LyricsComponent lyrics={lyrics} />
+                    </div>
+                    {/* Track Breakdown Note */}
+                    {selectedNote === single.id && (
+                       <div className="mt-8 p-6 bg-accentTertiary border-2 border-borderPrimary shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:bg-[#F4B400] dark:border-black">
+                          <div className="font-mono text-xs uppercase tracking-widest mb-2 border-b border-borderPrimary pb-1 w-fit dark:border-black">Author Note</div>
+                          <p className="font-medium text-lg leading-relaxed">
+                            <strong>{single.title}</strong> features a production style that blends intricate beats with Klense's signature flow. The instrumental's dynamic bassline and melodic undertones complement the lyrical content perfectly, creating a cohesive listening experience that showcases Klense's growth as an artist.
+                          </p>
+                       </div>
                     )}
                   </div>
-                ))}
-                
-                {/* Track Breakdown */}
-                <button
-                  onClick={() => setSelectedNote(selectedNote === single.id ? null : single.id)}
-                  className="mt-6 text-blue-500 hover:text-blue-600 font-medium transition"
-                >
-                  {selectedNote === single.id ? "Hide Track Breakdown" : "Show Track Breakdown"}
-                </button>
-                {selectedNote === single.id && (
-                  <div className="mt-4 p-4 bg-[var(--background-secondary)] rounded-lg shadow-lg space-y-4">
-                    <p className="text-sm sm:text-base text-[var(--text-secondary)] italic leading-relaxed">
-                      <strong>{single.title}</strong> features a production style that blends intricate beats with Klense's signature flow. The instrumental's dynamic bassline and melodic undertones complement the lyrical content perfectly, creating a cohesive listening experience that showcases Klense's growth as an artist.
-                    </p>
-                  </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
