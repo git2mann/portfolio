@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Analytics } from "@vercel/analytics/next";
 import ModalBlurOverlayWrapper from "@/app/_components/ModalBlurOverlayWrapper";
 import { Script as ThemeScript } from "@/app/_components/theme-switcher";
 import Footer from "@/app/_components/footer";
@@ -55,6 +56,7 @@ export default function RootLayout({
         <Header />
         <div className="animate-fade-in">{children}</div>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
