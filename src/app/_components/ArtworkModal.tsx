@@ -14,6 +14,7 @@ interface ArtworkModalProps {
   title?: string;
   year?: string;
   writeup?: string;
+  artworkId?: string;
 }
 
 const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
@@ -24,6 +25,7 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
   title,
   year,
   writeup,
+  artworkId,
 }) => {
   const [isZoomed, setIsZoomed] = useState(false);
   const [showUI, setShowUI] = useState(true);
@@ -43,14 +45,14 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      
+      document.documentElement.style.overflow = "hidden";
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === "Escape") onClose();
       };
       window.addEventListener("keydown", handleKeyDown);
-      
       return () => {
         document.body.style.overflow = "";
+        document.documentElement.style.overflow = "";
         window.removeEventListener("keydown", handleKeyDown);
       };
     }
@@ -98,11 +100,12 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
 
           {/* --- 2. MAIN ARTWORK --- */}
           <div
-            className={`relative z-10 w-full h-full transition-all duration-500 ${
+            className={`relative z-10 transition-all duration-500 ${
               isZoomed
                 ? "flex items-center justify-center p-0 m-0"
-                : "flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 px-2 md:px-0"
+                : "flex flex-col md:flex-row items-center justify-center gap-4 md:gap-12 w-screen h-screen px-0 py-0"
             } main-artwork`}
+            style={{ width: '100vw', height: '100vh', marginTop: 0, ...(isZoomed ? {} : { maxHeight: 'none' }) }}
           >
             <motion.div
               className={`transition-all duration-700 ease-out flex-shrink-0 ${
@@ -201,7 +204,11 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
               {/* Download */}
               <a
                 href={imageSrc}
-                download
+                download={
+                  title
+                    ? `${title.replace(/[^a-z0-9]+/gi, "_").replace(/_+/g, "_").replace(/^_|_$/g, "")}${year ? `_${year}` : ""}.jpg`
+                    : "artwork.jpg"
+                }
                 className="p-3 bg-black/20 hover:bg-white/10 backdrop-blur-md border border-white/5 rounded-full text-white/70 hover:text-white transition-all"
               >
                 <Download size={20} strokeWidth={1.5} />
@@ -210,34 +217,31 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
               {/* Share */}
               <button
                 onClick={async () => {
-                  // Generate a unique share page URL for the artwork
-                  let artworkId = imageSrc
-                    ? encodeURIComponent(imageSrc.split("/").pop() || "")
-                    : "";
-                  let shareUrl = artworkId
-                    ? `${window.location.origin}/art/share/${artworkId}`
-                    : window.location.href;
-                  
-                  const shareData = {
-                    title: title || "Artwork",
-                    text: writeup
-                      ? `${title ? title + " – " : ""}${writeup}`
-                      : title || "Artwork",
-                    url: shareUrl,
-                  };
-
-                  if (navigator.share) {
-                    try {
-                      await navigator.share(shareData);
-                    } catch (e) {
-                      // User cancelled or error
-                    }
-                  } else {
-                    try {
+                  // Use the artworkId prop if available, fallback to slugified title
+                  let id = artworkId;
+                  if (!id && title) {
+                    id = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "");
+                  }
+                  let shareUrl = `${window.location.origin}/art/share/${encodeURIComponent(id || "")}`;
+                  try {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
                       await navigator.clipboard.writeText(shareUrl);
-                      setShowShareMsg(true);
-                      setTimeout(() => setShowShareMsg(false), 1800);
-                    } catch (e) {}
+                    } else {
+                      // Fallback for older browsers (including some iOS Safari)
+                      const textarea = document.createElement('textarea');
+                      textarea.value = shareUrl;
+                      textarea.setAttribute('readonly', '');
+                      textarea.style.position = 'absolute';
+                      textarea.style.left = '-9999px';
+                      document.body.appendChild(textarea);
+                      textarea.select();
+                      document.execCommand('copy');
+                      document.body.removeChild(textarea);
+                    }
+                    setShowShareMsg(true);
+                    setTimeout(() => setShowShareMsg(false), 1800);
+                  } catch (e) {
+                    alert("Copying is not supported on this device. Please copy the link manually.");
                   }
                 }}
                 className="p-3 bg-black/20 hover:bg-white/10 backdrop-blur-md border border-white/5 rounded-full text-white/70 hover:text-white transition-all relative"

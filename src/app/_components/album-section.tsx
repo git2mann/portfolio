@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Album, Song } from '@/interfaces/music';
-import LyricsBlock from './lyrics-block';
+
+import LyricsComponent from './LyricsComponent';
 
 export default function AlbumSection({ album }: { album: Album }) {
   const [selectedSong, setSelectedSong] = useState<Song | null>(null);
@@ -51,10 +52,10 @@ export default function AlbumSection({ album }: { album: Album }) {
         </div>
 
         {selectedSong && (
-          <div className="lyrics-section">
-            <h3 className="text-xl font-semibold mb-4">{selectedSong.title} Lyrics</h3>
-            <LyricsBlock lyrics={selectedSong.lyrics} />
-          </div>
+            <div className="lyrics-section">
+              <h3 className="text-xl font-semibold mb-4">{selectedSong.title} Lyrics</h3>
+              <LyricsComponent lyrics={selectedSong.lyrics} />
+            </div>
         )}
       </div>
     </div>

@@ -20,14 +20,18 @@ export function getPostSlugs() {
  * @returns {Post} The post data including frontmatter and content
  */
 export function getPostBySlug(slug: string) {
-  const realSlug = slug.replace(/\.(md|html)$/, "");
+  const realSlug = slug.replace(/\.(md|mdx|html)$/, "");
   const mdPath = join(postsDirectory, `${realSlug}.md`);
+  const mdxPath = join(postsDirectory, `${realSlug}.mdx`);
   const htmlPath = join(postsDirectory, `${realSlug}.html`);
 
   let fileContents: string;
-  let contentType: 'markdown' | 'html';
+  let contentType: 'markdown' | 'mdx' | 'html';
 
-  if (fs.existsSync(mdPath)) {
+  if (fs.existsSync(mdxPath)) {
+    fileContents = fs.readFileSync(mdxPath, "utf8");
+    contentType = 'mdx';
+  } else if (fs.existsSync(mdPath)) {
     fileContents = fs.readFileSync(mdPath, "utf8");
     contentType = 'markdown';
   } else if (fs.existsSync(htmlPath)) {
@@ -37,7 +41,7 @@ export function getPostBySlug(slug: string) {
     throw new Error(`Post not found: ${slug}`);
   }
 
-  if (contentType === 'markdown') {
+  if (contentType === 'markdown' || contentType === 'mdx') {
     const { data, content } = matter(fileContents);
     return { ...data, slug: realSlug, content, contentType, tags: data.tags || [], } as Post;
   }

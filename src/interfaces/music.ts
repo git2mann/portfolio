@@ -1,6 +1,7 @@
+
 export type Annotation = {
   id: string;
-  text: string;
+  lines: string[];
   explanation?: string;
 };
 
@@ -9,11 +10,7 @@ export interface Song {
   title: string;
   duration: string;
   audioUrl: string;
-  lyrics: Array<{
-    id: string;
-    text: string;
-    explanation?: string;
-  }>;
+  lyrics: Annotation[];
 }
 
 export type Album = {
