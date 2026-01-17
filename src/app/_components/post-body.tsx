@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import markdownStyles from "./markdown-styles.module.css";
 import { useMemo } from "react";
 import { MDXProvider } from "@mdx-js/react";
-import { mdx } from '@mdx-js/react';
 
 /**
  * PostBody component
