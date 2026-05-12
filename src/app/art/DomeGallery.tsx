@@ -375,15 +375,23 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
                      <p className="text-[11px] md:text-lg text-primary/80 font-light leading-relaxed">
                         {currentGuidedItem.description}
                      </p>
-                     <div className="mt-6 md:mt-8 flex items-center gap-6 opacity-60">
-                        <div className="flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-accent-blue">
-                           <Disc size={12} className="animate-spin-slow" />
-                           <span className="font-bold">Rotation_Lock</span>
-                        </div>
-                        <div className="flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-accent-blue">
-                           <Zap size={12} />
-                           <span className="font-bold">Fetch_Mode_Active</span>
-                        </div>
+                     
+                     <div className="mt-6 md:mt-8 flex flex-wrap items-center gap-4 md:gap-6">
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setIsGuided(true); }}
+                          className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border ${isGuided ? 'bg-accent-blue/20 border-accent-blue/40 text-accent-blue font-bold shadow-[0_0_15px_rgba(10,132,255,0.2)]' : 'border-white/5 text-primary/30 hover:text-primary/60 hover:bg-white/5'}`}
+                        >
+                           <Activity size={12} className={isGuided ? 'animate-pulse' : ''} />
+                           <span>Guided_Tour</span>
+                        </button>
+                        
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setIsGuided(false); }}
+                          className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border ${!isGuided ? 'bg-primary/10 border-primary/20 text-primary font-bold shadow-[0_0_15px_rgba(255,255,255,0.05)]' : 'border-white/5 text-primary/30 hover:text-primary/60 hover:bg-white/5'}`}
+                        >
+                           <Move size={12} />
+                           <span>Free_Roam</span>
+                        </button>
                      </div>
                   </div>
 
@@ -401,28 +409,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
            </AnimatePresence>
         </div>
       </div>
-
-      {/* HUD CONTROLS (FULL SCREEN OVERLAY) */}
-      {isActive && !selectedItem && (
-        <div className="absolute top-12 left-1/2 -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-top-4 duration-700">
-           <div className="liquid-glass-clear p-1.5 rounded-full flex items-center shadow-2xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl">
-              <button 
-                onClick={() => setIsGuided(true)} 
-                className={`flex items-center gap-3 px-6 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.4em] font-bold transition-all ${isGuided ? 'bg-accent-blue text-white shadow-xl scale-105' : 'text-primary/40 hover:text-primary hover:bg-white/5'}`}
-              >
-                 <Activity size={14} />
-                 <span>Guided Tour</span>
-              </button>
-              <button 
-                onClick={() => setIsGuided(false)} 
-                className={`flex items-center gap-3 px-6 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.4em] font-bold transition-all ${!isGuided ? 'bg-primary text-background-primary shadow-xl scale-105' : 'text-primary/40 hover:text-primary hover:bg-white/5'}`}
-              >
-                 <Move size={14} />
-                 <span>Free Roam</span>
-              </button>
-           </div>
-        </div>
-      )}
 
       {/* DETAIL VIEW MODAL */}
       <AnimatePresence>
