@@ -170,13 +170,13 @@ const ThemeSelector = () => {
                             w-full flex items-center justify-between px-5 py-4 rounded-2xl text-left transition-all duration-300 group mb-1
                             ${isActive 
                               ? "bg-primary text-background-primary shadow-2xl scale-[1.02]" 
-                              : "hover:bg-white/5 text-secondary hover:text-primary border border-transparent hover:border-white/10"
+                              : "hover:bg-white/10 text-primary/60 hover:text-primary border border-transparent hover:border-white/20"
                             }
                           `}
                         >
                           <div className="flex items-center gap-4">
-                            <span className={`text-2xl transition-transform duration-500 ${isActive ? 'scale-110' : 'group-hover:scale-125'}`}>{theme.icon}</span>
-                            <span className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${isActive ? 'text-background-primary' : 'text-secondary group-hover:text-primary'}`}>{theme.name.replace('_', ' ')}</span>
+                            <span className={`text-2xl transition-transform duration-500 ${isActive ? 'scale-110' : 'opacity-70 group-hover:opacity-100 group-hover:scale-125'}`}>{theme.icon}</span>
+                            <span className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${isActive ? 'text-background-primary' : 'text-primary/70 group-hover:text-primary'}`}>{theme.name.replace('_', ' ')}</span>
                           </div>
                           
                           {isActive && <Check size={16} className="text-background-primary animate-in zoom-in duration-500" />}

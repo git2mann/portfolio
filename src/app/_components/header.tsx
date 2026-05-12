@@ -171,12 +171,12 @@ const Header = () => {
                                                         flex flex-col items-center justify-center gap-3 p-6 rounded-2xl transition-all border
                                                         ${isActive 
                                                             ? "bg-primary text-background-primary border-white/20 shadow-2xl scale-[1.02]" 
-                                                            : "bg-white/[0.02] border-white/5 text-secondary hover:bg-white/5 hover:text-primary"
+                                                            : "bg-white/[0.05] border-white/5 text-primary/60 hover:text-primary hover:bg-white/10"
                                                         }
                                                     `}
                                                 >
-                                                    <Icon size={28} className={isActive ? "text-background-primary" : "text-accent-blue"} />
-                                                    <span className={`text-[10px] font-bold uppercase tracking-[0.3em] ${isActive ? "text-background-primary" : ""}`}>
+                                                    <Icon size={28} className={isActive ? "text-background-primary" : "text-accent-blue opacity-80"} />
+                                                    <span className={`text-[10px] font-bold uppercase tracking-[0.3em] ${isActive ? "text-background-primary" : "text-primary/70"}`}>
                                                         {label}
                                                     </span>
                                                 </Link>
