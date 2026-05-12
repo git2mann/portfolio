@@ -160,20 +160,20 @@ export default function ContactPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
                             <div className="space-y-3 md:space-y-4">
                                 <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Source.ID</span>
-                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:opacity-10" placeholder="LEON NDUATI" />
+                                <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:text-primary/30" placeholder="LEON NDUATI" />
                             </div>
                             <div className="space-y-3 md:space-y-4">
                                 <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Endpoint.URL</span>
-                                <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:opacity-10" placeholder="NAME@EXAMPLE.COM" />
+                                <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:text-primary/30" placeholder="NAME@EXAMPLE.COM" />
                             </div>
                         </div>
                         <div className="space-y-3 md:space-y-4">
                             <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Message.Topic</span>
-                            <input type="text" name="subject" value={formData.subject} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:opacity-10" placeholder="COLLABORATION_INQUIRY" />
+                            <input type="text" name="subject" value={formData.subject} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:text-primary/30" placeholder="COLLABORATION_INQUIRY" />
                         </div>
                         <div className="space-y-3 md:space-y-4">
                             <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Data.Payload</span>
-                            <textarea name="message" rows={4} value={formData.message} onChange={handleInputChange} className="w-full bg-transparent border border-white/10 p-6 md:p-8 font-light text-xl md:text-2xl focus:outline-none focus:border-accent-blue transition-colors resize-none rounded-sm placeholder:opacity-10" placeholder="State your objective..." maxLength={500}></textarea>
+                            <textarea name="message" rows={4} value={formData.message} onChange={handleInputChange} className="w-full bg-transparent border border-white/10 p-6 md:p-8 font-light text-xl md:text-2xl focus:outline-none focus:border-accent-blue transition-colors resize-none rounded-sm placeholder:text-primary/30" placeholder="State your objective..." maxLength={500}></textarea>
                             <div className="flex justify-between mt-2 md:mt-4"><span className="text-red-500 text-sm md:text-base font-medium uppercase tracking-widest">{errors.message || ''}</span><span className="font-mono text-sm opacity-30">{formData.message.length}/500_BYTES</span></div>
                         </div>
                         <div className="absolute opacity-0 -z-10 h-0 w-0 overflow-hidden"><input type="text" name="website" value={formData.website} onChange={handleInputChange} tabIndex={-1} autoComplete="off" /></div>
