@@ -246,8 +246,8 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                            <div className="text-secondary opacity-100 text-sm md:text-base font-mono uppercase tracking-widest mt-2">IT & Infra Intern // 2025</div>
                         </div>
                         <div className="border-l-2 border-primary/10 pl-8 py-2">
-                           <div className="text-primary font-medium text-2xl md:text-3xl uppercase tracking-tight opacity-80">Strathmore Joint IS</div>
-                           <div className="text-secondary opacity-100 text-sm md:text-base font-mono uppercase tracking-widest mt-2">Head of System Ops // 2024</div>
+                           <div className="text-primary font-medium text-2xl md:text-3xl uppercase tracking-tight opacity-80">Strathmore Joint IS Project</div>
+                           <div className="text-secondary opacity-100 text-sm md:text-base font-mono uppercase tracking-widest mt-2">Lead Software Dev // 2024</div>
                         </div>
                       </div>
 
