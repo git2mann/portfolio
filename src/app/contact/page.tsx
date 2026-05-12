@@ -102,7 +102,7 @@ export default function ContactPage() {
               <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
                  <div className="flex items-center gap-4 mb-3 md:mb-4">
                     <span className="w-8 md:w-12 h-[1px] bg-accent-blue/50"></span>
-                    <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">System.Protocol.06</span>
+                    <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Get in Touch</span>
                  </div>
                  <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6">Connect</h1>
                  <div className="flex flex-wrap items-center gap-2 md:gap-4 text-lg md:text-3xl font-mono text-secondary">
@@ -112,7 +112,7 @@ export default function ContactPage() {
                  </div>
               </div>
               <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-xl md:text-5xl font-light text-primary mt-8 md:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
-                1. To establish a communication link. 2. The final protocol: opening the system for collaboration and impact.
+                1. To establish a communication link. 2. Reaching out for collaboration and creative impact.
               </ScrollReveal>
             </div>
 
@@ -130,24 +130,24 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12 items-start">
             <div className="lg:col-span-1 space-y-8 md:space-y-12">
                 <div className="group relative bg-white/[0.02] border border-white/5 p-10 md:p-12 rounded-sm overflow-hidden hover:border-accent-blue/30 transition-all duration-500">
-                    <div className="absolute top-2 right-4 font-mono text-xs md:text-sm opacity-10 uppercase tracking-widest">Protocol_Channel</div>
+                    <div className="absolute top-2 right-4 font-mono text-xs md:text-sm opacity-10 uppercase tracking-widest">Email</div>
                     <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-accent-blue/10 text-accent-blue mb-8 md:mb-10 flex items-center justify-center border border-accent-blue/20"><Mail size={24} /></div>
-                    <h2 className="text-sm md:text-base font-medium uppercase tracking-[0.4em] text-secondary mb-3 md:mb-4">Direct Endpoint</h2>
+                    <h2 className="text-sm md:text-base font-medium uppercase tracking-[0.4em] text-secondary mb-3 md:mb-4">Primary Email</h2>
                     <a href="mailto:nduatileon@gmail.com" className="text-2xl md:text-3xl font-light uppercase tracking-tighter hover:text-accent-blue transition-colors break-all">nduatileon@gmail.com</a>
                 </div>
 
                 <div className="group relative bg-white/[0.02] border border-white/5 p-10 md:p-12 rounded-sm overflow-hidden hover:border-accent-blue/30 transition-all duration-500">
-                    <div className="absolute top-2 right-4 font-mono text-xs md:text-sm opacity-10 uppercase tracking-widest">Network_Nodes</div>
-                    <h2 className="text-sm md:text-base font-medium uppercase tracking-[0.4em] text-secondary mb-8 md:mb-10">External Arrays</h2>
+                    <div className="absolute top-2 right-4 font-mono text-xs md:text-sm opacity-10 uppercase tracking-widest">Social Media</div>
+                    <h2 className="text-sm md:text-base font-medium uppercase tracking-[0.4em] text-secondary mb-8 md:mb-10">Follow My Work</h2>
                     <ul className="space-y-6 md:space-y-8">
-                        {[{ name: 'X_Protocol', url: 'https://twitter.com/leonnduati' }, { name: 'Insta_Log', url: 'https://instagram.com/thoughtsofman_' }, { name: 'Linked_In', url: 'https://linkedin.com/in/leonnduati' }].map(social => (
+                        {[{ name: 'X / Twitter', url: 'https://twitter.com/leonnduati' }, { name: 'Instagram', url: 'https://instagram.com/thoughtsofman_' }, { name: 'LinkedIn', url: 'https://linkedin.com/in/leonnduati' }].map(social => (
                             <li key={social.name}><a href={social.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group/link hover:text-accent-blue transition-colors"><span className="font-medium text-lg md:text-xl uppercase tracking-widest">{social.name}</span><ArrowRight size={20} className="opacity-20 group-hover/link:opacity-100 group-hover/link:translate-x-2 transition-all" /></a></li>
                         ))}
                     </ul>
                 </div>
 
                 <div className="p-10 md:p-12 rounded-sm bg-accent-blue/[0.03] border border-accent-blue/10 flex flex-col gap-6 md:gap-8">
-                    <div className="flex justify-between items-center font-mono text-sm md:text-base uppercase tracking-widest"><span className="opacity-40">System.Status</span><span className="text-green-500 font-medium">Awaiting_Input</span></div>
+                    <div className="flex justify-between items-center font-mono text-sm md:text-base uppercase tracking-widest"><span className="opacity-40">Current Status</span><span className="text-green-500 font-medium">Open for Inquiries</span></div>
                     <p className="text-secondary font-medium text-lg md:text-xl leading-relaxed opacity-80">Currently receptive to high-impact collaborations and architectural inquiries for Summer 2026.</p>
                     <div className="h-px w-full bg-accent-blue/10 relative overflow-hidden"><motion.div animate={{ x: ["-100%", "200%"] }} transition={{ duration: 4, repeat: Infinity, ease: "linear" }} className="absolute inset-0 h-full w-1/4 bg-accent-blue/40" /></div>
                 </div>
@@ -155,32 +155,32 @@ export default function ContactPage() {
 
             <div className="lg:col-span-2">
                 <div className="group relative bg-white/[0.02] border border-white/5 p-8 md:p-20 rounded-sm overflow-hidden transition-all duration-500 hover:bg-white/[0.03]">
-                    <div className="absolute top-6 right-10 font-mono text-xs md:text-sm opacity-10 uppercase tracking-widest">Transmission_Buffer</div>
+                    <div className="absolute top-6 right-10 font-mono text-xs md:text-sm opacity-10 uppercase tracking-widest">Contact Form</div>
                     <form onSubmit={handleSubmit} className="space-y-10 md:space-y-16 relative z-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16">
                             <div className="space-y-3 md:space-y-4">
-                                <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Source.ID</span>
+                                <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Your Name</span>
                                 <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:text-primary/30" placeholder="LEON NDUATI" />
                             </div>
                             <div className="space-y-3 md:space-y-4">
-                                <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Endpoint.URL</span>
+                                <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Your Email</span>
                                 <input type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:text-primary/30" placeholder="NAME@EXAMPLE.COM" />
                             </div>
                         </div>
                         <div className="space-y-3 md:space-y-4">
-                            <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Message.Topic</span>
+                            <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Subject</span>
                             <input type="text" name="subject" value={formData.subject} onChange={handleInputChange} className="w-full bg-transparent border-b border-white/10 p-3 font-light uppercase tracking-tighter text-3xl md:text-4xl focus:outline-none focus:border-accent-blue transition-colors placeholder:text-primary/30" placeholder="COLLABORATION_INQUIRY" />
                         </div>
                         <div className="space-y-3 md:space-y-4">
-                            <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Data.Payload</span>
+                            <span className="text-sm md:text-base font-medium uppercase tracking-widest opacity-40">Your Message</span>
                             <textarea name="message" rows={4} value={formData.message} onChange={handleInputChange} className="w-full bg-transparent border border-white/10 p-6 md:p-8 font-light text-xl md:text-2xl focus:outline-none focus:border-accent-blue transition-colors resize-none rounded-sm placeholder:text-primary/30" placeholder="State your objective..." maxLength={500}></textarea>
                             <div className="flex justify-between mt-2 md:mt-4"><span className="text-red-500 text-sm md:text-base font-medium uppercase tracking-widest">{errors.message || ''}</span><span className="font-mono text-sm opacity-30">{formData.message.length}/500_BYTES</span></div>
                         </div>
                         <div className="absolute opacity-0 -z-10 h-0 w-0 overflow-hidden"><input type="text" name="website" value={formData.website} onChange={handleInputChange} tabIndex={-1} autoComplete="off" /></div>
                         <div className="space-y-8 md:space-y-12">
-                            {submitStatus === 'success' && <div className="p-6 md:p-8 rounded-sm bg-green-500/5 border border-green-500/20 flex items-center gap-4 md:gap-6 animate-in fade-in"><CheckCircle className="text-green-500" size={24} /><span className="font-medium text-green-500 text-sm md:text-lg uppercase tracking-[0.2em]">Transmission Successful.</span></div>}
+                            {submitStatus === 'success' && <div className="p-6 md:p-8 rounded-sm bg-green-500/5 border border-green-500/20 flex items-center gap-4 md:gap-6 animate-in fade-in"><CheckCircle className="text-green-500" size={24} /><span className="font-medium text-green-500 text-sm md:text-lg uppercase tracking-[0.2em]">Message Sent.</span></div>}
                             <button type="submit" disabled={isSubmitting} className="group/submit w-full flex items-center justify-center gap-6 md:gap-10 py-6 md:py-8 rounded-sm bg-primary text-background-primary transition-all duration-500 hover:gap-16 disabled:opacity-50">
-                                {isSubmitting ? <><span className="animate-spin block w-6 h-6 md:w-8 md:h-8 border-3 border-background-primary border-t-transparent rounded-full"></span><span className="font-medium text-sm md:text-xl uppercase tracking-[0.4em]">Transmitting...</span></> : <><span className="font-medium text-sm md:text-xl uppercase tracking-[0.4em]">Initiate_Contact</span><div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-background-primary/20 flex items-center justify-center group-hover/submit:translate-x-3 transition-transform"><Send size={24} /></div></>}
+                                {isSubmitting ? <><span className="animate-spin block w-6 h-6 md:w-8 md:h-8 border-3 border-background-primary border-t-transparent rounded-full"></span><span className="font-medium text-sm md:text-xl uppercase tracking-[0.4em]">Sending...</span></> : <><span className="font-medium text-sm md:text-xl uppercase tracking-[0.4em]">Send Message</span><div className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-background-primary/20 flex items-center justify-center group-hover/submit:translate-x-3 transition-transform"><Send size={24} /></div></>}
                             </button>
                         </div>
                     </form>
