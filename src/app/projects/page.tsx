@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Container from "@/app/_components/container";
-import { ArrowRight, Terminal, Cpu, Box, Layout, Zap, Globe, Github, ExternalLink } from 'lucide-react';
+import { ArrowRight, Terminal, Cpu, Box, Layout, Zap, Globe, Github, ExternalLink, Activity } from 'lucide-react';
 import ScrollReveal from "@/app/_components/ScrollReveal";
 import { motion } from "framer-motion";
 
