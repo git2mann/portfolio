@@ -130,21 +130,21 @@ export default function ProjectsPage() {
                     <span className="text-green-500 font-medium text-xs md:text-sm uppercase tracking-[0.4em]">Section 01</span>
                     <span className="text-secondary opacity-30 font-mono text-xs md:text-sm">REPOSITORY</span>
                 </div>
-                <h2 className="text-4xl md:text-9xl font-light uppercase tracking-tighter leading-none">Compiling Archive</h2>
-                <p className="text-secondary font-medium text-base md:text-2xl mt-6 md:mt-10 max-w-xl opacity-70 leading-relaxed">Preparing system modules for public deployment. Full case studies and source data initializing.</p>
+                <h2 className="text-4xl md:text-9xl font-light uppercase tracking-tighter leading-none text-primary">Coming Soon</h2>
+                <p className="text-secondary font-medium text-base md:text-2xl mt-6 md:mt-10 max-w-2xl opacity-70 leading-relaxed">I am currently organizing my development projects for display. Detailed case studies, live demos, and source code will be available here soon.</p>
              </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-32">
             <div className="group relative flex flex-col bg-white/[0.02] border border-white/5 p-10 md:p-20 rounded-sm overflow-hidden">
-               <div className="absolute top-6 right-8 font-mono text-xs md:text-sm opacity-20 uppercase tracking-widest pointer-events-none">Status: Initializing</div>
+               <div className="absolute top-6 right-8 font-mono text-xs md:text-sm opacity-30 uppercase tracking-widest pointer-events-none text-secondary font-bold text-green-500">Status: In Progress</div>
                <div className="relative z-10">
                   <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-green-500/10 text-green-500 mb-8 md:mb-12 flex items-center justify-center border border-green-500/20">
-                     <Zap size={24} />
+                     <Activity size={24} />
                   </div>
-                  <h3 className="text-4xl md:text-7xl font-light mb-6 md:mb-10 uppercase tracking-tight text-primary">Project Documentation</h3>
+                  <h3 className="text-4xl md:text-7xl font-light mb-6 md:mb-10 uppercase tracking-tight text-primary">Development In Progress</h3>
                   <p className="text-secondary text-lg md:text-2xl font-medium leading-relaxed max-w-xl mb-12 md:mb-16 opacity-80">
-                     I am currently documenting my latest works and preparing the repositories for public access. Full project case studies and live demos will be deployed shortly.
+                     I am currently documenting my latest technical works and preparing my repositories for public access. In the meantime, you can explore my open-source contributions directly on GitHub.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-6 md:gap-12">
                      <Link 
