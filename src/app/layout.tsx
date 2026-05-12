@@ -1,15 +1,16 @@
 import * as React from "react";
 import { Analytics } from "@vercel/analytics/next";
 import ModalBlurOverlayWrapper from "@/app/_components/ModalBlurOverlayWrapper";
-import { Script as ThemeScript } from "@/app/_components/theme-switcher";
-import Footer from "@/app/_components/footer";
+import { themes, STORAGE_KEY, NoFOUCScript } from "@/app/_components/theme-utils";
 import Header from "@/app/_components/header";
+import FooterWrapper from "@/app/_components/FooterWrapper";
 import { SITE_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://nduatileon.site'),
   title: SITE_NAME,
   description: "Leon Nduati's personal portfolio and blog showcasing music, art, and projects",
   icons: {
@@ -42,20 +43,27 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              const themes = ${JSON.stringify(themes)};
+              (${NoFOUCScript.toString()})('${STORAGE_KEY}', themes);
+            `,
+          }}
+        />
       </head>
       <body
         className={
-          "font-noto-serif-jp-condensed bg-[var(--background-primary)] text-[var(--text-primary)] transition-colors duration-300"
+          "font-noto-display-condensed bg-[var(--background-primary)] text-[var(--text-primary)] transition-colors duration-300"
         }
       >
-        {/* Inject theme script as the very first element in body to avoid hydration mismatch */}
-        <ThemeScript />
         {/* Strong blur overlay when modal is open */}
         <ModalBlurOverlayWrapper />
+
         <div className="fixed inset-0 -z-10 bg-[var(--background-primary)]"></div>
         <Header />
         <div className="animate-fade-in">{children}</div>
-        <Footer />
+        <FooterWrapper />
         <Analytics />
       </body>
     </html>

@@ -25,7 +25,7 @@ const Avatar = ({ name, picture }: Props) => {
         blurDataURL="/assets/placeholder.png" // Optional
       />
       {/* Author's name */}
-      <div className="text-xl font-bold">{name}</div>
+      <div className="text-xl font-medium">{name}</div>
     </div>
   );
 };

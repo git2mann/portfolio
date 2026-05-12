@@ -143,16 +143,16 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="w-full md:max-w-lg bg-black/60 rounded-lg p-4 md:p-8 text-white/90 shadow-xl backdrop-blur-lg mt-4 md:mt-0 artwork-writeup"
-                style={{ maxHeight: "40vh", overflowY: "auto", fontSize: "1rem" }}
+                className="w-full md:max-w-lg liquid-glass rounded-[2rem] p-6 md:p-10 text-white/90 shadow-2xl mt-4 md:mt-0 artwork-writeup"
+                style={{ maxHeight: "50vh", overflowY: "auto" }}
               >
-                <div className="text-base md:text-lg font-semibold mb-2">
+                <div className="text-xl md:text-2xl font-light mb-4 tracking-tight uppercase">
                   {title}
                 </div>
-                <div className="text-xs font-mono uppercase tracking-widest mb-2 md:mb-4 text-white/50">
-                  {year} • Klense
+                <div className="text-[10px] font-mono uppercase tracking-[0.4em] mb-6 md:mb-8 text-white/40 flex items-center gap-3">
+                   <span className="w-8 h-px bg-white/20"></span> {year} • Klense
                 </div>
-                <div className="text-sm md:text-base whitespace-pre-line leading-relaxed">
+                <div className="text-sm md:text-lg font-light leading-relaxed opacity-80">
                   {writeup}
                 </div>
               </motion.div>
@@ -169,18 +169,18 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
             {/* TOP BAR */}
             <div className="flex justify-between items-start gap-2">
               <div className="flex flex-col">
-                <h2 className="text-white/90 font-medium text-lg md:text-2xl tracking-tight drop-shadow-md">
+                <h2 className="text-white font-light text-xl md:text-4xl tracking-tighter uppercase drop-shadow-2xl">
                   {title}
                 </h2>
-                <span className="text-white/50 text-xs font-mono uppercase tracking-widest mt-1">
-                  {year} • Klense
+                <span className="text-white/40 text-[10px] font-mono uppercase tracking-[0.4em] mt-2">
+                  {year} • Physical Archive
                 </span>
               </div>
               <button
                 onClick={onClose}
-                className="pointer-events-auto p-3 bg-black/20 hover:bg-white/10 backdrop-blur-md border border-white/5 rounded-full text-white/70 hover:text-white transition-all group"
+                className="pointer-events-auto p-4 liquid-glass-clear shadow-2xl transition-all duration-500 rounded-full text-white/60 hover:text-white hover:scale-110 active:scale-95 group"
               >
-                <X size={24} strokeWidth={1.5} />
+                <X size={28} strokeWidth={1} />
               </button>
             </div>
 
@@ -190,13 +190,13 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
               <span className="hidden md:inline-flex">
                 <button
                   onClick={() => setIsZoomed(!isZoomed)}
-                  className="p-3 bg-black/20 hover:bg-white/10 backdrop-blur-md border border-white/5 rounded-full text-white/70 hover:text-white transition-all"
+                  className="p-4 liquid-glass-clear shadow-2xl transition-all duration-500 rounded-full text-white/60 hover:text-white hover:scale-110 active:scale-95"
                   title={isZoomed ? "Fit to Screen" : "Fill Screen"}
                 >
                   {isZoomed ? (
-                    <Minimize2 size={20} strokeWidth={1.5} />
+                    <Minimize2 size={22} strokeWidth={1} />
                   ) : (
-                    <Maximize2 size={20} strokeWidth={1.5} />
+                    <Maximize2 size={22} strokeWidth={1} />
                   )}
                 </button>
               </span>
@@ -209,9 +209,9 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
                     ? `${title.replace(/[^a-z0-9]+/gi, "_").replace(/_+/g, "_").replace(/^_|_$/g, "")}${year ? `_${year}` : ""}.jpg`
                     : "artwork.jpg"
                 }
-                className="p-3 bg-black/20 hover:bg-white/10 backdrop-blur-md border border-white/5 rounded-full text-white/70 hover:text-white transition-all"
+                className="p-4 liquid-glass-clear shadow-2xl transition-all duration-500 rounded-full text-white/60 hover:text-white hover:scale-110 active:scale-95 flex items-center justify-center"
               >
-                <Download size={20} strokeWidth={1.5} />
+                <Download size={22} strokeWidth={1} />
               </a>
 
               {/* Share */}
@@ -244,10 +244,10 @@ const ArtworkFullscreen: React.FC<ArtworkModalProps> = ({
                     alert("Copying is not supported on this device. Please copy the link manually.");
                   }
                 }}
-                className="p-3 bg-black/20 hover:bg-white/10 backdrop-blur-md border border-white/5 rounded-full text-white/70 hover:text-white transition-all relative"
+                className="p-4 liquid-glass-clear shadow-2xl transition-all duration-500 rounded-full text-white/60 hover:text-white hover:scale-110 active:scale-95 relative"
                 title="Share"
               >
-                <Share2 size={20} strokeWidth={1.5} />
+                <Share2 size={22} strokeWidth={1} />
                 <AnimatePresence>
                     {showShareMsg && (
                     <motion.span 

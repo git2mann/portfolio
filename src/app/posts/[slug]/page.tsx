@@ -13,35 +13,42 @@ import { PostHeader } from "@/app/_components/post-header";
  * Renders a single blog post based on the slug parameter
  */
 export default async function Post(props: Params) {
-  // Extract the slug parameter from props
   const params = await props.params;
-  // Get the post data for the given slug
-  const post = getPostBySlug(params.slug);
+  const post = getPostBySlug(params.slug, [
+    "title",
+    "date",
+    "author",
+    "content",
+    "contentType",
+    "coverImage",
+    "preview",
+    "category"
+  ]);
 
-  // If post not found, return 404
   if (!post) {
     return notFound();
   }
 
-  // Pass raw content and contentType to PostBody
   const content = post.content;
   const contentType = post.contentType;
 
   return (
-    <main>
-      {/* Alert banner for preview mode */}
+    <main className="min-h-screen bg-background-primary pb-40">
       <Alert preview={post.preview} />
-      <Container>
-        {/* Removed redundant Header component */}
-        <article className="mb-32">
-          {/* Post header with title, cover image, date, and author */}
-          <PostHeader
+      
+      {/* 1. CINEMATIC HEADER (Full Width) */}
+      <div className="w-full px-6 md:px-20">
+         <PostHeader
             title={post.title}
             coverImage={post.coverImage}
             date={post.date || ""}
             author={post.author}
-          />
-          {/* Pass content and contentType to PostBody */}
+         />
+      </div>
+
+      {/* 2. ARTICLE BODY (Constrained) */}
+      <Container className="!max-w-none px-6 md:px-20 flex justify-center">
+        <article className="w-full max-w-7xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
           <PostBody content={content} isMarkdown={contentType === 'markdown'} contentType={contentType} />
         </article>
       </Container>
@@ -61,7 +68,7 @@ type Params = {
  */
 export async function generateMetadata(props: Params): Promise<Metadata> {
   const params = await props.params;
-  const post = getPostBySlug(params.slug);
+  const post = getPostBySlug(params.slug, ["title", "ogImage"]);
 
   if (!post) {
     return notFound();
@@ -84,7 +91,7 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
  * This enables static generation of all post pages
  */
 export async function generateStaticParams() {
-  const posts = getAllPosts();
+  const posts = getAllPosts(["slug"]);
 
   return posts.map((post) => ({
     slug: post.slug,

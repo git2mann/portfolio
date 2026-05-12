@@ -15,11 +15,12 @@ export function getPostSlugs() {
 }
 
 /**
- * Get a single post by its slug
+ * Get a single post by its slug with optional field filtering
  * @param {string} slug - The slug of the post to retrieve
- * @returns {Post} The post data including frontmatter and content
+ * @param {string[]} fields - Optional array of fields to retrieve
+ * @returns {Post} The post data
  */
-export function getPostBySlug(slug: string) {
+export function getPostBySlug(slug: string, fields: string[] = []) {
   const realSlug = slug.replace(/\.(md|mdx|html)$/, "");
   const mdPath = join(postsDirectory, `${realSlug}.md`);
   const mdxPath = join(postsDirectory, `${realSlug}.mdx`);
@@ -41,9 +42,39 @@ export function getPostBySlug(slug: string) {
     throw new Error(`Post not found: ${slug}`);
   }
 
+  type PostItems = {
+    [key: string]: any;
+  };
+
+  const items: PostItems = {
+    slug: realSlug,
+    contentType: contentType,
+  };
+
   if (contentType === 'markdown' || contentType === 'mdx') {
     const { data, content } = matter(fileContents);
-    return { ...data, slug: realSlug, content, contentType, tags: data.tags || [], } as Post;
+    
+    // If fields are specified, only return those
+    if (fields.length > 0) {
+      fields.forEach((field) => {
+        if (field === "slug") {
+          items[field] = realSlug;
+        }
+        if (field === "content") {
+          items[field] = content;
+        }
+        if (typeof data[field] !== "undefined") {
+          items[field] = data[field];
+        }
+      });
+    } else {
+      // Return all fields
+      Object.assign(items, data);
+      items.content = content;
+      items.tags = data.tags || [];
+    }
+    
+    return items as Post;
   }
 
   // Extract metadata from the <script> tag in HTML
@@ -53,17 +84,36 @@ export function getPostBySlug(slug: string) {
   }
 
   const metadata = JSON.parse(metadataMatch[1]);
-  return { ...metadata, slug: realSlug, content: fileContents, contentType } as Post;
+  
+  if (fields.length > 0) {
+    fields.forEach((field) => {
+      if (field === "slug") {
+        items[field] = realSlug;
+      }
+      if (field === "content") {
+        items[field] = fileContents;
+      }
+      if (typeof metadata[field] !== "undefined") {
+        items[field] = metadata[field];
+      }
+    });
+  } else {
+    Object.assign(items, metadata);
+    items.content = fileContents;
+  }
+
+  return items as Post;
 }
 
 /**
  * Get all posts sorted by date
+ * @param {string[]} fields - Optional array of fields to retrieve
  * @returns {Post[]} Array of all posts sorted by date (newest first)
  */
-export function getAllPosts(): Post[] {
+export function getAllPosts(fields: string[] = []): Post[] {
   const slugs = getPostSlugs();
   const posts = slugs
-    .map((slug) => getPostBySlug(slug))
+    .map((slug) => getPostBySlug(slug, fields))
     .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
   return posts.map((post) => ({
     ...post,
@@ -74,10 +124,11 @@ export function getAllPosts(): Post[] {
 /**
  * Get posts by category
  * @param {string} category - The category to filter posts by
+ * @param {string[]} fields - Optional array of fields to retrieve
  * @returns {Post[]} Array of posts in the specified category
  */
-export function getPostsByCategory(category: string): Post[] {
-  return getAllPosts().filter((post) => post.category === category);
+export function getPostsByCategory(category: string, fields: string[] = []): Post[] {
+  return getAllPosts(fields).filter((post) => post.category === category);
 }
 
 /**
@@ -85,7 +136,7 @@ export function getPostsByCategory(category: string): Post[] {
  * @returns {string[]} Array of unique tags
  */
 export function getAllTags(): string[] {
-  const posts = getAllPosts();
+  const posts = getAllPosts(["tags"]);
   const tags = posts.flatMap((post) => post.tags || []);
   return Array.from(new Set(tags)); // Remove duplicates
 }

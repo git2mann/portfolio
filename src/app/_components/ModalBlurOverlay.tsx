@@ -6,7 +6,11 @@ export default function ModalBlurOverlay() {
   React.useEffect(() => {
     const handler = (e: any) => setModalOpen(!!e.detail);
     window.addEventListener('artwork-modal-toggle', handler);
-    return () => window.removeEventListener('artwork-modal-toggle', handler);
+    window.addEventListener('global-blur-toggle', handler);
+    return () => {
+      window.removeEventListener('artwork-modal-toggle', handler);
+      window.removeEventListener('global-blur-toggle', handler);
+    };
   }, []);
   if (!modalOpen) return null;
   // zIndex: 90 ensures overlay is below modal (z-100) but above page content
