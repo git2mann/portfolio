@@ -102,7 +102,7 @@ const ThemeSelector = () => {
         aria-label="Change Appearance"
       >
         <span className="text-xl leading-none">{currentThemeData?.icon}</span>
-        <ChevronDown size={14} className={`transition-transform duration-500 text-white/40 ${isOpen ? "rotate-180 text-white/80" : ""}`} />
+        <ChevronDown size={14} className={`transition-transform duration-500 text-primary/40 ${isOpen ? "rotate-180 text-primary/80" : ""}`} />
       </button>
 
       {/* DROPDOWN/MODAL MENU: Decoupled via Portal */}
@@ -146,10 +146,10 @@ const ThemeSelector = () => {
                 <div className="py-2">
                   {isMobile && (
                     <div className="flex justify-between items-center mb-6 px-4 pt-2">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent-blue">Select Interface Theme</span>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/50">Select Interface Theme</span>
                       <button 
                         onClick={() => setIsOpen(false)}
-                        className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-secondary hover:text-primary transition-colors border border-white/10"
+                        className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary/60 hover:text-primary transition-colors border border-white/10"
                       >
                         <X size={18} />
                       </button>

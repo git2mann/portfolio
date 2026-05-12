@@ -151,10 +151,10 @@ const Header = () => {
                             >
                                 <div className="py-2">
                                     <div className="flex justify-between items-center mb-6 px-4 pt-2">
-                                        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent-blue">Navigation Hub</span>
+                                        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/50">Navigation Hub</span>
                                         <button 
                                             onClick={() => setMenuOpen(false)}
-                                            className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-secondary hover:text-primary transition-colors border border-white/10"
+                                            className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary/60 hover:text-primary transition-colors border border-white/10"
                                         >
                                             <X size={18} />
                                         </button>
