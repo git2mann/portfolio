@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Post } from "@/interfaces/post";
 import { ArrowLeft, ArrowRight, Music, Tag, Disc, BarChart2 } from "lucide-react";
+import ScrollReveal from "@/app/_components/ScrollReveal";
 
 export default async function MusicBlogPage({
   searchParams,
@@ -30,78 +31,73 @@ export default async function MusicBlogPage({
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <main className="min-h-screen bg-[#EAE8E3] text-black selection:bg-[#2B4592] selection:text-white">
+    <main className="min-h-screen pb-32 bg-background-primary text-primary">
       
-      {/* 1. BACKGROUND TEXTURE */}
-      <div className="fixed inset-0 opacity-10 pointer-events-none z-0" 
-           style={{ 
-             backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
-             backgroundSize: '40px 40px'
-           }}>
-      </div>
+      {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
+      <section className="relative min-h-[60vh] md:h-[70vh] flex flex-col justify-center overflow-hidden pt-20 border-b border-white/5">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-red-500/5 blur-3xl opacity-20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
+        </div>
 
-      {/* 2. HEADER MODULE */}
-      <div className="relative z-10 w-full border-b-4 border-black bg-[#F4F3EF]">
-         {/* Ticker Tape */}
-         <div className="w-full bg-black text-[#F4F3EF] py-2 overflow-hidden border-b-2 border-black">
-            <div className="animate-marquee whitespace-nowrap font-mono text-xs uppercase tracking-[0.3em] flex items-center gap-12">
-               <span>/// AUDIO_LOGS: ONLINE</span>
-               <span>/// FREQUENCY: 20HZ - 20KHZ</span>
-               <span>/// SYSTEM: RECORDING</span>
-               <span>/// AUDIO_LOGS: ONLINE</span>
-               <span>/// FREQUENCY: 20HZ - 20KHZ</span>
-               <span>/// SYSTEM: RECORDING</span>
+        <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
+            <div className="flex-1 text-left relative z-10">
+              <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
+                 <Link href="/blog" className="inline-flex items-center gap-4 text-accent-blue font-mono text-[10px] uppercase tracking-[0.5em] mb-10 hover:gap-6 transition-all group">
+                    <ArrowLeft size={12} className="group-hover:-translate-x-2 transition-transform" /> Back to Archive
+                 </Link>
+                 <div className="flex items-center gap-4 mb-3 md:mb-4">
+                    <span className="w-8 md:w-12 h-[1px] bg-red-500/50"></span>
+                    <span className="text-red-500 font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Sector_Music</span>
+                 </div>
+                 <h1 className="text-6xl sm:text-7xl md:text-[10rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6 uppercase">
+                   Sonic<br/>Studies
+                 </h1>
+              </div>
+              
+              <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-xl md:text-4xl font-light text-secondary mt-8 md:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
+                Technical analysis of audio engineering, production logs, and theoretical experiments in rhythm and frequency.
+              </ScrollReveal>
             </div>
-         </div>
 
-         <Container>
-            <div className="py-12 md:py-24 grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12">
-               <div>
-                  <Link 
-                     href="/blog" 
-                     className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest border-b-2 border-black pb-1 hover:text-[#2B4592] hover:border-[#2B4592] transition-colors mb-8"
-                  >
-                     <ArrowLeft className="w-3 h-3" /> Return to Main Index
-                  </Link>
-                  <h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter mb-6 relative z-10">
-                     Music<br/>
-                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2B4592] to-[#FF3B30]">Logs</span>
-                  </h1>
-                  <p className="text-lg font-medium border-l-4 border-[#2B4592] pl-6 max-w-lg leading-relaxed">
-                     Sonic analysis, production notes, and industry observations.
-                  </p>
-               </div>
-               
-               {/* Decorative Abstract Visual */}
-               <div className="hidden lg:flex items-center justify-center relative">
-                  <div className="w-64 h-64 border-4 border-black rounded-full flex items-center justify-center relative animate-spin-slow">
-                     <div className="absolute inset-0 border-2 border-black rounded-full scale-75 border-dashed"></div>
-                     <Music className="w-16 h-16" />
-                     <div className="absolute top-0 left-1/2 w-4 h-4 bg-[#FF3B30] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-black"></div>
+            {/* Right: Decorative Visual */}
+            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-8 md:mt-0">
+               <div className="relative aspect-square w-full group">
+                  <div className="absolute inset-0 bg-red-500/5 blur-3xl rounded-full opacity-60"></div>
+                  <div className="w-full h-full relative z-10 flex items-center justify-center">
+                     <div className="w-64 h-64 border border-white/10 rounded-full flex items-center justify-center relative animate-spin-slow">
+                        <div className="absolute inset-0 border border-white/5 rounded-full scale-90 border-dashed"></div>
+                        <Disc size={48} className="text-red-500 opacity-40" />
+                        <div className="absolute top-0 left-1/2 w-3 h-3 bg-red-500 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-[0_0_15px_rgba(239,68,68,1)]"></div>
+                     </div>
                   </div>
                </div>
             </div>
-         </Container>
-      </div>
+          </div>
+        </Container>
+      </section>
 
-      <Container>
-        <div className="max-w-[1920px] mx-auto py-12 relative z-10">
+      <Container className="!max-w-none px-6 md:px-20 py-20">
+        
+        {/* --- TAG FILTERS --- */}
+        {musicTags.length > 0 && (
+          <div className="mb-20 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 border-b border-white/5 pb-10">
+             <div className="space-y-2">
+                <div className="flex items-center gap-3">
+                   <Tag className="text-red-500 w-4 h-4" />
+                   <span className="font-mono text-[10px] uppercase tracking-[0.4em] opacity-40">Signal_Filter</span>
+                </div>
+                <h2 className="text-3xl font-light uppercase tracking-tighter">Frequency Selection</h2>
+             </div>
 
-          {/* 3. TAG FILTER BANK */}
-          {musicTags.length > 0 && (
-            <div className="mb-16 border-4 border-black bg-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-              <div className="flex items-center gap-3 mb-6 border-b-2 border-black/10 pb-4">
-                 <Tag className="w-5 h-5" />
-                 <h2 className="font-mono text-sm font-bold uppercase tracking-widest">Signal Filter</h2>
-              </div>
-              <div className="flex flex-wrap gap-3">
+             <div className="flex flex-wrap gap-2">
                 <Link
                   href="/blog/music"
-                  className={`
-                    px-4 py-2 border-2 text-xs font-bold uppercase tracking-wider transition-all duration-150
+                  className={`px-6 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all border
                     ${!tag 
-                      ? "bg-black text-white border-black" 
-                      : "bg-transparent text-black border-black hover:bg-[#2B4592] hover:text-white hover:border-[#2B4592]"
+                      ? 'bg-primary text-background-primary border-primary shadow-lg scale-105' 
+                      : 'text-secondary border-white/10 hover:border-red-500/40 hover:text-primary'
                     }
                   `}
                 >
@@ -111,171 +107,127 @@ export default async function MusicBlogPage({
                   <Link
                     key={tagItem}
                     href={`/blog/music?tag=${tagItem}`}
-                    className={`
-                      px-4 py-2 border-2 text-xs font-bold uppercase tracking-wider transition-all duration-150
+                    className={`px-6 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all border
                       ${tag === tagItem
-                        ? "bg-[#2B4592] text-white border-[#2B4592]" 
-                        : "bg-transparent text-black border-black hover:bg-[#FF3B30] hover:text-white hover:border-[#FF3B30]"
+                        ? 'bg-red-500 text-white border-red-500 shadow-lg scale-105' 
+                        : 'text-secondary border-white/10 hover:border-red-500/40 hover:text-primary'
                       }
                     `}
                   >
                     [ {tagItem.toUpperCase()} ]
                   </Link>
                 ))}
-              </div>
-            </div>
-          )}
+             </div>
+          </div>
+        )}
 
-          {/* 4. FEATURED POST (HERO CARD) */}
-          {featuredPost && (
-            <div className="mb-24 group relative">
-               <div className="absolute -inset-2 bg-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 translate-x-2 translate-y-2"></div>
-               <Link href={`/posts/${featuredPost.slug}`} className="block border-4 border-black bg-white relative z-10">
-                  <div className="grid grid-cols-1 lg:grid-cols-2">
-                     <div className="relative min-h-[400px] border-b-4 lg:border-b-0 lg:border-r-4 border-black overflow-hidden">
-                        <Image
-                           src={featuredPost.coverImage}
-                           alt={featuredPost.title}
-                           fill
-                           className="object-cover transition-transform duration-700 group-hover:scale-105"
-                           priority
-                        />
-                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        {/* --- FEATURED ARTIFACT --- */}
+        {featuredPost && (
+          <div className="mb-32 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+             <Link href={`/posts/${featuredPost.slug}`} className="group block relative aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 bg-white/[0.01]">
+                <Image
+                   src={featuredPost.coverImage}
+                   alt={featuredPost.title}
+                   fill
+                   className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-70 group-hover:opacity-100"
+                />
+                <div 
+                  className="absolute inset-0 via-transparent to-transparent"
+                  style={{ backgroundImage: 'linear-gradient(to top, var(--background-primary), color-mix(in srgb, var(--background-primary) 20%, transparent), transparent)' }}
+                ></div>
+                <div className="absolute inset-0 p-12 md:p-24 flex flex-col justify-end">
+                   <div className="max-w-4xl space-y-6">
+                      <div className="flex items-center gap-4">
+                         <div className="w-10 h-px bg-red-500" />
+                         <span className="text-red-500 font-mono text-[10px] uppercase tracking-[0.6em]">Priority_Analysis</span>
+                      </div>
+                      <h3 className="text-5xl md:text-8xl font-light uppercase tracking-tighter leading-[0.8]">{featuredPost.title}</h3>
+                      <p className="text-xl text-secondary font-light max-w-xl leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity">{featuredPost.excerpt}</p>
+                      <div className="pt-6">
+                         <div className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.4em] group-hover:gap-8 transition-all">
+                            Access_Module <ArrowRight size={18} />
+                         </div>
+                      </div>
+                   </div>
+                </div>
+             </Link>
+          </div>
+        )}
+
+        {/* --- LOG GRID --- */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-20">
+          {paginatedPosts.map((post, idx) => (
+            <article key={post.slug} className="group relative flex flex-col bg-white/[0.01] border border-white/5 hover:border-red-500/30 transition-all duration-700 rounded-2xl p-6 shadow-xl hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)]">
+               <Link href={`/posts/${post.slug}`} className="block flex-1">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden mb-10 rounded-xl">
+                     <Image
+                        src={post.coverImage}
+                        alt={post.title}
+                        fill
+                        className="object-cover transition-all duration-[3000ms] group-hover:scale-110 opacity-70 group-hover:opacity-100"
+                     />
+                     <div className="absolute top-0 left-0 bg-red-500 text-white px-3 py-1 font-mono text-[9px] uppercase tracking-widest rounded-br-lg">
+                        LOG_0{idx + 2}
                      </div>
-                     <div className="p-8 lg:p-12 flex flex-col justify-center">
-                        <div className="flex items-center gap-2 mb-4">
-                           <span className="bg-[#FF3B30] text-white px-3 py-1 font-mono text-[10px] uppercase tracking-widest border border-black">
-                              Priority_Read
-                           </span>
-                           {featuredPost.date && (
-                              <span className="font-mono text-xs text-gray-500">
-                                 {new Date(featuredPost.date).toLocaleDateString('en-CA')}
-                              </span>
-                           )}
-                        </div>
-                        <h3 className="text-4xl lg:text-5xl font-black uppercase leading-[0.9] tracking-tighter mb-6 group-hover:text-[#2B4592] transition-colors">
-                           {featuredPost.title}
-                        </h3>
-                        <p className="text-lg font-medium text-gray-700 mb-8 line-clamp-3">
-                           {featuredPost.excerpt}
-                        </p>
-                        <div className="flex items-center gap-2 font-bold uppercase text-sm tracking-widest group-hover:gap-4 transition-all">
-                           Access File <ArrowRight className="w-4 h-4" />
-                        </div>
+                  </div>
+                  <div className="flex flex-col px-4 pb-4">
+                     <time className="text-[10px] font-mono text-red-500 uppercase tracking-[0.3em] mb-6 block">
+                        {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                     </time>
+                     <h3 className="text-4xl font-light tracking-tighter mb-8 group-hover:text-white transition-colors uppercase leading-[0.85]">
+                        {post.title}
+                     </h3>
+                     <div className="mt-auto pt-6 border-t border-white/5 flex justify-between items-center opacity-30 group-hover:opacity-100 transition-all">
+                        <span className="text-[9px] font-mono uppercase tracking-[0.4em]">Execute_Analysis</span>
+                        <ArrowRight className="w-5 h-5 text-red-500 group-hover:translate-x-3 transition-transform" />
                      </div>
                   </div>
                </Link>
-            </div>
-          )}
-
-          {/* 5. DATA GRID (POSTS) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-            {paginatedPosts.map((post, idx) => (
-              <article
-                key={post.slug}
-                className="group flex flex-col h-full bg-[#F4F3EF] border-2 border-black hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-200"
-              >
-                <Link href={`/posts/${post.slug}`} className="block flex-1 flex flex-col">
-                   <div className="relative h-64 w-full border-b-2 border-black overflow-hidden bg-black">
-                      <Image
-                         src={post.coverImage}
-                         alt={post.title}
-                         fill
-                         className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute top-0 left-0 bg-black text-white px-3 py-1 font-mono text-xs uppercase tracking-widest border-r-2 border-b-2 border-white">
-                         Log_0{idx + 2}
-                      </div>
-                   </div>
-                   
-                   <div className="p-6 flex flex-col flex-1 bg-white">
-                      <time className="font-mono text-xs text-[#2B4592] font-bold tracking-widest mb-3 block">
-                         {new Date(post.date).toLocaleDateString()}
-                      </time>
-                      
-                      <h3 className="text-2xl font-black leading-tight mb-4 uppercase tracking-tight group-hover:text-[#FF3B30] transition-colors">
-                         {post.title}
-                      </h3>
-                      
-                      {post.excerpt && (
-                         <p className="text-sm font-medium text-gray-600 mb-6 flex-1 leading-relaxed border-l-2 border-gray-200 pl-4">
-                            {post.excerpt.substring(0, 100)}...
-                         </p>
-                      )}
-                      
-                      <div className="mt-auto pt-4 border-t-2 border-black/10 flex justify-between items-center">
-                         <span className="font-mono text-xs font-bold uppercase">Read</span>
-                         <ArrowRight className="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform" />
-                      </div>
-                   </div>
-                </Link>
-              </article>
-            ))}
-          </div>
-
-          {/* 6. NO RESULTS STATE */}
-          {paginatedPosts.length === 0 && !featuredPost && (
-            <div className="border-4 border-black border-dashed p-16 text-center bg-white">
-               <div className="w-16 h-16 bg-[#F4B400] mx-auto mb-6 flex items-center justify-center border-2 border-black rounded-full">
-                  <BarChart2 className="w-8 h-8" />
-               </div>
-               <h3 className="text-3xl font-black uppercase mb-2">No Data Found</h3>
-               <p className="font-mono text-sm text-gray-500 mb-8 uppercase tracking-widest">
-                  {tag ? `Filter "${tag}" returned 0 results.` : "Archive is currently empty."}
-               </p>
-               <Link 
-                  href="/blog/music" 
-                  className="inline-block px-8 py-3 bg-black text-white font-bold uppercase tracking-widest hover:bg-[#FF3B30] transition-colors"
-               >
-                  Reset Filters
-               </Link>
-            </div>
-          )}
-
-          {/* 7. SEQUENCE CONTROLLER (PAGINATION) */}
-          {totalPages > 1 && (
-            <div className="flex justify-center mt-16">
-               <div className="inline-flex border-2 border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                  <Link
-                     href={`/blog/music?page=${Math.max(1, currentPage - 1)}${tag ? `&tag=${tag}` : ''}`}
-                     className={`px-6 py-3 font-bold uppercase tracking-widest border-r-2 border-black transition-colors ${
-                        currentPage === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'hover:bg-[#FF3B30] hover:text-white'
-                     }`}
-                     aria-disabled={currentPage === 1}
-                     tabIndex={currentPage === 1 ? -1 : 0}
-                  >
-                     Prev
-                  </Link>
-                  
-                  {pageNumbers.map(number => (
-                     <Link 
-                        key={number} 
-                        href={`/blog/music?page=${number}${tag ? `&tag=${tag}` : ''}`}
-                        className={`px-4 py-3 font-mono font-bold border-r-2 border-black last:border-r-0 transition-colors ${
-                           currentPage === number 
-                              ? 'bg-black text-white' 
-                              : 'hover:bg-[#2B4592] hover:text-white'
-                        }`}
-                     >
-                        {number}
-                     </Link>
-                  ))}
-                  
-                  <Link
-                     href={`/blog/music?page=${Math.min(totalPages, currentPage + 1)}${tag ? `&tag=${tag}` : ''}`}
-                     className={`px-6 py-3 font-bold uppercase tracking-widest border-l-2 border-black transition-colors ${
-                        currentPage === totalPages ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'hover:bg-[#FF3B30] hover:text-white'
-                     }`}
-                     aria-disabled={currentPage === totalPages}
-                     tabIndex={currentPage === totalPages ? -1 : 0}
-                  >
-                     Next
-                  </Link>
-               </div>
-            </div>
-          )}
-
+            </article>
+          ))}
         </div>
+
+        {/* --- PAGINATION --- */}
+        {totalPages > 1 && (
+          <div className="flex justify-center mt-20">
+             <div className="inline-flex gap-4 p-2 rounded-full bg-white/[0.03] border border-white/5">
+                <Link
+                   href={`/blog/music?page=${Math.max(1, currentPage - 1)}${tag ? `&tag=${tag}` : ''}`}
+                   className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                      currentPage === 1 ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white/5 hover:text-red-500'
+                   }`}
+                >
+                   <ArrowLeft size={18} />
+                </Link>
+                
+                <div className="flex items-center gap-2 px-4">
+                   {pageNumbers.map(number => (
+                      <Link 
+                         key={number} 
+                         href={`/blog/music?page=${number}${tag ? `&tag=${tag}` : ''}`}
+                         className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs transition-all ${
+                            currentPage === number 
+                               ? 'bg-red-500 text-white shadow-lg scale-110' 
+                               : 'text-secondary hover:text-white hover:bg-white/5'
+                         }`}
+                      >
+                         {number}
+                      </Link>
+                   ))}
+                </div>
+                
+                <Link
+                   href={`/blog/music?page=${Math.min(totalPages, currentPage + 1)}${tag ? `&tag=${tag}` : ''}`}
+                   className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${
+                      currentPage === totalPages ? 'opacity-20 cursor-not-allowed' : 'hover:bg-white/5 hover:text-red-500'
+                   }`}
+                >
+                   <ArrowRight size={18} />
+                </Link>
+             </div>
+          </div>
+        )}
+
       </Container>
     </main>
   );
@@ -289,7 +241,7 @@ function getMusicTags(): string[] {
 }
 
 function getPostsByCategory(category: string, tag?: string): Post[] {
-  return getAllPosts().filter(
+  return getAllPosts(["title", "date", "slug", "coverImage", "excerpt", "tags", "category"]).filter(
     (post) => post.category === category && (!tag || post.tags?.includes(tag))
   );
 }

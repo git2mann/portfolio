@@ -1,138 +1,72 @@
-'use client';
+"use client";
 
-import Container from "@/app/_components/container";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import { FaSpotify, FaApple, FaYoutube, FaTicketAlt, FaPlay, FaCompactDisc } from "react-icons/fa";
-import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { 
+  Play, 
+  Clock, 
+  Music, 
+  ArrowRight, 
+  ExternalLink,
+  Info,
+  Disc,
+  Terminal,
+  Database,
+  Cpu,
+  Activity,
+  CornerDownRight,
+  ChevronLeft,
+  ChevronRight,
+  ArrowLeft
+} from "lucide-react";
+import Container from "@/app/_components/container";
+import ScrollReveal from "@/app/_components/ScrollReveal";
+import { motion, AnimatePresence } from "framer-motion";
+import InstructionPopup from "@/app/_components/InstructionPopup";
+import Tilt from 'react-parallax-tilt';
 
-// --- 1. RESTORED ASSETS: FLOWERS & HUMMINGBIRDS ---
+const FiDisc = Disc; // Fix for runtime error
 
-function Flower({
-  className = "",
-  style = {},
-  variant = 1,
-}: {
-  className?: string;
-  style?: React.CSSProperties;
-  variant?: number;
-}) {
-  let src = "/assets/music-assets/music-adjacents/FlowersOne.png";
-  if (variant === 2) src = "/assets/music-assets/music-adjacents/FlowersTwo.png";
-  else if (variant === 3) src = "/assets/music-assets/music-adjacents/FlowersThree.png";
-  else if (variant === 4) src = "/assets/music-assets/music-adjacents/FlowersFour.png";
-  return (
-    <div className={`absolute ${className}`} style={style}>
-        <Image
-        src={src}
-        alt={`Flower ${variant}`}
-        width={40}
-        height={40}
-        className="object-contain drop-shadow-lg"
-        draggable={false}
-        priority
-        />
-    </div>
-  );
-}
-
-function Hummingbird({ className = "", style = {}, variant = 1 }: { className?: string; style?: React.CSSProperties; variant?: number }) {
-  const src =
-    variant === 2
-      ? "/assets/music-assets/music-adjacents/HummingbirdTwo.png.png"
-      : "/assets/music-assets/music-adjacents/HummingbirdOne.png";
-  return (
-    <div className={`absolute ${className}`} style={style}>
-        <Image
-        src={src}
-        alt={`Hummingbird ${variant}`}
-        width={48}
-        height={36}
-        className="object-contain drop-shadow-xl"
-        draggable={false}
-        priority
-        />
-    </div>
-  );
-}
-
-// The "Organic Layer" - floats on top of the Bauhaus Grid
-function AnimatedFloaters() {
-  const floaters = [
-    { type: "flower", variant: 4, className: "floater-flower", style: { left: "5%", top: "15%" }, delay: 0.87 },
-    { type: "hummingbird", variant: 1, className: "floater-hummingbird", style: { left: "85%", top: "25%" }, delay: 0.23 },
-    { type: "flower", variant: 1, className: "floater-flower", style: { left: "75%", top: "85%" }, delay: 1.22 },
-    { type: "hummingbird", variant: 2, className: "floater-hummingbird", style: { left: "45%", top: "10%" }, delay: 0.76 },
-    { type: "flower", variant: 3, className: "floater-flower", style: { left: "92%", top: "55%" }, delay: 0.86 },
-    { type: "hummingbird", variant: 1, className: "floater-hummingbird", style: { left: "10%", top: "65%" }, delay: 1.5 },
-    { type: "flower", variant: 2, className: "floater-flower", style: { left: "30%", top: "25%" }, delay: 1.1 },
-  ];
-  return (
-    <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden">
-      {floaters.map((floater, i) => (
-        <div
-          key={i}
-          className={`animated-floater ${floater.className}`}
-          style={{
-            ...floater.style,
-            animationDelay: `${floater.delay}s`,
-          }}
-        >
-          {floater.type === "flower" && <Flower variant={floater.variant} />}
-          {floater.type === "hummingbird" && <Hummingbird variant={floater.variant} />}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-// --- 2. RESTORED ASSET: 3D VINYL SLEEVE ---
-
+// --- ASSETS ---
 const COVER_IMAGE = "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg";
-const BACK_COVER_IMAGE = "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Back Cover.jpeg";
 
-function VinylSleeve3D({ size = 340 }: { size?: number }) {
-   const vinylMiddleStyle = { background: "#1a1a1a" };
-   return (
-      <div
-         className="vinyl-sleeve group cursor-pointer"
-         style={{ width: size, height: size }}
+/**
+ * ClearRefractiveCover - The high-fidelity album cover with "clear liquid-glass" highlights and 3D Tilt
+ */
+function ClearRefractiveCover({ src, size = 400 }: { src: string, size?: number }) {
+  return (
+    <div className="relative group select-none flex items-center justify-center perspective-[1200px]" style={{ width: size, height: size }}>
+      <div className="absolute inset-16 bg-accent-blue/10 blur-[80px] rounded-full animate-pulse opacity-40 group-hover:opacity-100 transition-opacity duration-1000"></div>
+      
+      <Tilt
+        tiltMaxAngleX={15}
+        tiltMaxAngleY={15}
+        perspective={1200}
+        scale={1.02}
+        transitionSpeed={1500}
+        gyroscope={true}
+        glareEnable={true}
+        glareMaxOpacity={0.45}
+        glareColor="#ffffff"
+        glarePosition="all"
+        glareBorderRadius="0px"
+        className="w-full h-full"
       >
-         {/* Middle layers for thickness */}
-         <div className="vinyl-middle" style={vinylMiddleStyle} />
-         <div className="vinyl-middle-1" style={vinylMiddleStyle} />
-         <div className="vinyl-middle-2" style={vinylMiddleStyle} />
-         <div className="vinyl-middle-3" style={vinylMiddleStyle} />
-
-         {/* Front cover */}
-         <div className="vinyl-cover border-2 border-black">
-            <Image
-               src={COVER_IMAGE}
-               alt="Squealer Live Cover"
-               fill
-               className="object-cover"
-               sizes={`(max-width: 768px) 100vw, 500px`}
-               priority
-            />
-            {/* Grain Overlay */}
-            <div className="absolute inset-0 bg-black/10 mix-blend-overlay"></div>
-         </div>
-
-         {/* Back cover: now uses the actual back cover image */}
-         <div className="vinyl-back-cover border-2 border-black bg-[#F4F3EF]">
-            <Image
-               src={BACK_COVER_IMAGE}
-               alt="Squealer Live Back Cover"
-               fill
-               className="object-cover"
-               sizes={`(max-width: 768px) 100vw, 500px`}
-               priority
-            />
-            <div className="absolute inset-0 bg-black/10 mix-blend-overlay"></div>
-         </div>
-      </div>
-   );
+        <div 
+          className="relative w-full h-full overflow-hidden border border-primary/20 bg-black shadow-[0_0_80px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:border-primary/40"
+        >
+          <Image src={src} alt="Cover" fill className="object-cover" />
+          
+          {/* Technical HUD */}
+          <div className="absolute top-8 left-8 font-mono text-[10px] uppercase tracking-[0.4em] text-white/30 group-hover:text-white/80 transition-colors flex items-center gap-3">
+             <FiDisc size={12} className="animate-spin-slow" /> LIVE RECORDING
+          </div>
+        </div>
+      </Tilt>
+    </div>
+  );
 }
 
 // --- CONSTANTS ---
@@ -145,196 +79,190 @@ const TRACKLIST = [
 ];
 
 export default function SataopLivePage() {
-   return (
-      <main className="min-h-screen bg-[#EAE8E3] text-black dark:bg-[#18181b] dark:text-white selection:bg-[#FF3B30] selection:text-white relative">
-      
-         {/* 1. ANIMATION STYLES (Restored & Optimized) */}
-      <style jsx global>{`
-        .animated-floater {
-          position: absolute;
-          animation: floaterMove 8s ease-in-out infinite alternate;
-        }
-        @keyframes floaterMove {
-          0% { transform: translateY(0) scale(1) rotate(0deg); }
-          50% { transform: translateY(-20px) scale(1.1) rotate(5deg); }
-          100% { transform: translateY(10px) scale(0.95) rotate(-5deg); }
-        }
-        .vinyl-sleeve {
-          position: relative;
-          transform-style: preserve-3d;
-          animation: rotate-y-axis 15s linear infinite;
-          perspective: 1000px;
-        }
-        .vinyl-sleeve:hover {
-          animation-play-state: paused;
-          transform: rotateY(15deg) rotateX(10deg) scale(1.05);
-          transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        @keyframes rotate-y-axis {
-          0% { transform: rotateY(0deg); }
-          100% { transform: rotateY(360deg); }
-        }
-        .vinyl-cover, .vinyl-back-cover, [class^="vinyl-middle"] {
-          position: absolute; width: 100%; height: 100%; border-radius: 4px;
-        }
-        .vinyl-cover { transform: translateZ(4px); backface-visibility: hidden; }
-        .vinyl-back-cover { transform: rotateY(180deg) translateZ(4px); backface-visibility: hidden; }
-        /* Middle layers create thickness */
-        .vinyl-middle { transform: translateZ(0px); }
-        .vinyl-middle-1 { transform: translateZ(-1px); }
-        .vinyl-middle-2 { transform: translateZ(1px); }
-        .vinyl-middle-3 { transform: translateZ(2px); }
-      `}</style>
+  const router = useRouter();
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-      {/* 2. BACKGROUND & OVERLAYS */}
-         <div className="fixed inset-0 opacity-10 pointer-events-none z-0 dark:opacity-20" 
-                style={{ 
-                   backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
-                   backgroundSize: '40px 40px'
-                }}>
-         </div>
-      
-      {/* The Organic Layer */}
-      <AnimatedFloaters />
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
-      {/* 3. HEADER STRIP */}
-      <div className="sticky top-0 z-50 w-full border-b-4 border-black dark:border-white bg-[#F4F3EF] dark:bg-[#232326] flex justify-between items-center px-4 md:px-8 py-3 shadow-xl">
-         <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-[#FF3B30] animate-pulse"></div>
-            <span className="font-mono text-xs uppercase tracking-widest font-bold">Live Album</span>
-         </div>
-         <Link href="/music" className="font-mono text-xs uppercase hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors px-3 py-1 border border-transparent hover:border-black dark:hover:border-white flex items-center gap-2">
-            <ArrowLeft className="w-3 h-3" /> Archive
-         </Link>
+  const nextSlide = useCallback(() => {
+    if (activeSlide < 2 && !isAnimating) {
+      setActiveSlide(prev => prev + 1);
+      setIsAnimating(true);
+    }
+  }, [activeSlide, isAnimating]);
+
+  const prevSlide = useCallback(() => {
+    if (activeSlide > 0 && !isAnimating) {
+      setActiveSlide(prev => prev - 1);
+      setIsAnimating(true);
+    }
+  }, [activeSlide, isAnimating]);
+
+  // Handle Key Events
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") nextSlide();
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") prevSlide();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [nextSlide, prevSlide]);
+
+  if (!mounted) return null;
+
+  return (
+    <main className="h-screen w-full overflow-hidden bg-background-primary text-primary font-noto-display-condensed relative">
+      <InstructionPopup />
+
+      {/* Background Atmosphere - Enhanced visibility with Noise fix */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 z-0" style={{ transform: 'translateZ(0)' }}>
+           <Image src={COVER_IMAGE} alt="" fill className="object-cover scale-125 blur-[100px] opacity-25" />
+        </div>
+        <div className="absolute inset-0 z-10 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background-primary/20 via-background-primary/80 to-background-primary"></div>
       </div>
 
-      <Container>
-        <div className="max-w-[1600px] mx-auto pt-16 pb-32">
-           
-           {/* 4. HERO SECTION: ECO-BRUTALIST FUSION */}
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24 relative z-10">
-              
-              {/* Left: Bauhaus Typography */}
-              <div className="order-2 lg:order-1 flex flex-col gap-6 relative">
-                 
-                 {/* Decorative Tape */}
-                 <div className="absolute -top-12 -left-12 opacity-10 pointer-events-none">
-                    <Flower variant={3} style={{ width: '80px', height: '80px' }} />
-                 </div>
-                 
-                 <h1 className="text-6xl md:text-8xl lg:text-9xl font-black uppercase leading-[0.85] tracking-tighter mix-blend-darken text-black dark:text-white relative z-10">
-                    <span className="dark:text-white">Squealer And The Aggressors Of Peace</span><br/>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF3B30] to-[#2B4592] dark:text-white dark:bg-none">(Live)</span><br/>
-                 </h1>
+      {/* Navigation Controls - Moved below header */}
+      <div className="fixed top-32 left-8 md:top-40 md:left-12 z-[110] flex items-center gap-8 animate-in fade-in slide-in-from-left-4 duration-1000">
+         <button onClick={() => router.push('/music')} className="flex items-center gap-3 px-6 py-2.5 rounded-full liquid-glass-clear text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all text-primary border-primary/20">
+            <ArrowLeft size={16} /> Back
+         </button>
+         <div className="flex items-center gap-4 text-accent-blue font-mono text-[10px] uppercase tracking-[0.4em] opacity-40">
+            <span>Squealer Live</span>
+            <span className="w-1 h-1 rounded-full bg-accent-blue"></span>
+            <span>Slide 0{activeSlide + 1}</span>
+         </div>
+      </div>
 
-                 <div className="flex flex-col gap-4 mt-8 border-l-4 border-black dark:border-white pl-6 bg-white/50 dark:bg-white/10 backdrop-blur-sm p-4">
-                    <div className="font-mono text-sm uppercase tracking-widest text-gray-600 dark:text-gray-300 flex justify-between border-b border-black/20 dark:border-white/20 pb-2">
-                       <span>Artist</span>
-                       <span className="font-bold text-black dark:text-white">Klense</span>
-                    </div>
-                    <div className="font-mono text-sm uppercase tracking-widest text-gray-600 dark:text-gray-300 flex justify-between border-b border-black/20 dark:border-white/20 pb-2">
-                       <span>Location</span>
-                       <span className="font-bold text-black dark:text-white">Nairobi, KE</span>
-                    </div>
-                    <div className="font-mono text-sm uppercase tracking-widest text-[#FF3B30] dark:text-[#FF3B30] font-bold flex justify-between">
-                       <span>Status</span>
-                       <span>Available Now</span>
-                    </div>
+      <motion.div 
+        className="flex flex-row h-full will-change-transform"
+        animate={{ x: `-${activeSlide * 100}vw` }}
+        transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+        onAnimationComplete={() => setIsAnimating(false)}
+      >
+        {/* SLIDE 0: THE RELEASE */}
+        <section className="w-[100vw] h-full flex-shrink-0 flex items-center justify-center pt-12">
+           <Container className="!max-w-none px-6 md:px-24">
+              <div className="flex flex-col lg:flex-row items-center gap-16 md:gap-24">
+                 <div className="flex-shrink-0">
+                    <ClearRefractiveCover src={COVER_IMAGE} size={400} />
                  </div>
-
-                 <div className="flex flex-wrap gap-4 mt-8">
-                    <a 
-                       href="https://album.link/sataop-live-klense" 
-                       className="bg-black text-white dark:bg-white dark:text-black px-8 py-4 font-bold uppercase tracking-widest border-2 border-transparent hover:bg-[#FF3B30] hover:border-black dark:hover:border-white hover:text-black dark:hover:bg-[#FF3B30] dark:hover:text-white transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] active:translate-y-[2px] active:translate-x-[2px] active:shadow-none"
-                    >
-                       Stream Album
-                    </a>
-                    <a 
-                       href="https://klense.gumroad.com/l/sataop-live-album-klense" 
-                       target="_blank"
-                       className="px-8 py-4 font-bold uppercase tracking-widest border-2 border-black dark:border-white hover:bg-white dark:hover:bg-black transition-colors flex items-center gap-2 bg-[#F4B400] dark:bg-[#2B4592] dark:text-white"
-                    >
-                       <FaTicketAlt /> Purchase
-                    </a>
-                 </div>
-              </div>
-
-              {/* Right: The 3D Artifact (Vinyl) */}
-              <div className="order-1 lg:order-2 flex justify-center items-center relative h-[500px]">
-                 {/* Geometric Background Shapes */}
-                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#F4B400] rounded-full mix-blend-multiply opacity-50 blur-3xl animate-pulse"></div>
-                 <div className="absolute bottom-0 left-10 w-48 h-48 bg-[#2B4592] rounded-full mix-blend-multiply opacity-50 blur-3xl"></div>
-                 
-                 {/* Floating flowers specifically around the vinyl */}
-                 <div className="absolute -top-4 right-10 z-20 animate-bounce" style={{ animationDuration: '3s' }}>
-                    <Hummingbird variant={1} />
-                 </div>
-                 <div className="absolute bottom-10 -left-4 z-20 animate-bounce" style={{ animationDuration: '4s' }}>
-                    <Flower variant={2} />
-                 </div>
-
-                 {/* The Vinyl Component */}
-                 <div className="drop-shadow-2xl hover:scale-105 transition-transform duration-500">
-                    <VinylSleeve3D size={350} />
-                 </div>
-              </div>
-           </div>
-
-           {/* 5. THE SETLIST (Data Table) */}
-           <div className="border-4 border-black dark:border-white bg-white dark:bg-[#232326] relative z-10 mb-24 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
-              <div className="bg-black text-white dark:bg-white dark:text-black px-6 py-3 font-mono text-xs uppercase tracking-widest flex justify-between items-center">
-                 <span>// Setlist_Data</span>
-                 <FaCompactDisc className="animate-spin-slow" />
-              </div>
-              
-              <div className="divide-y-2 divide-black dark:divide-white">
-                 {TRACKLIST.map((track, idx) => (
-                    <div key={track} className="group flex items-center justify-between p-6 hover:bg-[#F4F3EF] dark:hover:bg-[#18181b] transition-colors relative overflow-hidden">
-                       {/* Subtle hover reveal of flower */}
-                       <div className="absolute right-4 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none transform translate-x-4 group-hover:translate-x-0 duration-300">
-                          <Flower variant={(idx % 4) + 1} />
+                 <div className="flex-grow space-y-10">
+                    <div className="space-y-4">
+                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.5em]">
+                          <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
+                          <span>LIVE PERFORMANCE // 2025</span>
                        </div>
-
-                       <div className="flex items-center gap-6 relative z-10">
-                          <span className="font-mono text-xl font-bold text-gray-400 dark:text-gray-300 group-hover:text-[#FF3B30] dark:group-hover:text-[#FF3B30]">
-                             {(idx + 1).toString().padStart(2, '0')}
-                          </span>
-                          <span className="text-xl md:text-3xl font-bold uppercase tracking-tight group-hover:translate-x-2 transition-transform">
-                             {track}
-                          </span>
+                       <h1 className="text-5xl md:text-7xl lg:text-[8.5rem] font-light tracking-tighter uppercase leading-[0.8] text-primary">
+                          Squealer Live
+                       </h1>
+                    </div>
+                    <div className="flex gap-12 pt-6 border-t border-primary/10">
+                       <div className="space-y-1">
+                          <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Type</p>
+                          <p className="text-2xl md:text-4xl font-light tracking-tighter text-primary">RAW CAPTURE</p>
                        </div>
-                       <div className="hidden md:flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity relative z-10">
-                          <span className="font-mono text-xs uppercase bg-black text-white dark:bg-white dark:text-black px-2 py-1">Live Ver.</span>
+                       <div className="space-y-1">
+                          <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Stability</p>
+                          <p className="text-2xl md:text-4xl font-light tracking-tighter text-primary">UNFILTERED</p>
                        </div>
                     </div>
+                 </div>
+              </div>
+           </Container>
+        </section>
+
+        {/* SLIDE 1: THE CONTEXT */}
+        <section className="w-[100vw] h-full flex-shrink-0 flex items-center justify-center pt-12">
+           <Container className="!max-w-none px-6 md:px-24">
+              <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-16 md:gap-24 items-center">
+                 <div className="space-y-12">
+                    <div className="max-w-3xl border-l-[3px] border-accent-blue pl-10 relative">
+                       <h3 className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
+                          <Terminal size={12} /> OVERVIEW
+                       </h3>
+                       <p className="text-3xl md:text-5xl font-light leading-tight text-primary">
+                          The Aggressors of Peace captured in raw motion. An investigation into noise, frequency, and collective energy.
+                       </p>
+                    </div>
+                 </div>
+                 
+                 <div className="liquid-glass p-10 rounded-[2rem] space-y-10">
+                    <h5 className="font-mono text-[9px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
+                       <Database size={12} /> PERFORMANCE DETAILS
+                    </h5>
+                    <div className="grid grid-cols-1 gap-6">
+                       {[
+                         { label: 'Location', val: 'Tallinn, EE' },
+                         { label: 'State', val: 'Live' },
+                         { label: 'Capture', val: 'Direct' },
+                         { label: 'Status', val: 'Stable' }
+                       ].map(item => (
+                         <div key={item.label} className="border-b border-primary/5 pb-3 group/item">
+                            <span className="block font-mono text-[8px] uppercase tracking-widest opacity-30 group-hover/item:opacity-70 transition-opacity">{item.label}</span>
+                            <span className="block text-xl font-light uppercase tracking-tighter mt-1 group-hover/item:text-primary transition-colors">{item.val}</span>
+                         </div>
+                       ))}
+                    </div>
+                 </div>
+              </div>
+           </Container>
+        </section>
+
+        {/* SLIDE 2: THE INDEX */}
+        <section className="w-[100vw] h-full flex-shrink-0 flex items-center justify-center pt-12">
+           <Container className="!max-w-none px-6 md:px-24 h-[75vh] flex flex-col">
+              <div className="flex items-end justify-between border-b border-primary/10 pb-4 mb-8">
+                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">The Index</h2>
+                 <span className="font-mono text-[9px] uppercase tracking-[0.5em] opacity-30 text-secondary">Track_Sequence // {TRACKLIST.length} Units</span>
+              </div>
+              <div className="flex-grow overflow-y-auto no-scrollbar space-y-1 pr-4 pb-24">
+                 {TRACKLIST.map((track, i) => (
+                   <div key={track} className="group border-b border-white/5">
+                      <div className="w-full flex items-center justify-between py-6 md:py-8 px-6 hover:bg-primary/[0.01] transition-all duration-700 cursor-pointer">
+                         <div className="flex items-center gap-10 md:gap-16">
+                            <span className={`font-mono text-lg md:text-2xl opacity-20 group-hover:text-accent-blue group-hover:opacity-100 transition-all duration-700`}>
+                               {String(i + 1).padStart(2, '0')}
+                            </span>
+                            <h4 className={`text-xl md:text-4xl font-light uppercase tracking-tighter text-primary/40 group-hover:text-primary transition-all duration-1000 group-hover:translate-x-4`}>
+                               {track}
+                            </h4>
+                         </div>
+                         <Play size={24} className="opacity-0 group-hover:opacity-100 transition-opacity text-accent-blue" />
+                      </div>
+                   </div>
                  ))}
               </div>
-           </div>
+           </Container>
+        </section>
+      </motion.div>
 
-           {/* 6. STREAMING LINKS (The Output) */}
-           <div id="stream" className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-              {[
-                 { name: 'Spotify', icon: FaSpotify, color: 'hover:bg-[#1DB954] hover:text-white', link: 'https://album.link/sataop-live-klense' },
-                 { name: 'Apple Music', icon: FaApple, color: 'hover:bg-black hover:text-white', link: 'https://album.link/sataop-live-klense' },
-                 { name: 'YouTube', icon: FaYoutube, color: 'hover:bg-[#FF0000] hover:text-white', link: 'https://album.link/sataop-live-klense' }
-              ].map((platform) => (
-                 <a 
-                    key={platform.name}
-                    href={platform.link}
-                    target="_blank"
-                    className={`
-                       group border-4 border-black dark:border-white bg-white dark:bg-[#232326] p-8 flex flex-col items-center justify-center gap-4 transition-all duration-300
-                       ${platform.color} hover:-translate-y-2 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]
-                    `}
-                 >
-                    <platform.icon className="w-12 h-12" />
-                    <span className="font-bold uppercase tracking-widest">{platform.name}</span>
-                 </a>
-              ))}
+      {/* Slide Navigation Dots */}
+      <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50">
+        <div className="liquid-glass px-6 py-3 rounded-full shadow-2xl border border-primary/10 flex items-center gap-6 hover:scale-100">
+           <button onClick={prevSlide} disabled={activeSlide === 0} className={`p-2 rounded-full transition-all ${activeSlide === 0 ? 'opacity-10 cursor-not-allowed' : 'hover:bg-accent-blue/10 text-accent-blue'}`}>
+              <ChevronLeft size={24} />
+           </button>
+           <div className="flex gap-3">
+            {[0, 1, 2].map(i => (
+              <button 
+                key={i} 
+                onClick={() => setActiveSlide(i)} 
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${activeSlide === i ? 'bg-accent-blue w-10' : 'bg-primary opacity-40 hover:opacity-70'}`} 
+                aria-label={`Slide ${i + 1}`}
+              />
+            ))}
            </div>
-
+           <button onClick={nextSlide} disabled={activeSlide === 2} className={`p-2 rounded-full transition-all ${activeSlide === 2 ? 'opacity-10 cursor-not-allowed' : 'hover:bg-accent-blue/10 text-accent-blue'}`}>
+              <ChevronRight size={24} />
+           </button>
         </div>
-      </Container>
+      </div>
     </main>
   );
 }

@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { Post } from "@/interfaces/post";
-import Container from "@/app/_components/container";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Mail, Music, Terminal, Star, Clock } from "lucide-react";
+import { ArrowRight, Mail, Music, Terminal, Star, Clock, ChevronRight } from "lucide-react";
+import { RefractiveButton } from "@/app/_components/RefractiveButton";
 
 export type CategoryItem = {
   category: string;
@@ -27,10 +27,11 @@ type Props = {
 export default function BlogTabsClient({ posts, categories }: Props) {
   const [activeTab, setActiveTab] = useState("featured");
   const [email, setEmail] = useState("");
+  const [website, setWebsite] = useState(""); // Honeypot
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const featuredPost = posts[0];
-  const moreStories = posts.slice(1, 4);
   const allPosts = posts;
   const musicPosts = posts.filter((post) => (post.category || "").toLowerCase() === "music");
   const techPosts = posts.filter((post) => (post.category || "").toLowerCase() === "tech");
@@ -45,39 +46,64 @@ export default function BlogTabsClient({ posts, categories }: Props) {
       setMessage("Input required: Email Address");
       return;
     }
-    // Simulate API Call
-    setTimeout(() => {
-       setMessage("Uplink Established. You are subscribed.");
-       setEmail("");
-    }, 1000);
+
+    if (website) {
+      setMessage("Uplink Established. You are subscribed.");
+      setEmail("");
+      setWebsite("");
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage("");
+
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage("Uplink Established. You are subscribed.");
+        setEmail("");
+      } else {
+        setMessage(`Error: ${data.error || "Uplink Failed"}`);
+      }
+    } catch (error) {
+      setMessage("Critical Error: Connection Lost.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <>
-      {/* 1. THE SWITCHBOARD NAVIGATION */}
-      <div className="sticky top-20 z-40 bg-[#EAE8E3] border-b-4 border-black shadow-[0_4px_0_0_rgba(0,0,0,0.1)]">
-        <div className="max-w-[1920px] mx-auto px-4 md:px-8">
-          <nav className="flex overflow-x-auto no-scrollbar gap-2 py-4">
+    <div className="space-y-16">
+      {/* 1. NAVIGATION TABS */}
+      <div className="sticky top-24 z-40 mb-12">
+        <div className="max-w-fit mx-auto liquid-glass-clear px-2 py-2 rounded-full shadow-2xl border border-white/5">
+          <nav className="flex gap-1 overflow-x-auto no-scrollbar">
             {[
                { id: 'featured', label: 'Highlights', icon: Star },
-               { id: 'all', label: 'Full Index', icon: Clock },
-               { id: 'music', label: 'Audio Logs', icon: Music },
-               { id: 'tech', label: 'Dev Log', icon: Terminal },
-               { id: 'subscribe', label: 'Connect', icon: Mail }
+               { id: 'all', label: 'All Posts', icon: Clock },
+               { id: 'music', label: 'Music Posts', icon: Music },
+               { id: 'tech', label: 'Dev Posts', icon: Terminal },
+               
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`
-                  flex items-center gap-2 px-6 py-2 font-mono text-xs font-bold uppercase tracking-widest border-2 transition-all duration-100 ease-linear
-                  whitespace-nowrap
+                  flex items-center gap-3 px-8 py-3 rounded-full text-xs font-medium uppercase tracking-[0.3em] transition-all whitespace-nowrap
                   ${activeTab === tab.id
-                    ? 'bg-black text-white border-black translate-x-[2px] translate-y-[2px] shadow-none'
-                    : 'bg-white text-black border-black hover:bg-[#FF3B30] hover:text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+                    ? 'bg-primary text-background-primary shadow-xl scale-105'
+                    : 'text-secondary hover:text-primary hover:bg-white/5'
                   }
                 `}
               >
-                <tab.icon className="w-4 h-4" />
+                <tab.icon className="w-3.5 h-3.5" />
                 {tab.label}
               </button>
             ))}
@@ -85,132 +111,119 @@ export default function BlogTabsClient({ posts, categories }: Props) {
         </div>
       </div>
 
-      <div className="max-w-[1920px] mx-auto px-4 md:px-8 py-16">
+      <div className="min-h-[600px]">
         
-        {/* --- FEATURED TAB: THE HERO MODULE --- */}
+        {/* --- FEATURED TAB --- */}
         {activeTab === "featured" && featuredPost && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
              
-             {/* The Hero Post */}
-             <div className="border-4 border-black bg-white grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] mb-24 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all duration-300 group">
-                <div className="p-8 md:p-16 flex flex-col justify-center border-b-4 lg:border-b-0 lg:border-r-4 border-black relative">
-                   <div className="absolute top-0 left-0 bg-[#FF3B30] text-white px-4 py-1 font-mono text-xs uppercase tracking-widest">
-                      Issue No. 01
+             {/* The Hero Post artifact */}
+             <div className="relative min-h-[600px] md:min-h-[80vh] w-full mb-32 group rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/5 flex flex-col justify-end">
+                <Image
+                  src={featuredPost.coverImage}
+                  alt={featuredPost.title}
+                  fill
+                  className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                />
+                <div 
+                  className="absolute inset-0 via-transparent to-transparent opacity-95"
+                  style={{ backgroundImage: 'linear-gradient(to top, var(--background-primary), color-mix(in srgb, var(--background-primary) 20%, transparent), transparent)' }}
+                ></div>
+                
+                <div className="relative p-10 md:p-24 lg:p-32 flex flex-col justify-end z-10 mt-20">
+                   <div className="max-w-5xl space-y-8 md:space-y-12">
+                      <div className="flex items-center gap-4">
+                         <div className="w-12 h-px bg-accent-blue" />
+                         <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">Priority_Sequence // Featured</span>
+                      </div>
+                      <h2 className="text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tighter uppercase leading-[0.75] text-primary">
+                         <Link href={`/posts/${featuredPost.slug}`}>
+                            {featuredPost.title}
+                         </Link>
+                      </h2>
+                      <p className="text-xl md:text-3xl text-secondary font-light max-w-3xl leading-relaxed group-hover:opacity-100 transition-opacity">
+                         {featuredPost.excerpt}
+                      </p>
+                      <div className="pt-8">
+                         <Link href={`/posts/${featuredPost.slug}`} className="inline-flex items-center gap-6 px-10 py-5 rounded-full bg-primary text-background-primary text-xs font-medium uppercase tracking-[0.4em] hover:scale-105 active:scale-95 transition-all">
+                            Open Sequence <ArrowRight size={18} />
+                         </Link>
+                      </div>
                    </div>
-                   <h1 className="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter mb-6 group-hover:text-[#2B4592] transition-colors">
-                      <Link href={`/posts/${featuredPost.slug}`}>
-                         {featuredPost.title}
-                      </Link>
-                   </h1>
-                   <p className="text-lg font-medium leading-relaxed border-l-4 border-black pl-6 mb-8 text-gray-700">
-                      {featuredPost.excerpt}
-                   </p>
-                   <Link 
-                      href={`/posts/${featuredPost.slug}`}
-                      className="self-start px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-[#FF3B30] transition-colors"
-                   >
-                      Read Article
-                   </Link>
-                </div>
-                <div className="relative min-h-[400px] overflow-hidden bg-black">
-                   <Image
-                      src={featuredPost.coverImage}
-                      alt={featuredPost.title}
-                      fill
-                      className="object-cover opacity-80 group-hover:scale-105 group-hover:opacity-60 transition-all duration-500 grayscale group-hover:grayscale-0"
-                   />
-                   <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none"></div>
                 </div>
              </div>
 
-             {/* More Stories Grid */}
-             {moreStories.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                   {moreStories.map((post, idx) => (
-                      <div key={post.slug} className="border-2 border-black bg-white p-6 hover:shadow-[8px_8px_0px_0px_#2B4592] transition-shadow group">
-                         <div className="font-mono text-xs text-gray-500 mb-2">0{idx + 2} // {new Date(post.date).toLocaleDateString()}</div>
-                         <h3 className="text-xl font-bold uppercase leading-tight mb-4 group-hover:underline decoration-2 underline-offset-4">
-                            <Link href={`/posts/${post.slug}`}>{post.title}</Link>
-                         </h3>
-                         <p className="text-sm text-gray-600 line-clamp-3 mb-4">{post.excerpt}</p>
-                         <Link href={`/posts/${post.slug}`} className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 group-hover:text-[#2B4592]">
-                            Read <ArrowRight className="w-3 h-3" />
-                         </Link>
+             {/* Portals */}
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                {categories.map((cat) => (
+                   <Link 
+                      key={cat.category} 
+                      href={cat.link}
+                      className="relative h-[500px] overflow-hidden rounded-[2.5rem] flex flex-col justify-end p-12 md:p-16 group shadow-2xl border border-white/5"
+                   >
+                      <div className="absolute inset-0 z-0">
+                         <Image src={cat.image} alt={cat.category} fill className="object-cover opacity-20 group-hover:opacity-40 group-hover:scale-110 transition-all duration-[3000ms]" />
+                         <div 
+                           className="absolute inset-0 via-transparent to-transparent"
+                           style={{ backgroundImage: 'linear-gradient(to top, var(--background-primary), color-mix(in srgb, var(--background-primary) 40%, transparent), transparent)' }}
+                         ></div>
                       </div>
-                   ))}
-                </div>
-             )}
-
-             {/* Categories (The Portals) */}
-             <div className="mt-32">
-                <div className="flex items-center gap-4 mb-12">
-                   <div className="w-4 h-4 bg-black animate-pulse"></div>
-                   <h2 className="text-4xl font-black uppercase tracking-tighter">Departments</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-4 border-black">
-                   {categories.map((cat, i) => (
-                      <Link 
-                         key={cat.category} 
-                         href={cat.link}
-                         className={`
-                            group relative h-80 border-b-4 md:border-b-0 ${i === 0 ? 'md:border-r-4' : ''} border-black overflow-hidden flex flex-col justify-between p-8 bg-white hover:text-white transition-colors duration-300
-                         `}
-                      >
-                         {/* Hover Background Flood */}
-                         <div className={`absolute inset-0 ${i === 0 ? 'bg-[#2B4592]' : 'bg-[#FF3B30]'} transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] z-0`}></div>
-                         
-                         <div className="relative z-10 flex justify-between items-start">
-                            <span className="font-mono text-xs uppercase tracking-widest border-b-2 border-black group-hover:border-white pb-1">Dept. 0{i + 1}</span>
-                            <span className="text-4xl">{cat.icon}</span>
+                      
+                      <div className="relative z-10 space-y-8">
+                         <div className="flex items-center gap-3">
+                            <div className="w-8 h-px bg-accent-blue/50" />
+                            <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.4em] mb-0 block">{cat.tagline}</span>
                          </div>
-                         
-                         <div className="relative z-10">
-                            <h3 className="text-5xl font-black uppercase tracking-tighter mb-2">{cat.category}</h3>
-                            <p className="font-mono text-xs uppercase tracking-wider opacity-80">{cat.tagline}</p>
+                         <h3 className="text-7xl md:text-8xl font-light uppercase tracking-tighter text-primary leading-[0.7]">{cat.category}</h3>
+                         <p className="text-secondary font-light text-xl max-w-sm group-hover:opacity-100 transition-opacity leading-relaxed">{cat.description}</p>
+                         <div className="flex items-center gap-4 text-xs font-medium uppercase tracking-[0.5em] text-accent-blue group-hover:translate-x-4 transition-transform pt-4">
+                            Establish_Entry <ChevronRight size={20} />
                          </div>
-                      </Link>
-                   ))}
-                </div>
+                      </div>
+                   </Link>
+                ))}
              </div>
           </div>
         )}
 
-        {/* --- LISTING TABS (ALL, MUSIC, TECH) --- */}
+        {/* --- LISTING TABS --- */}
         {(activeTab === "all" || activeTab === "music" || activeTab === "tech") && (
-          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-             <div className="flex items-end justify-between border-b-4 border-black pb-4 mb-12">
-                <h2 className="text-6xl font-black uppercase tracking-tighter">
-                   {activeTab === 'all' ? 'Master Index' : activeTab.toUpperCase() + ' LOGS'}
-                </h2>
-                <span className="font-mono text-xs uppercase tracking-widest hidden md:block">
-                   entries_count: {tabPosts.length}
-                </span>
-             </div>
-
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 {tabPosts.length === 0 ? (
-                   <div className="col-span-full border-2 border-dashed border-black p-12 text-center font-mono uppercase">
-                      No Data Found in this Sector.
+                   <div className="col-span-full py-40 text-center rounded-[3rem] border border-dashed border-white/10">
+                      <p className="font-mono text-xs uppercase tracking-[0.6em] text-secondary opacity-50 leading-relaxed">Reference_Not_Found<br/>Sector currently void of data logs.</p>
                    </div>
                 ) : (
                    tabPosts.map((post) => (
-                      <article key={post.slug} className="group border-2 border-black bg-white flex flex-col hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-200">
-                         <div className="relative h-48 w-full border-b-2 border-black overflow-hidden bg-black">
+                      <article key={post.slug} className="group relative flex flex-col bg-white/[0.01] border border-white/5 transition-all duration-700 rounded-2xl p-6 shadow-xl hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)]" style={{ borderColor: 'transparent' }}>
+                         <div className="relative aspect-[4/3] w-full overflow-hidden mb-10 rounded-xl">
                             <Image
                                src={post.coverImage}
                                alt={post.title}
                                fill
-                               className="object-cover opacity-80 grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500"
+                               className="object-cover transition-all duration-[3000ms] group-hover:scale-110 opacity-70 group-hover:opacity-100"
                             />
+                            <div className="absolute top-4 left-4 inline-block px-3 py-1 rounded-full liquid-glass-clear text-[9px] font-mono uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                               {post.category}
+                            </div>
                          </div>
-                         <div className="p-6 flex flex-col flex-1">
-                            <time className="font-mono text-xs text-gray-500 mb-2 block">{new Date(post.date).toLocaleDateString()}</time>
-                            <h3 className="text-xl font-bold uppercase leading-tight mb-4 group-hover:text-[#FF3B30] transition-colors">
+                         <div className="flex flex-col flex-1 px-4 pb-4">
+                            <div className="flex items-center gap-4 mb-6">
+                               <div className="w-8 h-px" style={{ backgroundColor: 'color-mix(in srgb, var(--accent-blue) 30%, transparent)' }} />
+                               <time className="text-[10px] font-mono text-accent-blue uppercase tracking-[0.3em]">
+                                  {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                </time>
+                            </div>
+                            <h3 className="text-4xl font-light tracking-tighter mb-8 group-hover:text-white transition-colors uppercase leading-[0.85]">
                                <Link href={`/posts/${post.slug}`}>{post.title}</Link>
                             </h3>
-                            <div className="mt-auto pt-4 border-t-2 border-black/10 flex justify-between items-center">
-                               <span className="font-mono text-xs font-bold uppercase">Read File</span>
-                               <ArrowRight className="w-4 h-4 -rotate-45 group-hover:rotate-0 transition-transform" />
+                            <p className="text-secondary font-light text-base line-clamp-2 mb-10 opacity-70 group-hover:opacity-90 transition-opacity leading-relaxed">
+                               {post.excerpt}
+                            </p>
+                            <div className="mt-auto pt-6 border-t border-white/5 flex justify-between items-center opacity-60 group-hover:opacity-100 transition-all">
+                               <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-secondary">Execute_Log</span>
+                               <ArrowRight className="w-5 h-5 text-accent-blue group-hover:translate-x-3 transition-transform" />
                             </div>
                          </div>
                       </article>
@@ -222,44 +235,68 @@ export default function BlogTabsClient({ posts, categories }: Props) {
 
         {/* --- SUBSCRIBE TAB --- */}
         {activeTab === "subscribe" && (
-          <div className="max-w-2xl mx-auto py-12 animate-in zoom-in-95 duration-300">
-             <div className="border-4 border-black bg-white p-8 md:p-12 shadow-[16px_16px_0px_0px_#F4B400]">
-                <div className="flex justify-center mb-6">
-                   <div className="w-20 h-20 bg-black rounded-full flex items-center justify-center">
-                      <Mail className="text-white w-10 h-10" />
-                   </div>
-                </div>
-                <h2 className="text-4xl font-black text-center uppercase tracking-tighter mb-4">Establish Uplink</h2>
-                <p className="text-center font-mono text-sm text-gray-600 mb-8 max-w-md mx-auto">
-                   Receive transmission of new logs, sonic experiments, and visual data directly to your inbox.
-                </p>
+          <div className="max-w-4xl mx-auto py-12 animate-in zoom-in-95 duration-700">
+             <div className="relative overflow-hidden rounded-[3rem] p-16 md:p-32 text-center bg-white/[0.01] border border-white/10 shadow-[0_50px_100px_rgba(0,0,0,0.4)]">
+                <div 
+                  className="absolute inset-0 opacity-40"
+                  style={{ background: 'radial-gradient(circle at center, color-mix(in srgb, var(--accent-blue) 10%, transparent), transparent)' }}
+                ></div>
                 
-                <div className="flex flex-col gap-4">
-                   <input
-                      type="email"
-                      placeholder="ENTER_EMAIL_ADDRESS"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-4 border-2 border-black bg-[#F4F3EF] font-mono text-sm focus:outline-none focus:bg-[#2B4592] focus:text-white focus:placeholder-white/50 transition-colors"
-                   />
-                   <button
-                      onClick={handleSubscribe}
-                      className="w-full py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-[#FF3B30] transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] active:translate-y-[2px] active:translate-x-[2px] active:shadow-none"
-                   >
-                      Initialize
-                   </button>
+                <div className="w-32 h-32 bg-white/5 border border-white/5 rounded-full flex items-center justify-center mx-auto mb-16 shadow-2xl relative z-10 animate-in fade-in zoom-in duration-1000">
+                   <Mail className="text-accent-blue w-12 h-12 animate-pulse" />
                 </div>
                 
-                {message && (
-                   <div className="mt-6 p-4 border-2 border-black bg-[#F4B400] font-mono text-xs font-bold text-center">
-                      {message}
+                <div className="relative z-10">
+                   <div className="flex items-center justify-center gap-4 mb-8">
+                      <div className="w-12 h-px" style={{ backgroundColor: 'color-mix(in srgb, var(--accent-blue) 40%, transparent)' }} />
+                      <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">System_Establishment</span>
                    </div>
-                )}
+                   <h2 className="text-7xl md:text-8xl font-light uppercase tracking-tighter mb-12 text-primary leading-none">Uplink</h2>
+                   <p className="text-secondary font-light text-2xl mb-20 max-w-xl mx-auto leading-relaxed italic opacity-80">
+                      Automated dispatches of technical modules, sonic studies, and high-fidelity data logs.
+                   </p>
+                   
+                   <div className="space-y-8 max-w-md mx-auto">
+                      <div className="relative">
+                         <div className="absolute opacity-0 -z-10 h-0 w-0 overflow-hidden">
+                            <input type="text" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off" />
+                         </div>
+
+                         <input
+                            type="email"
+                            placeholder="ENDPOINT_EMAIL"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            disabled={isLoading}
+                            className="w-full px-10 py-6 rounded-full bg-white/[0.03] border border-white/10 font-mono text-sm uppercase tracking-[0.3em] focus:outline-none focus:border-accent-blue/50 focus:bg-white/[0.05] transition-all disabled:opacity-50 text-center text-primary placeholder:text-secondary/30"
+                         />
+                      </div>
+                      
+                      <button 
+                        onClick={handleSubscribe} 
+                        disabled={isLoading}
+                        className="w-full h-24 rounded-full bg-primary text-background-primary flex items-center justify-center gap-6 group hover:scale-[1.02] active:scale-[0.98] transition-all relative overflow-hidden"
+                      >
+                         <span className="text-xl font-medium uppercase tracking-[0.5em] relative z-10">{isLoading ? "SYNCING..." : "INITIALIZE_UPLINK"}</span>
+                         <ArrowRight size={24} className="relative z-10 group-hover:translate-x-3 transition-transform" />
+                         <div className="absolute inset-0 bg-accent-blue translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                      </button>
+                   </div>
+                   
+                   {message && (
+                      <div 
+                        className="mt-16 p-10 rounded-2xl border font-mono text-[10px] uppercase tracking-[0.5em] animate-in slide-in-from-top-6"
+                        style={{ backgroundColor: 'color-mix(in srgb, var(--accent-blue) 5%, transparent)', borderColor: 'color-mix(in srgb, var(--accent-blue) 10%, transparent)', color: 'var(--accent-blue)' }}
+                      >
+                         {message}
+                      </div>
+                   )}
+                </div>
              </div>
           </div>
         )}
 
       </div>
-    </>
+    </div>
   );
 }

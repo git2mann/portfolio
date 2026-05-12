@@ -26,14 +26,14 @@ export default function AlbumSection({ album }: { album: Album }) {
           />
         </div>
         <div>
-          <h2 className="text-3xl font-bold">{album.title}</h2>
+          <h2 className="text-3xl font-medium">{album.title}</h2>
           <p className="text-neutral-600 dark:text-neutral-400">{album.releaseYear}</p>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="songs-list">
-          <h3 className="text-xl font-semibold mb-4">Tracks</h3>
+          <h3 className="text-xl font-medium mb-4">Tracks</h3>
           <div className="space-y-2">
             {album.songs.map((song) => (
               <button
@@ -53,7 +53,7 @@ export default function AlbumSection({ album }: { album: Album }) {
 
         {selectedSong && (
             <div className="lyrics-section">
-              <h3 className="text-xl font-semibold mb-4">{selectedSong.title} Lyrics</h3>
+              <h3 className="text-xl font-medium mb-4">{selectedSong.title} Lyrics</h3>
               <LyricsComponent lyrics={selectedSong.lyrics} />
             </div>
         )}

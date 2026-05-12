@@ -1,8 +1,10 @@
 "use client";
 
-import { memo, useEffect, useState, useRef } from "react";
-import dynamic from "next/dynamic";
-import { ChevronDown, Square, Circle } from "lucide-react";
+import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
+import { ChevronDown, Check, X } from "lucide-react";
+import { themes, STORAGE_KEY } from "./theme-utils";
+import { motion, AnimatePresence } from "framer-motion";
 
 declare global {
   interface Window {
@@ -10,115 +12,31 @@ declare global {
   }
 }
 
-type Theme = {
-  id: string;
-  name: string;
-  icon: string;
-  class: string;
-};
-
-const STORAGE_KEY = "theme";
-
-// Define themes (Data remains same, aesthetic changes via UI)
-export const themes: Theme[] = [
-  { id: "system", name: "Auto_Sys", icon: "⚙️", class: "system" },
-  { id: "light", name: "Light_Mode", icon: "☀️", class: "light" },
-  { id: "dark", name: "Dark_Mode", icon: "🌑", class: "dark" },
-  { id: "pastel", name: "Pastel", icon: "🌸", class: "theme-pastel" },
-  { id: "forest", name: "Forest", icon: "🌲", class: "theme-forest" },
-  { id: "ocean", name: "Ocean", icon: "🌊", class: "theme-ocean" },
-  { id: "sunset", name: "Sunset", icon: "🌅", class: "theme-sunset" },
-  { id: "metallic-silver", name: "Chrome", icon: "💿", class: "theme-metallic-silver" },
-  { id: "8bit", name: "8-Bit_OS", icon: "🕹️", class: "theme-8bit" }
-];
-
-// Define NoFOUCScript (Preserved functionality)
-export function NoFOUCScript(storageKey: string, themeList: Theme[]) {
-  const updateDOM = () => {
-    const modifyTransition = () => {
-      const css = document.createElement("style");
-      css.type = "text/css";
-      css.textContent = "*,*::before,*::after{transition:none!important;}";
-      document.head.appendChild(css);
-      return () => {
-        getComputedStyle(document.body);
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            document.head.removeChild(css);
-          });
-        });
-      };
-    };
-
-    const restoreTransitions = modifyTransition();
-    const theme = localStorage.getItem(storageKey) ?? "system";
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    const resolvedTheme = theme === "system" ? systemTheme : theme;
-
-    const allThemeClasses = themeList
-      .map(t => t.class)
-      .filter(c => c !== "system" && c !== "light");
-
-    document.documentElement.classList.remove(...allThemeClasses);
-
-    if (resolvedTheme !== "light" && resolvedTheme !== "system") {
-      const themeObj = themeList.find(t => t.id === resolvedTheme);
-      if (themeObj) {
-        document.documentElement.classList.add(themeObj.class);
-      }
-    }
-
-    document.documentElement.setAttribute("data-theme", theme);
-
-    // --- 8-Bit Theme Logic ---
-    document.documentElement.style.fontFamily = "";
-    const existingOverlay = document.getElementById("eight-bit-overlay");
-    if (existingOverlay) existingOverlay.remove();
-
-    if (resolvedTheme === "8bit") {
-      if (!document.getElementById("eight-bit-font-link")) {
-        const fontLink = document.createElement("link");
-        fontLink.id = "eight-bit-font-link";
-        fontLink.rel = "stylesheet";
-        fontLink.href = "https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap";
-        document.head.appendChild(fontLink);
-      }
-      document.documentElement.style.fontFamily = "'Press Start 2P', 'VT323', monospace";
-
-      const overlay = document.createElement("div");
-      overlay.id = "eight-bit-overlay";
-      overlay.style.cssText = "position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;opacity:0.18;background-image:repeating-linear-gradient(0deg, #ffb7ec 0 2px, transparent 2px 16px), repeating-linear-gradient(90deg, #a78bfa 0 2px, transparent 2px 16px);background-blend-mode:multiply;";
-      document.body.appendChild(overlay);
-    }
-
-    // --- Background Logic ---
-    if (resolvedTheme === "sunset") {
-      document.body.style.background = "linear-gradient(120deg, #6d28d9 0%, #f472b6 100%)";
-      document.body.style.backgroundAttachment = "fixed";
-    } else if (resolvedTheme === "8bit") {
-      document.body.style.background = "linear-gradient(135deg, #ffb7ec 0%, #a78bfa 100%)";
-      document.body.style.backgroundAttachment = "fixed";
-    } else {
-      document.body.style.background = "";
-      document.body.style.backgroundAttachment = "";
-    }
-
-    restoreTransitions();
-  };
-
-  window.updateDOM = updateDOM;
-  window.updateDOM();
-
-  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", window.updateDOM);
-}
-
-// --- BAUHAUS THEME SELECTOR UI ---
 const ThemeSelector = () => {
   const [mounted, setMounted] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<string>("system");
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownCoords, setDropdownCoords] = useState({ top: 0, right: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  
   const containerRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Dispatch global blur event
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('global-blur-toggle', { detail: isOpen }));
+    return () => {
+      // Cleanup on unmount if open
+      if (isOpen) window.dispatchEvent(new CustomEvent('global-blur-toggle', { detail: false }));
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     setMounted(true);
@@ -132,10 +50,33 @@ const ThemeSelector = () => {
     window.updateDOM?.();
   }, [currentTheme, mounted]);
 
-  // Click outside listener
+  // Update dropdown position when opened or window resized
+  useEffect(() => {
+    const updatePosition = () => {
+      if (isOpen && triggerRef.current && !isMobile) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        // Match the "github" position: Align right edge of menu to right edge of button
+        setDropdownCoords({
+          top: rect.bottom,
+          right: window.innerWidth - rect.right
+        });
+      }
+    };
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true); // Catch scroll events in the header
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [isOpen, isMobile]);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        const portalDropdown = document.getElementById("theme-portal-dropdown");
+        if (portalDropdown && portalDropdown.contains(event.target as Node)) return;
         setIsOpen(false);
       }
     };
@@ -148,109 +89,113 @@ const ThemeSelector = () => {
   const currentThemeData = themes.find(t => t.id === currentTheme);
 
   return (
-    <div className="relative font-sans" ref={containerRef}>
+    <div className="relative" ref={containerRef}>
       
-      {/* 1. THE TRIGGER BUTTON */}
+      {/* TRIGGER BUTTON */}
       <button
-        ref={buttonRef}
+        ref={triggerRef}
         onClick={() => setIsOpen(!isOpen)}
         className={`
-          relative flex items-center justify-between gap-3 px-4 py-2 
-          bg-white dark:bg-black text-black dark:text-white
-          border-2 border-black dark:border-white
-          transition-all duration-100 ease-linear
-          hover:bg-[#F4B400] hover:text-black hover:border-black
-          focus:outline-none
-          ${isOpen 
-            ? "translate-x-[2px] translate-y-[2px] shadow-none bg-[#F4B400] text-black" 
-            : "shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]"
-          }
+          flex items-center gap-3 px-5 py-2.5 rounded-full liquid-glass transition-all duration-500
+          ${isOpen ? "border-white/40 shadow-inner scale-[0.97]" : "hover:scale-[1.03] active:scale-95"}
         `}
-        aria-label="Select Theme"
-        aria-expanded={isOpen}
+        aria-label="Change Appearance"
       >
-        <div className="flex items-center gap-3">
-          <span className="text-lg leading-none filter grayscale">{currentThemeData?.icon}</span>
-          <span className="font-mono text-xs font-bold uppercase tracking-widest hidden md:inline-block">
-            {currentThemeData?.name.split('_')[0]}
-          </span>
-        </div>
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+        <span className="text-xl leading-none">{currentThemeData?.icon}</span>
+        <ChevronDown size={14} className={`transition-transform duration-500 text-white/40 ${isOpen ? "rotate-180 text-white/80" : ""}`} />
       </button>
 
-      {/* 2. THE DROPDOWN MENU */}
-      {isOpen && (
-        <div 
-          className="absolute right-0 top-full mt-2 w-64 bg-[#F4F3EF] dark:bg-[#111] border-2 border-black dark:border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] z-50 animate-in fade-in zoom-in-95 duration-100"
-        >
-          {/* Header Decoration */}
-          <div className="h-2 w-full flex border-b-2 border-black dark:border-white">
-             <div className="w-1/3 bg-[#FF3B30]"></div>
-             <div className="w-1/3 bg-[#2B4592]"></div>
-             <div className="w-1/3 bg-[#F4B400]"></div>
-          </div>
+      {/* DROPDOWN/MODAL MENU: Decoupled via Portal */}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {isOpen && (
+            <>
+              {/* Overlay for Mobile */}
+              {isMobile && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  onClick={() => setIsOpen(false)}
+                  className="fixed inset-0 bg-background-primary/60 backdrop-blur-xl z-[99999]"
+                />
+              )}
 
-          <div className="max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-black dark:scrollbar-thumb-white">
-            {themes.map((theme) => {
-              const isActive = currentTheme === theme.id;
-              return (
-                <button
-                  key={theme.id}
-                  onClick={() => {
-                    setCurrentTheme(theme.id);
-                    setIsOpen(false);
-                  }}
-                  className={`
-                    w-full flex items-center justify-between px-4 py-3 text-left border-b-2 border-black/10 dark:border-white/10 last:border-0
-                    transition-colors duration-150 group
-                    ${isActive 
-                      ? "bg-black text-white dark:bg-white dark:text-black" 
-                      : "hover:bg-[#2B4592] hover:text-white dark:hover:bg-[#FF3B30]"
-                    }
-                  `}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl filter grayscale group-hover:grayscale-0 transition-all">{theme.icon}</span>
-                    <span className="font-mono text-xs font-bold uppercase tracking-wider">{theme.name}</span>
-                  </div>
-                  
-                  {isActive ? (
-                    <Square className="w-3 h-3 fill-current" />
-                  ) : (
-                    <Circle className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <motion.div 
+                id="theme-portal-dropdown"
+                initial={isMobile ? { opacity: 0, scale: 0.9, y: "-45%" } : { opacity: 0, y: 10 }}
+                animate={isMobile ? { opacity: 1, scale: 1, y: "-50%" } : { opacity: 1, y: 0 }}
+                exit={isMobile ? { opacity: 0, scale: 0.9, y: "-45%" } : { opacity: 0, y: 10 }}
+                className={`
+                  fixed rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.8)] z-[100000] p-4 
+                  liquid-glass-clear overflow-hidden
+                  ${isMobile 
+                    ? 'left-6 right-6 top-1/2 -translate-y-1/2' 
+                    : 'w-72'
+                  }
+                `}
+                style={!isMobile ? { 
+                  top: dropdownCoords.top + 12,
+                  right: dropdownCoords.right,
+                  transform: 'translate3d(0, 0, 0)',
+                  WebkitTransform: 'translate3d(0, 0, 0)',
+                  backfaceVisibility: 'hidden',
+                  WebkitBackfaceVisibility: 'hidden'
+                } : {}}
+              >
+                <div className="py-2">
+                  {isMobile && (
+                    <div className="flex justify-between items-center mb-6 px-4 pt-2">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-accent-blue">Select Interface Theme</span>
+                      <button 
+                        onClick={() => setIsOpen(false)}
+                        className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-secondary hover:text-primary transition-colors border border-white/10"
+                      >
+                        <X size={18} />
+                      </button>
+                    </div>
                   )}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+
+                  <div className={`grid ${isMobile ? 'grid-cols-2 gap-2' : 'grid-cols-1'}`}>
+                    {themes.map((theme) => {
+                      const isActive = currentTheme === theme.id;
+                      return (
+                        <button
+                          key={theme.id}
+                          onClick={() => {
+                            setCurrentTheme(theme.id);
+                            setIsOpen(false);
+                          }}
+                          className={`
+                            w-full flex items-center justify-between px-5 py-4 rounded-2xl text-left transition-all duration-300 group mb-1
+                            ${isActive 
+                              ? "bg-primary text-background-primary shadow-2xl scale-[1.02]" 
+                              : "hover:bg-white/5 text-secondary hover:text-primary border border-transparent hover:border-white/10"
+                            }
+                          `}
+                        >
+                          <div className="flex items-center gap-4">
+                            <span className={`text-2xl transition-transform duration-500 ${isActive ? 'scale-110' : 'group-hover:scale-125'}`}>{theme.icon}</span>
+                            <span className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${isActive ? 'text-background-primary' : 'text-secondary group-hover:text-primary'}`}>{theme.name.replace('_', ' ')}</span>
+                          </div>
+                          
+                          {isActive && <Check size={16} className="text-background-primary animate-in zoom-in duration-500" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
       )}
     </div>
   );
 };
 
-export const Script = memo(() => (
-  <script
-    dangerouslySetInnerHTML={{
-      __html: `
-        const themes = ${JSON.stringify(themes)};
-        (${NoFOUCScript.toString()})('${STORAGE_KEY}', themes);
-      `,
-    }}
-  />
-));
-
-Script.displayName = "ThemeScript";
-
-const ClientScript = dynamic(() => Promise.resolve(Script), { ssr: false });
-
 export const ThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  return (
-    <>
-      {mounted && <ClientScript />}
-      <ThemeSelector />
-    </>
-  );
+  return <ThemeSelector />;
 };
+

@@ -14,7 +14,7 @@ export function MoreStories({ posts }: Props) {
   return (
     <section>
       {/* Section title */}
-      <h2 className="mb-8 text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
+      <h2 className="mb-8 text-6xl md:text-8xl font-light tracking-tighter leading-tight">
         More Stories
       </h2>
       

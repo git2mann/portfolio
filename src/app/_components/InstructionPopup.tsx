@@ -1,67 +1,75 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { X, Info } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function InstructionPopup() {
   const [isVisible, setIsVisible] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
 
   useEffect(() => {
     // Check if the popup has already been shown in this session
     const hasSeenPopup = sessionStorage.getItem('hasSeenInstructionPopup');
     if (!hasSeenPopup) {
-      setIsVisible(true);
-      sessionStorage.setItem('hasSeenInstructionPopup', 'true'); // Mark as shown
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+        sessionStorage.setItem('hasSeenInstructionPopup', 'true');
+      }, 800); // 800ms delay for promptness
+      return () => clearTimeout(timer);
     }
-
-    // Update the scroll position dynamically
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!isVisible) return null;
-
   return (
-    <div
-      className="fixed inset-0 flex items-start justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50 animate-fade-in"
-    >
-      <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg max-w-md text-center relative animate-slide-down mt-10 mx-auto">
-      {/* Close Button */}
-      <button
-      onClick={() => setIsVisible(false)}
-      className="absolute top-3 right-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition"
-      aria-label="Close"
-      >
-      <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className="w-6 h-6"
-      >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-      </button>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-md z-[200] px-6"
+        >
+          <motion.div 
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            className="liquid-glass-clear p-8 md:p-12 rounded-[2.5rem] shadow-2xl max-w-lg w-full text-center relative overflow-hidden"
+          >
+            {/* Close Button */}
+            <button
+              onClick={() => setIsVisible(false)}
+              className="absolute top-6 right-8 text-white/40 hover:text-white transition-all hover:scale-110 active:scale-90"
+              aria-label="Close"
+            >
+              <X size={24} strokeWidth={1.5} />
+            </button>
 
-      {/* Popup Content */}
-      <h2 className="text-2xl font-bold mb-4 text-neutral-800 dark:text-neutral-100 gradient-text">
-      How to Use the Lyrics Checker
-      </h2>
-      <p className="text-neutral-600 dark:text-neutral-400 mb-4 leading-relaxed">
-      Click on a lyric to view its explanation. To select another lyric, deactivate the current one by clicking on it again.
-      </p>
-      <button
-      onClick={() => setIsVisible(false)}
-      className="mt-6 px-6 py-3 bg-gradient-to-r from-[var(--gradient-start)] via-[var(--gradient-middle)] to-[var(--gradient-end)] text-white rounded-lg shadow-md hover:opacity-90 transition"
-      >
-      Got it!
-      </button>
-      </div>
-    </div>
+            {/* Popup Content */}
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-8 border border-red-500/20 shadow-[0_0_40px_rgba(239,68,68,0.2)]">
+                <Info size={32} className="text-red-500" />
+              </div>
+              
+              <h2 className="text-2xl md:text-3xl font-light mb-4 text-primary uppercase tracking-tight">
+                Lyrics & Annotations
+              </h2>
+              
+              <p className="text-secondary text-base md:text-lg font-light leading-relaxed mb-10 opacity-80">
+                Click on a highlighted lyric fragment to extract its interpretation. Deactivate by clicking again or selecting another unit.
+              </p>
+
+              <button
+                onClick={() => setIsVisible(false)}
+                className="w-full py-4 bg-white text-black font-medium uppercase text-xs tracking-[0.3em] hover:bg-red-500 hover:text-white transition-all shadow-xl hover:scale-[1.02] active:scale-95"
+              >
+                System Receptive
+              </button>
+            </div>
+
+            {/* Decorative Grid detail */}
+            <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

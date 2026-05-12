@@ -33,19 +33,19 @@ export function PostPreview({
       </div>
       
       {/* Post title with link to post */}
-      <h3 className="text-3xl mb-3 leading-snug">
+      <h3 className="text-5xl mb-3 leading-snug">
         <Link href={`/posts/${slug}`} className="hover:underline">
           {title}
         </Link>
       </h3>
       
       {/* Publication date */}
-      <div className="text-lg mb-4">
+      <div className="text-2xl mb-4">
         <DateFormatter dateString={date} />
       </div>
       
       {/* Post excerpt */}
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+      <p className="text-2xl leading-relaxed mb-4">{excerpt}</p>
       
       {/* Author information */}
       <Avatar name={author.name} picture={author.picture} />

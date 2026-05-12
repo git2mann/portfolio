@@ -15,8 +15,20 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'noto-serif-jp-condensed': [
-          'Noto Serif JP',
+        'sans': [
+          'Noto-Serif-Display-Condensed',
+          'serif',
+        ],
+        'serif': [
+          'Noto-Serif-Display-Condensed',
+          'serif',
+        ],
+        'noto-display-condensed': [
+          'Noto-Serif-Display-Condensed',
+          'serif',
+        ],
+        'skinny-serif': [
+          'Cormorant Garamond',
           'serif',
         ],
       },
@@ -26,21 +38,20 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
 
-      // Custom color palette for branding and UI consistency
+      // Custom color palette mapped to theme variables
       colors: {
-        "accent-1": "#FAFAFA", // Light gray
-        "accent-2": "#EAEAEA", // Slightly darker gray
-        "accent-7": "#333",     // Dark gray for text
-        success: "#0070f3",      // Blue for success messages
-        cyan: "#79FFE1",        // Cyan for UI highlights
-        primary: {
-          light: '#FFD700', // Highlight color for light mode
-          dark: '#FF8C00', // Highlight color for dark mode
-        },
-        secondary: {
-          light: '#FFFACD', // Secondary color for light mode
-          dark: '#FFA500', // Secondary color for dark mode
-        },
+        primary: "var(--text-primary)",
+        secondary: "var(--text-secondary)",
+        "background-primary": "var(--background-primary)",
+        "background-secondary": "var(--background-secondary)",
+        "accent-blue": "var(--accent-blue)",
+        "glass-bg": "var(--glass-bg)",
+        "glass-border": "var(--glass-border)",
+        "accent-1": "#FAFAFA",
+        "accent-2": "#EAEAEA",
+        "accent-7": "#333",
+        success: "#0070f3",
+        cyan: "#79FFE1",
       },
 
       // Additional spacing values for layout flexibility
@@ -73,6 +84,7 @@ const config: Config = {
         'fade-in': 'fadeIn 0.5s ease-out',
         'slide-up': 'slideUp 0.5s ease-out',
         'scale-in': 'scaleIn 0.3s ease-out',
+        'spin-slow': 'spin 8s linear infinite',
       },
 
       // Keyframes for custom animations

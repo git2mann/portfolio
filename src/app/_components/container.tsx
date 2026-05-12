@@ -1,15 +1,16 @@
 /**
  * Container component
  * Provides consistent horizontal padding and maximum width
- * Used to wrap content sections throughout the site
  */
 type Props = {
   children?: React.ReactNode;
+  className?: string;
+  id?: string;
 };
 
-const Container = ({ children }: Props) => {
+const Container = ({ children, className, id }: Props) => {
   return (
-    <div className="w-full px-5" style={{ marginTop: 0, paddingTop: 0 }}>
+    <div id={id} className={`max-w-[1440px] mx-auto px-5 md:px-10 ${className || ""}`}>
       {children}
     </div>
   );

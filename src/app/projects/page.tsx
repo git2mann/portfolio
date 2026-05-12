@@ -1,101 +1,120 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Container from "@/app/_components/container";
-import { ArrowRight, Code, Terminal, Cpu, PenTool, Layout, Box } from 'lucide-react';
+import { ArrowRight, Terminal, Cpu, Box, Layout, Zap, Globe, Github, ExternalLink } from 'lucide-react';
+import ScrollReveal from "@/app/_components/ScrollReveal";
+import { motion } from "framer-motion";
 
 export default function ProjectsPage() {
-  const [activeTab, setActiveTab] = useState('featured');
+  const [activeTab, setActiveTab] = useState('all');
 
   const categories = [
-    { id: 'featured', label: 'Priority', icon: Box },
-    { id: 'all', label: 'Master Index', icon: Layout },
-    { id: 'web', label: 'Web Systems', icon: Code },
-    { id: 'mobile', label: 'Mobile Units', icon: Terminal },
-    { id: 'open-source', label: 'Open Source', icon: PenTool },
-    { id: 'ai', label: 'Neural Nets', icon: Cpu }
+    { id: 'all', label: 'All Projects', icon: Layout },
+    { id: 'web', label: 'Web Systems', icon: Globe },
+    { id: 'mobile', label: 'Mobile Apps', icon: Terminal },
+    { id: 'ai', label: 'Intelligence', icon: Cpu }
   ];
 
   return (
-    <main className="min-h-screen bg-[#EAE8E3] text-black selection:bg-[#F4B400] selection:text-black">
+    <main className="min-h-screen pb-32">
       
-      {/* 1. BACKGROUND GRID */}
-      <div className="fixed inset-0 opacity-10 pointer-events-none z-0" 
-           style={{ 
-             backgroundImage: `linear-gradient(to right, #000 1px, transparent 1px), linear-gradient(to bottom, #000 1px, transparent 1px)`,
-             backgroundSize: '40px 40px'
-           }}>
-      </div>
+      {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
+      <section className="relative min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-20">
+        <div className="absolute inset-0 z-0">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            suppressHydrationWarning
+            className="w-full h-full object-cover scale-105 blur-2xl opacity-20"
+          >
+            <source src="/assets/LN Portfolio Asset Figurine Projects Loop Video Square.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
+        </div>
 
-      {/* 2. HERO: ENGINEERING BLUEPRINT */}
-      <div className="relative z-10 w-full border-b-4 border-black bg-[#F4F3EF]">
-         {/* Ticker Tape */}
-         <div className="w-full bg-black text-[#F4F3EF] py-2 overflow-hidden border-b-2 border-black">
-            <div className="animate-marquee whitespace-nowrap font-mono text-xs uppercase tracking-[0.3em] flex items-center gap-12">
-               <span>/// PROJECT_LAB: ONLINE</span>
-               <span>/// STATUS: DEVELOPMENT</span>
-               <span>/// ACCESS_LEVEL: PUBLIC</span>
-               <span>/// PROJECT_LAB: ONLINE</span>
-               <span>/// STATUS: DEVELOPMENT</span>
-               <span>/// ACCESS_LEVEL: PUBLIC</span>
+        <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
+            {/* Left: Dictionary Text */}
+            <div className="flex-1 text-left relative z-10">
+              <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
+                 <div className="flex items-center gap-6 mb-4 md:mb-8">
+                    <span className="w-12 md:w-20 h-[1px] bg-green-500/50"></span>
+                    <span className="text-green-500 font-medium text-xs md:text-sm uppercase tracking-[0.5em]">Engineering</span>
+                 </div>
+                 <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-6 md:mb-10">
+                   Code
+                 </h1>
+                 <div className="flex flex-wrap items-center gap-4 md:gap-8 text-xl md:text-4xl font-mono text-secondary">
+                   <span>/koʊd/</span>
+                   <span className="w-2 h-2 rounded-full bg-green-500/50"></span>
+                   <span>noun</span>
+                 </div>
+              </div>
+              
+              <ScrollReveal 
+                baseOpacity={0}
+                enableBlur={true}
+                blurStrength={10}
+                textClassName="text-xl md:text-5xl font-light text-primary mt-8 md:mt-12 leading-tight max-w-2xl"
+                stagger={0.08}
+                duration={1}
+                autoReveal={true}
+              >
+                1. The translation of human logic into machine execution. 2. A system of rules and structural protocols used to solve complex human problems.
+              </ScrollReveal>
+
+              <div className="mt-12 md:mt-24 flex flex-wrap gap-6 md:gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+                <Link 
+                  href="https://github.com/git2mann"
+                  target="_blank"
+                  className="px-8 md:px-10 py-3 md:py-4 rounded-full font-medium text-sm md:text-base uppercase tracking-widest transition-all bg-primary text-background-primary shadow-[0_0_30px_rgba(var(--text-primary-rgb),0.2)] flex items-center gap-3 hover:scale-105 active:scale-95"
+                >
+                  <Github size={20} /> GitHub Profile
+                </Link>
+                <Link href="/contact" className="px-8 md:px-10 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-sm md:text-base uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95">
+                  Contact
+                </Link>
+              </div>
             </div>
-         </div>
 
-         <div className="max-w-[1920px] mx-auto grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] min-h-[50vh]">
-            <div className="p-8 md:p-16 flex flex-col justify-center border-b-4 lg:border-b-0 lg:border-r-4 border-black relative bg-[#F4F3EF]">
-               <div className="mb-6 flex items-center gap-4">
-                  <div className="w-4 h-4 bg-[#F4B400] rounded-full animate-pulse border-2 border-black"></div>
-                  <span className="font-mono text-xs font-bold uppercase tracking-widest text-gray-500">
-                     System_Architecture
-                  </span>
+            {/* Right: Layered Figurine Visual */}
+            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-8 md:mt-0">
+               <div className="relative aspect-square w-full group">
+                  <div className="absolute inset-0 bg-green-500/5 blur-3xl rounded-full opacity-60"></div>
+                  <Image 
+                    src="/assets/LN Projects Still.png" 
+                    alt="Engineering Figurine"
+                    fill
+                    className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
+                    priority
+                  />
                </div>
-               
-               <h1 className="text-6xl md:text-8xl font-black uppercase leading-[0.85] tracking-tighter mb-8 mix-blend-darken">
-                  Applied<br/>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F4B400] to-[#FF3B30]">Systems</span>
-               </h1>
-               
-               <p className="text-lg font-medium border-l-4 border-black pl-6 max-w-lg leading-relaxed">
-                  Innovative solutions deployed across web, mobile, and emerging technologies.
-               </p>
             </div>
+          </div>
+        </Container>
+      </section>
 
-            <div className="relative bg-black group overflow-hidden border-b-4 lg:border-b-0 border-black min-h-[300px]">
-               <Image
-                  src="/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.jpg"
-                  alt="Projects"
-                  fill
-                  className="object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-500"
-                  priority
-               />
-               <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none"></div>
-               <div className="absolute top-4 right-4 border-2 border-white text-white px-3 py-1 font-mono text-xs uppercase tracking-widest">
-                  Fig. 01: The Lab
-               </div>
-            </div>
-         </div>
-      </div>
-
-      {/* 3. CONTROL PANEL (TABS) */}
-      <div className="sticky top-20 z-40 bg-[#EAE8E3] border-b-4 border-black shadow-xl">
-        <div className="max-w-[1920px] mx-auto">
-          <nav className="flex overflow-x-auto no-scrollbar py-4 px-4 md:px-8 gap-4">
+      {/* --- NAVIGATION / TABS --- */}
+      <div id="projects" className="sticky top-16 md:top-24 z-40 mb-12 md:mb-20 pt-6 md:pt-10">
+        <div className="max-w-fit mx-auto liquid-glass px-2 py-2 rounded-full shadow-lg border border-white/5">
+          <nav className="flex gap-1 md:gap-2">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveTab(cat.id)}
                 className={`
-                  flex items-center gap-2 px-6 py-3 font-mono text-xs font-bold uppercase tracking-widest border-2 transition-all duration-150
-                  whitespace-nowrap
-                  ${activeTab === cat.id
-                    ? 'bg-black text-white border-black translate-x-[2px] translate-y-[2px] shadow-none'
-                    : 'bg-white text-black border-black hover:bg-[#F4B400] hover:border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+                  flex items-center gap-3 px-6 md:px-10 py-2.5 md:py-3.5 rounded-full text-sm md:text-base font-medium uppercase tracking-widest transition-all
+                  ${activeTab === cat.id 
+                    ? 'bg-green-500 text-white shadow-[0_0_20px_rgba(34,197,94,0.3)]' 
+                    : 'text-secondary hover:text-primary'
                   }
                 `}
               >
-                <cat.icon className="w-4 h-4" />
                 {cat.label}
               </button>
             ))}
@@ -103,48 +122,63 @@ export default function ProjectsPage() {
         </div>
       </div>
 
-      <Container>
-        {/* 4. UNDER CONSTRUCTION STATE */}
-        <div className="py-24 md:py-32 flex flex-col items-center justify-center text-center px-4 relative z-10">
-           
-           <div className="border-4 border-black border-dashed p-12 md:p-16 bg-white w-full max-w-3xl shadow-[16px_16px_0px_0px_#F4B400] relative overflow-hidden group">
-              
-              {/* Construction Tape Effect */}
-              <div className="absolute top-0 left-0 w-full h-4 bg-[repeating-linear-gradient(45deg,#F4B400,#F4B400_10px,#000_10px,#000_20px)]"></div>
-              <div className="absolute bottom-0 left-0 w-full h-4 bg-[repeating-linear-gradient(45deg,#F4B400,#F4B400_10px,#000_10px,#000_20px)]"></div>
+      <Container className="!max-w-none px-6 md:px-20">
+        <section className="animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 md:mb-20 gap-8 md:gap-12 border-l-2 border-green-500/20 pl-8 md:pl-12">
+             <div>
+                <div className="flex items-center gap-4 mb-4 md:mb-6">
+                    <span className="text-green-500 font-medium text-xs md:text-sm uppercase tracking-[0.4em]">Section 01</span>
+                    <span className="text-secondary opacity-30 font-mono text-xs md:text-sm">REPOSITORY</span>
+                </div>
+                <h2 className="text-4xl md:text-9xl font-light uppercase tracking-tighter leading-none">Compiling Archive</h2>
+                <p className="text-secondary font-medium text-base md:text-2xl mt-6 md:mt-10 max-w-xl opacity-70 leading-relaxed">Preparing system modules for public deployment. Full case studies and source data initializing.</p>
+             </div>
+          </div>
 
-              <div className="w-20 h-20 bg-black text-[#F4B400] mx-auto mb-8 flex items-center justify-center border-4 border-[#F4B400] rounded-full animate-[spin_10s_linear_infinite]">
-                 <Code className="w-10 h-10" />
-              </div>
-              
-              <h2 className="text-4xl md:text-5xl font-black uppercase mb-6 tracking-tighter">
-                Under Construction
-              </h2>
-              
-              <div className="bg-[#F4F3EF] border-l-4 border-black p-4 mb-8 text-left max-w-lg mx-auto">
-                 <p className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-2">Status Report:</p>
-                 <p className="font-medium text-lg leading-relaxed">
-                    Projects are currently being compiled for public deployment. Check back soon for source code and case studies.
-                 </p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-32">
+            <div className="group relative flex flex-col bg-white/[0.02] border border-white/5 p-10 md:p-20 rounded-sm overflow-hidden">
+               <div className="absolute top-6 right-8 font-mono text-xs md:text-sm opacity-20 uppercase tracking-widest pointer-events-none">Status: Initializing</div>
+               <div className="relative z-10">
+                  <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl bg-green-500/10 text-green-500 mb-8 md:mb-12 flex items-center justify-center border border-green-500/20">
+                     <Zap size={24} />
+                  </div>
+                  <h3 className="text-4xl md:text-7xl font-light mb-6 md:mb-10 uppercase tracking-tight text-primary">Project Documentation</h3>
+                  <p className="text-secondary text-lg md:text-2xl font-medium leading-relaxed max-w-xl mb-12 md:mb-16 opacity-80">
+                     I am currently documenting my latest works and preparing the repositories for public access. Full project case studies and live demos will be deployed shortly.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-6 md:gap-12">
+                     <Link 
+                        href="https://github.com/git2mann" 
+                        target="_blank"
+                        className="group/btn flex items-center gap-4 text-sm md:text-lg font-medium uppercase tracking-[0.3em] pb-2 border-b-2 border-green-500/40 hover:border-green-500 transition-all hover:gap-8"
+                     >
+                        GitHub Profile <ExternalLink size={20} />
+                     </Link>
+                     <Link href="/contact" className="group/btn flex items-center gap-4 text-sm md:text-lg font-medium uppercase tracking-[0.3em] pb-2 border-b-2 border-white/20 hover:border-white transition-all hover:gap-8">
+                        Inquire <ArrowRight size={20} />
+                     </Link>
+                  </div>
+               </div>
+               <div className="mt-16 md:mt-24 h-px w-full bg-white/5 relative overflow-hidden">
+                  <motion.div 
+                    animate={{ x: ["-100%", "200%"] }} 
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 h-full w-1/4 bg-gradient-to-r from-transparent via-green-500/40 to-transparent"
+                  />
+               </div>
+            </div>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
-                 <Link 
-                    href="/contact" 
-                    className="px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-[#F4B400] hover:text-black hover:border-black border-2 border-transparent transition-all shadow-lg active:translate-y-1 active:translate-x-1 active:shadow-none"
-                 >
-                    Contact Developer
-                 </Link>
-                 <Link 
-                    href="/" 
-                    className="px-8 py-4 bg-transparent text-black font-bold uppercase tracking-widest border-2 border-black hover:bg-black hover:text-white transition-all"
-                 >
-                    Return Home
-                 </Link>
-              </div>
-           </div>
-
-        </div>
+            <div className="hidden md:flex flex-col justify-center gap-6 opacity-10 pointer-events-none">
+               {[1, 2, 3].map(i => (
+                 <div key={i} className="h-24 md:h-32 border border-white/10 rounded-sm flex items-center px-12 justify-between font-mono text-sm md:text-base uppercase tracking-widest">
+                    <span>Module_00{i}</span>
+                    <span>Locked_Data</span>
+                    <div className="w-2 h-2 rounded-full bg-white/20"></div>
+                 </div>
+               ))}
+            </div>
+          </div>
+        </section>
       </Container>
     </main>
   );
