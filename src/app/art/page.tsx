@@ -136,8 +136,14 @@ const ArtPage = () => {
       {/* --- INTERACTIVE DOME --- */}
       {galleryActive && (
         <section className="fixed inset-0 z-[200] bg-background-primary text-primary">
-          <div className="absolute top-8 right-8 md:top-10 md:right-10 z-[210] flex gap-4">
-             <button onClick={() => setGalleryActive(false)} className="liquid-glass-clear w-12 h-12 rounded-full flex items-center justify-center font-mono text-xl transition-all hover:bg-white/5 hover:scale-105 active:scale-95 border border-primary/10">×</button>
+          <div className="absolute top-6 right-6 md:top-10 md:right-10 z-[210] flex gap-4">
+             <button 
+                onClick={() => setGalleryActive(false)} 
+                className="liquid-glass-clear w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all hover:bg-white/5 hover:scale-105 active:scale-95 border border-primary/10"
+                aria-label="Exit Gallery"
+             >
+                <X size={20} />
+             </button>
           </div>
           <DomeGallery isActive={true} setIsActive={setGalleryActive} />
         </section>

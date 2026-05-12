@@ -343,7 +343,7 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
         </div>
 
         {/* BOTTOM/LEFT COLUMN: DESCRIPTION (Z-50) */}
-        <div className="relative w-full h-[45%] md:w-[45%] md:h-full flex flex-col justify-start md:justify-center px-6 md:px-20 z-50 pointer-events-none pb-12 md:pb-0">
+        <div className="relative w-full h-[45%] md:w-[45%] md:h-full flex flex-col justify-start md:justify-center px-6 md:px-20 z-50 pointer-events-none pb-16 md:pb-0">
            <AnimatePresence mode="wait">
              {isGuided && currentGuidedItem && !selectedItem && (
                <motion.div 
@@ -352,48 +352,48 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
                  animate={{ opacity: 1, x: 0 }}
                  exit={{ opacity: 0, x: -30 }}
                  transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-                 className="flex flex-col gap-3 md:gap-6 max-w-md pointer-events-auto"
+                 className="flex flex-col gap-5 md:gap-8 max-w-md pointer-events-auto"
                >
                   <div className="flex items-center gap-4">
-                     <div className="w-12 h-px bg-accent-blue/40" />
-                     <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue animate-pulse">Artifact Sequence {guidedIndex + 1}/{baseItems.length}</span>
+                     <div className="w-12 h-px bg-accent-blue/30" />
+                     <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.6em] text-accent-blue/80 animate-pulse font-bold">Artifact Sequence {guidedIndex + 1}/{baseItems.length}</span>
                   </div>
                   
-                  <div className="space-y-1 md:space-y-2">
+                  <div className="space-y-2 md:space-y-3">
                      <h2 className="text-3xl md:text-7xl font-light uppercase tracking-tighter leading-none text-primary">
                         {currentGuidedItem.title}
                      </h2>
-                     <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-secondary opacity-60">
+                     <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.4em] text-primary/40">
                         <span>{currentGuidedItem.artist}</span>
                         <span className="w-1 h-1 rounded-full bg-accent-blue/40" />
                         <span>{currentGuidedItem.year}</span>
                      </div>
                   </div>
 
-                  <div className="bg-primary/5 backdrop-blur-md border border-primary/10 p-4 md:p-8 rounded-[1.5rem] md:rounded-[2rem] relative overflow-hidden">
-                     <div className="absolute top-0 left-0 w-1 h-full bg-accent-blue/30" />
-                     <p className="text-[11px] md:text-lg text-secondary font-light leading-relaxed">
+                  <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+                     <div className="absolute top-0 left-0 w-1 h-full bg-accent-blue/40" />
+                     <p className="text-[11px] md:text-lg text-primary/80 font-light leading-relaxed">
                         {currentGuidedItem.description}
                      </p>
-                     <div className="mt-3 md:mt-6 flex items-center gap-6 opacity-40">
-                        <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-widest">
+                     <div className="mt-6 md:mt-8 flex items-center gap-6 opacity-60">
+                        <div className="flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-accent-blue">
                            <Disc size={12} className="animate-spin-slow" />
-                           <span>Rotation_Lock</span>
+                           <span className="font-bold">Rotation_Lock</span>
                         </div>
-                        <div className="flex items-center gap-2 font-mono text-[9px] uppercase tracking-widest">
+                        <div className="flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest text-accent-blue">
                            <Zap size={12} />
-                           <span>Fetch_Mode_Active</span>
+                           <span className="font-bold">Fetch_Mode_Active</span>
                         </div>
                      </div>
                   </div>
 
                   <div className="flex items-center gap-4">
-                     <button onClick={prevGuided} className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-primary/10 flex items-center justify-center text-primary hover:bg-primary/5 transition-all">
-                       <ArrowLeft size={18} />
+                     <button onClick={prevGuided} className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary/5 transition-all shadow-xl">
+                       <ArrowLeft size={20} />
                      </button>
-                     <button onClick={nextGuided} className="flex-1 h-10 md:h-12 rounded-full bg-primary text-background-primary flex items-center justify-between px-6 font-mono text-[10px] uppercase tracking-[0.3em] hover:scale-[1.02] active:scale-[0.98] transition-all">
+                     <button onClick={nextGuided} className="flex-1 h-12 md:h-16 rounded-full bg-primary text-background-primary flex items-center justify-between px-8 font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl">
                        <span>Fetch Next Artifact</span>
-                       <ArrowRight size={16} />
+                       <ArrowRight size={18} />
                      </button>
                   </div>
                </motion.div>
@@ -405,17 +405,17 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
       {/* HUD CONTROLS (FULL SCREEN OVERLAY) */}
       {isActive && !selectedItem && (
         <div className="absolute top-12 left-1/2 -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-top-4 duration-700">
-           <div className="liquid-glass-clear p-1.5 rounded-full flex items-center shadow-2xl border border-primary/10 bg-background-primary/40 backdrop-blur-xl">
+           <div className="liquid-glass-clear p-1.5 rounded-full flex items-center shadow-2xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl">
               <button 
                 onClick={() => setIsGuided(true)} 
-                className={`flex items-center gap-3 px-6 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.4em] transition-all ${isGuided ? 'bg-accent-blue text-white shadow-lg scale-105' : 'text-primary opacity-40 hover:opacity-100'}`}
+                className={`flex items-center gap-3 px-6 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.4em] font-bold transition-all ${isGuided ? 'bg-accent-blue text-white shadow-xl scale-105' : 'text-primary/40 hover:text-primary hover:bg-white/5'}`}
               >
                  <Activity size={14} />
                  <span>Guided Tour</span>
               </button>
               <button 
                 onClick={() => setIsGuided(false)} 
-                className={`flex items-center gap-3 px-6 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.4em] transition-all ${!isGuided ? 'bg-primary text-background-primary shadow-lg scale-105' : 'text-primary opacity-40 hover:opacity-100'}`}
+                className={`flex items-center gap-3 px-6 py-2.5 rounded-full font-mono text-[10px] uppercase tracking-[0.4em] font-bold transition-all ${!isGuided ? 'bg-primary text-background-primary shadow-xl scale-105' : 'text-primary/40 hover:text-primary hover:bg-white/5'}`}
               >
                  <Move size={14} />
                  <span>Free Roam</span>
