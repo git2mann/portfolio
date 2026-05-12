@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import DomeGallery from "./DomeGallery";
 import ArtworkModal from "@/app/_components/ArtworkModal";
-import { ArrowRight, ChevronRight, Filter, Grid, Globe } from "lucide-react";
+import { ArrowRight, ChevronRight, Filter, Grid, Globe, X } from "lucide-react";
 import ScrollReveal from "@/app/_components/ScrollReveal";
 
 const HIQU_IMAGES = [
