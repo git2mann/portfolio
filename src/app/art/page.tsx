@@ -156,25 +156,27 @@ const ArtPage = () => {
               <h2 className="text-4xl md:text-7xl font-light uppercase tracking-tighter leading-none text-primary">Curated Archive</h2>
            </div>
 
-           <div className="flex flex-wrap gap-2 bg-primary/[0.03] p-1.5 rounded-full border border-primary/5 overflow-hidden">
-              {[
-                { id: 'all', label: 'Full Catalog' },
-                { id: 'hiqugraph', label: 'HiQuGraphs' },
-                { id: 'studies', label: 'Editorial Studies' }
-              ].map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
-                  className={`px-6 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all
-                    ${activeCategory === cat.id 
-                      ? 'bg-primary text-background-primary shadow-xl' 
-                      : 'text-secondary hover:text-primary hover:bg-primary/5'
-                    }
-                  `}
-                >
-                  {cat.label}
-                </button>
-              ))}
+           <div className="max-w-full overflow-hidden bg-primary/[0.03] p-1.5 rounded-full border border-primary/5">
+              <div className="flex flex-nowrap gap-1 md:gap-2 overflow-x-auto no-scrollbar">
+                {[
+                  { id: 'all', label: 'Full Catalog' },
+                  { id: 'hiqugraph', label: 'HiQuGraphs' },
+                  { id: 'studies', label: 'Editorial Studies' }
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategory(cat.id)}
+                    className={`px-5 md:px-8 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all whitespace-nowrap
+                      ${activeCategory === cat.id 
+                        ? 'bg-primary text-background-primary shadow-xl' 
+                        : 'text-secondary hover:text-primary hover:bg-primary/5'
+                      }
+                    `}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
            </div>
         </div>
 
