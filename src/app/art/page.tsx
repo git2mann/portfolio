@@ -156,7 +156,7 @@ const ArtPage = () => {
               <h2 className="text-4xl md:text-7xl font-light uppercase tracking-tighter leading-none text-primary">Curated Archive</h2>
            </div>
 
-           <div className="flex flex-wrap gap-2 bg-primary/[0.03] p-1.5 rounded-full border border-primary/5">
+           <div className="flex flex-wrap gap-2 bg-primary/[0.03] p-1.5 rounded-full border border-primary/5 overflow-hidden">
               {[
                 { id: 'all', label: 'Full Catalog' },
                 { id: 'hiqugraph', label: 'HiQuGraphs' },
@@ -167,7 +167,7 @@ const ArtPage = () => {
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-6 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all
                     ${activeCategory === cat.id 
-                      ? 'bg-primary text-background-primary shadow-xl scale-105' 
+                      ? 'bg-primary text-background-primary shadow-xl' 
                       : 'text-secondary hover:text-primary hover:bg-primary/5'
                     }
                   `}

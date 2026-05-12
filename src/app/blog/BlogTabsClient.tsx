@@ -83,7 +83,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
     <div className="space-y-16">
       {/* 1. NAVIGATION TABS */}
       <div className="sticky top-24 z-40 mb-12">
-        <div className="max-w-fit mx-auto liquid-glass-clear px-2 py-2 rounded-full shadow-2xl border border-white/5">
+        <div className="max-w-fit mx-auto liquid-glass-clear px-2 py-2 rounded-full shadow-2xl border border-white/5 overflow-hidden">
           <nav className="flex gap-1 overflow-x-auto no-scrollbar">
             {[
                { id: 'featured', label: 'Highlights', icon: Star },
@@ -98,7 +98,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                 className={`
                   flex items-center gap-3 px-8 py-3 rounded-full text-xs font-medium uppercase tracking-[0.3em] transition-all whitespace-nowrap
                   ${activeTab === tab.id
-                    ? 'bg-primary text-background-primary shadow-xl scale-105'
+                    ? 'bg-primary text-background-primary shadow-xl'
                     : 'text-secondary hover:text-primary hover:bg-white/5'
                   }
                 `}
