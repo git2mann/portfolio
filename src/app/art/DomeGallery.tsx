@@ -315,18 +315,16 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
         <div className="absolute inset-0 bg-radial-gradient from-accent-blue/10 via-transparent to-transparent blur-[150px]"></div>
       </div>
 
-      {/* 2. CONSOLIDATED EXIT BUTTON (Hide if detail modal open) */}
-      {!selectedItem && (
-        <div className="absolute top-6 right-6 md:top-10 md:right-10 z-[110] animate-in fade-in zoom-in duration-500">
-           <button 
-              onClick={() => setIsActive(false)} 
-              className="liquid-glass-clear w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all hover:bg-white/5 hover:scale-110 active:scale-95 border border-primary/10 shadow-2xl"
-              aria-label="Exit Gallery"
-           >
-              <X size={20} className="text-primary" />
-           </button>
-        </div>
-      )}
+      {/* 2. CONSOLIDATED EXIT BUTTON */}
+      <div className="absolute top-6 right-6 md:top-10 md:right-10 z-[110] animate-in fade-in zoom-in duration-500">
+          <button 
+            onClick={() => setIsActive(false)} 
+            className="liquid-glass-clear w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all hover:bg-white/5 hover:scale-110 active:scale-95 border border-primary/10 shadow-2xl"
+            aria-label="Exit Gallery"
+          >
+            <X size={20} className="text-primary" />
+          </button>
+      </div>
 
       {/* DUAL-COLUMN LAYOUT */}
       <div className="relative w-full h-full flex flex-col md:flex-row overflow-hidden z-10">
