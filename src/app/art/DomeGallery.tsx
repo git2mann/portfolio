@@ -45,6 +45,22 @@ interface DomeGalleryProps {
 
 export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps) {
   const [hasMounted, setHasMounted] = useState(false);
+  
+  // Scroll Lock Effect
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [isActive]);
+
   useEffect(() => { setHasMounted(true); }, []);
   
   const containerRef = useRef<HTMLDivElement>(null);
@@ -315,7 +331,7 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
               return (
                 <div
                   key={item.id}
-                  className={`${styles.cardWrapper} ${isFocused ? 'shadow-[0_30px_100px_rgba(0,0,0,0.8),0_0_20px_rgba(255,255,255,0.05)] scale-[1.02]' : ''}`}
+                  className={`${styles.cardWrapper} ${isFocused ? 'shadow-[0_30px_100px_rgba(0,0,0,0.8),0_0_20px_rgba(255,255,255,0.05)] scale-[1.02]' : 'hover:scale-105 active:scale-95 transition-transform'}`}
                   style={{ 
                     position: 'absolute',
                     left: '50%',
@@ -324,7 +340,9 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
                     transform: `translate3d(${pos.x}px, ${pos.y}px, ${pos.z}px) scale(${finalScale})`,
                     zIndex: isFocused ? 10000 : Math.floor(pos.z + radius),
                     opacity: opacity,
-                    filter: isGuided && !isFocused ? 'blur(12px)' : 'none'
+                    filter: isGuided && !isFocused ? 'blur(12px)' : 'none',
+                    pointerEvents: 'auto', // Enable pointer events for clicking
+                    cursor: 'pointer'
                   }}
                   onClick={(e) => handleCardClick(e, item)}
                 >
@@ -344,69 +362,110 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
 
         {/* BOTTOM/LEFT COLUMN: DESCRIPTION (Z-50) */}
         <div className="relative w-full h-[45%] md:w-[45%] md:h-full flex flex-col justify-start md:justify-center px-6 md:px-20 z-50 pointer-events-none pb-16 md:pb-0">
-           <AnimatePresence mode="wait">
-             {isGuided && currentGuidedItem && !selectedItem && (
-               <motion.div 
-                 key={guidedIndex}
-                 initial={{ opacity: 0, x: -30 }}
-                 animate={{ opacity: 1, x: 0 }}
-                 exit={{ opacity: 0, x: -30 }}
-                 transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-                 className="flex flex-col gap-5 md:gap-8 max-w-md pointer-events-auto"
-               >
-                  <div className="flex items-center gap-4">
-                     <div className="w-12 h-px bg-accent-blue/30" />
-                     <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.6em] text-accent-blue/80 animate-pulse font-bold">Artifact Sequence {guidedIndex + 1}/{baseItems.length}</span>
-                  </div>
-                  
-                  <div className="space-y-2 md:space-y-3">
-                     <h2 className="text-3xl md:text-7xl font-light uppercase tracking-tighter leading-none text-primary">
-                        {currentGuidedItem.title}
-                     </h2>
-                     <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.4em] text-primary/40">
-                        <span>{currentGuidedItem.artist}</span>
-                        <span className="w-1 h-1 rounded-full bg-accent-blue/40" />
-                        <span>{currentGuidedItem.year}</span>
-                     </div>
-                  </div>
+           {/* ALWAYS VISIBLE CONTROLS */}
+           <div className="flex flex-col gap-5 md:gap-8 max-w-md pointer-events-auto">
+              <AnimatePresence mode="wait">
+                {isGuided && currentGuidedItem && !selectedItem ? (
+                  <motion.div 
+                    key={guidedIndex}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -30 }}
+                    transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+                    className="flex flex-col gap-5 md:gap-8"
+                  >
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-px bg-accent-blue/30" />
+                        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.6em] text-accent-blue/80 animate-pulse font-bold">Artifact Sequence {guidedIndex + 1}/{baseItems.length}</span>
+                      </div>
+                      
+                      <div className="space-y-2 md:space-y-3">
+                        <h2 className="text-3xl md:text-7xl font-light uppercase tracking-tighter leading-none text-primary">
+                            {currentGuidedItem.title}
+                        </h2>
+                        <div className="flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.4em] text-primary/40">
+                            <span>{currentGuidedItem.artist}</span>
+                            <span className="w-1 h-1 rounded-full bg-accent-blue/40" />
+                            <span>{currentGuidedItem.year}</span>
+                        </div>
+                      </div>
 
-                  <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden shadow-2xl">
-                     <div className="absolute top-0 left-0 w-1 h-full bg-accent-blue/40" />
-                     <p className="text-[11px] md:text-lg text-primary/80 font-light leading-relaxed">
-                        {currentGuidedItem.description}
-                     </p>
-                     
-                     <div className="mt-6 md:mt-8 flex flex-wrap items-center gap-4 md:gap-6">
-                        <button 
-                          onClick={(e) => { e.stopPropagation(); setIsGuided(true); }}
-                          className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border ${isGuided ? 'bg-accent-blue/20 border-accent-blue/40 text-accent-blue font-bold shadow-[0_0_15px_rgba(10,132,255,0.2)]' : 'border-white/5 text-primary/30 hover:text-primary/60 hover:bg-white/5'}`}
-                        >
-                           <Activity size={12} className={isGuided ? 'animate-pulse' : ''} />
-                           <span>Guided_Tour</span>
-                        </button>
+                      <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-accent-blue/40" />
+                        <p className="text-[11px] md:text-lg text-primary/80 font-light leading-relaxed">
+                            {currentGuidedItem.description}
+                        </p>
                         
-                        <button 
-                          onClick={(e) => { e.stopPropagation(); setIsGuided(false); }}
-                          className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border ${!isGuided ? 'bg-primary/10 border-primary/20 text-primary font-bold shadow-[0_0_15px_rgba(255,255,255,0.05)]' : 'border-white/5 text-primary/30 hover:text-primary/60 hover:bg-white/5'}`}
-                        >
-                           <Move size={12} />
-                           <span>Free_Roam</span>
-                        </button>
-                     </div>
-                  </div>
+                        <div className="mt-6 md:mt-8 flex flex-wrap items-center gap-4 md:gap-6">
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); setIsGuided(true); }}
+                              className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border ${isGuided ? 'bg-accent-blue/20 border-accent-blue/40 text-accent-blue font-bold shadow-[0_0_15px_rgba(10,132,255,0.2)]' : 'border-white/5 text-primary/30 hover:text-primary/60 hover:bg-white/5'}`}
+                            >
+                              <Activity size={12} className={isGuided ? 'animate-pulse' : ''} />
+                              <span>Guided_Tour</span>
+                            </button>
+                            
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); setIsGuided(false); }}
+                              className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border ${!isGuided ? 'bg-primary/10 border-primary/20 text-primary font-bold shadow-[0_0_15px_rgba(255,255,255,0.05)]' : 'border-white/5 text-primary/30 hover:text-primary/60 hover:bg-white/5'}`}
+                            >
+                              <Move size={12} />
+                              <span>Free_Roam</span>
+                            </button>
+                        </div>
+                      </div>
 
-                  <div className="flex items-center gap-4">
-                     <button onClick={prevGuided} className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary/5 transition-all shadow-xl">
-                       <ArrowLeft size={20} />
-                     </button>
-                     <button onClick={nextGuided} className="flex-1 h-12 md:h-16 rounded-full bg-primary text-background-primary flex items-center justify-between px-8 font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl">
-                       <span>Fetch Next Artifact</span>
-                       <ArrowRight size={18} />
-                     </button>
-                  </div>
-               </motion.div>
-             )}
-           </AnimatePresence>
+                      <div className="flex items-center gap-4">
+                        <button onClick={prevGuided} className="w-12 h-12 md:w-16 md:h-16 rounded-full border border-primary/20 flex items-center justify-center text-primary hover:bg-primary/5 transition-all shadow-xl">
+                          <ArrowLeft size={20} />
+                        </button>
+                        <button onClick={nextGuided} className="flex-1 h-12 md:h-16 rounded-full bg-primary text-background-primary flex items-center justify-between px-8 font-mono text-[10px] md:text-xs uppercase tracking-[0.4em] font-bold hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl">
+                          <span>Fetch Next Artifact</span>
+                          <ArrowRight size={18} />
+                        </button>
+                      </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    className="flex flex-col gap-6"
+                  >
+                    <div className="flex items-center gap-4">
+                        <div className="w-12 h-px bg-primary/20" />
+                        <span className="font-mono text-[9px] md:text-[10px] uppercase tracking-[0.6em] text-primary/40 font-bold">Manual_Exploration_Enabled</span>
+                    </div>
+
+                    <div className="bg-white/[0.03] backdrop-blur-xl border border-white/10 p-6 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden shadow-2xl">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-primary/20" />
+                        <h3 className="text-xl md:text-2xl font-light uppercase tracking-widest text-primary mb-4">Free Roam</h3>
+                        <p className="text-[11px] md:text-base text-primary/60 font-light leading-relaxed">
+                            Navigation unlocked. Drag to rotate the dome and tap any artifact to extract its metadata.
+                        </p>
+                        
+                        <div className="mt-8 flex flex-wrap items-center gap-4 md:gap-6">
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); setIsGuided(true); }}
+                              className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border border-white/5 text-primary/30 hover:text-primary/60 hover:bg-white/5`}
+                            >
+                              <Activity size={12} />
+                              <span>Guided_Tour</span>
+                            </button>
+                            
+                            <button 
+                              onClick={(e) => { e.stopPropagation(); setIsGuided(false); }}
+                              className={`flex items-center gap-2 font-mono text-[8px] md:text-[10px] uppercase tracking-widest transition-all px-3 py-1.5 rounded-full border bg-primary/10 border-primary/20 text-primary font-bold shadow-[0_0_15px_rgba(255,255,255,0.05)]`}
+                            >
+                              <Move size={12} />
+                              <span>Free_Roam</span>
+                            </button>
+                        </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+           </div>
         </div>
       </div>
 
