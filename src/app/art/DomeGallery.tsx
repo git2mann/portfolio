@@ -329,13 +329,13 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
 
       {/* 2. CONSOLIDATED EXIT BUTTON (Hide if detail modal open) */}
       {!selectedItem && (
-        <div className="absolute top-6 right-6 md:top-10 md:right-10 z-[110] animate-in fade-in zoom-in duration-500">
+        <div className="absolute top-14 right-6 md:top-10 md:right-10 z-[110] animate-in fade-in zoom-in duration-500">
             <button 
               onClick={() => setIsActive(false)} 
-              className="liquid-glass-clear w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all hover:bg-white/5 hover:scale-110 active:scale-95 border border-primary/10 shadow-2xl"
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl active:scale-90"
               aria-label="Exit Gallery"
             >
-              <X size={20} className="text-primary" />
+              <X size={24} className="text-primary" />
             </button>
         </div>
       )}
