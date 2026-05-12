@@ -352,11 +352,11 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
         {/* --- SECTION 4: CALL TO ACTION --- */}
         <section className="relative pt-32 md:pt-48 pb-0 flex flex-col items-center">
             <div className="w-full flex-grow flex flex-col items-center justify-center text-center py-20 px-10">
-               <Container className="w-full max-w-6xl mx-auto">
-                  <ScrollReveal textClassName="text-6xl md:text-[9rem] font-light uppercase tracking-tighter mb-8 leading-none" containerClassName="max-w-5xl mx-auto" stagger={0.08} duration={1}>
+               <Container className="w-full max-w-6xl mx-auto flex flex-col items-center">
+                  <ScrollReveal textClassName="text-6xl md:text-[9rem] font-light uppercase tracking-tighter mb-8 leading-none text-center" containerClassName="max-w-5xl mx-auto text-center" stagger={0.08} duration={1}>
                      Let's build something.
                   </ScrollReveal>
-                  <ScrollReveal textClassName="text-xl md:text-3xl font-medium mb-16 max-w-3xl mx-auto opacity-80" stagger={0.05} duration={1}>
+                  <ScrollReveal textClassName="text-xl md:text-3xl font-medium mb-16 max-w-3xl mx-auto opacity-80 text-center" containerClassName="max-w-3xl mx-auto text-center" stagger={0.05} duration={1}>
                      Looking for the next creative or technical intersection.
                   </ScrollReveal>
                   
