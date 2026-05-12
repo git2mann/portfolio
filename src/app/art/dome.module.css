@@ -202,3 +202,29 @@
   .modalDescription { font-size: 1rem; }
   .modalDetails { padding: 2rem; }
 }
+
+.closeModalBtn {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.closeModalBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+  border-color: var(--accent-blue);
+}
+
