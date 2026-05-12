@@ -204,10 +204,10 @@
 }
 
 .closeModalBtn {
-  position: absolute;
-  top: 3.5rem; /* Lowered to sitting comfortably below status bar */
+  position: fixed; /* Changed from absolute to fixed */
+  top: 3.5rem; 
   right: 1.5rem;
-  z-index: 100;
+  z-index: 200001; /* Must be higher than detailModal (200000) */
   width: 3.5rem;
   height: 3.5rem;
   border-radius: 50%;
@@ -218,14 +218,16 @@
   backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
   color: var(--text-primary);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
   transition: all 0.3s ease;
   cursor: pointer;
 }
 
 @media (min-width: 768px) {
   .closeModalBtn {
+    position: absolute; /* Keep absolute on desktop as it fits the layout better */
     top: 1.5rem;
+    right: 1.5rem;
     width: 3rem;
     height: 3rem;
   }

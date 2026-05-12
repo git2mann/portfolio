@@ -504,6 +504,15 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
       <AnimatePresence>
         {selectedItem && (
           <div className={styles.detailModal} onClick={handleCloseModal}>
+            {/* Viewport-Relative Close Button (Last child for stacking) */}
+            <button 
+              className={styles.closeModalBtn} 
+              onClick={handleCloseModal} 
+              aria-label="Close details"
+            >
+              <X size={24} />
+            </button>
+
             <motion.div
               className={styles.modalContent}
               onClick={(e) => e.stopPropagation()}
@@ -537,10 +546,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
                    </div>
                 </div>
               </div>
-              
-              <button className={styles.closeModalBtn} onClick={handleCloseModal} aria-label="Close details">
-                <X size={24} />
-              </button>
             </motion.div>
           </div>
         )}
