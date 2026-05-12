@@ -18,8 +18,8 @@ const HIQU_IMAGES = [
 ];
 
 const BATCH2_IMAGES = [
-  "image00001.jpeg","image00002.jpeg","image00003.jpeg","image00004.jpeg","image00005.jpeg",
-  "image00006.jpeg","image00007.jpeg","image00008.jpeg","image00009.jpeg","image00010.jpeg",
+  "image00001.jpeg", "image00002.jpeg", "image00003.jpeg", "image00004.jpeg",
+  "image00005.jpeg", "image00006.jpeg", "image00007.jpeg", "image00008.jpeg"
 ];
 
 const DOME_ASSETS = [
@@ -35,7 +35,19 @@ const DOME_ASSETS = [
 ];
 
 interface ArtItemData {
-  id: number; src: string; title: string; year: string; category: string; artist?: string; description?: string; unitX: number; unitY: number; unitZ: number;
+  id: number;
+  src: string;
+  title: string;
+  year: string;
+  category: string;
+  artist?: string;
+  description?: string;
+  unitX: number;
+  unitY: number;
+  unitZ: number;
+  scaleMultiplier: number;
+  randomSpeed: number;
+  randomPhase: number;
 }
 
 interface DomeGalleryProps {
@@ -315,16 +327,18 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
         <div className="absolute inset-0 bg-radial-gradient from-accent-blue/10 via-transparent to-transparent blur-[150px]"></div>
       </div>
 
-      {/* 2. CONSOLIDATED EXIT BUTTON */}
-      <div className="absolute top-6 right-6 md:top-10 md:right-10 z-[110] animate-in fade-in zoom-in duration-500">
-          <button 
-            onClick={() => setIsActive(false)} 
-            className="liquid-glass-clear w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all hover:bg-white/5 hover:scale-110 active:scale-95 border border-primary/10 shadow-2xl"
-            aria-label="Exit Gallery"
-          >
-            <X size={20} className="text-primary" />
-          </button>
-      </div>
+      {/* 2. CONSOLIDATED EXIT BUTTON (Hide if detail modal open) */}
+      {!selectedItem && (
+        <div className="absolute top-6 right-6 md:top-10 md:right-10 z-[110] animate-in fade-in zoom-in duration-500">
+            <button 
+              onClick={() => setIsActive(false)} 
+              className="liquid-glass-clear w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all hover:bg-white/5 hover:scale-110 active:scale-95 border border-primary/10 shadow-2xl"
+              aria-label="Exit Gallery"
+            >
+              <X size={20} className="text-primary" />
+            </button>
+        </div>
+      )}
 
       {/* DUAL-COLUMN LAYOUT */}
       <div className="relative w-full h-full flex flex-col md:flex-row overflow-hidden z-10">
@@ -498,8 +512,6 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
               exit={{ scale: 0.9, opacity: 0, y: 40 }}
               transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             >
-              <button className={styles.closeModalBtn} onClick={handleCloseModal}><X size={24} /></button>
-              
               <div className={styles.modalImageWrapper}>
                 <img src={selectedItem.src} alt={selectedItem.title} className={styles.modalImage} />
                 <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'radial-gradient(var(--text-primary) 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
@@ -525,6 +537,10 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
                    </div>
                 </div>
               </div>
+              
+              <button className={styles.closeModalBtn} onClick={handleCloseModal} aria-label="Close details">
+                <X size={24} />
+              </button>
             </motion.div>
           </div>
         )}
