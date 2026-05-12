@@ -180,7 +180,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
               <div className="mb-16 md:mb-24">
                  <div className="flex items-center gap-4 mb-4">
                     <span className="w-12 h-px bg-accent-blue"></span>
-                    <span className="text-accent-blue font-medium text-sm uppercase tracking-[0.5em]">The Specialist Side</span>
+                    <span className="text-accent-blue font-medium text-sm uppercase tracking-[0.5em]">Technical Experience</span>
                  </div>
                  <h2 className="text-5xl md:text-9xl font-light uppercase tracking-tighter leading-none mb-10 text-primary">Technical Architecture</h2>
                  <ScrollReveal textClassName="text-xl md:text-4xl text-primary font-light max-w-5xl leading-tight" stagger={0.03} duration={0.8}>
@@ -232,7 +232,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                 <div className="col-span-1 md:col-span-2 liquid-glass p-8 md:p-14 group overflow-hidden relative rounded-[3rem] shadow-2xl flex flex-col border border-primary/5">
                    <div className="relative z-10 flex flex-col h-full">
                       <div className="flex items-center justify-between mb-10">
-                         <h3 className="text-xs font-mono uppercase tracking-[0.5em] text-accent-blue font-semibold">Registry.load()</h3>
+                         <h3 className="text-xs font-mono uppercase tracking-[0.5em] text-accent-blue font-semibold">Work History</h3>
                          <Briefcase size={24} className="text-accent-blue/60" />
                       </div>
                       
@@ -295,7 +295,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                   <div className="mb-12 md:mb-16">
                      <div className="flex items-center gap-6 mb-3">
                         <span className="w-16 h-px bg-accent-blue shadow-[0_0_10px_rgba(43,69,146,0.5)]"></span>
-                        <span className="text-accent-blue font-medium text-sm uppercase tracking-[0.5em]">Selected Writing</span>
+                        <span className="text-accent-blue font-medium text-sm uppercase tracking-[0.5em]">Recent Writing</span>
                      </div>
                      <h2 className="text-5xl md:text-[8rem] font-light uppercase tracking-tighter mb-4 leading-none text-primary">The Paper Trail</h2>
                      <ScrollReveal textClassName="text-xl md:text-2xl text-primary font-light opacity-90 max-w-2xl mt-6 leading-relaxed" stagger={0.05} duration={0.8}>
@@ -321,14 +321,14 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                 </div>
                 <div className="w-full md:flex-1 flex flex-col mt-16 md:mt-32">
                    <div className="flex justify-between items-center mb-8 md:mb-10 border-b border-primary/10 pb-6">
-                      <span className="text-sm font-mono uppercase tracking-[0.5em] text-primary font-semibold">Recent Dispatches</span>
+                      <span className="text-sm font-mono uppercase tracking-[0.5em] text-primary font-semibold">Latest Posts</span>
                       <Link href="/blog" className="text-accent-blue font-mono font-bold text-xs uppercase tracking-[0.4em] hover:gap-4 flex items-center gap-2 transition-all">Archive [→]</Link>
                    </div>
                    <div className="flex flex-col gap-4 md:gap-6">
                      {recentPosts.slice(1, 3).map((post, i) => (
                        <article key={post.slug} className="group flex flex-row items-center gap-8 py-8 border-b border-primary/5 hover:bg-primary/[0.02] transition-all px-6 rounded-[2.5rem] bg-primary/[0.01]">
                           <div className="flex flex-col justify-center items-center opacity-70 group-hover:opacity-100 transition-opacity text-accent-blue">
-                             <span className="font-mono text-[10px] uppercase tracking-widest font-bold">Entry</span>
+                             <span className="font-mono text-[10px] uppercase tracking-widest font-bold">Post</span>
                              <span className="font-mono text-3xl font-light">0{i + 2}</span>
                           </div>
                           <div className="flex flex-col flex-1 min-w-0">
@@ -336,7 +336,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                                 <Link href={`/posts/${post.slug}`}>{post.title}</Link>
                              </h4>
                              <p className="text-primary text-base line-clamp-1 opacity-80 mb-6 font-light">{post.excerpt}</p>
-                             <Link href={`/posts/${post.slug}`} className="text-[10px] font-mono uppercase tracking-[0.4em] text-accent-blue opacity-100 group-hover:translate-x-3 transition-all font-bold">View Full Log</Link>
+                             <Link href={`/posts/${post.slug}`} className="text-[10px] font-mono uppercase tracking-[0.4em] text-accent-blue opacity-100 group-hover:translate-x-3 transition-all font-bold">Read Full Post</Link>
                           </div>
                           <div className="relative h-20 w-20 md:h-24 md:w-24 flex-shrink-0 overflow-hidden rounded-2xl opacity-80 group-hover:opacity-100 transition-all border border-primary/5">
                              <Image src={post.coverImage} alt={post.title} fill className="object-cover" />

@@ -38,7 +38,7 @@ export default function BiNgoPage() {
               <div className="mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
                  <div className="flex items-center gap-4 mb-6">
                     <span className="w-16 h-[2px] bg-gradient-to-r from-green-500 via-yellow-500 to-white"></span>
-                    <span className="text-green-400 font-medium text-xs md:text-sm uppercase tracking-[0.5em]">Project.Manifesto.00</span>
+                    <span className="text-green-400 font-medium text-xs md:text-sm uppercase tracking-[0.5em]">Our Manifesto</span>
                  </div>
                  <div className="h-24 md:h-48 mb-8">
                     <TextPressure 
@@ -89,9 +89,9 @@ export default function BiNgoPage() {
             <div className="flex flex-col lg:flex-row gap-20 items-start">
                <div className="flex-[0.8]">
                   <div className="flex items-center gap-4 mb-10 font-mono text-xs uppercase tracking-[0.4em] opacity-40">
-                     <span>Intelligence_Extraction</span>
+                     <span>Analytical Insight</span>
                      <span className="w-1 h-1 rounded-full bg-green-500"></span>
-                     <span>Semantic_Exactitude</span>
+                     <span>Precise Clarity</span>
                   </div>
                   <h2 className="text-6xl md:text-9xl font-light uppercase tracking-tighter mb-8 leading-tight text-primary">The Semantic<br/>Bingo</h2>
                </div>
@@ -137,9 +137,9 @@ export default function BiNgoPage() {
             <div className="flex flex-col md:flex-row gap-20 items-start">
                <div className="flex-1">
                   <div className="flex items-center gap-4 mb-10 font-mono text-xs uppercase tracking-[0.4em] opacity-40">
-                     <span>Protocol_Vision_01</span>
+                     <span>Our Vision</span>
                      <span className="w-1 h-1 rounded-full bg-green-500"></span>
-                     <span>Trajectory_Active</span>
+                     <span>Currently Active</span>
                   </div>
                   <h2 className="text-5xl md:text-9xl font-light uppercase tracking-tighter mb-12 leading-none text-primary">Technological<br/>Sovereignty</h2>
                </div>
@@ -157,7 +157,7 @@ export default function BiNgoPage() {
       <section className="py-40 relative">
         <Container className="!max-w-none px-6 md:px-20">
           <div className="mb-24">
-             <span className="text-green-400 font-medium text-sm uppercase tracking-[0.4em] mb-4 block">The System Architecture</span>
+             <span className="text-green-400 font-medium text-sm uppercase tracking-[0.4em] mb-4 block">How We Work</span>
              <h2 className="text-6xl md:text-[10rem] font-light uppercase tracking-tighter text-primary">The Framework</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -185,7 +185,7 @@ export default function BiNgoPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                <div className="order-2 lg:order-1">
                   <div className="mb-16">
-                     <span className="font-medium text-sm uppercase tracking-[0.4em] opacity-60 mb-4 block">Design Intelligence</span>
+                     <span className="font-medium text-sm uppercase tracking-[0.4em] opacity-60 mb-4 block">Visual Identity</span>
                      <h2 className="text-5xl md:text-9xl font-light uppercase tracking-tighter leading-none text-primary">Visual<br/>Semantics</h2>
                   </div>
                   <div className="space-y-12">
@@ -225,8 +225,8 @@ export default function BiNgoPage() {
       {/* --- FINAL CTA --- */}
       <section className="py-40 text-center relative z-10">
          <Container>
-            <h2 className="text-6xl md:text-[10rem] font-light uppercase tracking-tighter mb-12 text-primary">Action Protocol</h2>
-            <Link href="https://nduatileon.site" target="_blank" className="inline-flex items-center gap-6 text-3xl md:text-6xl font-light uppercase border-b-4 border-green-400 text-green-400 hover:gap-12 transition-all duration-500 pb-2">Access System <ArrowRight size={48} /></Link>
+            <h2 className="text-6xl md:text-[10rem] font-light uppercase tracking-tighter mb-12 text-primary">Get Involved</h2>
+            <Link href="https://nduatileon.site" target="_blank" className="inline-flex items-center gap-6 text-3xl md:text-6xl font-light uppercase border-b-4 border-green-400 text-green-400 hover:gap-12 transition-all duration-500 pb-2">Visit Site <ArrowRight size={48} /></Link>
          </Container>
       </section>
     </main>

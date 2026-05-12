@@ -109,10 +109,10 @@ const ArtPage = () => {
 
               <div className="mt-12 md:mt-24 flex flex-wrap gap-6 md:gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
                 <button onClick={() => setGalleryActive(true)} className="px-10 md:px-12 py-3 md:py-4 rounded-full font-medium text-xs md:text-sm uppercase tracking-widest transition-all bg-primary text-background-primary shadow-[0_0_30px_rgba(var(--text-primary-rgb),0.2)] hover:scale-105 active:scale-95 flex items-center gap-3">
-                   <span>Initiate Sequence</span>
+                   <span>Enter Gallery</span>
                    <ArrowRight size={16} />
                 </button>
-                <a href="#collections" className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95">Access Archive</a>
+                <a href="#collections" className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95">View Collection</a>
               </div>
             </div>
 
@@ -157,7 +157,7 @@ const ArtPage = () => {
            <div className="space-y-4">
               <div className="flex items-center gap-3">
                  <Grid className="text-blue-500 w-5 h-5" />
-                 <span className="font-mono text-xs uppercase tracking-[0.4em] opacity-40 text-secondary">Artifact_Index</span>
+                 <span className="font-mono text-xs uppercase tracking-[0.4em] opacity-40 text-secondary">Collection Guide</span>
               </div>
               <h2 className="text-4xl md:text-7xl font-light uppercase tracking-tighter leading-none text-primary">Curated Archive</h2>
            </div>
@@ -219,7 +219,7 @@ const ArtPage = () => {
         {/* Empty State */}
         {filteredWorks.length === 0 && (
            <div className="py-40 text-center liquid-glass rounded-[3rem] border-dashed border-2">
-              <span className="font-mono text-xs uppercase tracking-[0.5em] opacity-30 text-secondary">Reference_Not_Found // Sector Empty</span>
+              <span className="font-mono text-xs uppercase tracking-[0.5em] opacity-30 text-secondary">No artwork found in this category.</span>
            </div>
         )}
 
