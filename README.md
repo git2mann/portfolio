@@ -126,4 +126,4 @@ Post content in Markdown...
 
 ## License
 
-All rights reserved © Leon K Nduati 2025
+All rights reserved © Leon K Nduati 2026
