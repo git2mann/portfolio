@@ -118,7 +118,7 @@ const Header = () => {
 
                         <button
                             onClick={() => setMenuOpen(!menuOpen)}
-                            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
+                            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/10"
                             aria-label="Toggle Menu"
                         >
                             {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -126,7 +126,7 @@ const Header = () => {
                     </div>
                 </nav>
             </div>
-
+ 
             {/* --- MOBILE NAVIGATION MODAL --- */}
             {typeof document !== 'undefined' && createPortal(
                 <AnimatePresence>
@@ -138,28 +138,28 @@ const Header = () => {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 onClick={() => setMenuOpen(false)}
-                                className="fixed inset-0 bg-background-primary/60 backdrop-blur-xl z-[99999] md:hidden"
+                                className="fixed inset-0 bg-background-primary opacity-60 backdrop-blur-xl z-[99999] md:hidden"
                             />
-
+ 
                             {/* Modal */}
                             <motion.div 
                                 ref={menuRef}
-                                initial={{ opacity: 0, scale: 0.9, y: "-45%" }}
+                                initial={{ opacity: 0, scale: 0.95, y: "-48%" }}
                                 animate={{ opacity: 1, scale: 1, y: "-50%" }}
-                                exit={{ opacity: 0, scale: 0.9, y: "-45%" }}
-                                className="fixed left-6 right-6 top-1/2 -translate-y-1/2 rounded-[2.5rem] shadow-[0_40px_100px_rgba(0,0,0,0.8)] z-[100000] p-4 liquid-glass-clear overflow-hidden md:hidden"
+                                exit={{ opacity: 0, scale: 0.95, y: "-48%" }}
+                                className="fixed left-6 right-6 top-1/2 -translate-y-1/2 rounded-[2.5rem] shadow-[0_24px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.5)] z-[100000] p-5 glass overflow-hidden md:hidden"
                             >
                                 <div className="py-2">
                                     <div className="flex justify-between items-center mb-6 px-4 pt-2">
-                                        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/50">Navigation Hub</span>
+                                        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary opacity-50">Navigation Hub</span>
                                         <button 
                                             onClick={() => setMenuOpen(false)}
-                                            className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-primary/60 hover:text-primary transition-colors border border-white/10"
+                                            className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary opacity-60 hover:text-primary transition-colors border border-primary/10"
                                         >
                                             <X size={18} />
                                         </button>
                                     </div>
-
+ 
                                     <nav className="grid grid-cols-2 gap-2">
                                         {navLinks.map(({ href, label, icon: Icon }) => {
                                             const isActive = pathname === href;
@@ -168,15 +168,15 @@ const Header = () => {
                                                     key={href}
                                                     href={href}
                                                     className={`
-                                                        flex flex-col items-center justify-center gap-3 p-6 rounded-2xl transition-all border
+                                                        flex flex-col items-center justify-center gap-3 p-5 rounded-[1.5rem] transition-all duration-300 border group
                                                         ${isActive 
-                                                            ? "bg-primary text-background-primary border-white/20 shadow-2xl scale-[1.02]" 
-                                                            : "bg-white/[0.05] border-white/5 text-primary/60 hover:text-primary hover:bg-white/10"
+                                                            ? "bg-primary text-background-primary border-primary/20 shadow-xl scale-[1.02]" 
+                                                            : "bg-primary/5 border-primary/10 text-primary opacity-75 hover:opacity-100 hover:bg-primary/10 hover:scale-[1.02]"
                                                         }
                                                     `}
                                                 >
-                                                    <Icon size={28} className={isActive ? "text-background-primary" : "text-accent-blue opacity-80"} />
-                                                    <span className={`text-[10px] font-bold uppercase tracking-[0.3em] ${isActive ? "text-background-primary" : "text-primary/70"}`}>
+                                                    <Icon size={28} className={`transition-transform duration-300 group-hover:scale-110 ${isActive ? "text-background-primary" : "text-accent-blue opacity-90"}`} />
+                                                    <span className={`text-[10px] font-bold uppercase tracking-[0.3em] ${isActive ? "text-background-primary" : "text-primary opacity-70"}`}>
                                                         {label}
                                                     </span>
                                                 </Link>

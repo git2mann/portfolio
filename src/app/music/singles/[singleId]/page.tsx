@@ -153,9 +153,9 @@ export default function SinglePage() {
                  </div>
                  <div className="flex-grow space-y-10">
                     <div className="space-y-4">
-                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.5em]">
+                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
                           <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                          <span>RELEASE ACTIVE // {single.releaseYear}</span>
+                          <span>RELEASED {single.releaseYear}</span>
                        </div>
                        <h1 className="text-5xl md:text-7xl lg:text-[8.5rem] font-light tracking-tighter uppercase leading-[0.8] text-primary">
                           {single.title}
@@ -182,23 +182,26 @@ export default function SinglePage() {
               <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-16 md:gap-24 items-center">
                  <div className="space-y-10">
                     <div className="max-w-3xl border-l-[3px] border-accent-blue pl-10 relative">
-                       <h3 className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                          <FiTerminal size={12} /> OVERVIEW
+                       <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                          <FiTerminal size={12} /> Overview
                        </h3>
                        <p className="text-3xl md:text-5xl font-light leading-tight text-primary">
                           A bold statement of artistry. Blending wordplay with structural frequency. Documenting high-fidelity growth.
                        </p>
                     </div>
                     <div className="flex gap-6">
-                       <button className="flex items-center gap-3 px-8 py-4 bg-primary text-background-primary font-medium uppercase text-[10px] tracking-widest hover:bg-accent-blue hover:text-white transition-all shadow-2xl">
-                          <FiPlay size={16} fill="currentColor" /> Play Single
+                       <button 
+                         onClick={() => setActiveSlide(2)}
+                         className="flex items-center gap-3 px-8 py-4 bg-primary text-background-primary font-medium uppercase text-[10px] tracking-widest hover:bg-accent-blue hover:text-white transition-all shadow-2xl"
+                       >
+                          <FiDisc size={16} className="animate-spin-slow" /> View Lyrics
                        </button>
                     </div>
                  </div>
                  
                  <div className="liquid-glass p-10 rounded-[2rem] space-y-10">
-                    <h5 className="font-mono text-[9px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                       <FiDatabase size={12} /> METADATA
+                    <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                       <FiDatabase size={12} /> Single Details
                     </h5>
                     <div className="grid grid-cols-1 gap-6">
                        {[
@@ -223,7 +226,7 @@ export default function SinglePage() {
            <Container className="!max-w-none px-6 md:px-24 h-[75vh] flex flex-col">
               <div className="flex items-end justify-between border-b border-primary/10 pb-4 mb-8">
                  <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">Lyrics</h2>
-                 <span className="font-mono text-[9px] uppercase tracking-[0.5em] opacity-30 text-secondary">COMPOSITION ANALYSIS</span>
+                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 text-secondary font-semibold">Lyrics & Composition</span>
               </div>
               <div className="flex-grow overflow-y-auto no-scrollbar pr-4 pb-24">
                  <div className="bg-primary/[0.01] p-8 md:p-12 rounded-[1.5rem] border border-primary/5 backdrop-blur-sm">

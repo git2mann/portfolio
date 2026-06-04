@@ -32,8 +32,9 @@
   margin-left: -90px; 
   margin-top: -120px; 
   transform-style: preserve-3d; 
-  will-change: transform, filter, opacity; 
+  will-change: transform, opacity; 
   cursor: pointer; 
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 @media (max-width: 768px) { 
@@ -53,7 +54,7 @@
   background: var(--background-secondary);
   transform-style: preserve-3d; 
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4); 
-  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s; 
+  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s, filter 0.8s cubic-bezier(0.23, 1, 0.32, 1); 
   border: 1px solid var(--glass-border);
 }
 
@@ -61,12 +62,12 @@
   transform: scale(1.05); 
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6); 
   border: 1px solid var(--accent-blue);
+  filter: blur(0px) !important;
 }
 
 .cardWrapper:hover { 
   z-index: 100000 !important; 
   opacity: 1 !important; 
-  filter: blur(0px) !important; 
 }
 
 .cardInner img { 

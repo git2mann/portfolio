@@ -164,9 +164,9 @@ export default function EPPage() {
                  </div>
                  <div className="flex-grow space-y-10">
                     <div className="space-y-4">
-                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.5em]">
+                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
                           <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                          <span>RELEASE ACTIVE // {ep.releaseYear}</span>
+                          <span>RELEASED {ep.releaseYear}</span>
                        </div>
                        <h1 className="text-5xl md:text-7xl lg:text-[8.5rem] font-light tracking-tighter uppercase leading-[0.8] text-primary">
                           {ep.title}
@@ -189,8 +189,8 @@ export default function EPPage() {
               <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-16 md:gap-24 items-center">
                  <div className="space-y-10">
                     <div className="max-w-3xl border-l-[3px] border-accent-blue pl-10 relative">
-                       <h3 className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                          <FiTerminal size={12} /> OVERVIEW
+                       <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                          <FiTerminal size={12} /> Overview
                        </h3>
                        <p className="text-3xl md:text-5xl font-light leading-tight text-primary">
                           Focused explorations of specific sonic environments. Capturing the iterative process of the archive.
@@ -199,8 +199,8 @@ export default function EPPage() {
                  </div>
                  
                  <div className="liquid-glass p-10 rounded-[2rem] space-y-10">
-                    <h5 className="font-mono text-[9px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                       <FiDatabase size={12} /> METADATA
+                    <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                       <FiDatabase size={12} /> EP Details
                     </h5>
                     <div className="grid grid-cols-1 gap-6">
                        {[
@@ -224,8 +224,8 @@ export default function EPPage() {
         <section className="w-[100vw] h-full flex-shrink-0 flex items-center justify-center pt-12">
            <Container className="!max-w-none px-6 md:px-24 h-[75vh] flex flex-col">
               <div className="flex items-end justify-between border-b border-primary/10 pb-4 mb-8">
-                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">The Index</h2>
-                 <span className="font-mono text-[9px] uppercase tracking-[0.5em] opacity-30 text-secondary">Track_Sequence // {ep.songs.length} Units</span>
+                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">Tracks</h2>
+                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 text-secondary font-semibold">{ep.songs.length} Songs</span>
               </div>
               <div className="flex-grow overflow-y-auto no-scrollbar space-y-1 pr-4 pb-24">
                  {ep.songs.map((track: any, i: number) => (

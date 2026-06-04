@@ -154,24 +154,24 @@ export default function SataopLivePage() {
                  </div>
                  <div className="flex-grow space-y-10">
                     <div className="space-y-4">
-                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.5em]">
+                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
                           <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                          <span>LIVE PERFORMANCE // 2025</span>
+                          <span>LIVE PERFORMANCE - 2025</span>
                        </div>
                        <h1 className="text-5xl md:text-7xl lg:text-[8.5rem] font-light tracking-tighter uppercase leading-[0.8] text-primary">
                           Squealer Live
                        </h1>
                     </div>
-                    <div className="flex gap-12 pt-6 border-t border-primary/10">
-                       <div className="space-y-1">
-                          <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Type</p>
-                          <p className="text-2xl md:text-4xl font-light tracking-tighter text-primary">RAW CAPTURE</p>
-                       </div>
-                       <div className="space-y-1">
-                          <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Stability</p>
-                          <p className="text-2xl md:text-4xl font-light tracking-tighter text-primary">UNFILTERED</p>
-                       </div>
-                    </div>
+                        <div className="flex gap-12 pt-6 border-t border-primary/10">
+                           <div className="space-y-1">
+                              <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Recording Type</p>
+                              <p className="text-2xl md:text-4xl font-light tracking-tighter text-primary">LIVE SHOW</p>
+                           </div>
+                           <div className="space-y-1">
+                              <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Audio Style</p>
+                              <p className="text-2xl md:text-4xl font-light tracking-tighter text-primary">RAW & DIRECT</p>
+                           </div>
+                        </div>
                  </div>
               </div>
            </Container>
@@ -182,20 +182,19 @@ export default function SataopLivePage() {
            <Container className="!max-w-none px-6 md:px-24">
               <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-16 md:gap-24 items-center">
                  <div className="space-y-12">
-                    <div className="max-w-3xl border-l-[3px] border-accent-blue pl-10 relative">
-                       <h3 className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                          <Terminal size={12} /> OVERVIEW
-                       </h3>
+                     <div className="max-w-3xl border-l-[3px] border-accent-blue pl-10 relative">
+                        <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                           <Terminal size={12} /> Overview
+                        </h3>
                        <p className="text-3xl md:text-5xl font-light leading-tight text-primary">
                           The Aggressors of Peace captured in raw motion. An investigation into noise, frequency, and collective energy.
                        </p>
                     </div>
                  </div>
-                 
-                 <div className="liquid-glass p-10 rounded-[2rem] space-y-10">
-                    <h5 className="font-mono text-[9px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                       <Database size={12} /> PERFORMANCE DETAILS
-                    </h5>
+                                  <div className="liquid-glass p-10 rounded-[2rem] space-y-10">
+                     <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                        <Database size={12} /> Performance Details
+                     </h5>
                     <div className="grid grid-cols-1 gap-6">
                        {[
                          { label: 'Location', val: 'Tallinn, EE' },
@@ -218,8 +217,8 @@ export default function SataopLivePage() {
         <section className="w-[100vw] h-full flex-shrink-0 flex items-center justify-center pt-12">
            <Container className="!max-w-none px-6 md:px-24 h-[75vh] flex flex-col">
               <div className="flex items-end justify-between border-b border-primary/10 pb-4 mb-8">
-                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">The Index</h2>
-                 <span className="font-mono text-[9px] uppercase tracking-[0.5em] opacity-30 text-secondary">Track_Sequence // {TRACKLIST.length} Units</span>
+                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">Tracks</h2>
+                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 text-secondary font-semibold">{TRACKLIST.length} Songs</span>
               </div>
               <div className="flex-grow overflow-y-auto no-scrollbar space-y-1 pr-4 pb-24">
                  {TRACKLIST.map((track, i) => (
@@ -233,7 +232,7 @@ export default function SataopLivePage() {
                                {track}
                             </h4>
                          </div>
-                         <Play size={24} className="opacity-0 group-hover:opacity-100 transition-opacity text-accent-blue" />
+                         <ArrowRight size={24} className="opacity-0 group-hover:opacity-100 transition-opacity text-accent-blue" />
                       </div>
                    </div>
                  ))}

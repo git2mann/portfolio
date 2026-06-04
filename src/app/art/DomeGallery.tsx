@@ -362,7 +362,7 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
               return (
                 <div
                   key={item.id}
-                  className={`${styles.cardWrapper} ${isFocused ? 'shadow-[0_30px_100px_rgba(0,0,0,0.8),0_0_20px_rgba(255,255,255,0.05)] scale-[1.02]' : 'hover:scale-105 active:scale-95 transition-transform'}`}
+                  className={`${styles.cardWrapper} ${isFocused ? 'shadow-[0_30px_100px_rgba(0,0,0,0.8),0_0_20px_rgba(255,255,255,0.05)] scale-[1.02]' : 'hover:scale-105 active:scale-95'}`}
                   style={{ 
                     position: 'absolute',
                     left: '50%',
@@ -371,13 +371,19 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
                     transform: `translate3d(${pos.x}px, ${pos.y}px, ${pos.z}px) scale(${finalScale})`,
                     zIndex: isFocused ? 10000 : Math.floor(pos.z + radius),
                     opacity: opacity,
-                    filter: isGuided && !isFocused ? 'blur(12px)' : 'none',
                     pointerEvents: 'auto', // Enable pointer events for clicking
                     cursor: 'pointer'
                   }}
                   onClick={(e) => handleCardClick(e, item)}
                 >
-                  <div className={`${styles.cardInner} ${isFocused ? 'border-white/20' : 'border-white/5'}`} style={{ borderRadius: '1rem', borderWidth: isFocused ? '1px' : '0px' }}>
+                  <div 
+                    className={`${styles.cardInner} ${isFocused ? 'border-white/20' : 'border-white/5'}`} 
+                    style={{ 
+                      borderRadius: '1rem', 
+                      borderWidth: isFocused ? '1px' : '0px',
+                      filter: isGuided && !isFocused ? 'blur(12px)' : 'none'
+                    }}
+                  >
                     <img src={item.src} alt={item.title} loading="lazy" className={isFocused ? 'opacity-100' : ''} />
                     {!isGuided && (
                       <div className={styles.label}>

@@ -236,9 +236,9 @@ export default function AlbumPage() {
                  </div>
                  <div className="flex-grow space-y-8">
                     <div className="space-y-4">
-                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.5em]">
+                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
                           <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                          <span>RELEASE ACTIVE // {album.releaseYear}</span>
+                          <span>RELEASED {album.releaseYear}</span>
                        </div>
                        <h1 className="text-5xl md:text-7xl lg:text-[7.5rem] font-light tracking-tighter uppercase leading-[0.8] text-primary">
                           {album.title}
@@ -265,16 +265,19 @@ export default function AlbumPage() {
               <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-16 md:gap-24 items-center">
                  <div className="space-y-10">
                     <div className="max-w-3xl border-l-[3px] border-accent-blue pl-10 relative">
-                       <h3 className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                          <FiTerminal size={12} /> OVERVIEW
+                       <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                          <FiTerminal size={12} /> Overview
                        </h3>
                        <p className="text-3xl md:text-5xl font-light leading-tight text-primary">
                           {album.description}
                        </p>
                     </div>
                     <div className="flex flex-wrap gap-6">
-                       <button className="flex items-center gap-3 px-8 py-4 bg-primary text-background-primary font-medium uppercase text-[10px] tracking-widest hover:bg-accent-blue hover:text-white transition-all shadow-2xl">
-                          <FiPlay size={16} fill="currentColor" /> Play Album
+                       <button 
+                         onClick={() => setActiveSlide(2)}
+                         className="flex items-center gap-3 px-8 py-4 bg-primary text-background-primary font-medium uppercase text-[10px] tracking-widest hover:bg-accent-blue hover:text-white transition-all shadow-2xl"
+                       >
+                          <FiDisc size={16} className="animate-spin-slow" /> View Tracks
                        </button>
                        <button className="flex items-center gap-3 px-8 py-4 border border-primary/10 liquid-glass-clear font-medium uppercase text-[10px] tracking-widest hover:bg-primary/5 transition-all text-primary">
                           <FiExternalLink size={16} /> External Links
@@ -283,8 +286,8 @@ export default function AlbumPage() {
                  </div>
                  
                  <div className="liquid-glass p-10 rounded-[2rem] space-y-10">
-                    <h5 className="font-mono text-[9px] uppercase tracking-[0.6em] text-accent-blue/60 mb-6 flex items-center gap-4">
-                       <FiDatabase size={12} /> METADATA
+                    <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                       <FiDatabase size={12} /> Album Details
                     </h5>
                     <div className="grid grid-cols-1 gap-6">
                        {[
@@ -308,8 +311,8 @@ export default function AlbumPage() {
         <section className="w-[100vw] h-full flex-shrink-0 flex items-center justify-center pt-12">
            <Container className="!max-w-none px-6 md:px-24 h-[75vh] flex flex-col">
               <div className="flex items-end justify-between border-b border-primary/10 pb-4 mb-8">
-                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">The Index</h2>
-                 <span className="font-mono text-[9px] uppercase tracking-[0.5em] opacity-30 text-secondary">Track_Sequence // {album.songs.length} Units</span>
+                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">Tracks</h2>
+                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 text-secondary font-semibold">{album.songs.length} Songs</span>
               </div>
               <div className="flex-grow overflow-y-auto no-scrollbar space-y-1 pr-4 pb-24">
                  {album.songs.map((song, i) => (

@@ -373,3 +373,105 @@ body {
     filter: blur(6px);
   }
 }
+
+/* Custom View Transition (Ripple theme switch) styling */
+::view-transition-image-pair(root) {
+  isolation: auto;
+}
+
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  display: block;
+}
+
+::view-transition-new(root) {
+  animation: clip-path-ripple 1.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+  mix-blend-mode: normal;
+  display: block;
+  z-index: 9999;
+}
+
+@keyframes clip-path-ripple {
+  from {
+    clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%));
+  }
+  to {
+    clip-path: circle(var(--ripple-radius, 2000px) at var(--ripple-x, 50%) var(--ripple-y, 50%));
+  }
+}
+
+/* Disable all CSS transitions during active View Transitions to prevent double-rendering lag */
+html:active-view-transition,
+html:active-view-transition * {
+  transition: none !important;
+}
+
+/* Register theme variables as transitionable properties (Houdini) */
+@property --background-primary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #ffffff;
+}
+@property --background-secondary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #f5f5f7;
+}
+@property --text-primary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #1d1d1f;
+}
+@property --text-secondary {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #86868b;
+}
+@property --accent-blue {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0071e3;
+}
+@property --glass-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.7);
+}
+@property --glass-border {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(255, 255, 255, 0.3);
+}
+
+/* Global Theme Variable Transition for Non-Supported ViewTransition Browsers */
+html {
+  transition: 
+    --background-primary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    --background-secondary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    --text-primary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    --text-secondary 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    --accent-blue 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    --glass-bg 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+    --glass-border 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Toast View Transition */
+.theme-toast-container {
+  view-transition-name: theme-toast;
+}
+
+/* Ensure the toast group is on top of the root image pair/ripple and has rounded corners */
+::view-transition-group(theme-toast) {
+  z-index: 100002;
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+::view-transition-old(theme-toast),
+::view-transition-new(theme-toast) {
+  border-radius: 9999px !important;
+  overflow: hidden !important;
+}
+
+

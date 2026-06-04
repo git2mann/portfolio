@@ -36,7 +36,13 @@ export function NoFOUCScript(storageKey: string, themeList: Theme[]) {
       };
     };
 
-    const restoreTransitions = modifyTransition();
+    // Only disable transitions on the initial load to prevent FOUC.
+    // For runtime switches, we want transitions to happen smoothly.
+    const isInitial = !(window as any).__initialThemeLoaded;
+    const restoreTransitions = isInitial ? modifyTransition() : () => {};
+    if (isInitial) {
+      (window as any).__initialThemeLoaded = true;
+    }
     const theme = localStorage.getItem(storageKey) ?? "system";
     const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     const resolvedTheme = theme === "system" ? systemTheme : theme;
