@@ -110,34 +110,20 @@ const ThemeSelector = () => {
     });
   };
 
-  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleQuickSwitch = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
+    cycleTheme(e);
+  };
 
-    if (clickTimeoutRef.current) {
-      // Second click within 250ms: cancel single-click and cycle themes
-      clearTimeout(clickTimeoutRef.current);
-      clickTimeoutRef.current = null;
-      cycleTheme(e);
-    } else {
-      // First click: start 250ms timer
-      clickTimeoutRef.current = setTimeout(() => {
-        setIsOpen(prev => !prev);
-        clickTimeoutRef.current = null;
-      }, 250);
-    }
+  const handleToggleMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(prev => !prev);
   };
 
   useEffect(() => {
-    return () => {
-      if (clickTimeoutRef.current) clearTimeout(clickTimeoutRef.current);
-    };
-  }, []);
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -216,19 +202,30 @@ const ThemeSelector = () => {
   return (
     <div className="relative" ref={containerRef}>
       
-      {/* TRIGGER BUTTON */}
-      <button
-        ref={triggerRef}
-        onClick={handleClick}
+      {/* QUICK SWITCH + MENU TOGGLE */}
+      <div
         className={`
-          flex items-center gap-3 px-5 py-2.5 rounded-full liquid-glass transition-all duration-500 select-none
-          ${isOpen ? "border-white/40 shadow-inner scale-[0.97]" : "hover:scale-[1.03] active:scale-95"}
+          flex items-center rounded-full liquid-glass transition-all duration-500 select-none overflow-hidden
+          ${isOpen ? "border-white/40 shadow-inner scale-[0.97]" : "hover:scale-[1.03]"}
         `}
-        aria-label="Change Appearance"
       >
-        <span className="text-xl leading-none">{currentThemeData?.icon}</span>
-        <ChevronDown size={14} className={`transition-transform duration-500 text-primary opacity-40 ${isOpen ? "rotate-180 text-primary opacity-80" : ""}`} />
-      </button>
+        <button
+          onClick={handleQuickSwitch}
+          className="h-[42px] px-4 inline-flex items-center justify-center"
+          aria-label="Quick switch theme"
+        >
+          <span className="text-xl leading-none">{currentThemeData?.icon}</span>
+        </button>
+
+        <button
+          ref={triggerRef}
+          onClick={handleToggleMenu}
+          className="h-[42px] w-9 inline-flex items-center justify-center border-l border-primary/10"
+          aria-label="Open theme menu"
+        >
+          <ChevronDown size={14} className={`transition-transform duration-500 text-primary opacity-40 ${isOpen ? "rotate-180 text-primary opacity-80" : ""}`} />
+        </button>
+      </div>
 
       {/* DROPDOWN/MODAL MENU: Decoupled via Portal */}
       {typeof document !== 'undefined' && createPortal(
@@ -248,15 +245,15 @@ const ThemeSelector = () => {
 
               <motion.div 
                 id="theme-portal-dropdown"
-                initial={isMobile ? { opacity: 0, scale: 0.95, y: "-48%" } : { opacity: 0, y: 10 }}
-                animate={isMobile ? { opacity: 1, scale: 1, y: "-50%" } : { opacity: 1, y: 0 }}
-                exit={isMobile ? { opacity: 0, scale: 0.95, y: "-48%" } : { opacity: 0, y: 10 }}
+                initial={isMobile ? { opacity: 0, scale: 0.96 } : { opacity: 0, y: 10 }}
+                animate={isMobile ? { opacity: 1, scale: 1 } : { opacity: 1, y: 0 }}
+                exit={isMobile ? { opacity: 0, scale: 0.96 } : { opacity: 0, y: 10 }}
                 className={`
-                  fixed rounded-[2.5rem] shadow-[0_24px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.5)] z-[100000] p-5 
-                  glass overflow-hidden
+                  fixed rounded-[2rem] shadow-[0_24px_60px_rgba(0,0,0,0.2)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.55)] z-[100000]
+                  overflow-hidden
                   ${isMobile 
-                    ? 'left-6 right-6 top-1/2 -translate-y-1/2' 
-                    : 'w-72'
+                    ? 'w-[min(92vw,440px)] inset-x-0 mx-auto top-4' 
+                    : 'w-72 glass p-5'
                   }
                 `}
                 style={!isMobile ? { 
@@ -268,48 +265,107 @@ const ThemeSelector = () => {
                   WebkitBackfaceVisibility: 'hidden'
                 } : {}}
               >
-                <div className="py-2">
-                  {isMobile && (
-                    <div className="flex justify-between items-center mb-6 px-4 pt-2">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary opacity-50">Select Interface Theme</span>
-                      <button 
-                        onClick={() => setIsOpen(false)}
-                        className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary opacity-60 hover:text-primary transition-colors border border-primary/10"
-                      >
-                        <X size={18} />
-                      </button>
+                {isMobile ? (
+                  <div className="relative h-full glass px-5 py-6">
+                    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                      <div className="absolute -top-24 right-[-4rem] h-56 w-56 rounded-full bg-accent-blue/15 blur-3xl" />
+                      <div className="absolute -bottom-24 left-[-3rem] h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
                     </div>
-                  )}
 
-                  <div className={`grid ${isMobile ? 'grid-cols-2 gap-2' : 'grid-cols-1'}`}>
-                    {themes.map((theme) => {
-                      const isActive = currentTheme === theme.id;
-                      return (
+                    <div className="relative z-10 h-full flex flex-col">
+                      <div className="flex justify-between items-start mb-8">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary/55">Appearance</span>
+                          <p className="text-2xl font-light text-primary mt-2 tracking-tight">Choose a theme</p>
+                        </div>
                         <button
-                          key={theme.id}
-                          onClick={(e) => {
-                            selectTheme(theme.id, e);
-                            setIsOpen(false);
-                          }}
-                          className={`
-                            w-full flex items-center justify-between px-5 py-4 rounded-[1.5rem] text-left transition-all duration-300 group mb-1 border
-                            ${isActive 
-                              ? "bg-primary text-background-primary border-primary/20 shadow-lg scale-[1.02]" 
-                              : "bg-primary/5 border-primary/10 text-primary opacity-75 hover:opacity-100 hover:bg-primary/10 hover:scale-[1.02]"
-                            }
-                          `}
+                          onClick={() => setIsOpen(false)}
+                          className="w-11 h-11 rounded-full bg-primary/5 flex items-center justify-center text-primary opacity-70 hover:opacity-100 transition-all border border-primary/10"
                         >
-                          <div className="flex items-center gap-4">
-                            <span className={`text-2xl transition-transform duration-500 ${isActive ? 'scale-110' : 'opacity-70 group-hover:opacity-100 group-hover:scale-125'}`}>{theme.icon}</span>
-                            <span className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${isActive ? 'text-background-primary' : 'text-primary opacity-70 group-hover:text-primary'}`}>{theme.name.replace('_', ' ')}</span>
-                          </div>
-                          
-                          {isActive && <Check size={16} className="text-background-primary animate-in zoom-in duration-500" />}
+                          <X size={20} />
                         </button>
-                      );
-                    })}
+                      </div>
+
+                      <div className="flex-1 overflow-y-auto">
+                        <div className="space-y-1">
+                          {themes.map((theme) => {
+                            const isActive = currentTheme === theme.id;
+                            return (
+                              <button
+                                key={theme.id}
+                                onClick={(e) => {
+                                  selectTheme(theme.id, e);
+                                  setIsOpen(false);
+                                }}
+                                className={`
+                                  w-full flex items-center justify-between gap-4 px-2 py-3.5 rounded-xl text-left transition-all duration-300 group
+                                  ${isActive ? "bg-primary/8 text-primary" : "text-primary/85 hover:text-primary hover:bg-primary/5"}
+                                `}
+                              >
+                                <div className="flex items-center gap-3 min-w-0">
+                                  <span className={`h-10 w-10 rounded-full inline-flex items-center justify-center ${isActive ? "bg-primary/10" : "bg-primary/5"}`}>
+                                    <span className="text-xl leading-none">{theme.icon}</span>
+                                  </span>
+
+                                  <span className="min-w-0">
+                                    <span className={`block text-2xl leading-none font-light tracking-tight ${isActive ? "text-primary" : "text-primary/90"}`}>
+                                      {theme.name.replace('_', ' ')}
+                                    </span>
+                                    <span className={`block text-xs mt-1 uppercase tracking-[0.16em] ${isActive ? "text-accent-blue" : "text-secondary"}`}>
+                                      {theme.id === 'system' ? 'Follow device preference' : 'Apply interface palette'}
+                                    </span>
+                                  </span>
+                                </div>
+
+                                {isActive ? (
+                                  <Check size={18} className="text-accent-blue" />
+                                ) : (
+                                  <ChevronDown size={16} className="text-primary/30 -rotate-90" />
+                                )}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div className="pt-5 mt-4 border-t border-primary/10 flex items-center justify-between">
+                        <span className="text-[10px] uppercase tracking-[0.24em] text-secondary">Theme Studio</span>
+                        <span className="text-[10px] uppercase tracking-[0.24em] text-secondary">Personalization</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="py-2">
+                    <div className="grid grid-cols-1">
+                      {themes.map((theme) => {
+                        const isActive = currentTheme === theme.id;
+                        return (
+                          <button
+                            key={theme.id}
+                            onClick={(e) => {
+                              selectTheme(theme.id, e);
+                              setIsOpen(false);
+                            }}
+                            className={`
+                              w-full flex items-center justify-between px-5 py-3.5 rounded-2xl text-left transition-all duration-300 group mb-1
+                              ${isActive 
+                                ? "bg-primary text-background-primary shadow-md" 
+                                : "bg-transparent text-primary opacity-70 hover:opacity-100 hover:bg-primary/5"
+                              }
+                            `}
+                          >
+                            <div className="flex items-center gap-4">
+                              <span className={`text-2xl transition-transform duration-500 ${isActive ? 'scale-110' : 'opacity-70 group-hover:opacity-100 group-hover:scale-125'}`}>{theme.icon}</span>
+                              <span className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${isActive ? 'text-background-primary' : 'text-primary opacity-70 group-hover:text-primary'}`}>{theme.name.replace('_', ' ')}</span>
+                            </div>
+
+                            {isActive && <Check size={16} className="text-background-primary animate-in zoom-in duration-500" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </motion.div>
             </>
           )}

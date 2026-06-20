@@ -26,7 +26,7 @@ export function PostPreview({
   slug,
 }: Props) {
   return (
-    <div>
+    <div className="post-card p-6">
       {/* Cover image with link to post */}
       <div className="mb-5">
         <CoverImage slug={slug} title={title} src={coverImage} />

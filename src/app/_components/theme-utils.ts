@@ -27,7 +27,7 @@ export function NoFOUCScript(storageKey: string, themeList: Theme[]) {
       css.textContent = "*,*::before,*::after{transition:none!important;}";
       document.head.appendChild(css);
       return () => {
-        getComputedStyle(document.body);
+        getComputedStyle(document.body || document.documentElement);
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             document.head.removeChild(css);

@@ -69,7 +69,7 @@ const ArtPage = () => {
     <main className="min-h-screen pb-32 bg-background-primary">
       
       {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
-      <section className="relative min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-20">
+      <section className="relative min-h-[62vh] lg:h-[85vh] flex flex-col justify-center overflow-hidden pt-16 lg:pt-20">
         <div className="absolute inset-0 z-0">
           <video 
             autoPlay 
@@ -84,40 +84,40 @@ const ArtPage = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
         </div>
 
-        <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
+        <Container className="relative z-10 w-full !max-w-none px-5 lg:px-20">
+          <div className="flex flex-col lg:flex-row items-center gap-7 lg:gap-24">
             {/* Left: Dictionary Text */}
             <div className="flex-1 text-left relative z-10">
-              <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
-                 <div className="flex items-center gap-4 mb-3 md:mb-4">
-                    <span className="w-8 md:w-12 h-[1px] bg-blue-500/50"></span>
-                    <span className="text-blue-500 font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Selected Works</span>
+              <div className="mb-7 lg:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
+                 <div className="flex items-center gap-3 lg:gap-4 mb-3 lg:mb-4">
+                    <span className="w-8 lg:w-12 h-[1px] bg-blue-500/50"></span>
+                    <span className="text-blue-500 font-medium text-[11px] lg:text-sm uppercase tracking-[0.38em] lg:tracking-[0.5em]">Selected Works</span>
                  </div>
-                 <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6 uppercase">
+                 <h1 className="text-5xl sm:text-6xl lg:text-[11rem] font-light tracking-tighter leading-[0.82] mb-3 lg:mb-6 uppercase">
                    Art
                  </h1>
-                 <div className="flex flex-wrap items-center gap-2 md:gap-4 text-lg md:text-3xl font-mono text-secondary">
+                 <div className="flex flex-wrap items-center gap-2 lg:gap-4 text-base lg:text-3xl font-mono text-secondary">
                    <span>/ɑːrt/</span>
-                   <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-blue-500/50"></span>
+                   <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-blue-500/50"></span>
                    <span>noun</span>
                  </div>
               </div>
               
-              <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-xl md:text-5xl font-light text-primary mt-8 md:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
+              <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-lg lg:text-5xl font-light text-primary mt-6 lg:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
                 1. Visual poetry. An exploration of form, light, and narrative. 2. Digital realizations of abstract human emotion and logical structures.
               </ScrollReveal>
 
-              <div className="mt-12 md:mt-24 flex flex-wrap gap-6 md:gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
-                <button onClick={() => setGalleryActive(true)} className="px-10 md:px-12 py-3 md:py-4 rounded-full font-medium text-xs md:text-sm uppercase tracking-widest transition-all bg-primary text-background-primary shadow-[0_0_30px_rgba(var(--text-primary-rgb),0.2)] hover:scale-105 active:scale-95 flex items-center gap-3">
+              <div className="mt-8 lg:mt-16 flex flex-col sm:flex-row w-full sm:w-auto gap-3 lg:gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+                <button onClick={() => setGalleryActive(true)} className="w-full sm:w-auto px-7 lg:px-12 py-3 lg:py-4 rounded-full font-medium text-[11px] lg:text-sm uppercase tracking-[0.24em] lg:tracking-widest transition-all bg-primary text-background-primary shadow-[0_0_30px_rgba(var(--text-primary-rgb),0.2)] hover:scale-105 active:scale-95 flex items-center justify-center gap-3">
                    <span>Enter Gallery</span>
                    <ArrowRight size={16} />
                 </button>
-                <a href="#collections" className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95">View Collection</a>
+                <a href="#collections" className="w-full sm:w-auto text-center px-7 lg:px-12 py-3 lg:py-4 rounded-full liquid-glass-clear font-medium text-[11px] lg:text-sm uppercase tracking-[0.24em] lg:tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95">View Collection</a>
               </div>
             </div>
 
             {/* Right: Figurine Visual */}
-            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-8 md:mt-0">
+            <div className="flex-[0.6] lg:flex-[0.8] w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[600px] relative mt-7 lg:mt-0">
                <div className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-blue-500/5 blur-3xl rounded-full opacity-60"></div>
                   <Image 
@@ -141,20 +141,20 @@ const ArtPage = () => {
       )}
 
       {/* --- COLLECTIONS INDEX --- */}
-      <Container id="collections" className="mt-32 md:mt-48 !max-w-none px-6 md:px-20">
+      <Container id="collections" className="mt-20 lg:mt-32 !max-w-none px-5 lg:px-20">
         
         {/* Functional Navigation / Filter */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8 border-b border-primary/10 pb-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 lg:mb-16 gap-5 lg:gap-8 border-b border-primary/10 pb-6 lg:pb-8">
            <div className="space-y-4">
               <div className="flex items-center gap-3">
                  <Grid className="text-blue-500 w-5 h-5" />
                  <span className="font-mono text-xs uppercase tracking-[0.4em] opacity-40 text-secondary">Collection Guide</span>
               </div>
-              <h2 className="text-4xl md:text-7xl font-light uppercase tracking-tighter leading-none text-primary">Curated Archive</h2>
+              <h2 className="text-3xl lg:text-7xl font-light uppercase tracking-tighter leading-none text-primary">Curated Archive</h2>
            </div>
 
            <div className="max-w-full overflow-hidden bg-primary/[0.03] p-1.5 rounded-full border border-primary/5">
-              <div className="flex flex-nowrap gap-1 md:gap-2 overflow-x-auto no-scrollbar">
+              <div className="flex flex-nowrap gap-1 lg:gap-2 overflow-x-auto no-scrollbar">
                 {[
                   { id: 'all', label: 'Full Catalog' },
                   { id: 'hiqugraph', label: 'HiQuGraphs' },
@@ -163,7 +163,7 @@ const ArtPage = () => {
                   <button
                     key={cat.id}
                     onClick={() => setActiveCategory(cat.id)}
-                    className={`px-5 md:px-8 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all whitespace-nowrap
+                    className={`px-4 lg:px-8 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.18em] lg:tracking-[0.2em] transition-all whitespace-nowrap
                       ${activeCategory === cat.id 
                         ? 'bg-primary text-background-primary shadow-xl' 
                         : 'text-secondary hover:text-primary hover:bg-primary/5'
@@ -178,16 +178,16 @@ const ArtPage = () => {
         </div>
 
         {/* Dynamic Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-10">
            {filteredWorks.map((work, i) => (
              <div 
                 key={work.src} 
-                className="group relative flex flex-col bg-primary/[0.02] border border-primary/5 hover:border-blue-500/40 transition-all duration-500 rounded-sm p-4 overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
+                className="group relative flex flex-col bg-primary/[0.02] border border-primary/5 hover:border-blue-500/40 transition-all duration-500 rounded-sm p-3 lg:p-4 overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
                 onClick={() => openArtworkModal(work.src, work.title, work.year, "", String(i))}
              >
                 <div className="absolute top-2 right-4 font-mono text-[10px] opacity-10 uppercase tracking-widest pointer-events-none group-hover:opacity-30 text-secondary">{String(i + 1).padStart(3, '0')}</div>
                 
-                <div className="relative aspect-[4/5] w-full overflow-hidden mb-6 rounded-sm bg-background-secondary">
+                <div className="relative aspect-[4/5] w-full overflow-hidden mb-4 lg:mb-6 rounded-sm bg-background-secondary">
                    <Image 
                       src={work.src} 
                       alt={work.title} 
@@ -199,7 +199,7 @@ const ArtPage = () => {
                 <div className="flex justify-between items-end">
                    <div>
                       <span className="block font-mono text-[9px] uppercase tracking-[0.3em] text-blue-500/60 mb-1">{work.category}</span>
-                      <h3 className="text-lg md:text-xl font-light tracking-tight uppercase leading-none truncate group-hover:text-primary transition-colors text-primary">{work.title}</h3>
+                      <h3 className="text-base lg:text-xl font-light tracking-tight uppercase leading-none truncate group-hover:text-primary transition-colors text-primary">{work.title}</h3>
                    </div>
                    <span className="text-xs font-medium text-secondary opacity-40">{work.year}</span>
                 </div>

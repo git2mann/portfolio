@@ -18,7 +18,7 @@ import { albums, eps, singles } from "@/data/music";
 import Tilt from 'react-parallax-tilt';
 
 // --- HELPERS ---
-const liveAlbums = [
+const liveEps = [
   {
     id: "live-1",
     title: "Squealer Live",
@@ -59,45 +59,32 @@ function LiquidOrb({ className, delay = 0, duration = 20, size = "w-96 h-96", co
 function MusicWorkCard({ release, index }: { release: any, index: number }) {
   return (
     <Link 
-      href={release.link || `/music/${release.id}`} 
+      href={release.link} 
       className="group relative flex flex-col transition-all duration-500 rounded-xl overflow-hidden cursor-pointer"
     >
       <Tilt
         tiltMaxAngleX={12}
         tiltMaxAngleY={12}
         perspective={1000}
-        scale={1.03}
+        scale={1}
         transitionSpeed={1200}
-        glareEnable={true}
+        glareEnable={false}
         glareMaxOpacity={0.35}
         glareColor="var(--text-primary)"
         glarePosition="all"
         className="w-full h-full"
       >
-        <div className="flex flex-col bg-primary/[0.01] dark:bg-primary/[0.03] border border-primary/10 hover:border-accent-blue/30 transition-all duration-500 rounded-xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] h-full relative overflow-hidden backdrop-blur-md">
+        <div className="flex flex-col bg-primary/[0.01] dark:bg-primary/[0.03] transition-all duration-500 rounded-xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] h-full relative overflow-hidden backdrop-blur-md">
           {/* Subtle light sweep highlights */}
           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
           
-          <div className="absolute top-2 right-4 font-mono text-[11px] md:text-[12px] opacity-20 uppercase tracking-widest pointer-events-none transition-all group-hover:opacity-50 text-accent-blue">
-            #{String(index + 1).padStart(3, '0')}
-          </div>
-          
-          <div className="relative aspect-square w-full overflow-hidden mb-4 md:mb-6 rounded-lg bg-black border border-primary/5 shadow-inner">
+          <div className="relative aspect-square w-full overflow-hidden mb-4 md:mb-6 rounded-lg bg-black shadow-inner">
             <Image 
               src={release.coverImage} 
               alt={release.title} 
               fill 
-              className="object-cover transition-transform duration-700 group-hover:scale-105" 
+              className="object-cover transition-transform duration-700" 
             />
-            {/* Spec glare sweep on hover */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.08] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none"></div>
-
-            {/* Simple elegant details overlay without cover blur */}
-            <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-              <div className="px-5 py-2.5 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 shadow-lg text-white font-mono text-xs uppercase tracking-widest transition-all duration-300">
-                View Release
-              </div>
-            </div>
           </div>
           
           <div className="flex justify-between items-center mt-auto">
@@ -209,7 +196,7 @@ export default function MusicPage() {
         {/* Studio Albums */}
         <section>
           {/* Glass header panel */}
-          <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 border border-primary/10 bg-primary/[0.02] backdrop-blur-md shadow-lg">
+          <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 bg-primary/[0.02] backdrop-blur-md shadow-lg">
              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent"></div>
              
              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -225,9 +212,9 @@ export default function MusicPage() {
              </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-7">
             {albums.map((album, idx) => (
-              <MusicWorkCard key={album.id} release={album} index={idx} />
+              <MusicWorkCard key={album.id} release={{ ...album, link: `/music/${album.id}` }} index={idx} />
             ))}
           </div>
         </section>
@@ -235,7 +222,7 @@ export default function MusicPage() {
         {/* EPs */}
         <section>
           {/* Glass header panel */}
-          <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 border border-primary/10 bg-primary/[0.02] backdrop-blur-md shadow-lg">
+          <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 bg-primary/[0.02] backdrop-blur-md shadow-lg">
              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent"></div>
              
              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -251,9 +238,12 @@ export default function MusicPage() {
              </div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-7">
             {eps.map((ep, idx) => (
               <MusicWorkCard key={ep.id} release={{ ...ep, link: `/music/eps/${ep.id}` }} index={idx + albums.length} />
+            ))}
+            {liveEps.map((ep, idx) => (
+              <MusicWorkCard key={ep.id} release={{ ...ep, link: `/music/sataop-live` }} index={idx + albums.length + eps.length} />
             ))}
           </div>
         </section>
@@ -261,7 +251,7 @@ export default function MusicPage() {
         {/* Singles & Live captures */}
         <section className="pb-32">
           {/* Glass header panel */}
-          <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 border border-primary/10 bg-primary/[0.02] backdrop-blur-md shadow-lg">
+          <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 bg-primary/[0.02] backdrop-blur-md shadow-lg">
              <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent"></div>
              
              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -278,11 +268,8 @@ export default function MusicPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-             <div className="col-span-2">
-                <MusicWorkCard release={liveAlbums[0]} index={99} />
-             </div>
             {singles.map((single, idx) => (
-              <MusicWorkCard key={single.id} release={{ ...single, link: `/music/singles/${single.id}` }} index={idx + albums.length + eps.length} />
+              <MusicWorkCard key={single.id} release={{ ...single, link: `/music/singles/${single.id}` }} index={idx + albums.length + eps.length + liveEps.length} />
             ))}
           </div>
         </section>

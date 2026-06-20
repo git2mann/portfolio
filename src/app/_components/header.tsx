@@ -10,12 +10,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
 
 const navLinks = [
-    { href: "/", label: "Home", icon: Home },
-    { href: "/blog", label: "Blog", icon: FileText },
-    { href: "/music", label: "Music", icon: Music },
-    { href: "/art", label: "Art", icon: Palette },
-    { href: "/projects", label: "Projects", icon: Briefcase },
-    { href: "/contact", label: "Contact", icon: Mail }
+    { href: "/", label: "Home", icon: Home, detail: "Landing overview" },
+    { href: "/blog", label: "Blog", icon: FileText, detail: "Writing and field notes" },
+    { href: "/music", label: "Music", icon: Music, detail: "Releases and sound" },
+    { href: "/art", label: "Art", icon: Palette, detail: "Visual experiments" },
+    { href: "/projects", label: "Projects", icon: Briefcase, detail: "Systems and builds" },
+    { href: "/contact", label: "Contact", icon: Mail, detail: "Start a conversation" }
 ];
 
 const Header = () => {
@@ -53,7 +53,7 @@ const Header = () => {
         >
             <div className="max-w-[1440px] mx-auto px-4 md:px-8">
                 <nav className={`
-                    liquid-glass relative rounded-[2.5rem] 
+                    header-glass relative overflow-hidden rounded-[2.5rem] 
                     transition-all duration-700 px-6 py-2.5 flex justify-between items-center
                     ${scrolled ? "scale-[0.99] shadow-2xl" : "scale-100 shadow-none"}
                     ${scrolled ? "hover:scale-[0.99]" : "hover:scale-100"}
@@ -91,7 +91,7 @@ const Header = () => {
                     </div>
 
                     {/* --- CENTER: NAVIGATION (Desktop) --- */}
-                    <div className="hidden md:flex items-center gap-2 z-10">
+                    <div className="hidden lg:flex items-center gap-2 z-10">
                         {navLinks.filter(l => l.href !== '/').map(({ href, label }) => {
                             const isActive = pathname === href;
                             return (
@@ -114,15 +114,15 @@ const Header = () => {
 
                     {/* --- RIGHT: CONTROLS --- */}
                     <div className="flex items-center gap-2 md:gap-4 z-10">
-                        <ThemeSwitcher />
-
                         <button
                             onClick={() => setMenuOpen(!menuOpen)}
-                            className="md:hidden w-10 h-10 flex items-center justify-center rounded-full bg-primary/5 hover:bg-primary/10 transition-colors border border-primary/10"
+                            className="lg:hidden w-10 h-10 flex items-center justify-center rounded-full bg-primary/5 hover:bg-primary/10 transition-colors"
                             aria-label="Toggle Menu"
                         >
                             {menuOpen ? <X size={20} /> : <Menu size={20} />}
                         </button>
+
+                        <ThemeSwitcher />
                     </div>
                 </nav>
             </div>
@@ -138,51 +138,80 @@ const Header = () => {
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
                                 onClick={() => setMenuOpen(false)}
-                                className="fixed inset-0 bg-background-primary opacity-60 backdrop-blur-xl z-[99999] md:hidden"
+                                className="fixed inset-0 bg-background-primary opacity-60 backdrop-blur-xl z-[99999] lg:hidden"
                             />
  
                             {/* Modal */}
                             <motion.div 
                                 ref={menuRef}
-                                initial={{ opacity: 0, scale: 0.95, y: "-48%" }}
-                                animate={{ opacity: 1, scale: 1, y: "-50%" }}
-                                exit={{ opacity: 0, scale: 0.95, y: "-48%" }}
-                                className="fixed left-6 right-6 top-1/2 -translate-y-1/2 rounded-[2.5rem] shadow-[0_24px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.5)] z-[100000] p-5 glass overflow-hidden md:hidden"
+                                initial={{ opacity: 0, y: "4%" }}
+                                animate={{ opacity: 1, y: "0%" }}
+                                exit={{ opacity: 0, y: "4%" }}
+                                className="fixed inset-2 rounded-[2rem] shadow-[0_24px_60px_rgba(0,0,0,0.25)] dark:shadow-[0_24px_60px_rgba(0,0,0,0.6)] z-[100000] overflow-hidden lg:hidden"
                             >
-                                <div className="py-2">
-                                    <div className="flex justify-between items-center mb-6 px-4 pt-2">
-                                        <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-primary opacity-50">Navigation Hub</span>
-                                        <button 
-                                            onClick={() => setMenuOpen(false)}
-                                            className="w-10 h-10 rounded-full bg-primary/5 flex items-center justify-center text-primary opacity-60 hover:text-primary transition-colors border border-primary/10"
-                                        >
-                                            <X size={18} />
-                                        </button>
+                                <div className="relative h-full glass px-5 py-6">
+                                    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                                        <div className="absolute -top-24 right-[-4rem] h-56 w-56 rounded-full bg-accent-blue/15 blur-3xl" />
+                                        <div className="absolute -bottom-24 left-[-3rem] h-48 w-48 rounded-full bg-primary/10 blur-3xl" />
                                     </div>
- 
-                                    <nav className="grid grid-cols-2 gap-2">
-                                        {navLinks.map(({ href, label, icon: Icon }) => {
+
+                                    <div className="relative z-10 h-full flex flex-col">
+                                        <div className="flex justify-between items-start mb-8">
+                                            <div>
+                                                <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-primary/55">Navigation</span>
+                                                <p className="text-2xl font-light text-primary mt-2 tracking-tight">Choose a destination</p>
+                                            </div>
+                                            <button 
+                                                onClick={() => setMenuOpen(false)}
+                                                className="w-11 h-11 rounded-full bg-primary/5 flex items-center justify-center text-primary opacity-70 hover:opacity-100 transition-all border border-primary/10"
+                                            >
+                                                <X size={20} />
+                                            </button>
+                                        </div>
+
+                                        <nav className="flex-1 overflow-y-auto">
+                                            <div className="space-y-1">
+                                        {navLinks.map(({ href, label, icon: Icon, detail }) => {
                                             const isActive = pathname === href;
                                             return (
                                                 <Link
                                                     key={href}
                                                     href={href}
                                                     className={`
-                                                        flex flex-col items-center justify-center gap-3 p-5 rounded-[1.5rem] transition-all duration-300 border group
+                                                        flex items-center justify-between gap-4 px-2 py-3.5 rounded-xl transition-all duration-300 group
                                                         ${isActive 
-                                                            ? "bg-primary text-background-primary border-primary/20 shadow-xl scale-[1.02]" 
-                                                            : "bg-primary/5 border-primary/10 text-primary opacity-75 hover:opacity-100 hover:bg-primary/10 hover:scale-[1.02]"
+                                                            ? "bg-primary/8 text-primary" 
+                                                            : "text-primary/85 hover:text-primary hover:bg-primary/5"
                                                         }
                                                     `}
                                                 >
-                                                    <Icon size={28} className={`transition-transform duration-300 group-hover:scale-110 ${isActive ? "text-background-primary" : "text-accent-blue opacity-90"}`} />
-                                                    <span className={`text-[10px] font-bold uppercase tracking-[0.3em] ${isActive ? "text-background-primary" : "text-primary opacity-70"}`}>
-                                                        {label}
-                                                    </span>
+                                                    <div className="flex items-center gap-3 min-w-0">
+                                                        <span className={`h-10 w-10 rounded-full inline-flex items-center justify-center ${isActive ? "bg-primary/10" : "bg-primary/5"}`}>
+                                                            <Icon size={17} className={`${isActive ? "text-accent-blue" : "text-primary/70"}`} />
+                                                        </span>
+
+                                                        <span className="min-w-0">
+                                                            <span className={`block text-2xl leading-none font-light tracking-tight ${isActive ? "text-primary" : "text-primary/90"}`}>
+                                                                {label}
+                                                            </span>
+                                                            <span className={`block text-xs mt-1 truncate uppercase tracking-[0.16em] ${isActive ? "text-accent-blue" : "text-secondary"}`}>
+                                                                {detail}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+
+                                                    <ChevronRight size={18} className={`${isActive ? "text-accent-blue" : "text-primary/30"}`} />
                                                 </Link>
                                             );
                                         })}
-                                    </nav>
+                                            </div>
+                                        </nav>
+
+                                        <div className="pt-5 mt-4 border-t border-primary/10 flex items-center justify-between">
+                                            <span className="text-[10px] uppercase tracking-[0.24em] text-secondary">Leon Nduati</span>
+                                            <span className="text-[10px] uppercase tracking-[0.24em] text-secondary">Portfolio</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </motion.div>
                         </>

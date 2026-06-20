@@ -2,6 +2,50 @@
 
 // Lyrics for EP tracks
 export const epLyrics: Record<string, Record<string, any[]>> = {
+  '2': {
+    '1': [
+      {
+        lines: ["System online.", "Read only memories.", "Static in the feed."],
+        explanation: "Establishing the 'Read Only' state of the mind under pressure—observing without the power to change the immediate environment.",
+      }
+    ],
+    '2': [
+      {
+        lines: ["In the Nile.", "Drowning in denial.", "The current is too fast."],
+        explanation: "Wordplay on 'Nile' and 'Denial', reflecting the high-velocity escape from one's own thoughts.",
+      }
+    ],
+    '3': [
+      {
+        lines: ["608-856-4955.", "Line is dead.", "No one is picking up."],
+        explanation: "A breakdown in communication. The number represents a direct line to a past that no longer answers.",
+      }
+    ],
+    '4': [
+      {
+        lines: ["President Crook.", "The authority is compromised.", "Blowing up the hierarchy."],
+        explanation: "A commentary on power structures and the internal 'controlled demolition' of authority.",
+      }
+    ],
+    '5': [
+      {
+        lines: ["The World! (Interlude)", "Time stops.", "Everything is still for a second."],
+        explanation: "A palate cleanser. Lowering the system temperature before the next detonation hits.",
+      }
+    ],
+    '6': [
+      {
+        lines: ["Best Not.", "Don't push the button.", "Too late."],
+        explanation: "The massive warning shot. A snapshot of a mind under extreme pressure reaching its limit.",
+      }
+    ],
+    '7': [
+      {
+        lines: ["These Long Long Days (Outro)", "The dust settles.", "Firing on all cylinders now."],
+        explanation: "The aftermath. From stagnation to an arrogant, high-velocity baseline.",
+      }
+    ],
+  },
   '1': {
     '1': [
       // Back Again, Again lyrics

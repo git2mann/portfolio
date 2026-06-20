@@ -83,7 +83,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
     <div className="space-y-16">
       {/* 1. NAVIGATION TABS */}
       <div className="sticky top-24 z-40 mb-12">
-        <div className="max-w-fit mx-auto liquid-glass-clear px-2 py-2 rounded-full shadow-2xl border border-white/5 overflow-hidden">
+        <div className="max-w-fit mx-auto liquid-glass-clear px-2 py-2 rounded-full shadow-2xl overflow-hidden">
           <nav className="flex gap-1 overflow-x-auto no-scrollbar">
             {[
                { id: 'featured', label: 'Highlights', icon: Star },
