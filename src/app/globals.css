@@ -701,3 +701,39 @@ html {
   border-radius: 9999px !important;
   overflow: hidden !important;
 }
+
+/* Custom Typeface SVG Adaptability for Light/Dark/Merlot themes */
+.release-typeface-img {
+  filter: invert(1) brightness(0); /* Black text by default on light themes */
+  transition: filter 0.3s ease-out, transform 0.3s ease-out;
+  transform: none; /* No scale on mobile to avoid overflow and clipping */
+  transform-origin: center center;
+}
+
+@media (min-width: 1024px) {
+  .release-typeface-img {
+    transform: scale(1.5); /* Scale on desktop to compensate for padding */
+    transform-origin: left center;
+  }
+}
+
+.dark .release-typeface-img,
+.theme-merlot .release-typeface-img,
+.theme-forest .release-typeface-img,
+.theme-ocean .release-typeface-img,
+.theme-sunset .release-typeface-img,
+[data-theme="dark"] .release-typeface-img,
+[data-theme="merlot"] .release-typeface-img {
+  filter: invert(0) brightness(1); /* White text on dark themes */
+}
+
+/* Force Sataop Live Text (originally fill="#884c4e" dark red) to be white on dark themes */
+.dark img[src*="Sataop"][src*="Live"],
+.theme-merlot img[src*="Sataop"][src*="Live"],
+.theme-forest img[src*="Sataop"][src*="Live"],
+.theme-ocean img[src*="Sataop"][src*="Live"],
+.theme-sunset img[src*="Sataop"][src*="Live"],
+[data-theme="dark"] img[src*="Sataop"][src*="Live"],
+[data-theme="merlot"] img[src*="Sataop"][src*="Live"] {
+  filter: brightness(0) invert(1) !important;
+}

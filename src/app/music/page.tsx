@@ -21,7 +21,7 @@ import Tilt from 'react-parallax-tilt';
 const liveEps = [
   {
     id: "live-1",
-    title: "Squealer Live",
+    title: "Squealer and the Aggressors of Peace (Live)",
     coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg",
     releaseYear: "2025",
     type: "Live Performance",
@@ -32,8 +32,8 @@ const liveEps = [
 const allReleases = [
   { id: "cd", title: "Controlled Demolition", coverImage: "/assets/music-assets/ControlledDemolitionCover_v2.png", releaseYear: "2026", type: "EP", link: "/music/eps/2" },
   { id: "ht", title: "Half Thoughts", coverImage: "/assets/music-assets/HalfThoughts1Cover.png", releaseYear: "2025", type: "Album", link: "/music/4" },
-  { id: "soi", title: "Some Of Ink EP", coverImage: "/assets/music-assets/Some Of Ink EP Cover.png", releaseYear: "2025", type: "EP", link: "/music/eps/1" },
-  { id: "sl", title: "Squealer Live", coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg", releaseYear: "2025", type: "Live EP", link: "/music/sataop-live" },
+  { id: "soi", title: "Some Of Ink", coverImage: "/assets/music-assets/Some Of Ink EP Cover.png", releaseYear: "2025", type: "EP", link: "/music/eps/1" },
+  { id: "sl", title: "Squealer and the Aggressors of Peace (Live)", coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg", releaseYear: "2025", type: "Live EP", link: "/music/sataop-live" },
   { id: "af", title: "Allegory (Freestyle)", coverImage: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg", releaseYear: "2025", type: "Single", link: "/music/singles/1" },
   { id: "gs", title: "Goodbye Song (Demo)", coverImage: "/assets/music-assets/GoodbyeSongSingleCover.png", releaseYear: "2025", type: "Single", link: "/music/singles/4" },
   { id: "sataop", title: "Squealer and the Aggressors of Peace", coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg", releaseYear: "2022", type: "Album", link: "/music/1" },

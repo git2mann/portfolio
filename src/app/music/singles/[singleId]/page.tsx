@@ -104,7 +104,7 @@ export default function SinglePage() {
       <div className="relative z-10 flex flex-col gap-14 md:gap-20 pt-20 md:pt-24 pb-16 md:pb-24">
         {/* SLIDE 0: THE RELEASE */}
         <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none px-4 sm:px-6 md:px-24">
+           <Container className="w-full !px-4 md:!px-8">
               <div className="flex flex-col lg:flex-row items-center gap-10 md:gap-24">
                  <div className="flex-shrink-0">
                     <ClearRefractiveCover src={single.coverImage} size={400} />
@@ -136,35 +136,27 @@ export default function SinglePage() {
 
         {/* SLIDE 1: THE CONTEXT */}
       <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none px-4 sm:px-6 md:px-24">
+           <Container className="w-full !px-4 md:!px-8">
               <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 md:gap-24 items-center">
-                 <div className="space-y-8 md:space-y-10">
-                    <div className="max-w-3xl pl-0 md:pl-10 relative">
-                       <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                          <FiTerminal size={12} /> Overview
-                       </h3>
-                       <p className="text-xl sm:text-3xl md:text-5xl font-light leading-tight text-primary">
-                          A bold statement of artistry. Blending wordplay with structural frequency. Documenting high-fidelity growth.
-                       </p>
-                    </div>
-                    <div className="flex gap-6">
-                                 <button className="flex items-center gap-3 px-5 md:px-8 py-3 md:py-4 bg-primary text-background-primary font-medium uppercase text-[9px] md:text-[10px] tracking-widest transition-all shadow-2xl">
-                                    <FiDisc size={16} className="animate-spin-slow" /> Track Loaded
-                                 </button>
-                    </div>
-                 </div>
+                  <div className="space-y-8 md:space-y-10">
+                     <div className="flex gap-6 pl-0 md:pl-10">
+                                  <button className="flex items-center gap-3 px-5 md:px-8 py-3 md:py-4 bg-primary text-background-primary font-medium uppercase text-[9px] md:text-[10px] tracking-widest transition-all shadow-2xl">
+                                     <FiDisc size={16} className="animate-spin-slow" /> Track Loaded
+                                  </button>
+                     </div>
+                  </div>
                  
                  <div className="liquid-glass p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] space-y-6 md:space-y-10">
-                    <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                       <FiDatabase size={12} /> Single Details
-                    </h5>
-                    <div className="grid grid-cols-1 gap-6">
-                       {[
-                         { label: 'Format', val: 'Single' },
-                                     { label: 'Artist', val: 'Klense' },
-                         { label: 'Release', val: single.releaseYear },
-                         { label: 'Status', val: 'Published' }
-                       ].map(item => (
+                     <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
+                        <FiDatabase size={12} /> Release Details
+                     </h5>
+                     <div className="grid grid-cols-1 gap-6">
+                        {[
+                          { label: 'Artist', val: 'Klense' },
+                          { label: 'Format', val: 'Single' },
+                          { label: 'Release', val: single.releaseYear },
+                          { label: 'Status', val: 'Published' }
+                        ].map(item => (
                          <div key={item.label} className="pb-3 group/item">
                             <span className="block font-mono text-[8px] uppercase tracking-widest opacity-30 group-hover/item:opacity-70 transition-opacity">{item.label}</span>
                             <span className="block text-xl font-light uppercase tracking-tighter mt-1 group-hover/item:text-primary transition-colors">{item.val}</span>

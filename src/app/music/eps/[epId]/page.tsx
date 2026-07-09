@@ -114,57 +114,88 @@ export default function EPPage() {
       <div className="relative z-10 flex flex-col gap-14 md:gap-20 pt-20 md:pt-24 pb-16 md:pb-24">
         {/* SLIDE 0: THE RELEASE */}
         <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none px-4 sm:px-6 md:px-24">
-              <div className="flex flex-col lg:flex-row items-center gap-10 md:gap-24">
-                 <div className="flex-shrink-0">
-                    <ClearRefractiveCover src={ep.coverImage} size={400} />
-                 </div>
-                 <div className="flex-grow space-y-6 md:space-y-10">
-                    <div className="space-y-4">
-                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
-                          <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                          <span>RELEASED {ep.releaseYear}</span>
-                       </div>
-                       <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[8.5rem] font-light tracking-tighter uppercase leading-[0.85] md:leading-[0.8] text-primary">
+           <Container className="w-full !px-4 md:!px-8">
+               <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 md:gap-24 w-full">
+                  <div className="flex-shrink-0 flex flex-col gap-4">
+                     <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
+                        <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
+                        <span>{ep.id === "2" ? "COMING SOON" : "RELEASED"} - {ep.releaseYear}</span>
+                     </div>
+                     <ClearRefractiveCover src={ep.coverImage} size={400} />
+                  </div>
+                  <div className="flex-grow w-full flex flex-col gap-6 lg:justify-between lg:h-[450px]">
+                     {ep.typefaceImage ? (
+                        <div className="relative w-full h-[min(400px,78vw)] lg:h-[400px] select-none pointer-events-none">
+                           <img
+                             src={ep.typefaceImage}
+                             alt={ep.title}
+                             className="absolute inset-0 w-full h-full object-contain object-center lg:object-left release-typeface-img"
+                           />
+                          <h1 className="sr-only">{ep.title}</h1>
+                        </div>
+                     ) : (
+                        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[8.5rem] font-light tracking-tighter uppercase leading-[0.85] md:leading-[0.8] text-primary">
                           {ep.title}
-                       </h1>
-                    </div>
-                    <div className="flex flex-wrap gap-6 md:gap-12 pt-4 md:pt-6">
-                       <div className="space-y-1">
-                          <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Format</p>
-                          <p className="text-xl sm:text-2xl md:text-4xl font-light tracking-tighter text-primary">EXTENDED PLAY</p>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </Container>
+                        </h1>
+                     )}
+                     <div className="flex flex-wrap gap-6 md:gap-12">
+                        <div className="space-y-1">
+                           <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Format</p>
+                           <p className="text-xl sm:text-2xl md:text-4xl font-light tracking-tighter text-primary">EXTENDED PLAY</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </Container>
         </section>
 
         {/* SLIDE 1: THE CONTEXT */}
       <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none px-4 sm:px-6 md:px-24">
+           <Container className="w-full !px-4 md:!px-8">
               <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 md:gap-24 items-center">
                  <div className="space-y-8 md:space-y-10">
                     <div className="max-w-3xl pl-0 md:pl-10 relative">
                        <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
                           <FiTerminal size={12} /> Overview
                        </h3>
-                       <p className="text-xl sm:text-3xl md:text-5xl font-light leading-tight text-primary">
-                          Focused explorations of specific sonic environments. Capturing the iterative process of the archive.
-                       </p>
+                        {(() => {
+                          const text = ep.description || "";
+                          const dotIndex = text.indexOf('.');
+                          if (dotIndex === -1) {
+                            return (
+                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-relaxed text-primary">
+                                {text}
+                              </p>
+                            );
+                          }
+                          const firstSentence = text.substring(0, dotIndex + 1);
+                          const remainingText = text.substring(dotIndex + 1).trim();
+                          return (
+                            <div className="space-y-4 border-l border-accent-blue/20 pl-4 md:pl-6">
+                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-normal text-primary">
+                                {firstSentence}
+                              </p>
+                              {remainingText && (
+                                <p className="text-base sm:text-lg md:text-xl font-light leading-relaxed text-secondary">
+                                  {remainingText}
+                                </p>
+                              )}
+                            </div>
+                          );
+                        })()}
                     </div>
                  </div>
                  
                  <div className="liquid-glass p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] space-y-6 md:space-y-10">
                     <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                       <FiDatabase size={12} /> EP Details
+                       <FiDatabase size={12} /> Release Details
                     </h5>
                     <div className="grid grid-cols-1 gap-6">
                        {[
+                         { label: 'Artist', val: 'Klense' },
                          { label: 'Format', val: 'EP' },
-                                     { label: 'Artist', val: 'Klense' },
                          { label: 'Release', val: ep.releaseYear },
-                         { label: 'Status', val: 'Published' }
+                         { label: 'Status', val: ep.id === "2" ? 'Coming Soon' : 'Published' }
                        ].map(item => (
                          <div key={item.label} className="pb-3 group/item">
                             <span className="block font-mono text-[8px] uppercase tracking-widest opacity-30 group-hover/item:opacity-70 transition-opacity">{item.label}</span>

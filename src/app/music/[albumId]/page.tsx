@@ -46,8 +46,9 @@ const albumsData = injectLyrics([
     id: "1",
     title: "Squealer and the Aggressors of Peace",
     coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Sataop Text.svg",
     releaseYear: "2022",
-    description: "An investigation into power, peace, and sonic disruption. This concept album documents the friction between structural logic and raw human impulse.",
+    description: "My first concept album. A high-pressure confrontation with systemic control and personal conflict. I dissect the violent hypocrisy of institutional peace and the quiet, heavy rage many have no choice but to accept. The album is a personal pressure cooker, mapping the moment where passive endurance starts to sound like friction.",
     songs: [
       { id: "1", title: "Saudade In Err (Intro)", duration: "1:17", audioUrl: "/assets/music/sataop-klense-mp3s/Saudade In Err (Intro) - Klense.mp3", lyrics: [] },
       { id: "2", title: "Hummer's Theme", duration: "2:18", audioUrl: "/assets/music/sataop-klense-mp3s/Hummer's Theme - Klense.mp3", lyrics: [] },
@@ -65,8 +66,9 @@ const albumsData = injectLyrics([
     id: "2",
     title: "Lazlo",
     coverImage: "/assets/music-assets/Lazlo Album Cover (Final).jpeg",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Lazlo Text.svg",
     releaseYear: "2021",
-    description: "An introspective soundscape. A knowledge base of melodic experiments and internal architectures.",
+    description: "My trip down memory lane. I built this record to reminisce on the days spent in front of a tv, pulling from references like Camp Lazlo to capture that nostalgic drift. Fittingly, I spent a great deal of time during the writing of this record catching up on old cartoons. It is my own quiet ticket into hazy fragments of childhood in front of a widescreen.",
     songs: [
       { id: "1", title: "The Return (Intro)", duration: "0:30", audioUrl: "", lyrics: [] },
       { id: "2", title: "Know About", duration: "1:43", audioUrl: "", lyrics: [] },
@@ -83,8 +85,9 @@ const albumsData = injectLyrics([
     id: "3",
     title: "Son Of Ink",
     coverImage: "/assets/music-assets/Son Of Ink Album Cover.jpeg",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Son Of Ink Text.svg",
     releaseYear: "2021",
-    description: "The intersection of graphic ink and sonic clarity. A deep-dive into high-fidelity expression.",
+    description: "A heavy dive into the weight of authorship and self-preservation. This is me carving my permanent identity into a world that always seeks to smudge us out. It is the sound of me proving I exist. Now no longer available anywhere.",
     songs: [
       { id: "1", title: "Back Again", duration: "3:17", audioUrl: "", lyrics: [] },
       { id: "2", title: "Witness (Skit) [feat. Jeremy Olendo]", duration: "0:33", audioUrl: "", lyrics: [] },
@@ -100,8 +103,9 @@ const albumsData = injectLyrics([
     id: "4",
     title: "Half Thoughts",
     coverImage: "/assets/music-assets/HalfThoughts1Cover.png",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Half Thoughts Text.svg",
     releaseYear: "2025",
-    description: `Melodic fragments and sonic dispatches. Documentation of half-formed ideas that reached completion.`,
+    description: "My monument to the long unsaid. I focused on the heavy mental weight of my own fragments, my missed connections, and the things I left hanging in the air when I could not find the words. This project is me embracing the static of my own incompletion, proving that the silent spaces and half-formed ideas I keep hidden carry the most brutal weight of all.",
     songs: [
       { id: "1", title: "The Evening Dispatch!", duration: "2:05", audioUrl: "", lyrics: [] },
       { id: "2", title: "Saxophone", duration: "2:05", audioUrl: "", lyrics: [] },
@@ -191,22 +195,31 @@ export default function AlbumPage() {
       <div className="relative z-10 flex flex-col gap-14 md:gap-20 pt-20 md:pt-24 pb-16 md:pb-24">
         {/* SLIDE 0: THE RELEASE (Hero) */}
         <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none px-4 sm:px-6 md:px-24">
-              <div className="flex flex-col lg:flex-row items-center gap-10 md:gap-24">
-                 <div className="flex-shrink-0">
+           <Container className="w-full !px-4 md:!px-8">
+              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 md:gap-24 w-full">
+                 <div className="flex-shrink-0 flex flex-col gap-4">
+                    <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
+                       <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
+                       <span>RELEASED {album.releaseYear}</span>
+                    </div>
                     <ClearRefractiveCover src={album.coverImage} size={400} />
                  </div>
-                 <div className="flex-grow space-y-6 md:space-y-8">
-                    <div className="space-y-4">
-                       <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
-                          <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                          <span>RELEASED {album.releaseYear}</span>
+                 <div className="flex-grow w-full flex flex-col gap-6 lg:justify-between lg:h-[450px]">
+                    {(album as any).typefaceImage ? (
+                       <div className="relative w-full h-[min(400px,78vw)] lg:h-[400px] select-none pointer-events-none">
+                         <img
+                           src={(album as any).typefaceImage}
+                           alt={album.title}
+                           className="absolute inset-0 w-full h-full object-contain object-center lg:object-left release-typeface-img"
+                         />
+                         <h1 className="sr-only">{album.title}</h1>
                        </div>
+                    ) : (
                        <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[7.5rem] font-light tracking-tighter uppercase leading-[0.85] md:leading-[0.8] text-primary">
-                          {album.title}
+                         {album.title}
                        </h1>
-                    </div>
-                    <div className="flex flex-wrap gap-6 md:gap-12 pt-4 md:pt-6">
+                    )}
+                    <div className="flex flex-wrap gap-6 md:gap-12">
                        <div className="space-y-1">
                           <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Format</p>
                           <p className="text-xl sm:text-2xl md:text-4xl font-light tracking-tighter text-primary">ALBUM</p>
@@ -223,16 +236,38 @@ export default function AlbumPage() {
 
         {/* SLIDE 1: THE CONTEXT (Overview & Specs) */}
       <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none px-4 sm:px-6 md:px-24">
+           <Container className="w-full !px-4 md:!px-8">
               <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 md:gap-24 items-center">
                  <div className="space-y-8 md:space-y-10">
                     <div className="max-w-3xl pl-0 md:pl-10 relative">
                        <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
                           <FiTerminal size={12} /> Overview
                        </h3>
-                       <p className="text-xl sm:text-3xl md:text-5xl font-light leading-tight text-primary">
-                          {album.description}
-                       </p>
+                       {(() => {
+                          const text = album.description;
+                          const dotIndex = text.indexOf('.');
+                          if (dotIndex === -1) {
+                            return (
+                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-relaxed text-primary">
+                                {text}
+                              </p>
+                            );
+                          }
+                          const firstSentence = text.substring(0, dotIndex + 1);
+                          const remainingText = text.substring(dotIndex + 1).trim();
+                          return (
+                            <div className="space-y-4 border-l border-accent-blue/20 pl-4 md:pl-6">
+                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-normal text-primary">
+                                {firstSentence}
+                              </p>
+                              {remainingText && (
+                                <p className="text-base sm:text-lg md:text-xl font-light leading-relaxed text-secondary">
+                                  {remainingText}
+                                </p>
+                              )}
+                            </div>
+                          );
+                        })()}
                     </div>
                     <div className="flex flex-wrap gap-6">
                        <button className="flex items-center gap-3 px-5 md:px-8 py-3 md:py-4 liquid-glass-clear font-medium uppercase text-[9px] md:text-[10px] tracking-widest hover:bg-primary/5 transition-all text-primary">
@@ -243,11 +278,12 @@ export default function AlbumPage() {
                  
                  <div className="liquid-glass p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] space-y-6 md:space-y-10">
                     <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                       <FiDatabase size={12} /> Album Details
+                       <FiDatabase size={12} /> Release Details
                     </h5>
                     <div className="grid grid-cols-1 gap-6">
                        {[
-                                     { label: 'Artist', val: 'Klense' },
+                         { label: 'Artist', val: 'Klense' },
+                         { label: 'Format', val: 'Album' },
                          { label: 'Release', val: album.releaseYear },
                          { label: 'Status', val: 'Published' }
                        ].map(item => (

@@ -3,30 +3,34 @@ export const albums = [
     id: "4",
     title: "Half Thoughts",
     coverImage: "/assets/music-assets/HalfThoughts1Cover.png",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Half Thoughts Text.svg",
     releaseYear: "2025",
-    description: "A sonic diary of incomplete ideas that found their voice. Across 16 tracks and 34 minutes, Klense weaves together alternative rock, jazz-tinged saxophone, alternative Hip-Hop, and ambient textures that feel both intimate and expansive.",
+    description: "My monument to the long unsaid. I focused on the heavy mental weight of my own fragments, my missed connections, and the things I left hanging in the air when I could not find the words. This project is me embracing the static of my own incompletion, proving that the silent spaces and half-formed ideas I keep hidden carry the most brutal weight of all.",
     link: "/music/4"
   },
   {
     id: "1",
     title: "Squealer and the Aggressors of Peace",
     coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Sataop Text.svg",
     releaseYear: "2022",
-    description: "A groundbreaking album that pushes boundaries and challenges conventions.",
+    description: "My first concept album. A high-pressure confrontation with systemic control and personal conflict. I dissect the violent hypocrisy of institutional peace and the quiet, heavy rage many have no choice but to accept. The album is a personal pressure cooker, mapping the moment where passive endurance starts to sound like friction.",
   },
   {
     id: "2",
     title: "Lazlo",
     coverImage: "/assets/music-assets/Lazlo Album Cover (Final).jpeg",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Lazlo Text.svg",
     releaseYear: "2021",
-    description: "Rap inspired by a childhood classic.",
+    description: "My trip down memory lane. I built this record to reminisce on the days spent in front of a tv, pulling from references like Camp Lazlo to capture that nostalgic drift. Fittingly, I spent a great deal of time during the writing of this record catching up on old cartoons. It is my own quiet ticket into hazy fragments of childhood in front of a widescreen.",
   },
   {
     id: "3",
     title: "Son Of Ink",
     coverImage: "/assets/music-assets/Son Of Ink Album Cover.jpeg",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Son Of Ink Text.svg",
     releaseYear: "2021",
-    description: "A journey through personal growth and awakening.",
+    description: "A heavy dive into the weight of authorship and self-preservation. This is me carving my permanent identity into a world that always seeks to smudge us out. It is the sound of me proving I exist. Now no longer available anywhere.",
   },
 ];
 
@@ -35,7 +39,9 @@ export const eps = [
     id: "2",
     title: "Controlled Demolition",
     coverImage: "/assets/music-assets/ControlledDemolitionCover_v2.png",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Controlled Demolition Text.svg",
     releaseYear: "2026",
+    description: "My calculated collapse. This is about the absolute necessity of tearing down old structures when they no longer serve me. Here, I channel my cold, flat, Tallinn-dorm energy, realising that I’ll never change my always changing ways.",
     link: "/music/eps/2",
     tracks: [
       { id: "1", title: "Read Only Memories", duration: "1:06" },
@@ -51,7 +57,9 @@ export const eps = [
     id: "1",
     title: "Some Of Ink EP",
     coverImage: "/assets/music-assets/Some Of Ink EP Cover.png",
+    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Some Of Ink Text.svg",
     releaseYear: "2025",
+    description: "Focused explorations of specific sonic environments. Capturing the iterative process of the archive.",
     tracks: [
       { id: "1", title: "Back Again, Again", duration: "2:02" },
       { id: "2", title: "Still Ultimate", duration: "2:49" },
