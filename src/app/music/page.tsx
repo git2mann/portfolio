@@ -147,7 +147,7 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.22 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "linear" }}
             className="absolute inset-0"
             style={{ transform: 'translateZ(0)' }}
           >
@@ -155,7 +155,8 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
               src={releases[activeIndex]?.coverImage}
               alt=""
               fill
-              className="object-cover scale-125 blur-[100px]"
+              sizes="32px"
+              className="object-cover scale-125 blur-2xl"
               priority
             />
           </motion.div>
@@ -184,6 +185,11 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
         {/* Stack deck */}
         <div className="relative w-[85vw] max-w-[420px] aspect-square flex items-center justify-center mb-6">
           {releases.map((release, i) => {
+            // Prune cards out of range to prevent WebKit memory crashes on iOS Safari
+            if (i < activeIndex - 1 || i > activeIndex + 3) {
+              return null;
+            }
+
             const isPassed = i < activeIndex;
             const isActive = i === activeIndex;
             const diff = i - activeIndex;

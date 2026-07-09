@@ -84,7 +84,7 @@ const Header = () => {
                                     priority
                                 />
                             </div>
-                            <span className="font-medium text-2xl tracking-tight text-primary">
+                            <span className="hidden sm:inline font-medium text-2xl tracking-tight text-primary">
                                 Leon Nduati
                             </span>
                         </Link>
