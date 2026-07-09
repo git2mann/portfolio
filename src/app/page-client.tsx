@@ -540,12 +540,12 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                         </div>
                       </div>
 
-                      <div className="hidden lg:flex flex-col items-start w-full">
-                        <div className="text-left mb-8 md:mb-12 z-30 transition-transform duration-500 group-hover:-translate-y-4">
+                      <div className="hidden lg:flex flex-col items-center w-full text-center">
+                        <div className="text-center mb-8 md:mb-12 z-30 transition-transform duration-500 group-hover:-translate-y-4">
                           <h3 className="text-5xl sm:text-6xl md:text-[8rem] font-light tracking-tighter uppercase text-primary leading-[0.7]">
                             {item.title}
                           </h3>
-                          <div className="w-12 md:w-20 h-1 bg-accent-blue mt-4 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left shadow-[0_0_10px_rgba(43,69,146,0.5)]" />
+                          <div className="w-12 md:w-20 h-1 bg-accent-blue mt-4 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center mx-auto shadow-[0_0_10px_rgba(43,69,146,0.5)]" />
                         </div>
 
                         <div className="relative w-full aspect-square md:h-[450px] transition-all duration-700">
@@ -1122,7 +1122,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
 
         {/* --- SECTION 4: CALL TO ACTION --- */}
           <section className="relative pt-4 md:pt-10 pb-0 flex flex-col items-center">
-            <div className="w-full flex-grow flex flex-col items-center justify-center text-center py-12 md:py-16 px-6 md:px-10">
+            <div className="w-full flex-grow flex flex-col items-center justify-center text-center pt-16 md:pt-24 pb-24 md:pb-36 px-6 md:px-10">
                <Container className="w-full max-w-6xl mx-auto flex flex-col items-center">
                 <ScrollReveal textClassName="text-4xl md:text-[9rem] font-light uppercase tracking-tighter mb-5 md:mb-8 leading-none text-center" containerClassName="max-w-5xl mx-auto text-center" stagger={0.08} duration={1}>
                      Let's build something.

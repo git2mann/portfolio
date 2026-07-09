@@ -9,14 +9,15 @@ export type Theme = {
 export const STORAGE_KEY = "theme";
 
 export const themes: Theme[] = [
-  { id: "system", name: "Auto_Sys", icon: "⚙️", class: "system" },
-  { id: "light", name: "Light_Mode", icon: "☀️", class: "light" },
-  { id: "dark", name: "Dark_Mode", icon: "🌑", class: "dark" },
+  { id: "system", name: "Auto", icon: "⚙️", class: "system" },
+  { id: "light", name: "Light", icon: "☀️", class: "light" },
+  { id: "dark", name: "Dark", icon: "🌑", class: "dark" },
   { id: "pastel", name: "Pastel", icon: "🌸", class: "theme-pastel" },
   { id: "forest", name: "Forest", icon: "🌲", class: "theme-forest" },
   { id: "ocean", name: "Ocean", icon: "🌊", class: "theme-ocean" },
   { id: "sunset", name: "Sunset", icon: "🌅", class: "theme-sunset" },
-  { id: "metallic-silver", name: "Chrome", icon: "💿", class: "theme-metallic-silver" }
+  { id: "metallic-silver", name: "Chrome Legacy", icon: "💿", class: "theme-metallic-silver" },
+  { id: "merlot", name: "Merlot", icon: "🍷", class: "theme-merlot" }
 ];
 
 export function NoFOUCScript(storageKey: string, themeList: Theme[]) {

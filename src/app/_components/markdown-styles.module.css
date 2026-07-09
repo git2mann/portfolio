@@ -1,7 +1,7 @@
 
 .markdown {
   @apply leading-relaxed;
-  font-family: var(--font-inter), sans-serif;
+  font-family: 'Lato', sans-serif;
   color: var(--secondary);
 }
 

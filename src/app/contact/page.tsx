@@ -140,7 +140,7 @@ export default function ContactPage() {
                     <div className="absolute top-2 right-4 font-mono text-xs md:text-sm opacity-10 uppercase tracking-widest">Social Media</div>
                     <h2 className="text-sm md:text-base font-medium uppercase tracking-[0.4em] text-secondary mb-8 md:mb-10">Follow My Work</h2>
                     <ul className="space-y-6 md:space-y-8">
-                        {[{ name: 'X / Twitter', url: 'https://twitter.com/leonnduati' }, { name: 'Instagram', url: 'https://instagram.com/thoughtsofman_' }, { name: 'LinkedIn', url: 'https://linkedin.com/in/leonnduati' }].map(social => (
+                        {[{ name: 'X', url: 'https://x.com/leonnduati' }, { name: 'Instagram', url: 'https://instagram.com/thoughtsofman_' }, { name: 'LinkedIn', url: 'https://linkedin.com/in/leonnduati' }].map(social => (
                             <li key={social.name}><a href={social.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between group/link hover:text-accent-blue transition-colors"><span className="font-medium text-lg md:text-xl uppercase tracking-widest">{social.name}</span><ArrowRight size={20} className="opacity-20 group-hover/link:opacity-100 group-hover/link:translate-x-2 transition-all" /></a></li>
                         ))}
                     </ul>

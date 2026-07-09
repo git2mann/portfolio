@@ -23,6 +23,8 @@ const ThemeSelector = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const isFirstRender = useRef(true);
+  
+  const visibleThemes = themes.filter(t => ["system", "light", "dark", "merlot"].includes(t.id));
 
   const selectTheme = (themeId: string, e: React.MouseEvent<HTMLButtonElement>) => {
     console.log("selectTheme called", themeId);
@@ -45,19 +47,6 @@ const ThemeSelector = () => {
       return;
     }
 
-    const x = e.clientX;
-    const y = e.clientY;
-    
-    // Calculate distance to furthest corner of the viewport
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-
-    document.documentElement.style.setProperty("--ripple-x", `${x}px`);
-    document.documentElement.style.setProperty("--ripple-y", `${y}px`);
-    document.documentElement.style.setProperty("--ripple-radius", `${endRadius}px`);
-
     (document as any).startViewTransition(() => {
       flushSync(() => {
         setCurrentTheme(themeId);
@@ -67,10 +56,11 @@ const ThemeSelector = () => {
   };
 
   const cycleTheme = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const currentIndex = themes.findIndex(t => t.id === currentTheme);
-    const nextIndex = (currentIndex + 1) % themes.length;
-    const nextThemeId = themes[nextIndex].id;
-    const themeData = themes[nextIndex];
+    const currentIndex = visibleThemes.findIndex(t => t.id === currentTheme);
+    const safeIndex = currentIndex === -1 ? 0 : currentIndex;
+    const nextIndex = (safeIndex + 1) % visibleThemes.length;
+    const nextThemeId = visibleThemes[nextIndex].id;
+    const themeData = visibleThemes[nextIndex];
     console.log("cycleTheme called. Next theme is:", nextThemeId);
 
     const triggerToast = () => {
@@ -89,17 +79,6 @@ const ThemeSelector = () => {
       triggerToast();
       return;
     }
-
-    const x = e.clientX;
-    const y = e.clientY;
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
-
-    document.documentElement.style.setProperty("--ripple-x", `${x}px`);
-    document.documentElement.style.setProperty("--ripple-y", `${y}px`);
-    document.documentElement.style.setProperty("--ripple-radius", `${endRadius}px`);
 
     (document as any).startViewTransition(() => {
       flushSync(() => {
@@ -288,7 +267,7 @@ const ThemeSelector = () => {
 
                       <div className="flex-1 overflow-y-auto">
                         <div className="space-y-1">
-                          {themes.map((theme) => {
+                          {visibleThemes.map((theme) => {
                             const isActive = currentTheme === theme.id;
                             return (
                               <button
@@ -337,7 +316,7 @@ const ThemeSelector = () => {
                 ) : (
                   <div className="py-2">
                     <div className="grid grid-cols-1">
-                      {themes.map((theme) => {
+                      {visibleThemes.map((theme) => {
                         const isActive = currentTheme === theme.id;
                         return (
                           <button

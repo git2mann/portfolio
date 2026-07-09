@@ -124,67 +124,83 @@ export default async function TechBlogPage({
         {/* --- FEATURED ARTIFACT --- */}
         {featuredPost && (
           <div className="mb-32 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-             <Link href={`/posts/${featuredPost.slug}`} className="group block relative aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 bg-white/[0.01]">
-                <Image
-                   src={featuredPost.coverImage}
-                   alt={featuredPost.title}
-                   fill
-                   className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-70 group-hover:opacity-100"
-                />
-                <div 
-                  className="absolute inset-0 via-transparent to-transparent"
-                  style={{ backgroundImage: 'linear-gradient(to top, var(--background-primary), color-mix(in srgb, var(--background-primary) 20%, transparent), transparent)' }}
-                ></div>
-                <div className="absolute inset-0 p-12 md:p-24 flex flex-col justify-end">
-                   <div className="max-w-4xl space-y-6">
-                      <div className="flex items-center gap-4">
-                         <div className="w-10 h-px bg-accent-blue" />
-                         <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">System_Analysis</span>
-                      </div>
-                      <h3 className="text-5xl md:text-8xl font-light uppercase tracking-tighter leading-[0.8]">{featuredPost.title}</h3>
-                      <p className="text-xl text-secondary font-light max-w-xl leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity">{featuredPost.excerpt}</p>
-                      <div className="pt-6">
-                         <div className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.4em] group-hover:gap-8 transition-all">
-                            Access_Sequence <ArrowRight size={18} />
-                         </div>
-                      </div>
-                   </div>
-                </div>
-             </Link>
+              <Link href={`/posts/${featuredPost.slug}`} className="group block relative min-h-[500px] md:min-h-[550px] lg:aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 bg-white/[0.01] flex flex-col justify-end">
+                 <Image
+                    src={featuredPost.coverImage}
+                    alt={featuredPost.title}
+                    fill
+                    className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-65 group-hover:opacity-85 blur-[6px] group-hover:blur-[4px]"
+                 />
+                 <div 
+                   className="absolute inset-0 via-transparent to-transparent"
+                   style={{ backgroundImage: 'linear-gradient(to top, var(--background-primary), color-mix(in srgb, var(--background-primary) 20%, transparent), transparent)' }}
+                 ></div>
+                 <div className="relative z-10 p-8 sm:p-12 md:p-20 flex flex-col justify-end mt-20">
+                    <div className="max-w-4xl space-y-6">
+                       <div className="flex items-center gap-4">
+                          <div className="w-10 h-px bg-accent-blue" />
+                          <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">System_Analysis</span>
+                       </div>
+                       <h3 className="text-5xl md:text-8xl font-light uppercase tracking-tighter leading-[0.8]">{featuredPost.title}</h3>
+                       <p className="text-xl text-secondary font-light max-w-xl leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity">{featuredPost.excerpt}</p>
+                       <div className="pt-6">
+                          <div className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.4em] group-hover:gap-8 transition-all">
+                             Access_Sequence <ArrowRight size={18} />
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </Link>
           </div>
         )}
 
         {/* --- LOG GRID --- */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-20">
-          {paginatedPosts.map((post, idx) => (
-            <article key={post.slug} className="group relative flex flex-col bg-white/[0.01] border border-white/5 hover:border-accent-blue/30 transition-all duration-700 rounded-2xl p-6 shadow-xl hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)]">
-               <Link href={`/posts/${post.slug}`} className="block flex-1">
-                  <div className="relative aspect-[4/3] w-full overflow-hidden mb-10 rounded-xl">
-                     <Image
-                        src={post.coverImage}
-                        alt={post.title}
-                        fill
-                        className="object-cover transition-all duration-[3000ms] group-hover:scale-110 opacity-70 group-hover:opacity-100"
-                     />
-                     <div className="absolute top-0 left-0 bg-accent-blue text-white px-3 py-1 font-mono text-[9px] uppercase tracking-widest rounded-br-lg">
-                        LOG_0{idx + 2}
-                     </div>
-                  </div>
-                  <div className="flex flex-col px-4 pb-4">
-                     <time className="text-[10px] font-mono text-accent-blue uppercase tracking-[0.3em] mb-6 block">
-                        {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                     </time>
-                     <h3 className="text-4xl font-light tracking-tighter mb-8 group-hover:text-white transition-colors uppercase leading-[0.85]">
-                        {post.title}
-                     </h3>
-                     <div className="mt-auto pt-6 border-t border-white/5 flex justify-between items-center opacity-30 group-hover:opacity-100 transition-all">
-                        <span className="text-[9px] font-mono uppercase tracking-[0.4em]">Execute_Logic</span>
-                        <ArrowRight className="w-5 h-5 text-accent-blue group-hover:translate-x-3 transition-transform" />
-                     </div>
-                  </div>
-               </Link>
-            </article>
-          ))}
+          {paginatedPosts.map((post, idx) => {
+            const words = (post.content || "").trim().split(/\s+/).length;
+            const readTime = Math.max(1, Math.ceil(words / 200));
+
+            return (
+              <article key={post.slug} className="group relative flex flex-col liquid-glass rounded-[2rem] p-6 hover:-translate-y-1 transition-all">
+                 <Link href={`/posts/${post.slug}`} className="block flex-1 flex flex-col">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden mb-8 rounded-2xl">
+                       <Image
+                          src={post.coverImage}
+                          alt={post.title}
+                          fill
+                          className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-80 group-hover:opacity-100"
+                       />
+                       <div className="absolute top-4 left-4 z-10 bg-accent-blue text-white px-3 py-1 font-mono text-[9px] uppercase tracking-widest rounded-full">
+                          LOG_0{idx + 2}
+                       </div>
+                    </div>
+                    <div className="flex flex-col flex-1">
+                       <div className="flex items-center justify-between gap-4 mb-6">
+                          <div className="flex items-center gap-3">
+                             <div className="w-6 h-px bg-accent-blue/30" />
+                             <time className="text-[10px] font-mono text-accent-blue uppercase tracking-[0.3em]">
+                                {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                             </time>
+                          </div>
+                          <span className="text-[9px] font-mono text-secondary/50 uppercase tracking-widest">
+                             {readTime} min read
+                          </span>
+                       </div>
+                       <h3 className="text-3xl font-light tracking-tighter mb-6 group-hover:text-accent-blue transition-colors uppercase leading-[0.9]">
+                          {post.title}
+                       </h3>
+                       <p className="text-secondary font-light text-sm line-clamp-3 mb-8 leading-relaxed opacity-70 group-hover:opacity-90 transition-opacity">
+                          {post.excerpt}
+                       </p>
+                       <div className="mt-auto pt-6 border-t border-white/5 flex justify-between items-center opacity-60 group-hover:opacity-100 transition-all">
+                          <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-secondary">Execute_Logic</span>
+                          <ArrowRight className="w-5 h-5 text-accent-blue group-hover:translate-x-3 transition-transform" />
+                       </div>
+                    </div>
+                 </Link>
+              </article>
+            );
+          })}
         </div>
 
         {/* --- PAGINATION --- */}
@@ -241,7 +257,7 @@ function getTechTags(): string[] {
 }
 
 function getPostsByCategory(category: string, tag?: string): Post[] {
-  return getAllPosts(["title", "date", "slug", "coverImage", "excerpt", "tags", "category"]).filter(
+  return getAllPosts(["title", "date", "slug", "coverImage", "excerpt", "tags", "category", "content"]).filter(
     (post) => post.category === category && (!tag || post.tags?.includes(tag))
   );
 }

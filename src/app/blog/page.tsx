@@ -14,6 +14,8 @@ export default function BlogPage() {
     "coverImage",
     "excerpt",
     "category",
+    "tags",
+    "content",
   ]);
   
   const categories: CategoryItem[] = [
@@ -54,53 +56,32 @@ export default function BlogPage() {
             className="object-cover scale-110 blur-3xl opacity-10"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
         </div>
+        <div className="absolute inset-0 z-0 bg-[radial-gradient(rgba(255,255,255,0.015)_1px,transparent_1px)] [background-size:32px_32px] opacity-75"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent-blue/5 blur-[150px] rounded-full pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background-primary/30 via-transparent to-background-primary"></div>
 
-        <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
-            <div className="flex-1 text-left relative z-10">
-              <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
-                 <div className="flex items-center gap-4 mb-3 md:mb-4">
-                    <span className="w-8 md:w-12 h-[1px] bg-accent-blue/50"></span>
-                    <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">The Paper Trail</span>
-                 </div>
-                 <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6 uppercase">
-                   Archive
-                 </h1>
-                 <div className="flex flex-wrap items-center gap-2 md:gap-4 text-lg md:text-3xl font-mono text-secondary">
-                   <span>/ˈɑːr.kaɪv/</span>
-                   <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent-blue/50"></span>
-                   <span>noun</span>
-                 </div>
-              </div>
-              
-              <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-xl md:text-5xl font-light text-primary mt-8 md:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
-                1. A digital repository of technical breakthroughs and musical experiments. 2. A collection of posts documenting my journey through various projects.
-              </ScrollReveal>
-            </div>
-
-            {/* Right: Figurine Visual */}
-            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[350px] md:max-w-[700px] relative mt-8 md:mt-0">
-               <div className="relative aspect-square w-full group animate-in fade-in zoom-in duration-1000 delay-300">
-                  <div 
-                    className="absolute inset-0 blur-3xl rounded-full opacity-60 animate-pulse"
-                    style={{ backgroundColor: 'color-mix(in srgb, var(--accent-blue) 10%, transparent)' }}
-                  ></div>
-                  <div className="w-full h-full relative z-10 flex items-center justify-center">
-                     <Image 
-                        src="/assets/LN Portfolio Asset Figurine Hero Wave.png" 
-                        alt="Figurine Wave" 
-                        fill 
-                        className="object-contain drop-shadow-[0_0_50px_rgba(43,69,146,0.2)] hover:scale-105 transition-transform duration-1000"
-                     />
-                     
-                     {/* Orbiting element for tech flavor */}
-                     <div className="absolute inset-0 border border-white/5 rounded-full scale-90 border-dashed animate-spin-slow"></div>
-                     <div className="absolute top-0 left-1/2 w-2 h-2 bg-accent-blue rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_15px_rgba(43,69,146,1)]"></div>
-                  </div>
+        <Container className="relative z-10 w-full max-w-4xl mx-auto px-6 text-center">
+          <div className="flex flex-col items-center justify-center">
+            <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+               <div className="flex items-center justify-center gap-4 mb-4">
+                  <span className="w-8 md:w-12 h-[1px] bg-accent-blue/30"></span>
+                  <span className="text-accent-blue font-medium text-[11px] md:text-xs uppercase tracking-[0.6em]">The Paper Trail</span>
+                  <span className="w-8 md:w-12 h-[1px] bg-accent-blue/30"></span>
+               </div>
+               <h1 className="text-6xl sm:text-7xl md:text-[9rem] font-light tracking-tighter leading-[0.8] mb-6 uppercase text-primary">
+                 Archive
+               </h1>
+               <div className="flex items-center justify-center gap-2 md:gap-4 text-sm md:text-xl font-mono text-secondary/60">
+                 <span>/ˈɑːr.kaɪv/</span>
+                 <span className="w-1.5 h-1.5 rounded-full bg-accent-blue/40"></span>
+                 <span>noun</span>
                </div>
             </div>
+            
+            <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-xl md:text-3xl font-light text-primary/80 leading-relaxed max-w-2xl mx-auto" stagger={0.08} duration={1} autoReveal={true}>
+              1. A digital repository of technical breakthroughs and musical experiments. 2. A collection of posts documenting my journey through various projects.
+            </ScrollReveal>
           </div>
         </Container>
       </section>

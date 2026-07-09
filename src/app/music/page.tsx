@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { 
@@ -17,7 +17,7 @@ import TextPressure from "@/app/_components/TextPressure";
 import { albums, eps, singles } from "@/data/music";
 import Tilt from 'react-parallax-tilt';
 
-// --- HELPERS ---
+// --- HELPERS & CHRONOLOGICAL DATA ---
 const liveEps = [
   {
     id: "live-1",
@@ -27,6 +27,20 @@ const liveEps = [
     type: "Live Performance",
     link: "/music/sataop-live"
   }
+];
+
+const allReleases = [
+  { id: "cd", title: "Controlled Demolition", coverImage: "/assets/music-assets/ControlledDemolitionCover_v2.png", releaseYear: "2026", type: "EP", link: "/music/eps/2" },
+  { id: "ht", title: "Half Thoughts", coverImage: "/assets/music-assets/HalfThoughts1Cover.png", releaseYear: "2025", type: "Album", link: "/music/4" },
+  { id: "soi", title: "Some Of Ink EP", coverImage: "/assets/music-assets/Some Of Ink EP Cover.png", releaseYear: "2025", type: "EP", link: "/music/eps/1" },
+  { id: "sl", title: "Squealer Live", coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg", releaseYear: "2025", type: "Live EP", link: "/music/sataop-live" },
+  { id: "af", title: "Allegory (Freestyle)", coverImage: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg", releaseYear: "2025", type: "Single", link: "/music/singles/1" },
+  { id: "gs", title: "Goodbye Song (Demo)", coverImage: "/assets/music-assets/GoodbyeSongSingleCover.png", releaseYear: "2025", type: "Single", link: "/music/singles/4" },
+  { id: "sataop", title: "Squealer and the Aggressors of Peace", coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg", releaseYear: "2022", type: "Album", link: "/music/1" },
+  { id: "lazlo", title: "Lazlo", coverImage: "/assets/music-assets/Lazlo Album Cover (Final).jpeg", releaseYear: "2021", type: "Album", link: "/music/2" },
+  { id: "soi-album", title: "Son Of Ink", coverImage: "/assets/music-assets/Son Of Ink Album Cover.jpeg", releaseYear: "2021", type: "Album", link: "/music/3" },
+  { id: "ek", title: "Eye Kan", coverImage: "/assets/music-assets/Eye Kan Single Cover.jpeg", releaseYear: "2021", type: "Single", link: "/music/singles/2" },
+  { id: "fi", title: "First (Interlude)", coverImage: "/assets/music-assets/First(Interlude) Single Cover.jpeg", releaseYear: "2020", type: "Single", link: "/music/singles/3" }
 ];
 
 const FiDisc = Disc; // Compatibility alias
@@ -87,17 +101,172 @@ function MusicWorkCard({ release, index }: { release: any, index: number }) {
             />
           </div>
           
-          <div className="flex justify-between items-center mt-auto">
-             <h3 className="text-xs md:text-sm font-light tracking-tight uppercase leading-none truncate max-w-[70%] group-hover:text-accent-blue transition-colors text-primary/80">
+          <div className="flex justify-between items-center gap-2 mt-auto">
+             <h3 className="text-xs md:text-sm font-light tracking-tight uppercase leading-tight group-hover:text-accent-blue transition-colors text-primary/80 break-words flex-1 pr-2">
                 {release.title}
              </h3>
-             <span className="text-[10px] md:text-xs font-mono text-accent-blue flex items-center gap-1 opacity-65 group-hover:opacity-100 transition-opacity">
+             <span className="text-[10px] md:text-xs font-mono text-accent-blue flex items-center gap-1 opacity-65 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                 <span>{release.releaseYear}</span> <ArrowUpRight size={10} />
              </span>
           </div>
         </div>
       </Tilt>
     </Link>
+  );
+}
+
+/**
+ * MobileReleaseStack - Stacked cover images for mobile scroll flipping
+ */
+function MobileReleaseStack({ releases }: { releases: any[] }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  useEffect(() => {
+    return scrollYProgress.onChange((latest) => {
+      const index = Math.min(
+        releases.length - 1,
+        Math.floor(latest * (releases.length + 0.8))
+      );
+      setActiveIndex(index);
+    });
+  }, [scrollYProgress, releases.length]);
+
+  return (
+    <div ref={containerRef} className="relative h-[360vh] w-full bg-background-primary z-10">
+      {/* Dynamic Background Atmosphere for Mobile Stack */}
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={releases[activeIndex]?.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.22 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
+            className="absolute inset-0"
+            style={{ transform: 'translateZ(0)' }}
+          >
+            <Image
+              src={releases[activeIndex]?.coverImage}
+              alt=""
+              fill
+              className="object-cover scale-125 blur-[100px]"
+              priority
+            />
+          </motion.div>
+        </AnimatePresence>
+        {/* Noise and Vignette overlay to smooth the color-mixing blurs */}
+        <div className="absolute inset-0 z-10 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)' }}></div>
+        <div className="absolute inset-0 z-20 bg-gradient-to-b from-background-primary/20 via-background-primary/75 to-background-primary"></div>
+      </div>
+
+      {/* Edge Feathering Gradients to prevent abrupt background edges */}
+      <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background-primary via-background-primary/80 to-transparent z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background-primary via-background-primary/80 to-transparent z-10 pointer-events-none" />
+
+      {/* Sticky Deck Wrapper */}
+      <div className="sticky top-12 h-[calc(100vh-3rem)] w-full overflow-hidden flex flex-col items-center justify-center px-6 z-10">
+        
+        {/* Section info */}
+        <div className="w-full max-w-[420px] mb-4 flex justify-between items-center text-[9px] font-mono text-secondary/50">
+          <div className="flex items-center gap-1.5">
+            <span className="text-accent-blue font-semibold uppercase tracking-[0.22em]">Chronicle</span>
+            <span className="w-1 h-1 rounded-full bg-accent-blue/30"></span>
+            <span>Index {activeIndex + 1} / {releases.length}</span>
+          </div>
+        </div>
+
+        {/* Stack deck */}
+        <div className="relative w-[85vw] max-w-[420px] aspect-square flex items-center justify-center mb-6">
+          {releases.map((release, i) => {
+            const isPassed = i < activeIndex;
+            const isActive = i === activeIndex;
+            const diff = i - activeIndex;
+
+            // Stack spacing logic
+            let yOffset = 0;
+            let scale = 1;
+            let opacity = 1;
+            let zIndex = releases.length - i;
+            let rotate = 0;
+
+            if (isPassed) {
+              yOffset = -350;
+              scale = 0.85;
+              opacity = 0;
+              zIndex = 100 + i;
+              rotate = -8;
+            } else if (isActive) {
+              yOffset = 0;
+              scale = 1;
+              opacity = 1;
+            } else {
+              yOffset = diff * 8;
+              scale = Math.max(0.75, 1 - diff * 0.04);
+              opacity = Math.max(0, 1 - diff * 0.25);
+            }
+
+            return (
+              <motion.div
+                key={release.id}
+                animate={{
+                  y: yOffset,
+                  scale: scale,
+                  opacity: opacity,
+                  rotate: rotate
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 140,
+                  damping: 22
+                }}
+                style={{ zIndex }}
+                className="absolute inset-0 w-full h-full"
+              >
+                <Link href={release.link} className="block w-full h-full relative rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.8)] border border-white/10 bg-black">
+                  <Image
+                    src={release.coverImage}
+                    alt={release.title}
+                    fill
+                    className="object-cover"
+                    priority={i < 3}
+                  />
+                </Link>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Active Release Info - Full Title display with zero truncation */}
+        <div className="w-full max-w-[420px] px-2 text-center z-20 min-h-[110px]">
+          <div className="flex items-center justify-center gap-3 mb-1.5">
+            <span className="text-accent-blue font-mono text-[10px] font-bold uppercase tracking-[0.3em]">
+              {releases[activeIndex]?.type}
+            </span>
+            <span className="w-1 h-1 rounded-full bg-accent-blue/40"></span>
+            <span className="text-secondary font-mono text-[10px] uppercase tracking-wider">
+              {releases[activeIndex]?.releaseYear}
+            </span>
+          </div>
+          <h3 className="text-xl md:text-2xl font-light text-primary uppercase tracking-tight leading-tight break-words">
+            {releases[activeIndex]?.title}
+          </h3>
+          <div className="text-[8px] font-mono text-secondary/40 uppercase tracking-[0.2em] mt-3 animate-pulse">
+            Tap cover to open sequence
+          </div>
+        </div>
+        
+        {/* Swipe prompt indicator */}
+        <div className="flex flex-col items-center gap-1.5 text-secondary/30 font-mono text-[8px] uppercase tracking-[0.3em] mt-2">
+          <span className="animate-bounce">↓ Scroll down to flip stack ↓</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -108,7 +277,7 @@ export default function MusicPage() {
   if (!mounted) return <main className="min-h-screen bg-background-primary" />;
 
   return (
-    <main className="min-h-screen pb-64 bg-background-primary relative font-noto-display-condensed selection:bg-accent-blue/30">
+    <main className="min-h-screen pb-0 md:pb-64 bg-background-primary relative font-noto-display-condensed selection:bg-accent-blue/30">
       
       {/* 1. GLOBAL BACKGROUND WITH DRIFTING LIQUID ORBS */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-background-primary">
@@ -123,7 +292,7 @@ export default function MusicPage() {
       </div>
 
       {/* 2. HERO: DICTIONARY ENTRY */}
-      <section className="relative min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-20">
+      <section className="relative min-h-[50vh] md:min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-16 pb-4 md:pt-20">
         <div className="absolute inset-0 z-0">
           <video 
             autoPlay 
@@ -174,7 +343,7 @@ export default function MusicPage() {
             </div>
 
             {/* Right: Figurine Visual */}
-            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-8 md:mt-0">
+            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-4 md:mt-0">
                <div className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-accent-blue/5 blur-3xl rounded-full opacity-60"></div>
                   <Image 
@@ -191,7 +360,11 @@ export default function MusicPage() {
       </section>
 
       {/* 3. CONTENT SECTIONS (Art-style Architecture) */}
-      <Container id="collections" className="mt-24 md:mt-40 !max-w-none px-6 md:px-20 space-y-32 md:space-y-48 relative z-10">
+      <div className="md:hidden mt-0">
+        <MobileReleaseStack releases={allReleases} />
+      </div>
+
+      <Container id="collections" className="hidden md:block mt-24 md:mt-40 !max-w-none px-6 md:px-20 space-y-32 md:space-y-48 relative z-10">
         
         {/* Studio Albums */}
         <section>

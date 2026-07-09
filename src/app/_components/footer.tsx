@@ -1,7 +1,17 @@
 import Container from "@/app/_components/container";
 import { SITE_NAME } from "@/lib/constants";
-import { Github, Twitter, Instagram, Globe, Mail, ArrowUpRight } from "lucide-react";
+import { Github, Instagram, Globe, Mail, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+
+const XIcon = ({ size = 18 }: { size?: number }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="currentColor" 
+    style={{ width: size, height: size }}
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 /**
  * Footer component
@@ -11,7 +21,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { name: "Twitter", url: "https://x.com/leonnduati", icon: Twitter },
+    { name: "X", url: "https://x.com/leonnduati", icon: XIcon },
     { name: "Instagram", url: "https://instagram.com/thoughtsofman_", icon: Instagram },
     { name: "GitHub", url: "https://github.com/git2mann", icon: Github },
     { name: "Contact", url: "/contact", icon: Mail },
