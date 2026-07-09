@@ -553,29 +553,68 @@ textarea {
   }
 }
 
-/* Custom View Transition (Snappy theme switch) styling */
+/* Custom View Transition (Cinematic theme switch) styling */
 ::view-transition-image-pair(root) {
   isolation: auto;
 }
 
 ::view-transition-old(root) {
-  animation: theme-fast-fade-out 250ms cubic-bezier(0.4, 0, 1, 1) both;
+  animation: theme-old-fade 1200ms cubic-bezier(0.22, 1, 0.36, 1) both;
   mix-blend-mode: normal;
+  display: block;
 }
 
 ::view-transition-new(root) {
-  animation: theme-fast-fade-in 250ms cubic-bezier(0, 0, 0.2, 1) both;
+  transform-origin: center center;
+  animation:
+    theme-reveal-curtain 1450ms cubic-bezier(0.16, 1, 0.3, 1) both,
+    theme-reveal-glow 1450ms cubic-bezier(0.2, 0.8, 0, 1) both;
   mix-blend-mode: normal;
+  display: block;
+  z-index: 9999;
 }
 
-@keyframes theme-fast-fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+@keyframes theme-old-fade {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px) saturate(1);
+  }
+  to {
+    opacity: 0.88;
+    transform: scale(0.992);
+    filter: blur(2px) saturate(0.94);
+  }
 }
 
-@keyframes theme-fast-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes theme-reveal-curtain {
+  from {
+    clip-path: inset(0 100% 0 0);
+    transform: translateX(-1.2%) scale(1.02);
+  }
+  62% {
+    clip-path: inset(0 12% 0 0);
+    transform: translateX(0) scale(1.01);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes theme-reveal-glow {
+  from {
+    opacity: 0.68;
+    filter: saturate(1.22) contrast(1.05) brightness(1.05);
+  }
+  65% {
+    opacity: 0.95;
+    filter: saturate(1.08) contrast(1.01) brightness(1.02);
+  }
+  to {
+    opacity: 1;
+    filter: saturate(1) contrast(1) brightness(1);
+  }
 }
 
 /* Disable all CSS transitions during active View Transitions to prevent double-rendering lag */
