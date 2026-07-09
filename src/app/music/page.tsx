@@ -285,33 +285,12 @@ export default function MusicPage() {
   return (
     <main className="min-h-screen pb-0 md:pb-64 bg-background-primary relative font-noto-display-condensed selection:bg-accent-blue/30">
       
-      {/* 1. GLOBAL BACKGROUND WITH DRIFTING LIQUID ORBS */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden bg-background-primary">
-         <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)' }}></div>
-         
-         <div className="absolute top-0 left-0 w-full h-full bg-radial-gradient from-accent-blue/5 to-transparent blur-[180px]" />
-         
-         {/* Floating Liquid Orbs */}
-         <LiquidOrb color="bg-accent-blue" size="w-[30rem] h-[30rem]" duration={25} delay={0} className="top-1/4 -left-20" />
-         <LiquidOrb color="bg-primary" size="w-[28rem] h-[28rem]" duration={30} delay={2} className="bottom-1/4 -right-20" />
-         <LiquidOrb color="bg-accent-blue" size="w-[25rem] h-[25rem]" duration={22} delay={4} className="top-1/2 left-1/3" />
-      </div>
+      {/* 1. PLAIN BACKGROUND */}
+      <div className="fixed inset-0 z-0 pointer-events-none bg-background-primary" />
 
       {/* 2. HERO: DICTIONARY ENTRY */}
       <section className="relative min-h-[50vh] md:min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-16 pb-4 md:pt-20">
-        <div className="absolute inset-0 z-0">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            suppressHydrationWarning
-            className="w-full h-full object-cover scale-105 blur-2xl opacity-20"
-          >
-            <source src="/assets/LN Portfolio Asset Figurine Music Loop Video Square.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
-        </div>
+        <div className="absolute inset-0 z-0 pointer-events-none bg-background-primary" />
 
         <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
@@ -320,7 +299,7 @@ export default function MusicPage() {
               <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
                  {/* Selected Works line indicator */}
                  <div className="flex items-center gap-4 mb-3 md:mb-4">
-                    <span className="w-8 md:w-12 h-[1px] bg-accent-blue/50"></span>
+                    <span className="block w-8 md:w-12 h-[1px] bg-accent-blue opacity-50"></span>
                     <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Selected Works</span>
                  </div>
                  

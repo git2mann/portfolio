@@ -91,17 +91,14 @@ export default function ContactPage() {
       
       {/* --- HERO SECTION --- */}
       <section className="relative min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-20">
-        <div className="absolute inset-0 z-0">
-          <Image src="/assets/LN Art Still.png" alt="" fill className="object-cover scale-105 blur-2xl opacity-10" priority />
-          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
-        </div>
+        <div className="absolute inset-0 z-0 pointer-events-none bg-background-primary" />
 
         <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
             <div className="flex-1 text-left relative z-10">
               <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
                  <div className="flex items-center gap-4 mb-3 md:mb-4">
-                    <span className="w-8 md:w-12 h-[1px] bg-accent-blue/50"></span>
+                    <span className="block w-8 md:w-12 h-[1px] bg-accent-blue opacity-50"></span>
                     <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Get in Touch</span>
                  </div>
                  <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6">Connect</h1>

@@ -48,7 +48,7 @@ export default async function TechBlogPage({
                     <ArrowLeft size={12} className="group-hover:-translate-x-2 transition-transform" /> Back to Archive
                  </Link>
                  <div className="flex items-center gap-4 mb-3 md:mb-4">
-                    <span className="w-8 md:w-12 h-[1px] bg-accent-blue/50"></span>
+                    <span className="block w-8 md:w-12 h-[1px] bg-accent-blue opacity-50"></span>
                     <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Sector_Tech</span>
                  </div>
                  <h1 className="text-6xl sm:text-7xl md:text-[10rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6 uppercase">

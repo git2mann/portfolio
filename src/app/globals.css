@@ -737,3 +737,26 @@ html {
 [data-theme="merlot"] img[src*="Sataop"][src*="Live"] {
   filter: brightness(0) invert(1) !important;
 }
+
+/* Floating background gradient orbs (pure CSS) */
+@keyframes orbFloat1 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(40px, -60px) scale(1.1); }
+  66% { transform: translate(-30px, 30px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes orbFloat2 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-50px, 50px) scale(0.95); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.animate-orb-1 {
+  animation: orbFloat1 25s infinite ease-in-out;
+}
+
+.animate-orb-2 {
+  animation: orbFloat2 30s infinite ease-in-out;
+}
+

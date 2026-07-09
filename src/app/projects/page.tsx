@@ -158,26 +158,9 @@ export default function ProjectsPage() {
 
   return (
     <main className="min-h-screen pb-32 bg-background-primary relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 opacity-30">
-        <div className="absolute inset-0 [background-image:linear-gradient(to_right,rgba(0,113,227,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,113,227,0.08)_1px,transparent_1px)] [background-size:40px_40px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,113,227,0.12),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(0,113,227,0.08),transparent_40%)]" />
-      </div>
-      
       {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
       <section className="relative min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-20 z-10">
-        <div className="absolute inset-0 z-0">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            suppressHydrationWarning
-            className="w-full h-full object-cover scale-105 blur-2xl opacity-20"
-          >
-            <source src="/assets/LN Portfolio Asset Figurine Projects Loop Video Square.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
-        </div>
+        <div className="absolute inset-0 z-0 pointer-events-none bg-background-primary" />
 
         <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
@@ -185,7 +168,7 @@ export default function ProjectsPage() {
             <div className="flex-1 text-left relative z-10">
               <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
                  <div className="flex items-center gap-6 mb-4 md:mb-8">
-                    <span className="w-12 md:w-20 h-[1px] bg-accent-blue/50"></span>
+                    <span className="block w-12 md:w-20 h-[1px] bg-accent-blue opacity-50"></span>
                     <span className="text-accent-blue font-medium text-xs md:text-sm uppercase tracking-[0.5em]">Engineering</span>
                  </div>
                  <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-6 md:mb-10 text-primary uppercase">

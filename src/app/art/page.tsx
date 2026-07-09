@@ -70,19 +70,7 @@ const ArtPage = () => {
       
       {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
       <section className="relative min-h-[62vh] lg:h-[85vh] flex flex-col justify-center overflow-hidden pt-16 lg:pt-20">
-        <div className="absolute inset-0 z-0">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            suppressHydrationWarning
-            className="w-full h-full object-cover scale-105 blur-2xl opacity-20"
-          >
-            <source src="/assets/LN Portfolio Asset Figurine Art Loop Video Square.mp4" type="video/mp4" />
-          </video>
-          <div className="absolute inset-0 bg-gradient-to-b from-background-primary/50 via-transparent to-background-primary"></div>
-        </div>
+        <div className="absolute inset-0 z-0 pointer-events-none bg-background-primary" />
 
         <Container className="relative z-10 w-full !max-w-none px-5 lg:px-20">
           <div className="flex flex-col lg:flex-row items-center gap-7 lg:gap-24">
@@ -90,15 +78,15 @@ const ArtPage = () => {
             <div className="flex-1 text-left relative z-10">
               <div className="mb-7 lg:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
                  <div className="flex items-center gap-3 lg:gap-4 mb-3 lg:mb-4">
-                    <span className="w-8 lg:w-12 h-[1px] bg-blue-500/50"></span>
-                    <span className="text-blue-500 font-medium text-[11px] lg:text-sm uppercase tracking-[0.38em] lg:tracking-[0.5em]">Selected Works</span>
+                    <span className="block w-8 lg:w-12 h-[1px] bg-accent-blue opacity-50"></span>
+                    <span className="text-accent-blue font-medium text-[11px] lg:text-sm uppercase tracking-[0.38em] lg:tracking-[0.5em]">Selected Works</span>
                  </div>
                  <h1 className="text-5xl sm:text-6xl lg:text-[11rem] font-light tracking-tighter leading-[0.82] mb-3 lg:mb-6 uppercase">
                    Art
                  </h1>
                  <div className="flex flex-wrap items-center gap-2 lg:gap-4 text-base lg:text-3xl font-mono text-secondary">
                    <span>/ɑːrt/</span>
-                   <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-blue-500/50"></span>
+                   <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-accent-blue opacity-50"></span>
                    <span>noun</span>
                  </div>
               </div>
@@ -119,7 +107,7 @@ const ArtPage = () => {
             {/* Right: Figurine Visual */}
             <div className="flex-[0.6] lg:flex-[0.8] w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[600px] relative mt-7 lg:mt-0">
                <div className="relative aspect-square w-full group">
-                  <div className="absolute inset-0 bg-blue-500/5 blur-3xl rounded-full opacity-60"></div>
+                  <div className="absolute inset-0 bg-accent-blue/5 blur-3xl rounded-full opacity-60"></div>
                   <Image 
                     src="/assets/LN Art Still.png" 
                     alt="Art Figurine"
@@ -147,7 +135,7 @@ const ArtPage = () => {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 lg:mb-16 gap-5 lg:gap-8 border-b border-primary/10 pb-6 lg:pb-8">
            <div className="space-y-4">
               <div className="flex items-center gap-3">
-                 <Grid className="text-blue-500 w-5 h-5" />
+                 <Grid className="text-accent-blue w-5 h-5" />
                  <span className="font-mono text-xs uppercase tracking-[0.4em] opacity-40 text-secondary">Collection Guide</span>
               </div>
               <h2 className="text-3xl lg:text-7xl font-light uppercase tracking-tighter leading-none text-primary">Curated Archive</h2>
@@ -182,7 +170,7 @@ const ArtPage = () => {
            {filteredWorks.map((work, i) => (
              <div 
                 key={work.src} 
-                className="group relative flex flex-col bg-primary/[0.02] border border-primary/5 hover:border-blue-500/40 transition-all duration-500 rounded-sm p-3 lg:p-4 overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
+                className="group relative flex flex-col bg-primary/[0.02] border border-primary/5 hover:border-accent-blue/40 transition-all duration-500 rounded-sm p-3 lg:p-4 overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
                 onClick={() => openArtworkModal(work.src, work.title, work.year, "", String(i))}
              >
                 <div className="absolute top-2 right-4 font-mono text-[10px] opacity-10 uppercase tracking-widest pointer-events-none group-hover:opacity-30 text-secondary">{String(i + 1).padStart(3, '0')}</div>
@@ -198,7 +186,7 @@ const ArtPage = () => {
 
                 <div className="flex justify-between items-end">
                    <div>
-                      <span className="block font-mono text-[9px] uppercase tracking-[0.3em] text-blue-500/60 mb-1">{work.category}</span>
+                      <span className="block font-mono text-[9px] uppercase tracking-[0.3em] text-accent-blue/60 mb-1">{work.category}</span>
                       <h3 className="text-base lg:text-xl font-light tracking-tight uppercase leading-none truncate group-hover:text-primary transition-colors text-primary">{work.title}</h3>
                    </div>
                    <span className="text-xs font-medium text-secondary opacity-40">{work.year}</span>
