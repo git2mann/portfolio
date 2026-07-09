@@ -138,7 +138,11 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
   }, [scrollYProgress, releases.length]);
 
   return (
-    <div ref={containerRef} className="relative h-[360vh] w-full bg-background-primary z-10">
+    <div 
+      ref={containerRef} 
+      className="relative w-full bg-background-primary z-10"
+      style={{ height: `${releases.length * 70}vh` }}
+    >
       {/* Dynamic Background Atmosphere for Mobile Stack */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <AnimatePresence mode="popLayout">
@@ -345,11 +349,12 @@ export default function MusicPage() {
       </section>
 
       {/* 3. CONTENT SECTIONS (Art-style Architecture) */}
-      <div className="md:hidden mt-0">
-        <MobileReleaseStack releases={allReleases} />
-      </div>
+      <div id="collections" className="scroll-mt-24">
+        <div className="md:hidden mt-0">
+          <MobileReleaseStack releases={allReleases} />
+        </div>
 
-      <Container id="collections" className="hidden md:block mt-24 md:mt-40 !max-w-none px-6 md:px-20 space-y-32 md:space-y-48 relative z-10">
+        <Container className="hidden md:block mt-24 md:mt-40 !max-w-none px-6 md:px-20 space-y-32 md:space-y-48 relative z-10">
         
         {/* Studio Albums */}
         <section>
@@ -432,7 +437,8 @@ export default function MusicPage() {
           </div>
         </section>
 
-      </Container>
+       </Container>
+      </div>
     </main>
   );
 }
