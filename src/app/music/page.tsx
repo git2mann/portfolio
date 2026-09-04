@@ -15,14 +15,14 @@ import Container from "@/app/_components/container";
 import ScrollReveal from "@/app/_components/ScrollReveal";
 import TextPressure from "@/app/_components/TextPressure";
 import { albums, eps, singles } from "@/data/music";
-import Tilt from 'react-parallax-tilt';
+import SmoothTilt from '@/app/_components/SmoothTilt';
 
 // --- HELPERS & CHRONOLOGICAL DATA ---
 const liveEps = [
   {
     id: "live-1",
     title: "Squealer and the Aggressors of Peace (Live)",
-    coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg",
+    coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.webp",
     releaseYear: "2025",
     type: "Live Performance",
     link: "/music/sataop-live"
@@ -30,17 +30,17 @@ const liveEps = [
 ];
 
 const allReleases = [
-  { id: "cd", title: "Controlled Demolition", coverImage: "/assets/music-assets/ControlledDemolitionCover_v2.png", releaseYear: "2026", type: "EP", link: "/music/eps/2" },
-  { id: "ht", title: "Half Thoughts", coverImage: "/assets/music-assets/HalfThoughts1Cover.png", releaseYear: "2025", type: "Album", link: "/music/4" },
-  { id: "soi", title: "Some Of Ink", coverImage: "/assets/music-assets/Some Of Ink EP Cover.png", releaseYear: "2025", type: "EP", link: "/music/eps/1" },
-  { id: "sl", title: "Squealer and the Aggressors of Peace (Live)", coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg", releaseYear: "2025", type: "Live EP", link: "/music/sataop-live" },
-  { id: "af", title: "Allegory (Freestyle)", coverImage: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg", releaseYear: "2025", type: "Single", link: "/music/singles/1" },
-  { id: "gs", title: "Goodbye Song (Demo)", coverImage: "/assets/music-assets/GoodbyeSongSingleCover.png", releaseYear: "2025", type: "Single", link: "/music/singles/4" },
-  { id: "sataop", title: "Squealer and the Aggressors of Peace", coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg", releaseYear: "2022", type: "Album", link: "/music/1" },
-  { id: "lazlo", title: "Lazlo", coverImage: "/assets/music-assets/Lazlo Album Cover (Final).jpeg", releaseYear: "2021", type: "Album", link: "/music/2" },
-  { id: "soi-album", title: "Son Of Ink", coverImage: "/assets/music-assets/Son Of Ink Album Cover.jpeg", releaseYear: "2021", type: "Album", link: "/music/3" },
-  { id: "ek", title: "Eye Kan", coverImage: "/assets/music-assets/Eye Kan Single Cover.jpeg", releaseYear: "2021", type: "Single", link: "/music/singles/2" },
-  { id: "fi", title: "First (Interlude)", coverImage: "/assets/music-assets/First(Interlude) Single Cover.jpeg", releaseYear: "2020", type: "Single", link: "/music/singles/3" }
+  { id: "cd", title: "Controlled Demolition", coverImage: "/assets/music-assets/ControlledDemolitionCover_v2.webp", releaseYear: "2026", type: "EP", link: "/music/eps/2" },
+  { id: "ht", title: "Half Thoughts", coverImage: "/assets/music-assets/HalfThoughts1Cover.webp", releaseYear: "2025", type: "Album", link: "/music/4" },
+  { id: "soi", title: "Some Of Ink", coverImage: "/assets/music-assets/Some Of Ink EP Cover.webp", releaseYear: "2025", type: "EP", link: "/music/eps/1" },
+  { id: "sl", title: "Squealer and the Aggressors of Peace (Live)", coverImage: "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.webp", releaseYear: "2025", type: "Live EP", link: "/music/sataop-live" },
+  { id: "af", title: "Allegory (Freestyle)", coverImage: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.webp", releaseYear: "2025", type: "Single", link: "/music/singles/1" },
+  { id: "gs", title: "Goodbye Song (Demo)", coverImage: "/assets/music-assets/GoodbyeSongSingleCover.webp", releaseYear: "2025", type: "Single", link: "/music/singles/4" },
+  { id: "sataop", title: "Squealer and the Aggressors of Peace", coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.webp", releaseYear: "2022", type: "Album", link: "/music/1" },
+  { id: "lazlo", title: "Lazlo", coverImage: "/assets/music-assets/Lazlo Album Cover (Final).webp", releaseYear: "2021", type: "Album", link: "/music/2" },
+  { id: "soi-album", title: "Son Of Ink", coverImage: "/assets/music-assets/Son Of Ink Album Cover.webp", releaseYear: "2021", type: "Album", link: "/music/3" },
+  { id: "ek", title: "Eye Kan", coverImage: "/assets/music-assets/Eye Kan Single Cover.webp", releaseYear: "2021", type: "Single", link: "/music/singles/2" },
+  { id: "fi", title: "First (Interlude)", coverImage: "/assets/music-assets/First(Interlude) Single Cover.webp", releaseYear: "2020", type: "Single", link: "/music/singles/3" }
 ];
 
 const FiDisc = Disc; // Compatibility alias
@@ -68,36 +68,26 @@ function LiquidOrb({ className, delay = 0, duration = 20, size = "w-96 h-96", co
 }
 
 /**
- * MusicWorkCard - Redesigned to match the Art Page aesthetic with 3D Tilt and Liquid Glass specifications
+ * MusicWorkCard - Clean aesthetic matching the Art Page with crisp, flicker-free 3D tilt
  */
 function MusicWorkCard({ release, index }: { release: any, index: number }) {
   return (
     <Link 
       href={release.link} 
-      className="group relative flex flex-col transition-all duration-500 rounded-xl overflow-hidden cursor-pointer"
+      className="group relative flex flex-col h-full cursor-pointer"
     >
-      <Tilt
-        tiltMaxAngleX={12}
-        tiltMaxAngleY={12}
-        perspective={1000}
-        scale={1}
-        transitionSpeed={1200}
-        glareEnable={false}
-        glareMaxOpacity={0.35}
-        glareColor="var(--text-primary)"
-        glarePosition="all"
-        className="w-full h-full"
-      >
-        <div className="flex flex-col bg-primary/[0.01] dark:bg-primary/[0.03] transition-all duration-500 rounded-xl p-4 shadow-[0_8px_32px_rgba(0,0,0,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] h-full relative overflow-hidden backdrop-blur-md">
-          {/* Subtle light sweep highlights */}
-          <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/20 to-transparent"></div>
-          
-          <div className="relative aspect-square w-full overflow-hidden mb-4 md:mb-6 rounded-lg bg-black shadow-inner">
+      <SmoothTilt className="w-full h-full">
+        <div className="flex flex-col rounded-2xl overflow-hidden bg-primary/[0.02] hover:bg-primary/[0.04] shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12)] transition-[background-color,box-shadow] duration-300 p-3.5 md:p-4 h-full">
+          {/* Cover thumbnail - borderless with zero hover scaling */}
+          <div className="relative aspect-square w-full overflow-hidden mb-3 md:mb-5 rounded-xl">
             <Image 
               src={release.coverImage} 
               alt={release.title} 
               fill 
-              className="object-cover transition-transform duration-700" 
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              priority={index < 4}
+              className="object-cover" 
+              unoptimized
             />
           </div>
           
@@ -105,12 +95,12 @@ function MusicWorkCard({ release, index }: { release: any, index: number }) {
              <h3 className="text-xs md:text-sm font-light tracking-tight uppercase leading-tight group-hover:text-accent-blue transition-colors text-primary/80 break-words flex-1 pr-2">
                 {release.title}
              </h3>
-             <span className="text-[10px] md:text-xs font-mono text-accent-blue flex items-center gap-1 opacity-65 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+             <span className="text-[10px] md:text-xs font-mono text-accent-blue flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                 <span>{release.releaseYear}</span> <ArrowUpRight size={10} />
              </span>
           </div>
         </div>
-      </Tilt>
+      </SmoothTilt>
     </Link>
   );
 }
@@ -121,21 +111,30 @@ function MusicWorkCard({ release, index }: { release: any, index: number }) {
 function MobileReleaseStack({ releases }: { releases: any[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: isMobile ? containerRef : undefined,
     offset: ["start start", "end end"]
   });
 
   useEffect(() => {
-    return scrollYProgress.onChange((latest) => {
+    if (!isMobile) return;
+    return scrollYProgress.on("change", (latest) => {
       const index = Math.min(
         releases.length - 1,
         Math.floor(latest * (releases.length + 0.8))
       );
       setActiveIndex(index);
     });
-  }, [scrollYProgress, releases.length]);
+  }, [scrollYProgress, releases.length, isMobile]);
 
   return (
     <div 
@@ -153,15 +152,15 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: "linear" }}
             className="absolute inset-0"
-            style={{ transform: 'translateZ(0)' }}
+            style={{ transform: 'translate3d(0, 0, 0)' }}
           >
             <Image
               src={releases[activeIndex]?.coverImage}
               alt=""
               fill
-              sizes="32px"
+              sizes="100vw"
               className="object-cover scale-125 blur-2xl"
-              priority
+              priority={activeIndex === 0}
             />
           </motion.div>
         </AnimatePresence>
@@ -189,14 +188,10 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
         {/* Stack deck */}
         <div className="relative w-[85vw] max-w-[420px] aspect-square flex items-center justify-center mb-6">
           {releases.map((release, i) => {
-            // Prune cards out of range to prevent WebKit memory crashes on iOS Safari
-            if (i < activeIndex - 1 || i > activeIndex + 3) {
-              return null;
-            }
-
             const isPassed = i < activeIndex;
             const isActive = i === activeIndex;
             const diff = i - activeIndex;
+            const isFar = i < activeIndex - 1 || i > activeIndex + 3;
 
             // Stack spacing logic
             let yOffset = 0;
@@ -227,7 +222,7 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
                 animate={{
                   y: yOffset,
                   scale: scale,
-                  opacity: opacity,
+                  opacity: isFar ? 0 : opacity,
                   rotate: rotate
                 }}
                 transition={{
@@ -235,14 +230,18 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
                   stiffness: 140,
                   damping: 22
                 }}
-                style={{ zIndex }}
-                className="absolute inset-0 w-full h-full"
+                style={{ 
+                  zIndex,
+                  visibility: isFar ? 'hidden' : 'visible'
+                }}
+                className="absolute inset-0 w-full h-full pointer-events-auto"
               >
-                <Link href={release.link} className="block w-full h-full relative rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.8)] border border-white/10 bg-black">
+                <Link href={release.link} className="block w-full h-full relative rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.8)] bg-neutral-900">
                   <Image
                     src={release.coverImage}
                     alt={release.title}
                     fill
+                    sizes="(max-width: 480px) 85vw, 420px"
                     className="object-cover"
                     priority={i < 3}
                   />
@@ -281,11 +280,6 @@ function MobileReleaseStack({ releases }: { releases: any[] }) {
 }
 
 export default function MusicPage() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-
-  if (!mounted) return <main className="min-h-screen bg-background-primary" />;
-
   return (
     <main className="min-h-screen pb-0 md:pb-64 bg-background-primary relative font-noto-display-condensed selection:bg-accent-blue/30">
       
@@ -336,9 +330,10 @@ export default function MusicPage() {
                <div className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-accent-blue/5 blur-3xl rounded-full opacity-60"></div>
                   <Image 
-                    src="/assets/LN Music Still.png" 
+                    src="/assets/LN Music Still.webp" 
                     alt="Music Figurine"
-                    fill
+                    fill 
+                    sizes="(max-width: 768px) 300px, 600px"
                     className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
                     priority
                   />
@@ -349,7 +344,7 @@ export default function MusicPage() {
       </section>
 
       {/* 3. CONTENT SECTIONS (Art-style Architecture) */}
-      <div id="collections" className="scroll-mt-24">
+      <div id="collections" className="relative scroll-mt-24">
         <div className="md:hidden mt-0">
           <MobileReleaseStack releases={allReleases} />
         </div>

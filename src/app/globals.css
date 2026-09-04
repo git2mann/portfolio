@@ -1,88 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wdth,wght@62.5,100..900&display=swap');
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-Thin.ttf') format('truetype');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-ThinItalic.ttf') format('truetype');
-  font-weight: 100;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-Black.ttf') format('truetype');
-  font-weight: 900;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('/fonts/Lato/Lato-BlackItalic.ttf') format('truetype');
-  font-weight: 900;
-  font-style: italic;
-}
-
-@font-face {
-    font-family: 'Noto-Serif-Display-Condensed';
-    src: url('/fonts/Noto-Serif-Display-Condensed.ttf.woff') format('woff'),
-         url('/fonts/Noto-Serif-Display-Condensed.ttf.svg#Noto-Serif-Display-Condensed') format('svg'),
-         url('/fonts/Noto-Serif-Display-Condensed.ttf.eot'),
-         url('/fonts/Noto-Serif-Display-Condensed.ttf.eot?#iefix') format('embedded-opentype'); 
-    font-weight: normal;
-    font-style: normal;
-}
-
-
 /* Houdini Properties for Liquid Glass Border Animation */
 @property --angle-1 {
   syntax: "<angle>";
@@ -136,20 +51,20 @@ body {
   line-height: 1.5;
 }
 
-/* Fallback theme transitions for standard CSS properties to support Firefox and other non-Houdini engines */
+/* Theme transitions for structural containers */
 html,
 body,
 header,
 footer,
 main,
 section,
+nav,
+article,
+aside,
 .liquid-glass,
-.liquid-glass-clear,
-h1, h2, h3, h4, p, span, a, button,
-input,
-textarea {
-  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
-  transition-duration: 500ms;
+.liquid-glass-clear {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 400ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -706,13 +621,20 @@ html {
 .release-typeface-img {
   filter: invert(1) brightness(0); /* Black text by default on light themes */
   transition: filter 0.3s ease-out, transform 0.3s ease-out;
-  transform: none; /* No scale on mobile to avoid overflow and clipping */
-  transform-origin: center center;
+  transform: scale(1.15); /* Prominent scale on mobile */
+  transform-origin: left center;
+}
+
+@media (min-width: 640px) {
+  .release-typeface-img {
+    transform: scale(1.2); /* Medium screens */
+    transform-origin: left center;
+  }
 }
 
 @media (min-width: 1024px) {
   .release-typeface-img {
-    transform: scale(1.5); /* Scale on desktop to compensate for padding */
+    transform: scale(1.25); /* Large desktop flair filling width cleanly */
     transform-origin: left center;
   }
 }

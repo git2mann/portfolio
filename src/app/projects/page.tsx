@@ -212,7 +212,7 @@ export default function ProjectsPage() {
                <div className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-accent-blue/5 blur-3xl rounded-full opacity-60"></div>
                   <Image 
-                    src="/assets/LN Projects Still.png" 
+                    src="/assets/LN Projects Still.webp" 
                     alt="Engineering Figurine"
                     fill
                     className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(0,0,0,0.4)]"

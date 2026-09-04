@@ -414,10 +414,17 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
     }
   };
 
+  const handleVideoLeave = (index: number) => {
+    const video = videoRefs.current[index];
+    if (video) {
+      video.pause();
+    }
+  };
+
   const figurines = [
-    { id: 'wave', src: "/assets/LN Portfolio Asset Figurine Hero Wave.png" },
-    { id: 'dict', src: "/assets/LN Portfolio Asset Figurine Hero Dictionary.png" },
-    { id: 'stance', src: "/assets/LN Portfolio Asset Figurine Hero Stance.png" }
+    { id: 'wave', src: "/assets/LN Portfolio Asset Figurine Hero Wave.webp" },
+    { id: 'dict', src: "/assets/LN Portfolio Asset Figurine Hero Dictionary.webp" },
+    { id: 'stance', src: "/assets/LN Portfolio Asset Figurine Hero Stance.webp" }
   ];
 
   const getFigurineStyle = (index: number) => {
@@ -433,12 +440,10 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
   };
 
   const heroItems = [
-    { title: "music", href: "/music", image: "/assets/LN Music Still.png", video: "/assets/LN Portfolio Asset Figurine Music Loop Video Square.mp4" },
-    { title: "art", href: "/art", image: "/assets/LN Art Still.png", video: "/assets/LN Portfolio Asset Figurine Art Loop Video Square.mp4" },
-    { title: "code", href: "/projects", image: "/assets/LN Projects Still.png", video: "/assets/LN Portfolio Asset Figurine Projects Loop Video Square.mp4" }
+    { title: "music", href: "/music", image: "/assets/LN Music Still.webp", video: "/assets/LN Portfolio Asset Figurine Music Loop Video Square.mp4" },
+    { title: "art", href: "/art", image: "/assets/LN Art Still.webp", video: "/assets/LN Portfolio Asset Figurine Art Loop Video Square.mp4" },
+    { title: "code", href: "/projects", image: "/assets/LN Projects Still.webp", video: "/assets/LN Portfolio Asset Figurine Projects Loop Video Square.mp4" }
   ];
-
-  if (!mounted) return <main className="min-h-screen w-full bg-background-primary" />;
 
   return (
     <main className="w-full bg-background-primary relative font-noto-display-condensed text-primary overflow-x-hidden">
@@ -518,6 +523,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                       href={item.href}
                       className="group relative w-full"
                       onMouseEnter={() => handleVideoHover(idx)}
+                      onMouseLeave={() => handleVideoLeave(idx)}
                     >
                       <div className="lg:hidden relative h-36 rounded-[1.1rem] overflow-hidden bg-black shadow-[0_14px_36px_rgba(0,0,0,0.18)]">
                         <Image
@@ -553,10 +559,10 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                           <div className="absolute inset-0 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden rounded-[2.5rem]">
                             <video
                               ref={el => { videoRefs.current[idx] = el; }}
-                              autoPlay
                               loop
                               muted
                               playsInline
+                              preload="none"
                               suppressHydrationWarning
                               className="w-full h-full object-contain"
                             >

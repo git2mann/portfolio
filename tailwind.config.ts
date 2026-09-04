@@ -16,18 +16,22 @@ const config: Config = {
     extend: {
       fontFamily: {
         'sans': [
+          'var(--font-lato)',
           'Lato',
           'sans-serif',
         ],
         'serif': [
+          'var(--font-lato)',
           'Lato',
           'sans-serif',
         ],
         'noto-display-condensed': [
+          'var(--font-lato)',
           'Lato',
           'sans-serif',
         ],
         'skinny-serif': [
+          'var(--font-cormorant)',
           'Cormorant Garamond',
           'serif',
         ],

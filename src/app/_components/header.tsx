@@ -77,9 +77,10 @@ const Header = () => {
                         <Link href="/" className="flex items-center gap-4 group">
                             <div className="relative w-11 h-11 rounded-full overflow-hidden border border-white/40 shadow-inner transition-transform group-hover:scale-110">
                                 <Image
-                                    src="/assets/blog/authors/IMG_7908.PNG"
+                                    src="/assets/blog/authors/IMG_7908.webp"
                                     alt="Klense"
                                     fill
+                                    sizes="44px"
                                     className="object-cover"
                                     priority
                                 />

@@ -1,13 +1,13 @@
 ---
 title: "AI & The Future of Creative Workflows: Designing for Humans First"
 excerpt: "Exploring how agentic AI and intelligent interfaces are reshaping the creative landscape for developers and artists alike, establishing a collaborative partnership."
-coverImage: "/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.jpg"
+coverImage: "/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.webp"
 date: "2026-05-20T14:30:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
-  url: "/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.jpg"
+  url: "/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.webp"
 tags: ["AI", "Creative Technology", "UI Design", "Agentic Systems", "Future", "Tech"]
 category: "Tech"
 ---

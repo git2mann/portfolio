@@ -101,7 +101,7 @@ export default function DomeGallery({ isActive, setIsActive }: DomeGalleryProps)
   const isTransitioning = useRef(false);
   const [radius, setRadius] = useState(1200); 
   const [, setTick] = useState(0);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     if (isGuided) {

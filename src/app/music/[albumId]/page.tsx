@@ -1,352 +1,59 @@
-"use client";
+import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+import { albums, getAlbumById } from '@/data/music';
+import { SITE_NAME } from '@/lib/constants';
+import AlbumDetailClient from './AlbumDetailClient';
 
-import { useParams, useRouter } from 'next/navigation';
-import Container from "@/app/_components/container";
-import { useState, useRef, useEffect, useCallback } from 'react';
-import LyricsComponent from '@/app/_components/LyricsComponent';
-import { albumLyrics } from '@/data/lyrics/albums';
-import type { Album, Song } from '@/interfaces/music';
-import Image from 'next/image';
-import InstructionPopup from "@/app/_components/InstructionPopup";
-import Tilt from 'react-parallax-tilt';
-import { 
-  FiArrowLeft, 
-  FiClock, 
-  FiDisc, 
-  FiPlay, 
-  FiCornerDownRight, 
-  FiExternalLink, 
-  FiTerminal, 
-  FiDatabase, 
-  FiCpu, 
-  FiHash,
-  FiActivity,
-  FiChevronRight,
-  FiChevronLeft
-} from 'react-icons/fi';
-import { motion, AnimatePresence } from 'framer-motion';
+interface PageProps {
+  params: Promise<{
+    albumId: string;
+  }>;
+}
 
-// --- HELPERS ---
+export async function generateStaticParams() {
+  return albums.map((album) => ({
+    albumId: album.id,
+  }));
+}
 
-function injectLyrics(albums: Album[], albumLyrics: Record<string, Record<string, any[]>>): Album[] {
-  return albums.map((album: Album) => {
-    const lyricsForAlbum = albumLyrics[album.id] || {};
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const album = getAlbumById(resolvedParams.albumId);
+
+  if (!album) {
     return {
-      ...album,
-      songs: album.songs.map((song: Song) => ({
-        ...song,
-        lyrics: lyricsForAlbum[song.id] || [],
-      })),
+      title: `Album Not Found | ${SITE_NAME}`,
     };
-  });
+  }
+
+  const title = `${album.title} (${album.releaseYear}) | Music | ${SITE_NAME}`;
+  const description = album.description;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [album.coverImage],
+      type: 'music.album',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [album.coverImage],
+    },
+  };
 }
 
-const albumsData = injectLyrics([
-  {
-    id: "1",
-    title: "Squealer and the Aggressors of Peace",
-    coverImage: "/assets/music-assets/SQUEALER AND THE AGGRESSORS OF PEACE Album Cover.jpeg",
-    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Sataop Text.svg",
-    releaseYear: "2022",
-    description: "My first concept album. A high-pressure confrontation with systemic control and personal conflict. I dissect the violent hypocrisy of institutional peace and the quiet, heavy rage many have no choice but to accept. The album is a personal pressure cooker, mapping the moment where passive endurance starts to sound like friction.",
-    songs: [
-      { id: "1", title: "Saudade In Err (Intro)", duration: "1:17", audioUrl: "/assets/music/sataop-klense-mp3s/Saudade In Err (Intro) - Klense.mp3", lyrics: [] },
-      { id: "2", title: "Hummer's Theme", duration: "2:18", audioUrl: "/assets/music/sataop-klense-mp3s/Hummer's Theme - Klense.mp3", lyrics: [] },
-      { id: "3", title: "Chop Your Head", duration: "3:17", audioUrl: "/assets/music/sataop-klense-mp3s/Chop Your Head - Klense.mp3", lyrics: [] },
-      { id: "4", title: "Roast", duration: "2:51", audioUrl: "/assets/music/sataop-klense-mp3s/Roast - Klense.mp3", lyrics: [] },
-      { id: "5", title: "Salamander Crowd", duration: "2:01", audioUrl: "/assets/music/sataop-klense-mp3s/Salamander Crowd - Klense.mp3", lyrics: [] },
-      { id: "6", title: "Me, Myself and I", duration: "2:31", audioUrl: "/assets/music/sataop-klense-mp3s/Me, Myself and I - Klense.mp3", lyrics: [] },
-      { id: "7", title: "Help Me Run", duration: "2:50", audioUrl: "/assets/music/sataop-klense-mp3s/Help Me Run - Klense.mp3", lyrics: [] },
-      { id: "8", title: "Jungle Law", duration: "2:01", audioUrl: "/assets/music/sataop-klense-mp3s/Jungle Law - Klense.mp3", lyrics: [] },
-      { id: "9", title: "Tisa", duration: "3:23", audioUrl: "/assets/music/sataop-klense-mp3s/Tisa - Klense.mp3", lyrics: [] },
-      { id: "10", title: "You In Mind", duration: "2:40", audioUrl: "/assets/music/sataop-klense-mp3s/You In Mind - Klense.mp3", lyrics: [] }
-    ]
-  },
-  {
-    id: "2",
-    title: "Lazlo",
-    coverImage: "/assets/music-assets/Lazlo Album Cover (Final).jpeg",
-    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Lazlo Text.svg",
-    releaseYear: "2021",
-    description: "My trip down memory lane. I built this record to reminisce on the days spent in front of a tv, pulling from references like Camp Lazlo to capture that nostalgic drift. Fittingly, I spent a great deal of time during the writing of this record catching up on old cartoons. It is my own quiet ticket into hazy fragments of childhood in front of a widescreen.",
-    songs: [
-      { id: "1", title: "The Return (Intro)", duration: "0:30", audioUrl: "", lyrics: [] },
-      { id: "2", title: "Know About", duration: "1:43", audioUrl: "", lyrics: [] },
-      { id: "3", title: "General Ike", duration: "2:15", audioUrl: "", lyrics: [] },
-      { id: "4", title: "Me, You (Mii Yu)", duration: "2:25", audioUrl: "", lyrics: [] },
-      { id: "5", title: "Lazlo's Camp", duration: "2:35", audioUrl: "", lyrics: [] },
-      { id: "6", title: "S a t o r i", duration: "3:25", audioUrl: "", lyrics: [] },
-      { id: "7", title: "With U", duration: "3:20", audioUrl: "", lyrics: [] },
-      { id: "8", title: "Elay-AZ Theme", duration: "1:06", audioUrl: "", lyrics: [] },
-      { id: "9", title: "On Da Fens", duration: "3:20", audioUrl: "", lyrics: [] }
-    ]
-  },
-  {
-    id: "3",
-    title: "Son Of Ink",
-    coverImage: "/assets/music-assets/Son Of Ink Album Cover.jpeg",
-    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Son Of Ink Text.svg",
-    releaseYear: "2021",
-    description: "A heavy dive into the weight of authorship and self-preservation. This is me carving my permanent identity into a world that always seeks to smudge us out. It is the sound of me proving I exist. Now no longer available anywhere.",
-    songs: [
-      { id: "1", title: "Back Again", duration: "3:17", audioUrl: "", lyrics: [] },
-      { id: "2", title: "Witness (Skit) [feat. Jeremy Olendo]", duration: "0:33", audioUrl: "", lyrics: [] },
-      { id: "3", title: "Clarity (feat. Prescribed)", duration: "2:41", audioUrl: "", lyrics: [] },
-      { id: "4", title: "Ultimate", duration: "3:48", audioUrl: "", lyrics: [] },
-      { id: "5", title: "Battle", duration: "1:54", audioUrl: "", lyrics: [] },
-      { id: "6", title: "Something", duration: "3:18", audioUrl: "", lyrics: [] },
-      { id: "7", title: "Lunchtime (Freestyle)", duration: "1:17", audioUrl: "", lyrics: [] },
-      { id: "8", title: "Local (Outro)", duration: "1:51", audioUrl: "", lyrics: [] }
-    ],
-  },
-  {
-    id: "4",
-    title: "Half Thoughts",
-    coverImage: "/assets/music-assets/HalfThoughts1Cover.png",
-    typefaceImage: "/assets/music-assets/Portfolio Music Typefaces/Half Thoughts Text.svg",
-    releaseYear: "2025",
-    description: "My monument to the long unsaid. I focused on the heavy mental weight of my own fragments, my missed connections, and the things I left hanging in the air when I could not find the words. This project is me embracing the static of my own incompletion, proving that the silent spaces and half-formed ideas I keep hidden carry the most brutal weight of all.",
-    songs: [
-      { id: "1", title: "The Evening Dispatch!", duration: "2:05", audioUrl: "", lyrics: [] },
-      { id: "2", title: "Saxophone", duration: "2:05", audioUrl: "", lyrics: [] },
-      { id: "3", title: "Oze II", duration: "2:09", audioUrl: "", lyrics: [] },
-      { id: "4", title: "Oze", duration: "2:19", audioUrl: "", lyrics: [] },
-      { id: "5", title: "Wish Ya Told Me!", duration: "1:33", audioUrl: "", lyrics: [] },
-      { id: "6", title: "Intermission IV", duration: "2:11", audioUrl: "", lyrics: [] },
-      { id: "7", title: "You Are The Reason", duration: "1:53", audioUrl: "", lyrics: [] },
-      { id: "8", title: "Blue Salmon", duration: "1:18", audioUrl: "", lyrics: [] },
-      { id: "9", title: "Deglupta", duration: "1:37", audioUrl: "", lyrics: [] },
-      { id: "10", title: "Kept You Waiting", duration: "1:36", audioUrl: "", lyrics: [] },
-      { id: "11", title: "Karl Draisack", duration: "2:37", audioUrl: "", lyrics: [] },
-      { id: "12", title: "Forbo", duration: "1:57", audioUrl: "", lyrics: [] },
-      { id: "13", title: "Garble Surmount", duration: "2:33", audioUrl: "", lyrics: [] },
-      { id: "14", title: "Impromptu", duration: "3:05", audioUrl: "", lyrics: [] },
-      { id: "15", title: "Addis Abeba", duration: "2:42", audioUrl: "", lyrics: [] },
-      { id: "16", title: "Abide by Klense", duration: "2:03", audioUrl: "", lyrics: [] },
-    ],
-  },
-], albumLyrics);
+export default async function AlbumPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const album = getAlbumById(resolvedParams.albumId);
 
-/**
- * ClearRefractiveCover - The high-fidelity album cover with "clear liquid-glass" highlights and 3D Tilt
- */
-function ClearRefractiveCover({ src, size = 400 }: { src: string, size?: number }) {
-  return (
-      <div className="relative group select-none flex items-center justify-center perspective-[1200px]" style={{ width: `min(${size}px, 78vw)`, height: `min(${size}px, 78vw)` }}>
-      <div className="absolute inset-16 bg-accent-blue/10 blur-[80px] rounded-full animate-pulse opacity-40 group-hover:opacity-100 transition-opacity duration-1000"></div>
-      
-      <Tilt
-        tiltMaxAngleX={15}
-        tiltMaxAngleY={15}
-        perspective={1200}
-            scale={1}
-        transitionSpeed={1500}
-        gyroscope={true}
-            glareEnable={false}
-        glareMaxOpacity={0.45}
-        glareColor="#ffffff"
-        glarePosition="all"
-        glareBorderRadius="0px"
-        className="w-full h-full"
-      >
-            <div className="relative w-full h-full overflow-hidden bg-black shadow-[0_0_80px_rgba(0,0,0,0.5)] transition-all duration-700">
-          <Image src={src} alt="Cover" fill className="object-cover" />
-        </div>
-      </Tilt>
-    </div>
-  );
-}
+  if (!album) {
+    notFound();
+  }
 
-export default function AlbumPage() {
-  const params = useParams();
-  const router = useRouter();
-  const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  const album = params ? albumsData.find((a: Album) => a.id === params.albumId) : null;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!album || !mounted) return null;
-
-  return (
-      <main className="min-h-screen w-full overflow-x-hidden bg-background-primary text-primary font-noto-display-condensed relative">
-      <InstructionPopup />
-
-      {/* Background Atmosphere - Enhanced blur with Noise to fix banding */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 z-0" style={{ transform: 'translateZ(0)' }}>
-           <Image src={album.coverImage} alt="" fill className="object-cover scale-125 blur-[120px] opacity-25" />
-        </div>
-        {/* Noise overlay to break up banding blocks */}
-        <div className="absolute inset-0 z-10 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)' }}></div>
-        <div className="absolute inset-0 z-20 bg-gradient-to-b from-background-primary/20 via-background-primary/80 to-background-primary"></div>
-      </div>
-
-      {/* Navigation Controls - Moved below header */}
-      <div className="fixed top-20 left-4 sm:left-6 md:top-40 md:left-12 z-[110] flex items-center gap-4 md:gap-8 animate-in fade-in slide-in-from-left-4 duration-1000">
-         <button onClick={() => router.push('/music')} className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-2.5 rounded-full liquid-glass-clear text-[10px] md:text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all text-primary">
-            <FiArrowLeft size={16} /> Back
-         </button>
-      </div>
-
-      <div className="relative z-10 flex flex-col gap-14 md:gap-20 pt-20 md:pt-24 pb-16 md:pb-24">
-        {/* SLIDE 0: THE RELEASE (Hero) */}
-        <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="w-full !px-4 md:!px-8">
-              <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 md:gap-24 w-full">
-                 <div className="flex-shrink-0 flex flex-col gap-4">
-                    <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
-                       <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                       <span>RELEASED {album.releaseYear}</span>
-                    </div>
-                    <ClearRefractiveCover src={album.coverImage} size={400} />
-                 </div>
-                 <div className="flex-grow w-full flex flex-col gap-6 lg:justify-between lg:h-[450px]">
-                    {(album as any).typefaceImage ? (
-                       <div className="relative w-full h-[min(400px,78vw)] lg:h-[400px] select-none pointer-events-none">
-                         <img
-                           src={(album as any).typefaceImage}
-                           alt={album.title}
-                           className="absolute inset-0 w-full h-full object-contain object-center lg:object-left release-typeface-img"
-                         />
-                         <h1 className="sr-only">{album.title}</h1>
-                       </div>
-                    ) : (
-                       <h1 className="text-3xl sm:text-5xl md:text-7xl lg:text-[7.5rem] font-light tracking-tighter uppercase leading-[0.85] md:leading-[0.8] text-primary">
-                         {album.title}
-                       </h1>
-                    )}
-                    <div className="flex flex-wrap gap-6 md:gap-12">
-                       <div className="space-y-1">
-                          <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Format</p>
-                          <p className="text-xl sm:text-2xl md:text-4xl font-light tracking-tighter text-primary">ALBUM</p>
-                       </div>
-                       <div className="space-y-1">
-                          <p className="font-mono text-[9px] uppercase text-primary/40 tracking-widest">Resolution</p>
-                          <p className="text-xl sm:text-2xl md:text-4xl font-light tracking-tighter text-primary">LOSSLESS</p>
-                       </div>
-                    </div>
-                 </div>
-              </div>
-           </Container>
-        </section>
-
-        {/* SLIDE 1: THE CONTEXT (Overview & Specs) */}
-      <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="w-full !px-4 md:!px-8">
-              <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 md:gap-24 items-center">
-                 <div className="space-y-8 md:space-y-10">
-                    <div className="max-w-3xl pl-0 md:pl-10 relative">
-                       <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                          <FiTerminal size={12} /> Overview
-                       </h3>
-                       {(() => {
-                          const text = album.description;
-                          const dotIndex = text.indexOf('.');
-                          if (dotIndex === -1) {
-                            return (
-                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-relaxed text-primary">
-                                {text}
-                              </p>
-                            );
-                          }
-                          const firstSentence = text.substring(0, dotIndex + 1);
-                          const remainingText = text.substring(dotIndex + 1).trim();
-                          return (
-                            <div className="space-y-4 border-l border-accent-blue/20 pl-4 md:pl-6">
-                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-normal text-primary">
-                                {firstSentence}
-                              </p>
-                              {remainingText && (
-                                <p className="text-base sm:text-lg md:text-xl font-light leading-relaxed text-secondary">
-                                  {remainingText}
-                                </p>
-                              )}
-                            </div>
-                          );
-                        })()}
-                    </div>
-                    <div className="flex flex-wrap gap-6">
-                       <button className="flex items-center gap-3 px-5 md:px-8 py-3 md:py-4 liquid-glass-clear font-medium uppercase text-[9px] md:text-[10px] tracking-widest hover:bg-primary/5 transition-all text-primary">
-                          <FiExternalLink size={16} /> External Links
-                       </button>
-                    </div>
-                 </div>
-                 
-                 <div className="liquid-glass p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] space-y-6 md:space-y-10">
-                    <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                       <FiDatabase size={12} /> Release Details
-                    </h5>
-                    <div className="grid grid-cols-1 gap-6">
-                       {[
-                         { label: 'Artist', val: 'Klense' },
-                         { label: 'Format', val: 'Album' },
-                         { label: 'Release', val: album.releaseYear },
-                         { label: 'Status', val: 'Published' }
-                       ].map(item => (
-                         <div key={item.label} className="pb-3 group/item">
-                            <span className="block font-mono text-[8px] uppercase tracking-widest opacity-30 group-hover/item:opacity-70 transition-opacity">{item.label}</span>
-                            <span className="block text-xl font-light uppercase tracking-tighter mt-1 group-hover/item:text-primary transition-colors">{item.val}</span>
-                         </div>
-                       ))}
-                    </div>
-                 </div>
-              </div>
-           </Container>
-        </section>
-
-        {/* SLIDE 2: THE INDEX (Tracklist) */}
-      <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none w-full px-4 sm:px-6 md:px-24 h-auto md:h-[75vh] flex flex-col">
-              <div className="md:pl-10">
-              <div className="flex items-end justify-between pb-4 mb-5 md:mb-8">
-                 <h2 className="text-3xl sm:text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">Tracks</h2>
-                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 text-secondary font-semibold">{album.songs.length} Songs</span>
-              </div>
-              <div className="flex-grow overflow-visible md:overflow-y-auto no-scrollbar space-y-1 pr-0 md:pr-4 pb-8 md:pb-24">
-                 {album.songs.map((song, i) => (
-                   <div key={song.id} className="group">
-                      <button 
-                        onClick={() => setActiveTrackId(activeTrackId === song.id ? null : song.id)}
-                        className={`w-full flex items-center justify-between py-4 md:py-8 px-3 sm:px-4 md:px-6 transition-all duration-500 ${activeTrackId === song.id ? 'bg-primary/[0.03] scale-[1.01]' : 'hover:bg-primary/[0.01]'}`}
-                      >
-                         <div className="flex items-center gap-4 sm:gap-8 md:gap-16 min-w-0">
-                            <span className={`font-mono text-base sm:text-lg md:text-2xl transition-colors ${activeTrackId === song.id ? 'text-accent-blue' : 'opacity-20'}`}>
-                               {String(i + 1).padStart(2, '0')}
-                            </span>
-                            <h4 className={`text-base sm:text-xl md:text-4xl font-light uppercase tracking-tighter transition-all truncate ${activeTrackId === song.id ? 'text-primary md:translate-x-4' : 'text-primary/40 group-hover:text-primary'}`}>
-                               {song.title}
-                            </h4>
-                         </div>
-                         <div className="flex items-center gap-3 md:gap-6 shrink-0">
-                            <span className="font-mono text-[10px] md:text-xs opacity-20 text-secondary">{song.duration}</span>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeTrackId === song.id ? 'bg-accent-blue rotate-180 shadow-lg' : 'group-hover:bg-primary/10'}`}>
-                               <FiCornerDownRight size={14} className={activeTrackId === song.id ? 'text-white' : 'opacity-20'} />
-                            </div>
-                         </div>
-                      </button>
-                      <AnimatePresence>
-                         {activeTrackId === song.id && (
-                           <motion.div
-                             initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
-                             className="overflow-hidden"
-                           >
-                              <div className="py-6 md:py-12 px-4 md:px-6 bg-primary/[0.01] backdrop-blur-sm">
-                                 <LyricsComponent lyrics={song.lyrics} />
-                              </div>
-                           </motion.div>
-                         )}
-                      </AnimatePresence>
-                   </div>
-                 ))}
-              </div>
-              </div>
-           </Container>
-        </section>
-         </div>
-    </main>
-  );
+  return <AlbumDetailClient album={album} />;
 }

@@ -5,7 +5,7 @@ coverImage: "/assets/blog/blog-post-covers/organic-sound-cover.jpg"
 date: "2026-06-18T10:15:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
   url: "/assets/blog/blog-post-covers/organic-sound-cover.jpg"
 tags: ["Sound Design", "Electronic Music", "Synthesis", "Production Logs", "Creativity"]

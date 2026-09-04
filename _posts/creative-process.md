@@ -1,13 +1,13 @@
 ---
 title: "Finding Inspiration: My Creative Process"
 excerpt: "A look into how I find inspiration and maintain creativity across different artistic disciplines. From establishing routines to embracing randomness, these approaches help me stay productive and innovative."
-coverImage: "/assets/blog/blog-post-covers/jabber-visuals-PlUQQyIMO8U-unsplash.jpg"
+coverImage: "/assets/blog/blog-post-covers/jabber-visuals-PlUQQyIMO8U-unsplash.webp"
 date: "2025-01-05T14:45:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
-  url: "/assets/blog/blog-post-covers/jabber-visuals-PlUQQyIMO8U-unsplash.jpg"
+  url: "/assets/blog/blog-post-covers/jabber-visuals-PlUQQyIMO8U-unsplash.webp"
 tags: ["Creativity", "Inspiration", "Process", "Productivity", "Tips"]
 ---
 

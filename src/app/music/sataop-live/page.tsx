@@ -1,219 +1,175 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { 
-  Play, 
-  Clock, 
-  Music, 
-  ArrowRight, 
-  ExternalLink,
-  Info,
-  Disc,
+  ArrowLeft,
+  Disc, 
   Terminal,
-  Database,
-  Cpu,
   Activity,
-  CornerDownRight,
-  ChevronLeft,
-  ChevronRight,
-  ArrowLeft
+  Music
 } from "lucide-react";
 import Container from "@/app/_components/container";
-import ScrollReveal from "@/app/_components/ScrollReveal";
-import { motion, AnimatePresence } from "framer-motion";
-import InstructionPopup from "@/app/_components/InstructionPopup";
-import Tilt from 'react-parallax-tilt';
-
-const FiDisc = Disc; // Fix for runtime error
-
-// --- ASSETS ---
-const COVER_IMAGE = "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.jpeg";
-
-/**
- * ClearRefractiveCover - The high-fidelity album cover with "clear liquid-glass" highlights and 3D Tilt
- */
-function ClearRefractiveCover({ src, size = 400 }: { src: string, size?: number }) {
-  return (
-      <div className="relative group select-none flex items-center justify-center perspective-[1200px]" style={{ width: `min(${size}px, 78vw)`, height: `min(${size}px, 78vw)` }}>
-      <div className="absolute inset-16 bg-accent-blue/10 blur-[80px] rounded-full animate-pulse opacity-40 group-hover:opacity-100 transition-opacity duration-1000"></div>
-      
-      <Tilt
-        tiltMaxAngleX={15}
-        tiltMaxAngleY={15}
-        perspective={1200}
-            scale={1}
-        transitionSpeed={1500}
-        gyroscope={true}
-            glareEnable={false}
-        glareMaxOpacity={0.45}
-        glareColor="#ffffff"
-        glarePosition="all"
-        glareBorderRadius="0px"
-        className="w-full h-full"
-      >
-            <div className="relative w-full h-full overflow-hidden bg-black shadow-[0_0_80px_rgba(0,0,0,0.5)] transition-all duration-700">
-          <Image src={src} alt="Cover" fill className="object-cover" />
-        </div>
-      </Tilt>
-    </div>
-  );
-}
+import ClearRefractiveCover from "@/app/_components/ClearRefractiveCover";
 
 // --- CONSTANTS ---
 const TRACKLIST = [
-  "Hummer's Theme",
-  "Jungle Law",
-  "Tisa",
-  "Salamander Crowd",
-  "Saudade In Err (Outro)",
+  { id: "1", title: "Saudade In Err (Live)", duration: "1:22", audioUrl: "" },
+  { id: "2", title: "Hummer's Theme (Live)", duration: "2:25", audioUrl: "" },
+  { id: "3", title: "Chop Your Head (Live)", duration: "3:30", audioUrl: "" },
+  { id: "4", title: "Roast (Live)", duration: "3:05", audioUrl: "" },
+  { id: "5", title: "Salamander Crowd (Live)", duration: "2:15", audioUrl: "" },
+  { id: "6", title: "Me, Myself and I (Live)", duration: "2:45", audioUrl: "" },
+  { id: "7", title: "Help Me Run (Live)", duration: "3:02", audioUrl: "" },
+  { id: "8", title: "Jungle Law (Live)", duration: "2:10", audioUrl: "" },
+  { id: "9", title: "Tisa (Live)", duration: "3:40", audioUrl: "" },
+  { id: "10", title: "You In Mind (Live)", duration: "2:55", audioUrl: "" },
 ];
 
+const COVER_IMAGE = "/assets/music-assets/Squealer and the Aggressors of Peace (Live) Front Cover.webp";
+const TYPEFACE_IMAGE = "/assets/music-assets/Portfolio Music Typefaces/Sataop Live Text.svg";
+
 export default function SataopLivePage() {
-  const router = useRouter();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
+  const [activeTrackId, setActiveTrackId] = useState<string | null>(null);
 
   return (
-      <main className="min-h-screen w-full overflow-x-hidden bg-background-primary text-primary font-noto-display-condensed relative">
-      <InstructionPopup />
-
+    <main className="min-h-screen w-full overflow-x-hidden bg-background-primary text-primary font-noto-display-condensed relative pb-24">
       {/* Background Atmosphere - Enhanced visibility with Noise fix */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 z-0" style={{ transform: 'translateZ(0)' }}>
-           <Image src={COVER_IMAGE} alt="" fill className="object-cover scale-125 blur-[100px] opacity-25" />
+          <Image src={COVER_IMAGE} alt="" fill sizes="100vw" className="object-cover scale-125 blur-[100px] opacity-20" priority unoptimized />
         </div>
         <div className="absolute inset-0 z-10 opacity-[0.15] mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url(/noise.png)' }}></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-background-primary/20 via-background-primary/80 to-background-primary"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background-primary/30 via-background-primary/85 to-background-primary"></div>
       </div>
 
-      {/* Navigation Controls - Moved below header */}
-      <div className="fixed top-20 left-4 sm:left-6 md:top-40 md:left-12 z-[110] flex items-center gap-4 md:gap-8 animate-in fade-in slide-in-from-left-4 duration-1000">
-         <button onClick={() => router.push('/music')} className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-2.5 rounded-full liquid-glass-clear text-[10px] md:text-xs uppercase tracking-widest hover:scale-105 active:scale-95 transition-all text-primary">
-            <ArrowLeft size={16} /> Back
-         </button>
-      </div>
+      <Container className="relative z-10 pt-24 sm:pt-28 md:pt-32 px-4 sm:px-6 md:px-12 max-w-6xl">
+        {/* Navigation Breadcrumb Bar */}
+        <div className="flex items-center justify-between mb-8 md:mb-12">
+          <Link 
+            href="/music" 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full liquid-glass-clear text-xs uppercase tracking-widest text-primary/70 hover:text-primary transition-all active:scale-95"
+          >
+            <ArrowLeft size={14} /> Back to Releases
+          </Link>
+          <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-secondary/60">
+            Music / Live / Sataop (Live)
+          </span>
+        </div>
 
-      <div className="relative z-10 flex flex-col gap-14 md:gap-20 pt-20 md:pt-24 pb-16 md:pb-24">
-        {/* SLIDE 0: THE RELEASE */}
-        <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="w-full !px-4 md:!px-8">
-               <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10 md:gap-24 w-full">
-                  <div className="flex-shrink-0 flex flex-col gap-4">
-                     <div className="flex items-center gap-4 text-accent-blue font-mono text-xs uppercase tracking-[0.2em] font-semibold">
-                        <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse"></div>
-                        <span>LIVE PERFORMANCE - 2025</span>
-                     </div>
-                     <ClearRefractiveCover src={COVER_IMAGE} size={400} />
-                  </div>
-                  <div className="flex-grow w-full flex flex-col gap-6 lg:justify-between lg:h-[450px]">
-                     <div className="relative w-full h-[min(400px,78vw)] lg:h-[400px] select-none pointer-events-none">
-                        <img
-                           src="/assets/music-assets/Portfolio Music Typefaces/Sataop Live Text.svg"
-                           alt="Squealer and the Aggressors of Peace (Live)"
-                           className="absolute inset-0 w-full h-full object-contain object-center lg:object-left release-typeface-img"
-                        />
-                        <h1 className="sr-only">Squealer and the Aggressors of Peace (Live)</h1>
-                     </div>
-                  </div>
-               </div>
-            </Container>
+        {/* RELEASE HERO & OVERVIEW */}
+        <section className="grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-10 lg:gap-16 items-start mb-16 md:mb-24">
+          {/* Cover & Specs */}
+          <div className="flex flex-col gap-6">
+            <ClearRefractiveCover src={COVER_IMAGE} size={380} />
+            
+            {/* Quick Specs Card */}
+            <div className="bg-primary/[0.03] backdrop-blur-md p-5 rounded-2xl grid grid-cols-3 gap-3 text-center">
+              <div className="space-y-0.5">
+                <span className="block font-mono text-[9px] uppercase tracking-widest text-secondary/70">Format</span>
+                <span className="block text-sm font-medium uppercase text-primary">Live Album</span>
+              </div>
+              <div className="space-y-0.5 px-2">
+                <span className="block font-mono text-[9px] uppercase tracking-widest text-secondary/70">Tracks</span>
+                <span className="block text-sm font-medium uppercase text-primary">{TRACKLIST.length} Songs</span>
+              </div>
+              <div className="space-y-0.5">
+                <span className="block font-mono text-[9px] uppercase tracking-widest text-secondary/70">Year</span>
+                <span className="block text-sm font-medium uppercase text-primary">2025</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Details & Concept Overview */}
+          <div className="flex flex-col justify-start gap-6">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-blue/10 text-accent-blue font-mono text-[10px] uppercase tracking-widest font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse" />
+                Live Performance • 2025
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-secondary/60">
+                Live Recording
+              </span>
+            </div>
+
+            {/* Typeface SVG */}
+            <div className="relative w-full h-44 sm:h-56 md:h-72 lg:h-80 xl:h-96 select-none pointer-events-none flex items-center justify-start my-2 sm:my-4">
+              <img
+                src="/assets/music-assets/Portfolio Music Typefaces/Sataop Live Text.svg"
+                alt="Squealer and the Aggressors of Peace (Live)"
+                className="w-full h-full object-contain object-left release-typeface-img drop-shadow-[0_10px_30px_rgba(0,0,0,0.25)]"
+              />
+              <h1 className="sr-only">Squealer and the Aggressors of Peace (Live)</h1>
+            </div>
+
+            <div className="space-y-1">
+              <p className="font-mono text-[11px] uppercase tracking-widest text-secondary">
+                Artist: <span className="text-primary font-medium">Leon Nduati (Klense)</span>
+              </p>
+            </div>
+
+            {/* Liner Notes / Concept Overview */}
+            <div className="space-y-4 pt-2">
+              <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue font-semibold flex items-center gap-2">
+                <Disc size={13} /> Concept & Live Performance Notes
+              </h3>
+              <div className="space-y-3 pl-4 md:pl-5">
+                <p className="text-base sm:text-lg md:text-xl font-light leading-snug text-primary">
+                  My stripping away of the studio polish, putting my material through its paces.
+                </p>
+                <p className="text-sm sm:text-base font-light leading-relaxed text-secondary/90">
+                  Of note is that the songs that made the cut for the live album represent the strongest story aspects of the original project. The contradictions of the original record are quelled here, as each track is intense, and almost too much to listen to. It is the chaotic, beautiful clash of this project’s energy where the concept of aggressing peace is truly evident, years later.
+                </p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* SLIDE 1: THE CONTEXT */}
-        <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="w-full !px-4 md:!px-8">
-              <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-10 md:gap-24 items-center">
-                 <div className="space-y-8 md:space-y-12">
-                     <div className="max-w-3xl pl-0 md:pl-10 relative">
-                        <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                           <Terminal size={12} /> Overview
-                        </h3>
-                       {(() => {
-                          const text = "My stripping away of the studio polish, putting my material through its paces. Of note is that the songs that made the cut for the live album represent the strongest story aspects of the original project. On the same, the contradictions of the original record are finally quelled here, as each track is intense, and almost too much to listen to. It is the chaotic, beautiful clash of this project’s energy where the concept of aggressing peace is truly evident, years later.";
-                          const dotIndex = text.indexOf('.');
-                          if (dotIndex === -1) {
-                            return (
-                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-relaxed text-primary">
-                                {text}
-                              </p>
-                            );
-                          }
-                          const firstSentence = text.substring(0, dotIndex + 1);
-                          const remainingText = text.substring(dotIndex + 1).trim();
-                          return (
-                            <div className="space-y-4 border-l border-accent-blue/20 pl-4 md:pl-6">
-                              <p className="text-xl sm:text-2xl md:text-3xl font-light leading-normal text-primary">
-                                {firstSentence}
-                              </p>
-                              {remainingText && (
-                                <p className="text-base sm:text-lg md:text-xl font-light leading-relaxed text-secondary">
-                                  {remainingText}
-                                </p>
-                              )}
-                            </div>
-                          );
-                        })()}
-                    </div>
-                 </div>
-                                  <div className="liquid-glass p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] space-y-6 md:space-y-10">
-                     <h5 className="font-mono text-[10px] uppercase tracking-[0.2em] text-accent-blue/60 mb-6 flex items-center gap-2 font-semibold">
-                        <Database size={12} /> Release Details
-                     </h5>
-                    <div className="grid grid-cols-1 gap-6">
-                       {[
-                         { label: 'Artist', val: 'Klense' },
-                         { label: 'Format', val: 'Live Album' },
-                         { label: 'Release', val: '2025' },
-                         { label: 'Status', val: 'Published' }
-                       ].map(item => (
-                         <div key={item.label} className="pb-3 group/item">
-                            <span className="block font-mono text-[8px] uppercase tracking-widest opacity-30 group-hover/item:opacity-70 transition-opacity">{item.label}</span>
-                            <span className="block text-xl font-light uppercase tracking-tighter mt-1 group-hover/item:text-primary transition-colors">{item.val}</span>
-                         </div>
-                       ))}
-                    </div>
-                 </div>
-              </div>
-           </Container>
-        </section>
+        {/* TRACKLIST - Pure natural page flow, borderless aesthetic */}
+        <section className="w-full">
+          <div className="flex items-end justify-between pb-4 mb-6">
+            <div>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-light uppercase tracking-tight text-primary">
+                Live Tracklist
+              </h2>
+              <p className="font-mono text-[10px] uppercase tracking-widest text-secondary/70 mt-1">
+                Recorded live in performance
+              </p>
+            </div>
+            <span className="font-mono text-xs uppercase tracking-widest text-accent-blue font-medium">
+              {TRACKLIST.length} Tracks
+            </span>
+          </div>
 
-        {/* SLIDE 2: THE INDEX */}
-        <section className="w-full flex items-center justify-center pt-6 md:pt-12">
-           <Container className="!max-w-none w-full px-4 sm:px-6 md:px-24 h-auto md:h-[75vh] flex flex-col">
-              <div className="md:pl-10">
-              <div className="flex items-end justify-between pb-4 mb-5 md:mb-8">
-                 <h2 className="text-3xl sm:text-4xl md:text-6xl font-light uppercase tracking-tighter text-primary leading-none">Tracks</h2>
-                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] opacity-40 text-secondary font-semibold">{TRACKLIST.length} Songs</span>
+          <div className="space-y-2.5">
+            {TRACKLIST.map((track, i) => (
+              <div 
+                key={track.id} 
+                className="rounded-2xl transition-all duration-300 bg-primary/[0.015] hover:bg-primary/[0.04] p-4 sm:p-5 flex items-center justify-between"
+              >
+                <div className="flex items-center gap-4 sm:gap-6 min-w-0">
+                  <span className="font-mono text-sm sm:text-base text-secondary/50">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h4 className="text-base sm:text-lg md:text-xl font-light uppercase tracking-tight truncate text-primary/80">
+                    {track.title}
+                  </h4>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-xs text-secondary/60">
+                    {track.duration}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-blue/10 text-accent-blue font-mono text-[9px] uppercase tracking-wider">
+                    <Activity size={10} /> Live
+                  </span>
+                </div>
               </div>
-              <div className="flex-grow overflow-visible md:overflow-y-auto no-scrollbar space-y-1 pr-0 md:pr-4 pb-8 md:pb-24">
-                 {TRACKLIST.map((track, i) => (
-                   <div key={track} className="group">
-                      <div className="w-full flex items-center justify-between py-4 md:py-8 px-3 sm:px-4 md:px-6 hover:bg-primary/[0.01] transition-all duration-700 cursor-pointer">
-                         <div className="flex items-center gap-4 sm:gap-8 md:gap-16 min-w-0">
-                            <span className={`font-mono text-base sm:text-lg md:text-2xl opacity-20 group-hover:text-accent-blue group-hover:opacity-100 transition-all duration-700`}>
-                               {String(i + 1).padStart(2, '0')}
-                            </span>
-                            <h4 className={`text-base sm:text-xl md:text-4xl font-light uppercase tracking-tighter text-primary/40 group-hover:text-primary transition-all duration-1000 truncate md:group-hover:translate-x-4`}>
-                               {track}
-                            </h4>
-                         </div>
-                         <ArrowRight size={20} className="opacity-0 md:group-hover:opacity-100 transition-opacity text-accent-blue shrink-0" />
-                      </div>
-                   </div>
-                 ))}
-              </div>
-              </div>
-           </Container>
+            ))}
+          </div>
         </section>
-      </div>
+      </Container>
     </main>
   );
 }

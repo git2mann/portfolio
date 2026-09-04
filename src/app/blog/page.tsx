@@ -24,7 +24,7 @@ export default function BlogPage() {
       tagline: "AUDIO ENGINEERING // PROCESS",
       link: "/blog/music",
       icon: "🎵",
-      image: "/assets/blog/blog-post-covers/selina-farzaei-x2QHTVg2HqA-unsplash.jpg",
+      image: "/assets/blog/blog-post-covers/selina-farzaei-x2QHTVg2HqA-unsplash.webp",
       color: "accent-blue",
       textColor: "text-accent-blue",
       bgColor:  "liquid-glass" 
@@ -35,7 +35,7 @@ export default function BlogPage() {
       tagline: "FULL STACK // OPEN SOURCE",
       link: "/blog/tech",
       icon: "💻",
-      image: "/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.jpg",
+      image: "/assets/blog/blog-post-covers/pontus-wellgraf-16_bFHg8Ouc-unsplash.webp",
       color: "accent-blue",
       textColor: "text-accent-blue",
       bgColor:  "liquid-glass" 

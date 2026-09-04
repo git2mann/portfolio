@@ -10,6 +10,8 @@ const withMDX = require('@next/mdx')({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    formats: ['image/avif', 'image/webp'],
+    contentDispositionType: 'inline',
     remotePatterns: [
       {
         protocol: 'https',

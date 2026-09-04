@@ -1,330 +1,259 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Info, Terminal, Search, Layers, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, Sparkles, ChevronLeft, ChevronRight, BookOpen, Layers } from 'lucide-react';
 
-// --- TYPE DEFINITIONS ---
 export interface LyricsGroup {
   lines: string[];
   explanation?: string;
+  id?: string;
 }
 
 export interface LyricsComponentProps {
   lyrics: LyricsGroup[];
 }
 
-const LyricsComponent: React.FC<LyricsComponentProps> = ({ lyrics }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+export default function LyricsComponent({ lyrics }: LyricsComponentProps) {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const [expandAll, setExpandAll] = useState(false);
 
-  const getSelectableIndexes = () => lyrics.map((g, i) => (g.explanation ? i : -1)).filter(i => i >= 0);
+  // Get indexes of stanzas that have an explanation
+  const annotatedIndexes = lyrics
+    .map((g, i) => (g.explanation ? i : -1))
+    .filter((i) => i >= 0);
 
-  const selectNext = (direction: 1 | -1) => {
-    const selectable = getSelectableIndexes();
-    if (selectable.length === 0) return;
+  const totalAnnotations = annotatedIndexes.length;
 
-    if (selectedIndex === null || !selectable.includes(selectedIndex)) {
-      setSelectedIndex(selectable[0]);
-      return;
-    }
+  const selectNext = useCallback(
+    (direction: 1 | -1) => {
+      if (annotatedIndexes.length === 0) return;
+      if (openIndex === null || !annotatedIndexes.includes(openIndex)) {
+        setOpenIndex(annotatedIndexes[0]);
+        return;
+      }
+      const currentPos = annotatedIndexes.indexOf(openIndex);
+      const nextPos = Math.min(
+        Math.max(currentPos + direction, 0),
+        annotatedIndexes.length - 1
+      );
+      setOpenIndex(annotatedIndexes[nextPos]);
+    },
+    [annotatedIndexes, openIndex]
+  );
 
-    const currentPos = selectable.indexOf(selectedIndex);
-    const nextPos = Math.min(Math.max(currentPos + direction, 0), selectable.length - 1);
-    setSelectedIndex(selectable[nextPos]);
-  };
-
-  // Keyboard navigation
+  // Keyboard navigation when a note is active
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!lyrics || lyrics.length === 0) return;
       if (document.activeElement && (document.activeElement as HTMLElement).tagName === 'INPUT') return;
-      
+
       if (e.key === 'Escape') {
-        setSelectedIndex(null);
+        setOpenIndex(null);
+        setExpandAll(false);
         return;
       }
 
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-        e.preventDefault();
-        selectNext(1);
-      } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-        e.preventDefault();
-        selectNext(-1);
+      if (openIndex !== null && !expandAll) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          selectNext(1);
+        } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          selectNext(-1);
+        }
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [selectedIndex, lyrics]);
+  }, [openIndex, expandAll, lyrics, selectNext]);
 
-  useEffect(() => {
-    if (selectedIndex === null) return;
-    if (!lyrics[selectedIndex] || !lyrics[selectedIndex].explanation) {
-      setSelectedIndex(null);
-    }
-  }, [lyrics, selectedIndex]);
-
-  useEffect(() => {
-    if (selectedIndex === null) return;
-    const html = document.documentElement;
-    const body = document.body;
-    const prevHtmlOverflow = html.style.overflow;
-    const prevBodyOverflow = body.style.overflow;
-    html.style.overflow = 'hidden';
-    body.style.overflow = 'hidden';
-    return () => {
-      html.style.overflow = prevHtmlOverflow;
-      body.style.overflow = prevBodyOverflow;
-    };
-  }, [selectedIndex]);
-
-  if (!lyrics || lyrics.length === 0) return null;
-
-    const selectableIndexes = getSelectableIndexes();
-    const currentSelectablePos = selectedIndex === null ? -1 : selectableIndexes.indexOf(selectedIndex);
-
+  if (!lyrics || lyrics.length === 0) {
     return (
-      <div className="relative w-full py-3 md:py-4 transition-colors duration-500 font-noto-display-condensed">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 md:mb-10 border-b border-primary/10 pb-3 md:pb-4 gap-3 md:gap-4">
-        <div className="flex items-center gap-3 md:gap-6">
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-accent-blue/10 flex items-center justify-center border border-accent-blue/20">
-              <Layers size={18} className="text-accent-blue" />
-           </div>
-           <div>
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-light tracking-tighter uppercase leading-none text-primary">
-             Lyrics Notes
-              </h2>
-          <p className="font-mono text-[8px] md:text-[9px] uppercase tracking-[0.25em] md:tracking-[0.4em] text-secondary mt-1">Select a section to read its note</p>
-           </div>
+      <div className="py-8 px-6 rounded-2xl bg-primary/[0.02] text-center my-4">
+        <p className="font-mono text-xs uppercase tracking-widest text-secondary">
+          Instrumental / No lyrics available for this track
+        </p>
+      </div>
+    );
+  }
+
+  const currentAnnotatedPos = openIndex === null ? -1 : annotatedIndexes.indexOf(openIndex);
+
+  return (
+    <div className="w-full py-2 sm:py-4 transition-colors font-noto-display-condensed">
+      {/* Sleek Toolbar Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-accent-blue/10 flex items-center justify-center text-accent-blue flex-shrink-0">
+            <BookOpen size={15} />
+          </div>
+          <div>
+            <div className="flex items-center gap-2.5">
+              <h3 className="text-base sm:text-lg font-medium tracking-tight uppercase text-primary">
+                Lyrics & Liner Notes
+              </h3>
+              {totalAnnotations > 0 && (
+                <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-wider text-accent-blue bg-accent-blue/10 px-2 py-0.5 rounded-full font-medium">
+                  {totalAnnotations} {totalAnnotations === 1 ? 'Annotation' : 'Annotations'}
+                </span>
+              )}
+            </div>
+            {totalAnnotations > 0 && (
+              <p className="font-mono text-[10px] uppercase tracking-wider text-secondary/70 mt-0.5">
+                Select any highlighted verse to view commentary
+              </p>
+            )}
+          </div>
         </div>
-        <div className="hidden md:flex items-center gap-3 text-accent-blue font-mono text-[10px] uppercase tracking-widest opacity-40">
-           <Search size={12} />
-          <span>Use arrows to move</span>
-        </div>
+
+        {totalAnnotations > 0 && (
+          <button
+            onClick={() => {
+              setExpandAll(!expandAll);
+              if (!expandAll) setOpenIndex(null);
+            }}
+            className="self-start sm:self-center inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full liquid-glass-clear text-[10px] font-mono uppercase tracking-widest text-secondary hover:text-accent-blue transition-all active:scale-95"
+          >
+            <Layers size={12} />
+            <span>{expandAll ? 'Collapse All Notes' : 'Expand All Notes'}</span>
+          </button>
+        )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12 relative">
-        
-        {/* Lyrics column */}
-        <div className="space-y-0 relative z-10">
-          {lyrics.map((group, idx) => {
-            const isActive = selectedIndex === idx;
-            const isHovered = hoverIndex === idx;
-            const hasAnnotation = !!group.explanation;
-            
-            return (
+      {/* Lyrics Container - Flows naturally with zero nested scrollbars */}
+      <div className="space-y-6 sm:space-y-8 max-w-3xl">
+        {lyrics.map((group, idx) => {
+          const hasAnnotation = !!group.explanation;
+          const isSelected = openIndex === idx || expandAll;
+
+          return (
+            <div key={idx} className="relative group/stanza">
               <div
-                key={idx}
-                className="relative"
-                onMouseEnter={() => setHoverIndex(idx)}
-                onMouseLeave={() => setHoverIndex(null)}
+                onClick={() => {
+                  if (hasAnnotation && !expandAll) {
+                    setOpenIndex(openIndex === idx ? null : idx);
+                  }
+                }}
+                className={`
+                  relative transition-all duration-300 rounded-xl p-3 sm:p-4 -mx-3 sm:-mx-4
+                  ${hasAnnotation ? 'cursor-pointer hover:bg-accent-blue/[0.04]' : 'cursor-default'}
+                  ${isSelected && hasAnnotation ? 'bg-accent-blue/[0.06] shadow-sm' : hasAnnotation ? 'hover:bg-accent-blue/[0.03]' : ''}
+                `}
               >
-                <button
-                  onClick={() => hasAnnotation && setSelectedIndex(isActive ? null : idx)}
-                  className={`
-                    w-full text-left relative py-4 md:py-8 outline-none transition-all duration-700 group
-                    ${!hasAnnotation ? 'cursor-default' : 'cursor-pointer'}
-                    ${selectedIndex !== null && !isActive ? 'opacity-50 md:opacity-20 md:blur-[1px] md:grayscale-[0.5]' : 'opacity-100'}
-                  `}
-                >
-                  {/* Focus Glow Overlay */}
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div 
-                        layoutId="focus-glow"
-                        className="absolute inset-0 bg-accent-blue/[0.03] rounded-xl border border-accent-blue/10 shadow-[inset_0_0_20px_rgba(var(--accent-blue-rgb),0.05)]"
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                      />
-                    )}
-                  </AnimatePresence>
-
-                  {/* Line Number / ID */}
-                  <div className={`
-                    absolute left-0 top-1/2 -translate-y-1/2 flex items-center gap-4 transition-all duration-700
-                    ${isActive ? 'opacity-100 translate-x-0' : 'opacity-5 -translate-x-4 group-hover:opacity-30 group-hover:translate-x-0'}
-                  `}>
-                    <span className="font-mono text-[8px] md:text-[10px] text-accent-blue">SECTION {String(idx + 1).padStart(2, '0')}</span>
+                {/* Annotation Indicator Pill on Top of Stanza */}
+                {hasAnnotation && (
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-[9px] uppercase tracking-widest text-secondary/60">
+                      Verse {String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <span
+                      className={`
+                        inline-flex items-center gap-1 px-2 py-0.5 rounded-full font-mono text-[9px] uppercase tracking-wider transition-all
+                        ${isSelected ? 'bg-accent-blue text-white shadow-sm' : 'bg-accent-blue/10 text-accent-blue group-hover/stanza:bg-accent-blue/20'}
+                      `}
+                    >
+                      <Sparkles size={10} />
+                      <span>{isSelected ? 'Note Open' : 'Note'}</span>
+                    </span>
                   </div>
-                  
-                  {/* Lyric Lines */}
-                  <div className={`
-                    pl-14 md:pl-28 pr-4 md:pr-12 transition-all duration-700
-                    ${isActive ? 'md:translate-x-4' : isHovered && hasAnnotation ? 'md:translate-x-2' : ''}
-                  `}>
-                    {group.lines.map((line, i) => (
-                      <span
-                        key={i}
-                        className={`
-                          block text-lg sm:text-xl md:text-4xl lg:text-5xl font-light tracking-tight leading-[1.1] mb-1 uppercase
-                          transition-all duration-700
-                          ${isActive 
-                            ? 'text-primary' 
-                            : isHovered && hasAnnotation
-                              ? 'text-primary'
-                              : 'text-primary/30'
-                          }
-                        `}
-                      >
-                        {line}
-                      </span>
-                    ))}
-                  </div>
+                )}
 
-                  {/* Interaction Hint */}
-                  {hasAnnotation && !isActive && (
-                    <div className="hidden md:flex absolute right-6 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full border border-primary/5 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-primary/5">
-                       <Info size={14} className="text-accent-blue" />
-                    </div>
-                  )}
-                </button>
+                {/* Stanza Lines - Beautiful, readable poetic typography */}
+                <div className="space-y-1.5">
+                  {group.lines.map((line, lineIdx) => (
+                    <p
+                      key={lineIdx}
+                      className={`
+                        text-base sm:text-lg md:text-xl font-light leading-relaxed tracking-wide transition-colors
+                        ${isSelected ? 'text-primary font-normal' : hasAnnotation ? 'text-primary/90 group-hover/stanza:text-primary' : 'text-primary/75'}
+                      `}
+                    >
+                      {line}
+                    </p>
+                  ))}
+                </div>
               </div>
-            );
-          })}
-        </div>
 
-        {/* Notes panel */}
-        <div className="hidden lg:block relative">
-           <div className="sticky top-24 w-full h-[60vh] flex flex-col">
-              <AnimatePresence mode="wait">
-                {selectedIndex !== null ? (
+              {/* Inline Annotation Card - Smooth Accordion Unroll directly below verse */}
+              <AnimatePresence>
+                {hasAnnotation && isSelected && (
                   <motion.div
-                    key="panel"
-                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                    transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                    className="flex-grow liquid-glass-clear rounded-[2rem] overflow-hidden shadow-2xl flex flex-col"
+                    initial={{ opacity: 0, height: 0, y: -6 }}
+                    animate={{ opacity: 1, height: 'auto', y: 0 }}
+                    exit={{ opacity: 0, height: 0, y: -6 }}
+                    transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                    className="overflow-hidden"
                   >
-                    {/* Panel header */}
-                    <div className="bg-accent-blue/[0.03] px-8 py-6 flex justify-between items-center border-b border-primary/5">
-                       <div className="flex items-center gap-3">
-                          <div className="w-1.5 h-1.5 rounded-full bg-accent-blue animate-pulse" />
-                          <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-accent-blue font-bold">Lyric Note</span>
-                       </div>
-                       <button onClick={() => setSelectedIndex(null)} className="p-2 rounded-full hover:bg-primary/5 transition-colors opacity-40 hover:opacity-100"><X size={16} /></button>
-                    </div>
+                    <div className="mt-2 mb-4 p-4 sm:p-6 rounded-2xl bg-accent-blue/[0.06] backdrop-blur-md shadow-lg relative">
+                      {/* Card Header */}
+                      <div className="flex items-center justify-between pb-3 mb-3">
+                        <div className="flex items-center gap-2 text-accent-blue">
+                          <Sparkles size={13} />
+                          <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest font-semibold">
+                            Liner Note & Interpretation
+                          </span>
+                        </div>
 
-                    <div className="p-10 flex flex-col justify-between h-full">
-                       <div className="space-y-12 overflow-y-auto no-scrollbar pb-8">
-                          {/* Selected lines */}
-                          <div className="space-y-2 opacity-40 border-l-2 border-accent-blue/20 pl-6 py-1">
-                             {lyrics[selectedIndex].lines.map((line, i) => (
-                               <p key={i} className="text-sm font-medium uppercase tracking-tight leading-tight">{line}</p>
-                             ))}
-                          </div>
+                        <div className="flex items-center gap-1 sm:gap-2">
+                          {!expandAll && totalAnnotations > 1 && (
+                            <div className="flex items-center gap-1 mr-1">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  selectNext(-1);
+                                }}
+                                disabled={currentAnnotatedPos <= 0}
+                                aria-label="Previous note"
+                                className="w-6 h-6 rounded-full flex items-center justify-center text-secondary hover:text-accent-blue disabled:opacity-20 transition-colors"
+                              >
+                                <ChevronLeft size={14} />
+                              </button>
+                              <span className="font-mono text-[9px] text-secondary/60">
+                                {currentAnnotatedPos + 1}/{totalAnnotations}
+                              </span>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  selectNext(1);
+                                }}
+                                disabled={currentAnnotatedPos === totalAnnotations - 1}
+                                aria-label="Next note"
+                                className="w-6 h-6 rounded-full flex items-center justify-center text-secondary hover:text-accent-blue disabled:opacity-20 transition-colors"
+                              >
+                                <ChevronRight size={14} />
+                              </button>
+                            </div>
+                          )}
 
-                          {/* Explanation */}
-                          <div className="space-y-4">
-                             <h4 className="font-mono text-[10px] uppercase tracking-[0.3em] text-accent-blue font-bold flex items-center gap-2">
-                                <Info size={12} /> Explanation
-                             </h4>
-                             <p className="text-xl text-primary font-light leading-relaxed">
-                                {lyrics[selectedIndex].explanation}
-                             </p>
-                          </div>
-                       </div>
-
-                       {/* Panel footer */}
-                          <div className="pt-8 border-t border-primary/5 flex justify-between items-center font-mono text-[9px] uppercase tracking-[0.25em] opacity-40">
+                          {!expandAll && (
                             <button
-                             onClick={() => selectNext(-1)}
-                             className="inline-flex items-center gap-1 hover:text-accent-blue transition-colors disabled:opacity-20"
-                            disabled={currentSelectablePos <= 0}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setOpenIndex(null);
+                              }}
+                              aria-label="Close note"
+                              className="w-6 h-6 rounded-full flex items-center justify-center text-secondary hover:text-primary transition-colors opacity-60 hover:opacity-100"
                             >
-                             <ChevronLeft size={12} /> Prev
+                              <X size={14} />
                             </button>
-                            <button
-                             onClick={() => selectNext(1)}
-                             className="inline-flex items-center gap-1 hover:text-accent-blue transition-colors disabled:opacity-20"
-                            disabled={currentSelectablePos === selectableIndexes.length - 1 || currentSelectablePos === -1}
-                            >
-                             Next <ChevronRight size={12} />
-                            </button>
-                       </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Explanation Body */}
+                      <p className="text-sm sm:text-base font-light leading-relaxed text-primary/90">
+                        {group.explanation}
+                      </p>
                     </div>
-                  </motion.div>
-                ) : (
-                  <motion.div 
-                    initial={{ opacity: 0 }} 
-                    animate={{ opacity: 1 }}
-                    className="flex-grow border border-dashed border-primary/10 flex flex-col items-center justify-center text-center p-12 group rounded-[2.5rem] bg-primary/[0.01]"
-                  >
-                     <div className="w-20 h-20 rounded-full bg-primary/[0.02] flex items-center justify-center mb-8 border border-primary/5 group-hover:border-accent-blue/20 transition-colors">
-                        <Terminal size={32} className="text-primary/10 group-hover:text-accent-blue/40 transition-colors" />
-                     </div>
-                     <p className="font-mono text-[10px] uppercase tracking-[0.5em] text-secondary opacity-40 leading-relaxed">
-                      Choose a section<br/>to view notes
-                     </p>
                   </motion.div>
                 )}
               </AnimatePresence>
-           </div>
-        </div>
-
+            </div>
+          );
+        })}
       </div>
-
-      {/* Mobile modal */}
-      <AnimatePresence>
-        {selectedIndex !== null && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="lg:hidden fixed inset-0 z-[200] bg-black/60 backdrop-blur-md flex items-end"
-            onClick={() => setSelectedIndex(null)}
-          >
-             <motion.div
-                initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }}
-                transition={{ type: "spring", damping: 30, stiffness: 300 }}
-               className="w-full max-h-[88dvh] overflow-y-auto no-scrollbar bg-background-primary border-t border-primary/20 p-5 sm:p-6 pt-8 sm:pt-10 rounded-t-[2rem] shadow-2xl relative"
-                onClick={(e) => e.stopPropagation()}
-             >
-               <div className="sticky top-0 z-10 bg-background-primary/95 backdrop-blur-sm -mx-5 sm:-mx-6 px-5 sm:px-6 pb-4">
-                <div className="w-12 h-1 bg-primary/10 rounded-full mx-auto mb-4" />
-                <button onClick={() => setSelectedIndex(null)} className="absolute top-2 right-5 sm:right-6 w-9 h-9 flex items-center justify-center rounded-full bg-primary/5 hover:bg-accent-blue/10 transition-colors"><X size={18} /></button>
-               </div>
-                
-               <div className="space-y-6 pb-4">
-                 <div className="flex items-center gap-3 text-accent-blue">
-                   <Terminal size={16} />
-                  <span className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.4em] font-bold">Lyric Note</span>
-                   </div>
-
-                 <div className="border-l-2 border-accent-blue/20 pl-4 sm:pl-6 opacity-50 py-1">
-                      {lyrics[selectedIndex].lines.map((line, i) => (
-                    <p key={i} className="text-sm sm:text-base font-light text-primary uppercase mb-1">{line}</p>
-                      ))}
-                   </div>
-
-                 <div className="space-y-3 sm:space-y-4">
-                  <h3 className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-accent-blue font-bold">Explanation</h3>
-                   <p className="text-lg sm:text-xl md:text-2xl font-light leading-snug text-primary">
-                         {lyrics[selectedIndex].explanation}
-                      </p>
-                   </div>
-
-                 <div className="sticky bottom-0 bg-background-primary/95 backdrop-blur-sm pt-4 border-t border-primary/10 flex justify-between items-center font-mono text-[9px] uppercase tracking-widest opacity-60">
-                     <button
-                      onClick={() => selectNext(-1)}
-                      className="inline-flex items-center gap-1 hover:text-accent-blue transition-colors disabled:opacity-20"
-                   disabled={currentSelectablePos <= 0}
-                     >
-                      <ChevronLeft size={12} /> Prev
-                     </button>
-                     <button
-                      onClick={() => selectNext(1)}
-                      className="inline-flex items-center gap-1 hover:text-accent-blue transition-colors disabled:opacity-20"
-                   disabled={currentSelectablePos === selectableIndexes.length - 1 || currentSelectablePos === -1}
-                     >
-                      Next <ChevronRight size={12} />
-                     </button>
-                   </div>
-                </div>
-             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
-};
-
-export default LyricsComponent;
+}

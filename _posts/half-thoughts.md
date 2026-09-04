@@ -1,13 +1,13 @@
 ---
 title: "Half Thoughts: Letting Go of the Past by Revisiting It"
 excerpt: "Dive into the world of Half Thoughts—an album where demos, fragments, and raw ideas become a vibrant musical journey. Download, listen, and join the conversation."
-coverImage: "/assets/music-assets/HalfThoughts1Cover.png"
+coverImage: "/assets/music-assets/HalfThoughts1Cover.webp"
 date: "2025-07-05T12:00:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
-  url: "/assets/music-assets/HalfThoughts1Cover.png"
+  url: "/assets/music-assets/HalfThoughts1Cover.webp"
 tags: ["music", "album", "half-thoughts", "release", "interactive"]
 category: "Music"
 ---

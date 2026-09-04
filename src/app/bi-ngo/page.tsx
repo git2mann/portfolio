@@ -71,7 +71,7 @@ export default function BiNgoPage() {
                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2 }} className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-green-500/5 blur-[120px] rounded-full opacity-40"></div>
                   <Image 
-                    src="/assets/BI NGO Logo Final.png" 
+                    src="/assets/BI NGO Logo Final.webp" 
                     alt="The BI NGO Final Logo" 
                     fill 
                     className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(34,197,94,0.3)]" 
@@ -215,7 +215,7 @@ export default function BiNgoPage() {
                <div className="order-1 lg:order-2 flex justify-center">
                   <div className="relative w-full max-w-[500px] aspect-square group">
                      <div className="absolute inset-0 bg-white/5 blur-[100px] rounded-full animate-pulse"></div>
-                     <Image src="/assets/BI NGO Logo Final.png" alt="Logo Breakdown" fill className="object-contain transition-transform duration-1000 group-hover:rotate-3" />
+                     <Image src="/assets/BI NGO Logo Final.webp" alt="Logo Breakdown" fill className="object-contain transition-transform duration-1000 group-hover:rotate-3" />
                   </div>
                </div>
             </div>

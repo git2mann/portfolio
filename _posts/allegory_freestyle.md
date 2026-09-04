@@ -1,16 +1,16 @@
 ---
 title: "New Track Premiere: 'Allegory (Freestyle)'"
 excerpt: "Listen to my latest single 'Allegory (Freestyle)' - a hard-hitting one-minute rap that delivers sharp lyricism and energy."
-coverImage: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg"
+coverImage: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.webp"
 date: "2025-01-10T12:00:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
-  url: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg"
+  url: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.webp"
 tags: ["Announcement", "Single", "New Release", "Hip-Hop", "Freestyle", "Rap"]
 contentType: "audio"
-mediaUrl: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.jpeg"
+mediaUrl: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.webp"
 ---
 
 # New Track Premiere: 'Allegory (Freestyle)'

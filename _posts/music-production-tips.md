@@ -1,13 +1,13 @@
 ---
 title: "5 Essential Music Production Tips for Beginners"
 excerpt: "Starting your journey in music production can be overwhelming. Here are five essential tips to help beginners create better music and develop their skills more effectively."
-coverImage: "/assets/blog/blog-post-covers/ivan-jermakov-N1I6IgDOGJs-unsplash.jpg"
+coverImage: "/assets/blog/blog-post-covers/ivan-jermakov-N1I6IgDOGJs-unsplash.webp"
 date: "2025-01-10T10:30:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
-  url: "/assets/blog/blog-post-covers/ivan-jermakov-N1I6IgDOGJs-unsplash.jpg"
+  url: "/assets/blog/blog-post-covers/ivan-jermakov-N1I6IgDOGJs-unsplash.webp"
 tags: ["Production", "Tips", "Beginners", "Creativity", "Growth"]
 ---
 

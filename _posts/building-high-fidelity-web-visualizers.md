@@ -5,7 +5,7 @@ coverImage: "/assets/blog/blog-post-covers/audio-visualizer-cover.jpg"
 date: "2026-03-05T09:00:00.000Z"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
   url: "/assets/blog/blog-post-covers/audio-visualizer-cover.jpg"
 tags: ["WebGL", "Web Audio API", "Interactive Design", "Canvas", "Creative Coding", "Tech"]

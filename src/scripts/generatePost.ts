@@ -42,7 +42,7 @@ coverImage: "${coverImage}"
 date: "${date}"
 author:
   name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
+  picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
   url: "${coverImage}"
 ---
