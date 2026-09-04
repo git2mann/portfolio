@@ -1,46 +1,92 @@
 # Leon K Nduati - Personal Portfolio & Blog
 
-A modern, performant personal portfolio and blog built with Next.js, TypeScript, and Tailwind CSS. This site showcases my work as a creative professional across multiple disciplines including music, art, and technology.
+A modern, performant, and cinematic personal portfolio and creative archive built with Next.js 16 (Turbopack), TypeScript, Tailwind CSS, and Framer Motion. This site showcases my work as a multidisciplinary creative across music, visual art, writing, and technology.
+
+---
 
 ## Features
 
-- **Blog Platform**: 
-  - Markdown-based blog with support for rich content.
-  - Posts grouped by year and displayed with featured images, excerpts, and tags.
-  - Dynamic routing for individual blog posts.
-- **Music Portfolio**: 
-  - Interactive audio player with waveform visualization.
-  - Featured tracks with lyrics and annotations.
-  - Discography and release showcase with album details and song lyrics.
-- **Art Gallery**: A dedicated section for showcasing visual artwork and exhibitions.
-- **Projects Section**: Highlighting various creative and technical projects with detailed descriptions.
-- **Dark Mode & Theme Switcher**: Multiple theme options including:
-  - Light Mode
-  - Dark Mode
+### Music Portfolio & Discography
+- **Interactive 3D Cover Displays**: Physics-based interactive tilt (`ClearRefractiveCover` & `SmoothTilt`) powered by Framer Motion springs, providing fluid 60fps responsiveness across Chrome, Firefox, and Safari with zero GPU layer culling or flickering.
+- **Borderless Modern Architecture**: Completely borderless release layouts across studio albums, EPs, live performances, and singles, utilizing subtle contrast washes and floating glass surfaces.
+- **Integrated Mini Audio Player**: Custom compact player (`MiniAudioPlayer`) featuring play/pause controls, draggable timeline scrubbing, duration indicators, and animated frequency bars.
+- **Reimagined Lyrics & Liner Notes System**:
+  - Naturally flowing page layouts eliminating clunky nested scrollbars.
+  - Inline accordion-expanding liner notes directly below annotated verses.
+  - Verse-level commentary steppers, "Expand / Collapse All" toggle, and keyboard shortcuts (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`, `Esc`).
+- **Dynamic Mobile Release Stack**: Custom touch-optimized card deck with gesture-based flipping for mobile viewports.
+
+### Art Gallery & Exhibitions
+- **Curated Archive**: Grid presentation of digital artwork, HiQuGraphs, and editorial studies.
+- **Interactive Dome Gallery**: 3D dome visualization experience for browsing artwork collections.
+- **Social Share Pages**: Individual artwork showcase routes (`/art/share/[artworkId]`) optimized with OpenGraph metadata and clean direct visual previews.
+
+### Writing & Blog Platform
+- Markdown-driven editorial engine with Gray Matter frontmatter parsing.
+- Categorized articles (Music, Tech) with chronological filtering, tag taxonomies, and reading times.
+- SEO optimized with OpenGraph and Twitter card previews.
+
+### Design System & Theme Engine
+- **Multiple Curated Palettes**:
+  - Light & Dark modes
   - Dark Ocean
   - Pastel Pink
   - Forest
   - Ocean
   - Sunset
-  - **Metallic Silver** (realistic metallic sheen, glassy menus, and subtle highlights)
-  - **8-Bit Sunset** (retro pixel look with Lanton's Ant 8-bit grid overlay)
-- **Responsive Design**: Optimized for all screen sizes, ensuring a seamless experience on mobile, tablet, and desktop.
-- **Performance Optimized**: Built with Next.js for fast loading speeds and efficient rendering.
-- **TypeScript**: Full type safety throughout the codebase for better maintainability.
-- **Modern Styling**: Clean, modern aesthetic using Tailwind CSS and custom themes.
+  - **Metallic Silver**: Glassy menus, metallic sheen, and refractive surface highlights.
+  - **8-Bit Sunset**: Retro aesthetic with dynamic pixel grid overlay.
+- **Responsive & Accessible**: Mobile-first architecture with smooth viewport transitions and custom typography.
+
+---
 
 ## Technology Stack
 
-- **Framework**: Next.js 15
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Content**: Markdown with Gray Matter
-- **Audio**: WaveSurfer.js for audio visualization
+- **Framework**: Next.js 16 (App Router with Turbopack)
+- **Language**: TypeScript (Strict Mode)
+- **Styling**: Tailwind CSS with custom glassmorphism utilities and CSS variables
+- **Motion & Physics**: Framer Motion
+- **Icons**: Lucide React & React Icons
+- **Content**: Markdown with Gray Matter & Next MDX
+- **Optimization**: WebP media delivery, dynamic `sitemap.ts`, and `robots.ts`
 - **Deployment**: Vercel
 
-## Local Development
+---
 
-To set up the project locally, follow these steps:
+## Project Structure
+
+```
+├── _posts/           # Blog posts and articles in Markdown format
+├── public/           # Static public assets
+│   ├── assets/       # High-fidelity WebP imagery, audio samples, and SVG typefaces
+│   │   ├── blog/     # Author avatars and editorial header images
+│   │   └── music-assets/ # Album covers, typefaces, and wallpapers
+│   └── favicon.ico   # Site favicon
+├── src/
+│   ├── app/          # Next.js App Router (pages, layouts, route handlers)
+│   │   ├── _components/ # Reusable UI components (Tilt, Player, Lyrics, etc.)
+│   │   ├── api/      # Route handlers (/api/contact, /api/subscribe)
+│   │   ├── art/      # Art gallery and share pages
+│   │   ├── blog/     # Blog index and category feeds
+│   │   ├── music/    # Discography, release detail pages, and live projects
+│   │   ├── sitemap.ts# Dynamic XML sitemap generator
+│   │   └── robots.ts # Search engine crawler instructions
+│   ├── data/         # Release metadata, song catalogs, and lyrics data
+│   │   └── lyrics/   # Verified lyrics and liner notes (albums, eps, singles)
+│   ├── interfaces/   # TypeScript data definitions
+│   └── lib/          # Global constants and utility helpers
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18.17+ (or Node.js 20+)
+- npm, pnpm, or yarn
+
+### Installation
 
 1. **Clone the repository**:
    ```bash
@@ -53,79 +99,38 @@ To set up the project locally, follow these steps:
    npm install
    ```
 
-3. **Start the development server**:
+3. **Start the local development server**:
    ```bash
    npm run dev
    ```
-   This will start the development server at `http://localhost:3000`.
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 4. **Build for production**:
    ```bash
    npm run build
    ```
 
-5. **Start the production server**:
+5. **Start production build locally**:
    ```bash
    npm start
    ```
 
-## Generating a Blog Post
+---
 
-To generate a new blog post, run the following script:
+## Content Management
+
+### Generating a New Blog Post
+
+Generate a pre-formatted blog post template using the CLI script:
 
 ```bash
 npx ts-node src/scripts/generatePost.ts
 ```
 
-Follow the prompts to enter the post title, excerpt, and cover image URL. If you leave the cover image URL blank, a default image will be used.
+Follow the prompts to enter title, excerpt, and cover image. Posts are saved to `/_posts` and automatically indexed by the blog feed.
 
-## Content Management
-
-Blog posts are stored in the `/_posts` directory as Markdown files with front matter support. Adding a new Markdown file in this directory will automatically create a new blog post.
-
-### Blog Post Structure
-
-Each blog post is written in Markdown and includes front matter metadata. Below is an example structure:
-
-```markdown
 ---
-title: "Post Title"
-excerpt: "A brief summary of the post."
-coverImage: "/assets/blog/preview/cover.jpg"
-date: "2025-01-01T12:00:00.000Z"
-author:
-  name: Leon Nduati
-  picture: "/assets/blog/authors/IMG_7908.PNG"
-ogImage:
-  url: "/assets/blog/preview/cover.jpg"
-tags: ["Tag1", "Tag2"]
-contentType: "article" # Options: 'article', 'video', 'audio', 'gallery'
-mediaUrl: "/path/to/media" # Optional for audio or video posts
----
-
-Post content in Markdown...
-```
-
-### Adding a New Blog Post
-
-1. Create a new Markdown file in the `/_posts` directory.
-2. Use the structure above to define the metadata and content.
-3. Save the file, and it will automatically appear on the blog page.
-
-## Project Structure
-
-```
-├── _posts/           # Blog post markdown files
-├── public/           # Static assets
-│   ├── assets/      # Images and media
-│   └── favicon/     # Favicon files
-├── src/
-│   ├── app/         # Next.js app directory
-│   ├── interfaces/  # TypeScript interfaces
-│   └── lib/         # Utility functions
-└── styles/          # Global styles
-```
 
 ## License
 
-All rights reserved © Leon K Nduati 2025
+All rights reserved © Leon K Nduati
