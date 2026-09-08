@@ -129,6 +129,7 @@ export default async function MusicBlogPage({
                     src={featuredPost.coverImage}
                     alt={featuredPost.title}
                     fill
+                    sizes="(max-width: 1280px) 100vw, 1280px"
                     className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-65 group-hover:opacity-85 blur-[6px] group-hover:blur-[4px]"
                  />
                  <div 
@@ -168,6 +169,7 @@ export default async function MusicBlogPage({
                           src={post.coverImage}
                           alt={post.title}
                           fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-80 group-hover:opacity-100"
                        />
                        <div className="absolute top-4 left-4 z-10 bg-red-500 text-white px-3 py-1 font-mono text-[9px] uppercase tracking-widest rounded-full">

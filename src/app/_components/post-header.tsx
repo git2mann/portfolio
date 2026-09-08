@@ -96,6 +96,7 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
                 src={coverImage}
                 alt={title}
                 fill
+                sizes="(max-width: 1280px) 100vw, 1280px"
                 className="object-cover opacity-90"
                 priority
              />

@@ -24,7 +24,7 @@ const ThemeSelector = () => {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const isFirstRender = useRef(true);
   
-  const visibleThemes = themes.filter(t => ["system", "light", "dark", "merlot"].includes(t.id));
+  const visibleThemes = themes.filter(t => ["system", "light", "dark", "interpol", "merlot"].includes(t.id));
 
   const selectTheme = (themeId: string, e: React.MouseEvent<HTMLButtonElement>) => {
     console.log("selectTheme called", themeId);
@@ -333,9 +333,9 @@ const ThemeSelector = () => {
                               }
                             `}
                           >
-                            <div className="flex items-center gap-4">
-                              <span className={`text-2xl transition-transform duration-500 ${isActive ? 'scale-110' : 'opacity-70 group-hover:opacity-100 group-hover:scale-125'}`}>{theme.icon}</span>
-                              <span className={`text-[10px] font-bold uppercase tracking-[0.3em] transition-colors ${isActive ? 'text-background-primary' : 'text-primary opacity-70 group-hover:text-primary'}`}>{theme.name.replace('_', ' ')}</span>
+                            <div className="flex items-center gap-3.5 min-w-0 pr-2">
+                              <span className={`text-2xl shrink-0 transition-transform duration-500 ${isActive ? 'scale-110' : 'opacity-70 group-hover:opacity-100 group-hover:scale-125'}`}>{theme.icon}</span>
+                              <span className={`text-[10px] font-bold uppercase tracking-[0.28em] transition-colors leading-tight ${isActive ? 'text-background-primary' : 'text-primary opacity-70 group-hover:text-primary'}`}>{theme.name.replace('_', ' ')}</span>
                             </div>
 
                             {isActive && <Check size={16} className="text-background-primary animate-in zoom-in duration-500" />}

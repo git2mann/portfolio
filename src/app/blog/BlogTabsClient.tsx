@@ -158,6 +158,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                   src={featuredPost.coverImage}
                   alt={featuredPost.title}
                   fill
+                  sizes="(max-width: 1280px) 100vw, 1280px"
                   className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-65 group-hover:opacity-85 blur-[4px] group-hover:blur-[2px]"
                 />
                 <div 
@@ -255,7 +256,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                          className="relative h-[500px] overflow-hidden rounded-[2.5rem] flex flex-col justify-end p-12 md:p-16 group shadow-2xl border border-white/5 hover:border-accent-blue/20 transition-colors block w-full"
                       >
                          <div className="absolute inset-0 z-0">
-                            <Image src={cat.image} alt={cat.category} fill className="object-cover opacity-20 group-hover:opacity-40 group-hover:scale-105 transition-all duration-[3000ms]" />
+                            <Image src={cat.image} alt={cat.category} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover opacity-20 group-hover:opacity-40 group-hover:scale-105 transition-all duration-[3000ms]" />
                             <div 
                               className="absolute inset-0 via-transparent to-transparent"
                               style={{ backgroundImage: 'linear-gradient(to top, var(--background-primary), color-mix(in srgb, var(--background-primary) 40%, transparent), transparent)' }}
@@ -366,6 +367,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                                 src={post.coverImage}
                                 alt={post.title}
                                 fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-80 group-hover:opacity-100"
                              />
                              <div className="absolute top-4 left-4 z-10 inline-block px-3 py-1 rounded-full liquid-glass-clear text-[9px] font-mono uppercase tracking-widest text-primary font-semibold">

@@ -112,6 +112,7 @@ const ArtPage = () => {
                     src="/assets/LN Art Still.webp" 
                     alt="Art Figurine"
                     fill
+                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 600px"
                     className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
                     priority
                   />
@@ -180,6 +181,7 @@ const ArtPage = () => {
                       src={work.src} 
                       alt={work.title} 
                       fill 
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                       className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-110" 
                    />
                 </div>

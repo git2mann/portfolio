@@ -62,6 +62,7 @@ export default async function Post(props: Params) {
              src={post.coverImage} 
              alt="" 
              fill 
+             sizes="100vw"
              className="object-cover scale-150 blur-[80px] transform-gpu" 
              priority 
              style={{ 
@@ -128,6 +129,7 @@ export default async function Post(props: Params) {
                         src={relatedPost.coverImage}
                         alt={relatedPost.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                       />
                     </div>

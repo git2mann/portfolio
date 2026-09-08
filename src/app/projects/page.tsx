@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Container from "@/app/_components/container";
-import { Terminal, Cpu, Layout, Globe, Github, ExternalLink } from 'lucide-react';
+import { Terminal, Cpu, Layout, Globe, Github, ExternalLink, Maximize2, X } from 'lucide-react';
 import ScrollReveal from "@/app/_components/ScrollReveal";
 import { motion } from "framer-motion";
 
@@ -215,6 +215,7 @@ export default function ProjectsPage() {
                     src="/assets/LN Projects Still.webp" 
                     alt="Engineering Figurine"
                     fill
+                    sizes="(max-width: 768px) 300px, 600px"
                     className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
                     priority
                   />
@@ -259,7 +260,7 @@ export default function ProjectsPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-32">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 mb-32">
             {filteredProjects.map((project) => (
               <motion.article
                 key={project.id} 
@@ -267,121 +268,127 @@ export default function ProjectsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{ duration: 0.45 }}
-                className="group relative flex flex-col rounded-[12px] overflow-hidden border border-primary/10 shadow-[0_20px_60px_rgba(0,0,0,0.14)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_28px_80px_rgba(0,0,0,0.2)]"
+                className="group relative flex flex-col liquid-terminal liquid-terminal-card rounded-2xl overflow-hidden shadow-lg transition-all duration-500"
               >
-                <div
-                  className="px-4 py-3 border-b border-white/10 flex items-center gap-3"
-                  style={{ background: `linear-gradient(180deg, #1b1d23 0%, #151518 100%)` }}
-                >
-                  <div className="flex gap-1.5 items-center">
-                    <span className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                    <span className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                {/* Terminal Titlebar */}
+                <div className="liquid-terminal-header px-4 py-3 flex items-center justify-between select-none">
+                  <div className="flex gap-2 items-center">
+                    <span className="terminal-dot terminal-dot-close" />
+                    <span className="terminal-dot terminal-dot-min" />
                     <button
                       type="button"
                       aria-label={`Open ${project.title} in fullscreen`}
                       onClick={() => setFullScreenProjectId(project.id)}
-                      className="w-3 h-3 rounded-full bg-[#27c93f] shadow-[0_0_0_0_rgba(39,201,63,0.0)] transition-all hover:shadow-[0_0_0_4px_rgba(39,201,63,0.2)]"
+                      className="terminal-dot terminal-dot-max shadow-[0_0_8px_rgba(39,201,63,0.45)] cursor-pointer"
                     />
                   </div>
-                  <div className="font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase text-white/60 ml-2 truncate">
+                  <div className="font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase text-secondary truncate px-2">
                     guest@leon-nduati:~/projects/{project.id}
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => setFullScreenProjectId(project.id)}
+                    className="flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-secondary/70 hover:text-primary transition-colors cursor-pointer"
+                  >
+                    <Maximize2 size={11} />
+                    <span className="hidden sm:inline">Expand</span>
+                  </button>
                 </div>
 
-                <div
-                  className="relative text-[#7dd3fc] min-h-[470px] sm:min-h-[500px] md:min-h-[560px] px-4 py-4 md:px-7 md:py-7 font-mono"
-                  style={{ background: 'radial-gradient(circle at 20% 0%, #112030 0%, #0b0b0d 38%)' }}
-                >
+                <div className="relative flex flex-col flex-1 p-5 md:p-7 font-mono">
+                  {/* Subtle category ambient glow */}
                   <div
-                    className="pointer-events-none absolute inset-0 opacity-20"
-                    style={{ background: `radial-gradient(circle at 82% 12%, ${getProjectAccent(project.category)}33 0%, transparent 35%)` }}
+                    className="pointer-events-none absolute top-0 right-0 w-48 h-48 rounded-full blur-3xl opacity-15"
+                    style={{ background: getProjectAccent(project.category) }}
                   />
-                  <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(to_bottom,transparent_50%,rgba(255,255,255,0.08)_51%)] [background-size:100%_4px]" />
-                  <motion.div
-                    className="pointer-events-none absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-[#7dd3fc]/80 to-transparent"
-                    animate={{ y: ['-10%', '110%'] }}
-                    transition={{ duration: 3.6, repeat: Infinity, ease: 'linear' }}
-                  />
+
                   <div className="relative z-10 flex h-full flex-col">
-                    <div className="mb-5 flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3">
+                    <div className="mb-4 flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-2.5">
                         <span
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-md border bg-[#7dd3fc]/10"
-                          style={{ borderColor: `${getProjectAccent(project.category)}55`, color: getProjectAccent(project.category) }}
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg border liquid-terminal-subpanel"
+                          style={{ borderColor: `${getProjectAccent(project.category)}40`, color: getProjectAccent(project.category) }}
                         >
                           {project.category === 'ai' ? <Cpu size={15} /> : project.category === 'web' ? <Globe size={15} /> : <Terminal size={15} />}
                         </span>
-                        <span className="text-[11px] uppercase tracking-[0.24em]" style={{ color: `${getProjectAccent(project.category)}cc` }}>{project.status}</span>
+                        <span className="text-[11px] uppercase tracking-[0.24em] font-semibold" style={{ color: getProjectAccent(project.category) }}>
+                          {project.status}
+                        </span>
                       </div>
-                      <span className="text-[10px] uppercase tracking-[0.2em] text-[#7dd3fc]/55">system online</span>
+                      <span className="text-[10px] uppercase tracking-[0.2em] text-secondary flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        online
+                      </span>
                     </div>
 
-                    <h3 className="text-xl md:text-2xl font-semibold mb-2 uppercase tracking-wide text-[#dff4ff] leading-tight">
+                    <h3 className="text-xl md:text-2xl font-light uppercase tracking-tight text-primary leading-tight mb-1">
                       {project.title}
                     </h3>
-                    <p className="text-[10px] md:text-xs uppercase tracking-[0.24em] text-[#38bdf8] mb-5">
+                    <p className="text-[10px] md:text-xs uppercase tracking-[0.24em] font-semibold mb-4" style={{ color: getProjectAccent(project.category) }}>
                       {project.role}
                     </p>
 
-                    <div className="mb-4 rounded-[10px] border border-[#7dd3fc]/15 bg-[#0d141f]/85 px-3 py-2 text-[10px] md:text-xs text-[#9dddf8]">
-                      last login: sat jun 20 23:11 on ttys008
+                    {/* Session Log Box */}
+                    <div className="liquid-terminal-console rounded-xl px-3.5 py-2 text-[10px] md:text-xs text-secondary/80 flex items-center justify-between mb-3 shadow-inner">
+                      <span>ttys008 // env: secure_sandbox</span>
+                      <span className="text-[9px] font-semibold uppercase tracking-wider text-accent-blue">Active Session</span>
                     </div>
 
-                    <div className="space-y-1 text-[11px] md:text-xs leading-relaxed mb-5 text-[#7dd3fc]/90">
+                    <div className="liquid-terminal-console rounded-xl p-3 md:p-3.5 space-y-1 text-[11px] md:text-xs leading-relaxed mb-4 text-secondary">
                       {projectBootLog(project).map((line, idx) => (
                         <motion.div
                           key={line}
-                          initial={{ opacity: 0, y: 8 }}
+                          initial={{ opacity: 0, y: 6 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, amount: 0.65 }}
-                          transition={{ duration: 0.28, delay: idx * 0.12 }}
+                          transition={{ duration: 0.25, delay: idx * 0.08 }}
                           className="flex gap-2"
                         >
-                          <span className="text-[#38bdf8]/55">&gt;</span>
+                          <span style={{ color: getProjectAccent(project.category) }}>&gt;</span>
                           <span>{line}</span>
                         </motion.div>
                       ))}
                     </div>
 
-                    <p className="text-[#dff4ff]/80 text-[12px] md:text-sm leading-relaxed mb-6">
+                    <p className="text-secondary text-xs md:text-sm leading-relaxed mb-5 font-sans">
                       {project.description}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-3 mb-5">
+                    <div className="grid grid-cols-2 gap-2.5 mb-5">
                       {project.metrics.map((m, idx) => (
-                        <div key={idx} className="rounded-lg border border-[#7dd3fc]/20 bg-[#0f1723] px-3 py-2.5">
-                          <span className="text-lg md:text-xl font-semibold block tracking-tight text-[#dff4ff]">{m.value}</span>
-                          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.22em] text-[#7dd3fc]/70">{m.label}</span>
+                        <div key={idx} className="liquid-terminal-subpanel rounded-xl px-3.5 py-2.5 shadow-sm">
+                          <span className="text-base md:text-lg font-semibold block tracking-tight text-primary">{m.value}</span>
+                          <span className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-secondary">{m.label}</span>
                         </div>
                       ))}
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="flex flex-wrap gap-1.5 mb-6">
                       {project.stack.map((tag) => (
-                        <span key={tag} className="px-2.5 py-1 rounded-md bg-[#38bdf8]/10 text-[#bdeaff] text-[10px] md:text-[11px] uppercase tracking-[0.18em] border border-[#38bdf8]/20">
+                        <span key={tag} className="liquid-terminal-subpanel px-2.5 py-1 rounded-lg text-secondary text-[10px] md:text-[11px] uppercase tracking-[0.16em]">
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    <div className="mt-auto flex flex-wrap items-center gap-2.5 md:gap-3 text-[10px] md:text-xs">
+                    <div className="mt-auto flex flex-wrap items-center gap-2.5 text-[10px] md:text-xs pt-3 border-t border-primary/10">
                       {project.github.startsWith("http") && (
                         <Link 
                           href={project.github} 
                           target="_blank"
-                          className="inline-flex items-center gap-1.5 md:gap-2 rounded-md border border-[#7dd3fc]/25 bg-[#38bdf8]/10 px-2.5 md:px-3 py-2 uppercase tracking-[0.16em] md:tracking-[0.22em] text-[#dff4ff] transition-colors hover:bg-[#38bdf8]/20"
+                          className="liquid-glass-clear inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 uppercase tracking-[0.16em] text-primary transition-all hover:bg-primary/10 shadow-sm"
                         >
-                          open github <Github size={12} />
+                          GitHub <Github size={12} />
                         </Link>
                       )}
                       <Link 
                         href={project.link} 
                         target={project.link.startsWith("http") ? "_blank" : undefined}
-                        className="inline-flex items-center gap-1.5 md:gap-2 rounded-md border border-[#22d3ee]/25 bg-[#22d3ee]/10 px-2.5 md:px-3 py-2 uppercase tracking-[0.16em] md:tracking-[0.22em] text-[#dff4ff] transition-colors hover:bg-[#22d3ee]/20"
+                        className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 uppercase tracking-[0.16em] text-background-primary bg-primary transition-all hover:opacity-90 shadow-sm font-medium"
                       >
-                        {project.link.startsWith("/contact") ? "inquire" : "execute launch"} <ExternalLink size={12} />
+                        {project.link.startsWith("/contact") ? "Inquire" : "Launch"} <ExternalLink size={12} />
                       </Link>
-                      <span className="text-[#7dd3fc]/70">guest@projects:~$ <span className="animate-pulse">_</span></span>
+                      <span className="text-secondary/70 ml-auto hidden sm:inline">guest@projects:~$ <span className="animate-pulse text-accent-blue font-bold">_</span></span>
                     </div>
                   </div>
                 </div>
@@ -397,59 +404,66 @@ export default function ProjectsPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[90] bg-[#030507]/95 backdrop-blur-xl"
+          className="fixed inset-0 z-[90] bg-background-primary/80 backdrop-blur-2xl transition-all duration-300 flex flex-col p-3 md:p-8 overflow-y-auto"
         >
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
             <motion.div
-              animate={{ opacity: [0.25, 0.45, 0.25], scale: [1, 1.08, 1] }}
+              animate={{ opacity: [0.15, 0.3, 0.15], scale: [1, 1.08, 1] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
               className="absolute -top-24 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full blur-3xl"
-              style={{ backgroundColor: `${getProjectAccent(fullScreenProject.category)}50` }}
+              style={{ backgroundColor: `${getProjectAccent(fullScreenProject.category)}40` }}
             />
-            <motion.div
-              animate={{ x: ['0%', '-40%'] }}
-              transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
-              className="absolute inset-0 opacity-30 [background-image:linear-gradient(to_right,rgba(125,211,252,0.09)_1px,transparent_1px),linear-gradient(to_bottom,rgba(125,211,252,0.09)_1px,transparent_1px)] [background-size:32px_32px]"
-            />
-            <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(to_bottom,transparent_50%,rgba(255,255,255,0.06)_51%)] [background-size:100%_4px]" />
           </div>
 
-          <div className="relative z-10 flex h-full flex-col p-3 md:p-10">
-            <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between rounded-[12px] border border-white/10 bg-[#14161b] px-3 md:px-4 py-2.5 md:py-3">
+          <div className="relative z-10 flex h-full flex-col max-w-[1400px] w-full mx-auto my-auto">
+            {/* Modal Terminal Header */}
+            <div className="liquid-terminal-header flex w-full items-center justify-between rounded-t-2xl px-4 py-3 border border-primary/10 border-b-0 select-none">
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   aria-label="Close fullscreen terminal"
                   onClick={() => setFullScreenProjectId(null)}
-                  className="h-3 w-3 rounded-full bg-[#ff5f56] shadow-[0_0_0_0_rgba(255,95,86,0)] transition-all hover:shadow-[0_0_0_4px_rgba(255,95,86,0.25)]"
+                  className="terminal-dot terminal-dot-close cursor-pointer"
                 />
-                <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
-                <span className="h-3 w-3 rounded-full bg-[#27c93f]" />
+                <span className="terminal-dot terminal-dot-min" />
+                <span className="terminal-dot terminal-dot-max" />
               </div>
-              <div className="font-mono text-[9px] md:text-xs uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60 truncate px-3">
+              <div className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-secondary truncate px-3">
                 immersive://{fullScreenProject.id}.session
               </div>
-              <span className="font-mono text-[8px] md:text-[10px] uppercase tracking-[0.16em] text-[#7dd3fc]/60">tap green bubble</span>
+              <button
+                type="button"
+                onClick={() => setFullScreenProjectId(null)}
+                className="font-mono text-[10px] uppercase tracking-wider text-secondary hover:text-primary flex items-center gap-1 px-2 py-1 rounded hover:bg-primary/5 transition-colors cursor-pointer"
+              >
+                <X size={13} />
+                <span className="hidden sm:inline">Close</span>
+              </button>
             </div>
 
-            <div className="mx-auto mt-3 md:mt-4 flex w-full max-w-[1400px] flex-1 flex-col rounded-[12px] border border-white/10 bg-[#06090d]/85 p-3.5 md:p-8 text-[#bdeaff] shadow-[0_0_100px_rgba(56,189,248,0.18)] overflow-hidden">
-              <div className="mb-5 flex flex-wrap items-center gap-3 md:gap-4 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em]">
-                <span className="rounded-md border px-2.5 py-1" style={{ borderColor: `${getProjectAccent(fullScreenProject.category)}66`, color: getProjectAccent(fullScreenProject.category) }}>
-                  {fullScreenProject.status}
-                </span>
-                <span className="text-white/70">{fullScreenProject.title}</span>
-                <span className="text-white/45">role: {fullScreenProject.role}</span>
+            {/* Modal Terminal Body */}
+            <div className="liquid-terminal rounded-b-2xl border border-primary/10 p-4 md:p-8 shadow-2xl flex-1 flex flex-col overflow-hidden">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-3 font-mono text-xs uppercase tracking-[0.2em]">
+                <div className="flex items-center gap-3">
+                  <span className="rounded-lg border px-3 py-1 font-semibold liquid-terminal-subpanel" style={{ borderColor: `${getProjectAccent(fullScreenProject.category)}50`, color: getProjectAccent(fullScreenProject.category) }}>
+                    {fullScreenProject.status}
+                  </span>
+                  <span className="text-primary font-light text-lg tracking-tight">{fullScreenProject.title}</span>
+                </div>
+                <span className="text-secondary">Role: {fullScreenProject.role}</span>
               </div>
 
               <div className="mb-4 flex flex-wrap gap-2 font-mono text-[10px] md:text-xs uppercase tracking-[0.18em]">
-                <span className="rounded-md border border-[#7dd3fc]/25 bg-[#38bdf8]/10 px-2.5 py-1 text-[#cdecff]">trace live</span>
-                <span className="rounded-md border border-[#7dd3fc]/25 bg-[#38bdf8]/10 px-2.5 py-1 text-[#cdecff]">network stable</span>
-                <span className="rounded-md border border-[#7dd3fc]/25 bg-[#38bdf8]/10 px-2.5 py-1 text-[#cdecff]">latency 11ms</span>
+                <span className="liquid-terminal-subpanel rounded-lg px-2.5 py-1 text-secondary">trace live</span>
+                <span className="liquid-terminal-subpanel rounded-lg px-2.5 py-1 text-secondary">network stable</span>
+                <span className="liquid-terminal-subpanel rounded-lg px-2.5 py-1 text-emerald-500 font-semibold flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" /> latency 11ms
+                </span>
               </div>
 
               <div className="grid gap-6 md:grid-cols-[1.3fr_0.7fr] flex-1 min-h-0">
-                <div className="rounded-[10px] border border-[#7dd3fc]/20 bg-[#050a10] p-3.5 md:p-5 overflow-auto max-h-[52svh] md:max-h-none">
-                  <div className="space-y-2 font-mono text-[10px] sm:text-[11px] md:text-sm leading-relaxed">
+                <div className="liquid-terminal-console rounded-xl p-4 md:p-6 overflow-auto max-h-[52svh] md:max-h-none shadow-inner">
+                  <div className="space-y-2.5 font-mono text-[11px] sm:text-xs md:text-sm leading-relaxed text-secondary">
                     {projectBootLog(fullScreenProject).map((line, idx) => (
                       <motion.div
                         key={line}
@@ -458,7 +472,7 @@ export default function ProjectsPage() {
                         transition={{ duration: 0.28, delay: idx * 0.14 }}
                         className="flex gap-2"
                       >
-                        <span style={{ color: `${getProjectAccent(fullScreenProject.category)}cc` }}>&gt;</span>
+                        <span style={{ color: getProjectAccent(fullScreenProject.category) }}>&gt;</span>
                         <span>{line}</span>
                       </motion.div>
                     ))}
@@ -475,9 +489,9 @@ export default function ProjectsPage() {
                         initial={{ opacity: 0, x: -6 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.3, delay: 0.55 + idx * 0.16 }}
-                        className="flex gap-2 text-[#dff4ff]/85"
+                        className="flex gap-2 text-primary/80"
                       >
-                        <span className="text-[#7dd3fc]/50">$</span>
+                        <span className="text-accent-blue select-none font-bold">$</span>
                         <span>{line}</span>
                       </motion.div>
                     ))}
@@ -486,40 +500,54 @@ export default function ProjectsPage() {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 1.4 }}
-                      className="pt-2 text-[#7dd3fc]/80"
+                      className="pt-3 text-secondary flex items-center gap-2"
                     >
-                      guest@immersive:~$ <span className="animate-pulse">_</span>
+                      <span className="text-accent-blue font-bold">guest@immersive:~$</span>
+                      <span className="animate-pulse text-accent-blue font-bold">_</span>
                     </motion.div>
                   </div>
                 </div>
 
-                <div className="rounded-[10px] border border-[#7dd3fc]/20 bg-[#050a10] p-3.5 md:p-5 flex flex-col">
-                  <h4 className="mb-4 font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] text-[#7dd3fc]/80">Action Console</h4>
-                  <p className="text-[#dff4ff]/75 text-xs md:text-sm leading-relaxed mb-5">
-                    Execute this project session in a dedicated workspace or inspect source directly.
-                  </p>
+                <div className="liquid-terminal-subpanel rounded-xl p-5 md:p-7 flex flex-col justify-between shadow-sm">
+                  <div>
+                    <h4 className="mb-3 font-mono text-xs uppercase tracking-[0.25em] text-primary font-semibold">Action Console</h4>
+                    <p className="text-secondary text-xs md:text-sm leading-relaxed mb-6 font-sans">
+                      Execute this project session in a dedicated workspace or inspect source directly.
+                    </p>
+
+                    <div className="liquid-terminal-console rounded-xl p-3.5 space-y-2 text-xs font-mono text-secondary mb-6">
+                      <div className="flex justify-between">
+                        <span>Status</span>
+                        <span className="text-emerald-500 font-semibold">Operational</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Category</span>
+                        <span className="text-primary uppercase">{fullScreenProject.category}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Deployment</span>
+                        <span className="text-primary">Global Edge</span>
+                      </div>
+                    </div>
+                  </div>
 
                   <div className="space-y-3 mt-auto">
                     {fullScreenProject.github.startsWith('http') && (
                       <Link
                         href={fullScreenProject.github}
                         target="_blank"
-                        className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-[#7dd3fc]/25 bg-[#38bdf8]/10 px-4 py-3 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#dff4ff] transition-colors hover:bg-[#38bdf8]/20"
+                        className="liquid-glass-clear w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-mono text-xs uppercase tracking-[0.2em] text-primary transition-all hover:bg-primary/10 shadow-sm font-medium"
                       >
-                        open github <Github size={12} />
+                        Open GitHub <Github size={14} />
                       </Link>
                     )}
 
                     <Link
                       href={fullScreenProject.link}
                       target={fullScreenProject.link.startsWith('http') ? '_blank' : undefined}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-lg border px-4 py-3 font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#dff4ff] transition-colors"
-                      style={{
-                        borderColor: `${getProjectAccent(fullScreenProject.category)}55`,
-                        backgroundColor: `${getProjectAccent(fullScreenProject.category)}22`
-                      }}
+                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 font-mono text-xs uppercase tracking-[0.2em] text-background-primary bg-primary transition-all hover:opacity-90 shadow-md font-medium"
                     >
-                      {fullScreenProject.link.startsWith('/contact') ? 'inquire' : 'execute launch'} <ExternalLink size={12} />
+                      {fullScreenProject.link.startsWith('/contact') ? 'Inquire' : 'Execute Launch'} <ExternalLink size={14} />
                     </Link>
                   </div>
                 </div>

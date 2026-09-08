@@ -279,17 +279,16 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
     }
   }, [consoleHistory]);
 
-  const handleCommand = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputValue.trim()) return;
+  const executeCommand = (rawCmd: string) => {
+    if (!rawCmd.trim()) return;
 
-    const cmd = inputValue.trim().toLowerCase();
+    const cmd = rawCmd.trim().toLowerCase();
     const sys = systemsData[selectedSystem];
     
     // Add input to history
     const newHistory = [
       ...consoleHistory,
-      { text: `guest@leon-nduati:~$ ${inputValue}`, type: 'input' as const }
+      { text: `guest@leon-nduati:~$ ${rawCmd.trim()}`, type: 'input' as const }
     ];
     
     let outputs: { text: string; type: 'system' | 'output' | 'error' }[] = [];
@@ -363,12 +362,17 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
         break;
       default:
         outputs = [
-          { text: `bash: command not found: ${inputValue}. Type 'help' for a list of available commands.`, type: 'error' as const }
+          { text: `bash: command not found: ${rawCmd}. Type 'help' for a list of available commands.`, type: 'error' as const }
         ];
     }
 
     setConsoleHistory([...newHistory, ...outputs]);
     setInputValue("");
+  };
+
+  const handleCommand = (e: React.FormEvent) => {
+    e.preventDefault();
+    executeCommand(inputValue);
   };
 
   useEffect(() => {
@@ -498,6 +502,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                              src={fig.src} 
                              alt="Leon Nduati Figurine" 
                              fill 
+                             sizes="(max-width: 1024px) 95vw, 50vw"
                              className="object-contain" 
                              priority 
                            />
@@ -530,6 +535,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                           src={item.image}
                           alt={item.title}
                           fill
+                          sizes="(max-width: 1024px) 100vw, 33vw"
                           className="object-cover scale-[1.03]"
                         />
                         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent" />
@@ -575,6 +581,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                             src={item.image}
                             alt={item.title}
                             fill
+                            sizes="(max-width: 1024px) 100vw, 33vw"
                             className="object-contain absolute z-20 transition-all duration-1000 group-hover:opacity-0"
                           />
                         </div>
@@ -612,86 +619,110 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                     setIsSystemWindowOpen(true);
                     setIsSystemWindowMinimized(false);
                   }}
-                  className={`rounded-[12px] border border-primary/10 shadow-2xl overflow-hidden flex flex-col transition-all duration-500 ${isSystemWindowOpen && !isSystemWindowMinimized ? 'h-[74svh] max-h-[780px] min-h-[260px]' : 'h-[128px] max-h-[128px] min-h-[128px]'} ${isSystemWindowDimmed ? 'opacity-50 grayscale saturate-50' : 'opacity-100'}`}
+                  className={`liquid-terminal rounded-2xl overflow-hidden flex flex-col transition-all duration-500 ${isSystemWindowOpen && !isSystemWindowMinimized ? 'h-[76svh] max-h-[820px] min-h-[300px]' : 'h-[128px] max-h-[128px] min-h-[128px]'} ${isSystemWindowDimmed ? 'opacity-50 grayscale saturate-50' : 'opacity-100'}`}
                   style={{ 
-                    boxShadow: `0 30px 100px -30px ${systemsData[selectedSystem].glowColor}`,
-                    background: 'radial-gradient(circle at 20% 0%, #112030 0%, #0b0b0d 38%)'
+                    boxShadow: `0 30px 100px -30px ${systemsData[selectedSystem].glowColor}`
                   }}
                 >
-                  <div
-                    className="px-4 py-3 flex items-center border-b border-primary/10 select-none"
-                    style={{ background: 'linear-gradient(180deg, #1b1d23 0%, #151518 100%)' }}
-                  >
-                    <div className="flex gap-1.5 items-center mr-6">
+                  <div className="liquid-terminal-header px-4 py-3 flex items-center justify-between select-none">
+                    <div className="flex gap-2 items-center">
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsSystemWindowOpen(false);
                           setIsSystemWindowMinimized(false);
                           setIsSystemWindowDimmed(true);
                         }}
                         aria-label="Close system window"
-                        className="w-3 h-3 rounded-full bg-[#ff5f56]"
+                        className="terminal-dot terminal-dot-close"
                       />
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsSystemWindowDimmed(false);
                           if (isSystemWindowOpen) setIsSystemWindowMinimized(true);
                         }}
                         aria-label="Minimize system window"
-                        className="w-3 h-3 rounded-full bg-[#ffbd2e]"
+                        className="terminal-dot terminal-dot-min"
                       />
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsSystemWindowOpen(true);
                           setIsSystemWindowMinimized(false);
                           setIsSystemWindowDimmed(false);
                         }}
                         aria-label="Open system window"
-                        className="w-3 h-3 rounded-full bg-[#27c93f] shadow-[0_0_10px_rgba(39,201,63,0.45)]"
+                        className="terminal-dot terminal-dot-max shadow-[0_0_8px_rgba(39,201,63,0.45)]"
                       />
                     </div>
-                    <div className="flex-1 text-center font-mono text-[10px] uppercase tracking-[0.2em] text-[#9fb1c7]">
-                      guest@leon-nduati:~/systems/{selectedSystem}
+                    <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-secondary truncate px-2">
+                      <Terminal size={12} style={{ color: systemsData[selectedSystem].accentColor }} />
+                      <span>guest@leon-nduati:~/systems/{selectedSystem}</span>
                     </div>
-                    <div className="w-12" />
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[10px] text-secondary/60 uppercase tracking-widest hidden sm:inline">zsh</span>
+                      <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: systemsData[selectedSystem].accentColor }} />
+                    </div>
                   </div>
 
                   {(!isSystemWindowOpen || isSystemWindowMinimized) && (
-                    <div className="px-4 py-2.5 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-[#7dd3fc]/75 border-b border-primary/10">
-                      {!isSystemWindowOpen ? 'click green button to open project window' : 'window minimized - click green to restore'}
+                    <div className="px-4 py-3 text-center font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-secondary border-b border-primary/10 bg-primary/[0.02]">
+                      {!isSystemWindowOpen ? 'click green button to open system terminal' : 'window minimized — click green button to restore'}
                     </div>
                   )}
 
                   {isSystemWindowOpen && !isSystemWindowMinimized && (
-                    <div className="px-3 lg:px-4 py-3 border-b border-primary/10 bg-[#0b111a]/70">
-                      <div className="flex items-center gap-3">
+                    <div className="liquid-terminal-header px-3 lg:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 border-b border-primary/10">
+                      <div className="flex items-center gap-2">
                         <button
                           type="button"
                           onClick={() => cycleSystem('prev')}
                           aria-label="Show previous system"
-                          className="h-9 w-9 shrink-0 rounded-full border border-primary/20 bg-primary/5 text-primary flex items-center justify-center"
+                          className="h-8 w-8 shrink-0 rounded-full border border-primary/15 hover:border-primary/30 bg-primary/[0.03] hover:bg-primary/10 text-primary flex items-center justify-center transition-colors"
                         >
-                          <ChevronLeft size={15} />
+                          <ChevronLeft size={14} />
                         </button>
-
-                        <div className="min-w-0 flex-1 text-center">
-                          <p className="text-[10px] font-mono uppercase tracking-[0.24em] text-secondary">System {selectedSystemIndex + 1} / {systemKeys.length}</p>
-                          <p className="text-sm font-semibold uppercase tracking-wide text-primary truncate">{systemsData[selectedSystem].name}</p>
-                        </div>
-
                         <button
                           type="button"
                           onClick={() => cycleSystem('next')}
                           aria-label="Show next system"
-                          className="h-9 w-9 shrink-0 rounded-full border border-primary/20 bg-primary/5 text-primary flex items-center justify-center"
+                          className="h-8 w-8 shrink-0 rounded-full border border-primary/15 hover:border-primary/30 bg-primary/[0.03] hover:bg-primary/10 text-primary flex items-center justify-center transition-colors"
                         >
-                          <ChevronRight size={15} />
+                          <ChevronRight size={14} />
                         </button>
+                        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-secondary hidden md:inline ml-1">
+                          System {selectedSystemIndex + 1} / {systemKeys.length}
+                        </span>
                       </div>
 
+                      {/* System Switcher Tabs */}
+                      <div className="flex items-center gap-1.5 overflow-x-auto py-0.5 scrollbar-none max-w-full">
+                        {systemKeys.map((key) => {
+                          const isSel = selectedSystem === key;
+                          return (
+                            <button
+                              key={key}
+                              type="button"
+                              onClick={() => setSelectedSystem(key)}
+                              className={`px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                                isSel
+                                  ? 'bg-primary text-background-primary font-semibold shadow-sm'
+                                  : 'text-secondary hover:text-primary hover:bg-primary/5'
+                              }`}
+                            >
+                              <span
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: isSel ? 'currentColor' : systemsData[key].accentColor }}
+                              />
+                              {systemsData[key].name.split(':')[0]}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   )}
 
@@ -705,22 +736,17 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                       transition={{ duration: 0.4 }}
                       className="relative flex-1 min-h-0 flex flex-col justify-between"
                     >
-                      <div className="pointer-events-none absolute inset-0 opacity-20 [background-image:linear-gradient(to_bottom,transparent_50%,rgba(255,255,255,0.08)_51%)] [background-size:100%_4px]" />
-                      <motion.div
-                        className="pointer-events-none absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-[#7dd3fc]/80 to-transparent"
-                        animate={{ y: ['-10%', '110%'] }}
-                        transition={{ duration: 3.6, repeat: Infinity, ease: "linear" }}
-                      />
+                      <div className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.06] [background-image:linear-gradient(to_bottom,transparent_50%,currentColor_51%)] [background-size:100%_4px]" />
 
                       <div className="relative z-10 flex-1 p-4 lg:p-8 overflow-y-auto">
                         {/* Title & Github */}
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 lg:gap-4 mb-5 lg:mb-6">
                           <div>
-                            <h3 className="text-2xl lg:text-5xl font-light uppercase tracking-tight text-[#dff4ff]">
+                            <h3 className="text-2xl lg:text-5xl font-light uppercase tracking-tight text-primary">
                               {systemsData[selectedSystem].name}
                             </h3>
                             <p 
-                              className="text-sm font-mono uppercase tracking-widest mt-1 font-semibold"
+                              className="text-xs lg:text-sm font-mono uppercase tracking-widest mt-1.5 font-semibold"
                               style={{ color: systemsData[selectedSystem].accentColor }}
                             >
                               {systemsData[selectedSystem].role}
@@ -731,14 +757,14 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                               href={systemsData[selectedSystem].github} 
                               target="_blank" 
                               rel="noopener noreferrer" 
-                              className="self-start px-4 py-2 rounded-md border border-[#7dd3fc]/25 bg-[#38bdf8]/10 text-[10px] lg:text-xs font-mono uppercase tracking-[0.2em] hover:bg-[#38bdf8]/20 flex items-center gap-2 text-[#dff4ff] transition-all duration-300"
+                              className="self-start px-4 py-2 rounded-full liquid-glass-clear text-[10px] lg:text-xs font-mono uppercase tracking-[0.2em] hover:bg-primary/10 flex items-center gap-2 text-primary transition-all duration-300 shadow-sm"
                             >
                               Codebase <ExternalLink size={12} style={{ color: systemsData[selectedSystem].accentColor }} />
                             </a>
                           ) : (
                             <Link 
                               href={systemsData[selectedSystem].github} 
-                              className="self-start px-4 py-2 rounded-md border border-[#7dd3fc]/25 bg-[#38bdf8]/10 text-[10px] lg:text-xs font-mono uppercase tracking-[0.2em] hover:bg-[#38bdf8]/20 flex items-center gap-2 text-[#dff4ff] transition-all duration-300"
+                              className="self-start px-4 py-2 rounded-full liquid-glass-clear text-[10px] lg:text-xs font-mono uppercase tracking-[0.2em] hover:bg-primary/10 flex items-center gap-2 text-primary transition-all duration-300 shadow-sm"
                             >
                               Explore <ArrowRight size={12} style={{ color: systemsData[selectedSystem].accentColor }} />
                             </Link>
@@ -746,17 +772,16 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                         </div>
 
                         {/* Description */}
-                        <p className="text-sm lg:text-xl text-[#dff4ff]/85 font-light leading-relaxed mb-5 lg:mb-6 line-clamp-4 lg:line-clamp-none">
+                        <p className="text-sm lg:text-lg text-secondary font-light leading-relaxed mb-6 lg:mb-8 line-clamp-4 lg:line-clamp-none">
                           {systemsData[selectedSystem].description}
                         </p>
 
                         {/* Metrics Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 lg:gap-4 mb-6 lg:mb-10">
-                          {systemsData[selectedSystem].metrics.slice(0, 2).map((metric, i) => (
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-8">
+                          {systemsData[selectedSystem].metrics.slice(0, 3).map((metric, i) => (
                             <div 
                               key={i} 
-                              className="p-3.5 lg:p-5 rounded-[10px] bg-[#0f1723]/90 border shadow-inner transition-all duration-300 min-w-0"
-                              style={{ borderColor: `${systemsData[selectedSystem].accentColor}30` }}
+                              className="liquid-terminal-subpanel p-3.5 lg:p-5 rounded-xl transition-all duration-300 min-w-0 shadow-sm"
                             >
                               <span 
                                 className="text-xl sm:text-2xl lg:text-4xl font-light block mb-1 tracking-tight font-semibold leading-none break-words"
@@ -764,41 +789,50 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                               >
                                 {metric.value}
                               </span>
-                              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.16em] sm:tracking-[0.2em] text-[#7dd3fc]/70 break-words">
+                              <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.16em] sm:tracking-[0.2em] text-secondary break-words">
                                 {metric.label}
                               </span>
                             </div>
                           ))}
                         </div>
 
-                        <div className="mb-5 lg:mb-6">
-                          <h4 className="text-xs font-mono uppercase tracking-[0.28em] text-[#7dd3fc]/80 mb-3">Core Stack</h4>
+                        {/* Core Stack */}
+                        <div className="mb-6 lg:mb-8">
+                          <h4 className="text-xs font-mono uppercase tracking-[0.28em] text-secondary mb-3">Core Stack</h4>
                           <div className="flex flex-wrap gap-2">
                             {systemsData[selectedSystem].stack.map((tech) => (
                               <span
                                 key={tech}
-                                className="px-2.5 py-1 rounded-md border border-[#7dd3fc]/25 bg-[#0f1723]/90 text-[10px] font-mono uppercase tracking-[0.16em] text-[#c7ebff]"
+                                className="liquid-terminal-subpanel px-3 py-1 rounded-lg text-[10px] font-mono uppercase tracking-[0.16em] text-secondary hover:text-primary transition-colors"
                               >
                                 {tech}
                               </span>
                             ))}
                           </div>
                         </div>
+
+                        {/* Live Terminal Shell */}
                         <div className="mt-4 lg:mt-6">
-                          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-3 px-1 gap-1.5 lg:gap-0">
-                          <span className="text-[11px] lg:text-xs font-mono uppercase tracking-[0.18em] lg:tracking-widest text-secondary flex items-center gap-2">
-                            <Terminal size={14} style={{ color: systemsData[selectedSystem].accentColor }} className="animate-pulse animate-duration-1000" /> Live Terminal Shell
-                          </span>
-                          <span 
-                            className="text-[9px] lg:text-[10px] font-mono uppercase tracking-[0.16em] lg:tracking-widest font-semibold animate-pulse animate-duration-1000"
-                            style={{ color: systemsData[selectedSystem].accentColor }}
-                          >
-                            SYSTEM STATUS: ONLINE
-                          </span>
+                          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-3 px-1 gap-1.5 sm:gap-0">
+                            <span className="text-[11px] lg:text-xs font-mono uppercase tracking-widest text-secondary flex items-center gap-2">
+                              <Terminal size={14} style={{ color: systemsData[selectedSystem].accentColor }} className="animate-pulse" />
+                              Live Terminal Shell
+                            </span>
+                            <span 
+                              className="text-[9px] lg:text-[10px] font-mono uppercase tracking-widest font-semibold flex items-center gap-2"
+                              style={{ color: systemsData[selectedSystem].accentColor }}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full animate-ping" style={{ backgroundColor: systemsData[selectedSystem].accentColor }} />
+                              ONLINE // CPU: {fluxStats.cpu}% // LATENCY: {fluxStats.latency}ms
+                            </span>
                           </div>
                           
-                          <div ref={consoleContainerRef} className="rounded-[10px] border border-[#7dd3fc]/20 bg-[#0b121d]/90 p-3 lg:p-4 max-h-[26svh] lg:max-h-[180px] min-h-[140px] lg:min-h-0 overflow-y-auto font-mono text-[11px] lg:text-sm flex flex-col gap-1.5 leading-relaxed scrollbar-thin scrollbar-thumb-primary/10">
-                            {consoleHistory.slice(-7).map((item, idx) => {
+                          {/* Console Output Window */}
+                          <div 
+                            ref={consoleContainerRef} 
+                            className="liquid-terminal-console rounded-xl p-3.5 lg:p-4 max-h-[26svh] lg:max-h-[190px] min-h-[140px] overflow-y-auto font-mono text-[11px] lg:text-xs flex flex-col gap-1.5 leading-relaxed scrollbar-thin"
+                          >
+                            {consoleHistory.slice(-10).map((item, idx) => {
                               if (!item) return null;
                               return (
                                 <div 
@@ -808,21 +842,21 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                                     color: item.type === 'error' 
                                       ? '#ef4444' 
                                       : item.type === 'input' 
-                                        ? '#ffffff' 
+                                        ? 'var(--text-primary)' 
                                         : item.type === 'system'
                                           ? systemsData[selectedSystem].accentColor
-                                          : `${systemsData[selectedSystem].accentColor}cc`
+                                          : 'var(--text-secondary)'
                                   }}
                                 >
                                   {item.type === 'input' ? (
                                     <>
-                                      <span className="text-[#7dd3fc]/70 select-none hidden lg:inline">guest@leon-nduati:~$</span>
-                                      <span className="text-[#7dd3fc]/70 select-none lg:hidden">guest@ln:~$</span>
-                                      <span className="break-all">{item.text.replace("guest@leon-nduati:~$ ", "")}</span>
+                                      <span className="text-accent-blue font-bold select-none hidden lg:inline">guest@leon-nduati:~$</span>
+                                      <span className="text-accent-blue font-bold select-none lg:hidden">guest@ln:~$</span>
+                                      <span className="font-semibold break-all text-primary">{item.text.replace("guest@leon-nduati:~$ ", "")}</span>
                                     </>
                                   ) : (
                                     <>
-                                      <span className="opacity-50 select-none">&gt;</span>
+                                      <span className="opacity-40 select-none">&gt;</span>
                                       <span className="break-words">{item.text}</span>
                                     </>
                                   )}
@@ -831,8 +865,38 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                             })}
                           </div>
 
-                          <div className="mt-2 text-[10px] font-mono uppercase tracking-[0.18em] text-[#7dd3fc]/55">
-                            detailed diagnostics available in projects section
+                          {/* Interactive Input Form */}
+                          <form onSubmit={handleCommand} className="mt-2.5 flex items-center gap-2 rounded-xl border border-primary/10 bg-primary/[0.02] dark:bg-white/[0.03] px-3.5 py-2">
+                            <span className="font-mono text-xs text-accent-blue font-bold select-none hidden sm:inline">guest@leon-nduati:~$</span>
+                            <span className="font-mono text-xs text-accent-blue font-bold select-none sm:hidden">$</span>
+                            <input
+                              type="text"
+                              value={inputValue}
+                              onChange={(e) => setInputValue(e.target.value)}
+                              placeholder="Type command ('help', 'status', 'metrics', 'stack', 'run')..."
+                              className="flex-1 bg-transparent font-mono text-xs text-primary placeholder:text-secondary/40 outline-none border-none py-0.5"
+                            />
+                            <button
+                              type="submit"
+                              className="px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider bg-primary/10 hover:bg-primary/20 text-primary transition-all font-semibold"
+                            >
+                              Execute
+                            </button>
+                          </form>
+
+                          {/* Quick Action Chips */}
+                          <div className="mt-2.5 flex flex-wrap items-center gap-1.5 px-1">
+                            <span className="text-[9px] font-mono uppercase tracking-widest text-secondary/60 mr-1">Quick Run:</span>
+                            {['help', 'status', 'metrics', 'stack', 'about', 'pipeline', 'github', 'run', 'clear'].map((cmd) => (
+                              <button
+                                key={cmd}
+                                type="button"
+                                onClick={() => executeCommand(cmd)}
+                                className="px-2 py-0.5 rounded-md text-[9px] font-mono uppercase tracking-wider border border-primary/10 hover:border-primary/25 bg-primary/[0.02] hover:bg-primary/10 text-secondary hover:text-primary transition-all"
+                              >
+                                {cmd}
+                              </button>
+                            ))}
                           </div>
                         </div>
                       </div>
@@ -845,112 +909,125 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
 
               {/* Career Command Center */}
               <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 md:gap-8 max-w-[1600px] mx-auto w-full mt-10 md:mt-14">
-                <div onClick={() => {
-                  if (!isCareerWindowDimmed) return;
-                  setIsCareerWindowDimmed(false);
-                  setIsCareerWindowOpen(true);
-                  setIsCareerWindowMinimized(false);
-                }} className={`xl:col-span-2 rounded-[12px] border border-primary/10 overflow-hidden shadow-2xl flex flex-col transition-all duration-500 ${isCareerWindowOpen && !isCareerWindowMinimized ? 'h-[74svh] max-h-[780px] min-h-[260px]' : 'h-[128px] max-h-[128px] min-h-[128px]'} ${isCareerWindowDimmed ? 'opacity-50 grayscale saturate-50' : 'opacity-100'}`} style={{ background: 'radial-gradient(circle at 20% 0%, #112030 0%, #0b0b0d 38%)' }}>
-                  <div className="px-4 py-3 border-b border-primary/10 flex items-center" style={{ background: 'linear-gradient(180deg, #1b1d23 0%, #151518 100%)' }}>
-                    <div className="flex gap-1.5 items-center mr-6">
+                <div 
+                  onClick={() => {
+                    if (!isCareerWindowDimmed) return;
+                    setIsCareerWindowDimmed(false);
+                    setIsCareerWindowOpen(true);
+                    setIsCareerWindowMinimized(false);
+                  }} 
+                  className={`xl:col-span-2 liquid-terminal rounded-2xl overflow-hidden flex flex-col transition-all duration-500 ${isCareerWindowOpen && !isCareerWindowMinimized ? 'h-[76svh] max-h-[820px] min-h-[260px]' : 'h-[128px] max-h-[128px] min-h-[128px]'} ${isCareerWindowDimmed ? 'opacity-50 grayscale saturate-50' : 'opacity-100'}`}
+                >
+                  <div className="liquid-terminal-header px-4 py-3 flex items-center justify-between select-none">
+                    <div className="flex gap-2 items-center">
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsCareerWindowOpen(false);
                           setIsCareerWindowMinimized(false);
                           setIsCareerWindowDimmed(true);
                         }}
                         aria-label="Close career window"
-                        className="w-3 h-3 rounded-full bg-[#ff5f56]"
+                        className="terminal-dot terminal-dot-close"
                       />
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsCareerWindowDimmed(false);
                           if (isCareerWindowOpen) setIsCareerWindowMinimized(true);
                         }}
                         aria-label="Minimize career window"
-                        className="w-3 h-3 rounded-full bg-[#ffbd2e]"
+                        className="terminal-dot terminal-dot-min"
                       />
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsCareerWindowOpen(true);
                           setIsCareerWindowMinimized(false);
                           setIsCareerWindowDimmed(false);
                         }}
                         aria-label="Open career window"
-                        className="w-3 h-3 rounded-full bg-[#27c93f] shadow-[0_0_10px_rgba(39,201,63,0.45)]"
+                        className="terminal-dot terminal-dot-max shadow-[0_0_8px_rgba(39,201,63,0.45)]"
                       />
                     </div>
-                    <span className="flex-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[#9fb1c7] text-center">guest@leon-nduati:~/career/dossier.log</span>
-                    <span className="w-12" />
+                    <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-secondary text-center truncate px-2">
+                      guest@leon-nduati:~/career/dossier.log
+                    </span>
+                    <span className="font-mono text-[10px] text-secondary/60 uppercase tracking-widest hidden sm:inline">log</span>
                   </div>
 
                   {(!isCareerWindowOpen || isCareerWindowMinimized) && (
-                    <div className="px-4 py-2.5 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-[#7dd3fc]/75 border-b border-primary/10">
-                      {!isCareerWindowOpen ? 'click green button to open career window' : 'window minimized - click green to restore'}
+                    <div className="px-4 py-3 text-center font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-secondary border-b border-primary/10 bg-primary/[0.02]">
+                      {!isCareerWindowOpen ? 'click green button to open career dossier' : 'window minimized — click green button to restore'}
                     </div>
                   )}
 
                   {isCareerWindowOpen && !isCareerWindowMinimized && (
                   <div className="flex-1 min-h-0 overflow-y-auto p-4 md:p-8 lg:p-10">
-                    <div className="mb-5 md:mb-8 rounded-[10px] border border-[#7dd3fc]/20 bg-[#0d141f]/90 px-3.5 md:px-4 py-3 flex flex-wrap items-center justify-between gap-2.5 md:gap-3">
-                      <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#9dddf8]">career stack: systems engineering | full-stack | machine learning</span>
-                      <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#34d399]">status: available for collaboration</span>
+                    <div className="liquid-terminal-subpanel mb-5 md:mb-8 rounded-xl px-4 py-3.5 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+                      <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-secondary">
+                        career stack: systems engineering | full-stack | machine learning
+                      </span>
+                      <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-emerald-500 font-semibold flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                        status: available for collaboration
+                      </span>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                      <div className="rounded-[10px] border border-[#7dd3fc]/20 bg-[#0b121d]/90 p-4 md:p-6">
+                      <div className="liquid-terminal-subpanel rounded-xl p-4 md:p-6 shadow-sm">
                         <div className="flex items-center justify-between mb-5 md:mb-6">
-                          <h3 className="text-[10px] md:text-xs font-mono uppercase tracking-[0.35em] text-[#7dd3fc]">Work History</h3>
-                          <Briefcase size={18} className="text-[#7dd3fc]/80" />
+                          <h3 className="text-xs font-mono uppercase tracking-[0.35em] text-primary font-semibold">Work History</h3>
+                          <Briefcase size={18} className="text-accent-blue" />
                         </div>
                         <div className="space-y-5">
-                          <div className="border-l-2 pl-4" style={{ borderColor: '#38bdf8' }}>
-                            <div className="text-[#dff4ff] text-lg md:text-2xl font-light uppercase tracking-tight">Inst. of Baltic Studies</div>
-                            <div className="text-[#7dd3fc] text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-2">Full-Stack Dev Intern // Estonia // 2026</div>
+                          <div className="border-l-2 pl-4" style={{ borderColor: 'var(--accent-blue)' }}>
+                            <div className="text-primary text-lg md:text-2xl font-light uppercase tracking-tight">Inst. of Baltic Studies</div>
+                            <div className="text-secondary text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-1.5">Full-Stack Dev Intern // Estonia // 2026</div>
                           </div>
-                          <div className="border-l-2 border-[#7dd3fc]/20 pl-4">
-                            <div className="text-[#dff4ff]/90 text-lg md:text-2xl font-light uppercase tracking-tight">Old Mutual Kenya</div>
-                            <div className="text-[#7dd3fc]/70 text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-2">IT & Infra Intern // 2025</div>
+                          <div className="border-l-2 border-primary/15 pl-4">
+                            <div className="text-primary text-lg md:text-2xl font-light uppercase tracking-tight">Old Mutual Kenya</div>
+                            <div className="text-secondary text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-1.5">IT & Infra Intern // 2025</div>
                           </div>
-                          <div className="border-l-2 border-[#7dd3fc]/20 pl-4">
-                            <div className="text-[#dff4ff]/85 text-lg md:text-2xl font-light uppercase tracking-tight">Strathmore Joint IS Project</div>
-                            <div className="text-[#7dd3fc]/70 text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-2">Lead Software Dev // 2024</div>
+                          <div className="border-l-2 border-primary/15 pl-4">
+                            <div className="text-primary text-lg md:text-2xl font-light uppercase tracking-tight">Strathmore Joint IS Project</div>
+                            <div className="text-secondary text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-1.5">Lead Software Dev // 2024</div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="rounded-[10px] border border-[#7dd3fc]/20 bg-[#0b121d]/90 p-4 md:p-6">
+                      <div className="liquid-terminal-subpanel rounded-xl p-4 md:p-6 shadow-sm">
                         <div className="flex items-center justify-between mb-5 md:mb-6">
-                          <h3 className="text-[10px] md:text-xs font-mono uppercase tracking-[0.35em] text-[#7dd3fc]">Education</h3>
-                          <GraduationCap size={18} className="text-[#7dd3fc]/80" />
+                          <h3 className="text-xs font-mono uppercase tracking-[0.35em] text-primary font-semibold">Education</h3>
+                          <GraduationCap size={18} className="text-accent-blue" />
                         </div>
                         <div className="space-y-5">
                           <div>
-                            <div className="text-[#dff4ff] text-lg md:text-2xl font-light">Strathmore University // BBIT</div>
-                            <div className="text-[#7dd3fc]/75 text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-2">Software Engineering & ML Focus</div>
+                            <div className="text-primary text-lg md:text-2xl font-light">Strathmore University // BBIT</div>
+                            <div className="text-secondary text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-1.5">Software Engineering & ML Focus</div>
                           </div>
-                          <div className="pt-5 border-t border-[#7dd3fc]/15">
-                            <div className="text-[#dff4ff] text-lg md:text-2xl font-light">Tallinn University</div>
-                            <div className="text-[#7dd3fc]/75 text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-2">Exchange Scholar // Estonia</div>
+                          <div className="pt-5 border-t border-primary/10">
+                            <div className="text-primary text-lg md:text-2xl font-light">Tallinn University</div>
+                            <div className="text-secondary text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] mt-1.5">Exchange Scholar // Estonia</div>
                           </div>
                         </div>
 
-                        <div className="mt-6 pt-5 border-t border-[#7dd3fc]/15">
-                          <div className="flex items-center gap-3 mb-4 text-[#7dd3fc]">
-                            <Award size={18} />
-                            <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.25em]">Achievements</span>
+                        <div className="mt-6 pt-5 border-t border-primary/10">
+                          <div className="flex items-center gap-3 mb-4 text-primary">
+                            <Award size={18} className="text-accent-blue" />
+                            <span className="font-mono text-xs uppercase tracking-[0.25em] font-semibold">Achievements</span>
                           </div>
                           <div className="grid grid-cols-2 gap-3">
-                            <div className="rounded-[10px] border border-[#7dd3fc]/20 bg-[#0f1723]/90 p-4">
-                              <span className="text-lg md:text-2xl font-light block mb-1 tracking-tight text-[#dff4ff]">Dean&apos;s List</span>
-                              <span className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-[#7dd3fc]/70">3x Academic Honour</span>
+                            <div className="liquid-terminal-console rounded-xl p-4">
+                              <span className="text-lg md:text-2xl font-light block mb-1 tracking-tight text-primary">Dean&apos;s List</span>
+                              <span className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-secondary">3x Academic Honour</span>
                             </div>
-                            <div className="rounded-[10px] border border-[#7dd3fc]/20 bg-[#0f1723]/90 p-4">
-                              <span className="text-lg md:text-2xl font-light block mb-1 tracking-tight text-[#38bdf8]">Top 4</span>
-                              <span className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-[#7dd3fc]/70">Digital Explorers</span>
+                            <div className="liquid-terminal-console rounded-xl p-4">
+                              <span className="text-lg md:text-2xl font-light block mb-1 tracking-tight text-accent-blue">Top 4</span>
+                              <span className="text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-secondary">Digital Explorers</span>
                             </div>
                           </div>
                         </div>
@@ -960,72 +1037,94 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                   )}
                 </div>
 
-                <div onClick={() => {
-                  if (!isFilesWindowDimmed) return;
-                  setIsFilesWindowDimmed(false);
-                  setIsFilesWindowOpen(true);
-                  setIsFilesWindowMinimized(false);
-                }} className={`rounded-[12px] border border-primary/10 overflow-hidden shadow-2xl flex flex-col transition-all duration-500 ${isFilesWindowOpen && !isFilesWindowMinimized ? 'h-[74svh] max-h-[780px] min-h-[260px]' : 'h-[128px] max-h-[128px] min-h-[128px]'} ${isFilesWindowDimmed ? 'opacity-50 grayscale saturate-50' : 'opacity-100'}`} style={{ background: 'radial-gradient(circle at 18% 0%, #12243a 0%, #0b0b0d 45%)' }}>
-                  <div className="px-4 py-3 border-b border-primary/10 flex items-center" style={{ background: 'linear-gradient(180deg, #1b1d23 0%, #151518 100%)' }}>
-                    <div className="flex gap-1.5 items-center mr-6">
+                <div 
+                  onClick={() => {
+                    if (!isFilesWindowDimmed) return;
+                    setIsFilesWindowDimmed(false);
+                    setIsFilesWindowOpen(true);
+                    setIsFilesWindowMinimized(false);
+                  }} 
+                  className={`liquid-terminal rounded-2xl overflow-hidden flex flex-col transition-all duration-500 ${isFilesWindowOpen && !isFilesWindowMinimized ? 'h-[76svh] max-h-[820px] min-h-[260px]' : 'h-[128px] max-h-[128px] min-h-[128px]'} ${isFilesWindowDimmed ? 'opacity-50 grayscale saturate-50' : 'opacity-100'}`}
+                >
+                  <div className="liquid-terminal-header px-4 py-3 flex items-center justify-between select-none">
+                    <div className="flex gap-2 items-center">
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsFilesWindowOpen(false);
                           setIsFilesWindowMinimized(false);
                           setIsFilesWindowDimmed(true);
                         }}
                         aria-label="Close files window"
-                        className="w-3 h-3 rounded-full bg-[#ff5f56]"
+                        className="terminal-dot terminal-dot-close"
                       />
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsFilesWindowDimmed(false);
                           if (isFilesWindowOpen) setIsFilesWindowMinimized(true);
                         }}
                         aria-label="Minimize files window"
-                        className="w-3 h-3 rounded-full bg-[#ffbd2e]"
+                        className="terminal-dot terminal-dot-min"
                       />
                       <button
                         type="button"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           setIsFilesWindowOpen(true);
                           setIsFilesWindowMinimized(false);
                           setIsFilesWindowDimmed(false);
                         }}
                         aria-label="Open files window"
-                        className="w-3 h-3 rounded-full bg-[#27c93f] shadow-[0_0_10px_rgba(39,201,63,0.45)]"
+                        className="terminal-dot terminal-dot-max shadow-[0_0_8px_rgba(39,201,63,0.45)]"
                       />
                     </div>
-                    <span className="flex-1 font-mono text-[10px] uppercase tracking-[0.2em] text-[#9fb1c7] text-center">guest@leon-nduati:~/career/commands.sh</span>
-                    <span className="w-12" />
+                    <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-secondary text-center truncate px-2">
+                      guest@leon-nduati:~/career/commands.sh
+                    </span>
+                    <span className="font-mono text-[10px] text-secondary/60 uppercase tracking-widest hidden sm:inline">sh</span>
                   </div>
 
                   {(!isFilesWindowOpen || isFilesWindowMinimized) && (
-                    <div className="px-4 py-2.5 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-[#7dd3fc]/75 border-b border-primary/10">
-                      {!isFilesWindowOpen ? 'click green button to open files window' : 'window minimized - click green to restore'}
+                    <div className="px-4 py-3 text-center font-mono text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-secondary border-b border-primary/10 bg-primary/[0.02]">
+                      {!isFilesWindowOpen ? 'click green button to open quick actions' : 'window minimized — click green button to restore'}
                     </div>
                   )}
 
                   {isFilesWindowOpen && !isFilesWindowMinimized && (
-                  <div className="flex-1 min-h-0 overflow-y-auto p-4 md:p-7 flex flex-col">
-                    <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#9dddf8] mb-3">quick actions</p>
-                    <h3 className="text-[#dff4ff] text-xl md:text-3xl font-light leading-tight mb-2.5 md:mb-3">Open the files that matter.</h3>
-                    <p className="text-[#9cc7e6] text-sm md:text-base leading-relaxed mb-4 md:mb-6">Download my CV, inspect source repositories, or open a direct line to collaborate.</p>
+                  <div className="flex-1 min-h-0 overflow-y-auto p-4 md:p-7 flex flex-col justify-between">
+                    <div>
+                      <p className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-accent-blue mb-2.5 font-semibold">Quick Actions</p>
+                      <h3 className="text-primary text-xl md:text-3xl font-light leading-tight mb-2.5">Open the files that matter.</h3>
+                      <p className="text-secondary text-sm md:text-base leading-relaxed mb-6">Download my CV, inspect source repositories, or open a direct line to collaborate.</p>
+                    </div>
 
-                    <div className="space-y-3 mt-3 md:mt-6 pb-2">
-                      <a href="/Leon_Nduati_CV_Analytics.pdf" download className="w-full rounded-[10px] border border-[#7dd3fc]/25 bg-[#38bdf8]/10 px-4 py-3 flex items-center justify-between hover:bg-[#38bdf8]/20 transition-colors">
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#dff4ff]">download cv</span>
-                        <FileText size={16} className="text-[#7dd3fc]" />
+                    <div className="space-y-3 mt-auto pb-2">
+                      <a 
+                        href="/Leon_Nduati_CV_Analytics.pdf" 
+                        download 
+                        className="liquid-terminal-subpanel w-full rounded-xl px-4 py-3.5 flex items-center justify-between hover:bg-primary/10 transition-all duration-300 group shadow-sm"
+                      >
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-primary font-medium">Download CV</span>
+                        <FileText size={16} className="text-accent-blue group-hover:scale-110 transition-transform" />
                       </a>
-                      <a href="https://github.com/git2mann" target="_blank" rel="noopener noreferrer" className="w-full rounded-[10px] border border-[#7dd3fc]/25 bg-[#38bdf8]/10 px-4 py-3 flex items-center justify-between hover:bg-[#38bdf8]/20 transition-colors">
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#dff4ff]">open github</span>
-                        <ExternalLink size={16} className="text-[#7dd3fc]" />
+                      <a 
+                        href="https://github.com/git2mann" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="liquid-terminal-subpanel w-full rounded-xl px-4 py-3.5 flex items-center justify-between hover:bg-primary/10 transition-all duration-300 group shadow-sm"
+                      >
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-primary font-medium">Open GitHub</span>
+                        <ExternalLink size={16} className="text-accent-blue group-hover:scale-110 transition-transform" />
                       </a>
-                      <Link href="/contact" className="w-full rounded-[10px] border border-[#34d399]/30 bg-[#34d399]/15 px-4 py-3 flex items-center justify-between hover:bg-[#34d399]/25 transition-colors">
-                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#dff4ff]">contact</span>
-                        <ArrowRight size={16} className="text-[#34d399]" />
+                      <Link 
+                        href="/contact" 
+                        className="liquid-terminal-subpanel w-full rounded-xl px-4 py-3.5 flex items-center justify-between hover:bg-primary/10 transition-all duration-300 group shadow-sm border-accent-blue/30"
+                      >
+                        <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] text-primary font-medium">Direct Contact</span>
+                        <ArrowRight size={16} className="text-accent-blue group-hover:translate-x-1 transition-transform" />
                       </Link>
                     </div>
                   </div>
@@ -1063,7 +1162,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                     className="group rounded-[1.3rem] bg-background-primary shadow-[0_20px_70px_rgba(0,0,0,0.08)] overflow-hidden"
                   >
                     <div className="relative h-56 md:h-[460px] overflow-hidden">
-                      <Image src={recentPosts[0].coverImage} alt={recentPosts[0].title} fill className="object-cover transition-transform duration-[2200ms] group-hover:scale-105" />
+                      <Image src={recentPosts[0].coverImage} alt={recentPosts[0].title} fill sizes="(max-width: 1280px) 100vw, 65vw" className="object-cover transition-transform duration-[2200ms] group-hover:scale-105" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                     </div>
 
@@ -1102,7 +1201,7 @@ export default function LandingPageClient({ recentPosts }: { recentPosts: Post[]
                         >
                           <div className="flex gap-3 items-start">
                             <div className="relative h-14 w-14 rounded-lg overflow-hidden shrink-0">
-                              <Image src={post.coverImage} alt={post.title} fill className="object-cover" />
+                              <Image src={post.coverImage} alt={post.title} fill sizes="56px" className="object-cover" />
                             </div>
 
                             <div className="min-w-0 flex-1">

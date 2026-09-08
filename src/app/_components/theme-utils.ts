@@ -12,6 +12,7 @@ export const themes: Theme[] = [
   { id: "system", name: "Auto", icon: "⚙️", class: "system" },
   { id: "light", name: "Light", icon: "☀️", class: "light" },
   { id: "dark", name: "Dark", icon: "🌑", class: "dark" },
+  { id: "interpol", name: "TOTBL", icon: "🎸", class: "theme-interpol" },
   { id: "pastel", name: "Pastel", icon: "🌸", class: "theme-pastel" },
   { id: "forest", name: "Forest", icon: "🌲", class: "theme-forest" },
   { id: "ocean", name: "Ocean", icon: "🌊", class: "theme-ocean" },

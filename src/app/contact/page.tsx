@@ -116,7 +116,7 @@ export default function ContactPage() {
             <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-8 md:mt-0">
                <div className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-accent-blue/5 blur-3xl rounded-full opacity-60"></div>
-                  <Image src="/assets/LN Portfolio Asset Figurine Hero Stance.webp" alt="" fill className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_10px_40px_rgba(0,0,0,0.3)]" priority />
+                  <Image src="/assets/LN Portfolio Asset Figurine Hero Stance.webp" alt="" fill sizes="(max-width: 768px) 300px, 600px" className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_10px_40px_rgba(0,0,0,0.3)]" priority />
                </div>
             </div>
           </div>
