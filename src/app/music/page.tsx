@@ -30,6 +30,7 @@ const liveEps = [
 ];
 
 const allReleases = [
+  { id: "wdill", title: "What Do I Look Like?", coverImage: "/assets/music-assets/What Do I Look Like Album Cover.jpeg", releaseYear: "2026", type: "Album", link: "/music/what-do-i-look-like" },
   { id: "cd", title: "Controlled Demolition", coverImage: "/assets/music-assets/ControlledDemolitionCover_v2.webp", releaseYear: "2026", type: "EP", link: "/music/eps/2" },
   { id: "ht", title: "Half Thoughts", coverImage: "/assets/music-assets/HalfThoughts1Cover.webp", releaseYear: "2025", type: "Album", link: "/music/4" },
   { id: "soi", title: "Some Of Ink", coverImage: "/assets/music-assets/Some Of Ink EP Cover.webp", releaseYear: "2025", type: "EP", link: "/music/eps/1" },
@@ -322,6 +323,10 @@ export default function MusicPage() {
                    <ArrowRight size={16} />
                 </a>
                 <Link href="/music/sataop-live" className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95 text-primary">Live Project</Link>
+                <Link href="/music/what-do-i-look-like" className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95 text-primary flex items-center gap-2">
+                   <span>What Do I Look Like?</span>
+                   <ArrowUpRight size={14} />
+                </Link>
               </div>
             </div>
 
@@ -374,6 +379,49 @@ export default function MusicPage() {
             {albums.map((album, idx) => (
               <MusicWorkCard key={album.id} release={{ ...album, link: `/music/${album.id}` }} index={idx} />
             ))}
+          </div>
+        </section>
+
+        {/* Unreleased Double Album Feature */}
+        <section className="relative rounded-2xl overflow-hidden p-6 md:p-8 bg-primary/[0.02] backdrop-blur-md shadow-lg border border-primary/5">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10">
+            <Link href="/music/what-do-i-look-like" className="relative aspect-square w-36 sm:w-44 shrink-0 rounded-xl overflow-hidden shadow-md group">
+              <Image 
+                src="/assets/music-assets/What Do I Look Like Album Cover.jpeg" 
+                alt="What Do I Look Like?" 
+                fill 
+                sizes="176px"
+                className="object-cover group-hover:scale-105 transition-transform duration-300" 
+                unoptimized
+              />
+            </Link>
+
+            <div className="space-y-2 flex-1 min-w-0">
+              <div className="flex items-center gap-3">
+                <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.2em] font-semibold">
+                  Pay What You Want
+                </span>
+                <span className="text-secondary/50 font-mono text-[10px] uppercase tracking-wider">
+                  2026 • 2-Disc Album
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-light uppercase tracking-tight text-primary">
+                What Do I Look Like?
+              </h3>
+              <p className="text-secondary text-sm font-light leading-relaxed max-w-xl">
+                An unreleased album created and merely sat on. Available as a pay-what-you-want download—free ($0) or whatever amount you want.
+              </p>
+            </div>
+
+            <div className="shrink-0">
+              <Link 
+                href="/music/what-do-i-look-like" 
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-accent-blue text-white hover:bg-accent-blue/90 font-mono text-xs uppercase tracking-widest font-medium transition-all active:scale-95"
+              >
+                <span>View Album</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
           </div>
         </section>
 
