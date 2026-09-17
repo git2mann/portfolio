@@ -30,7 +30,7 @@ const liveEps = [
 ];
 
 const allReleases = [
-  { id: "wdill", title: "What Do I Look Like?", coverImage: "/assets/music-assets/What Do I Look Like Album Cover.jpeg", releaseYear: "2026", type: "Album", link: "/music/what-do-i-look-like" },
+  { id: "wdill", title: "What Do I Look Like?", coverImage: "/assets/music-assets/WhatDoILookLikeCover.webp", releaseYear: "2026", type: "Album", link: "/music/what-do-i-look-like" },
   { id: "cd", title: "Controlled Demolition", coverImage: "/assets/music-assets/ControlledDemolitionCover_v2.webp", releaseYear: "2026", type: "EP", link: "/music/eps/2" },
   { id: "ht", title: "Half Thoughts", coverImage: "/assets/music-assets/HalfThoughts1Cover.webp", releaseYear: "2025", type: "Album", link: "/music/4" },
   { id: "soi", title: "Some Of Ink", coverImage: "/assets/music-assets/Some Of Ink EP Cover.webp", releaseYear: "2025", type: "EP", link: "/music/eps/1" },
@@ -387,12 +387,11 @@ export default function MusicPage() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-10">
             <Link href="/music/what-do-i-look-like" className="relative aspect-square w-36 sm:w-44 shrink-0 rounded-xl overflow-hidden shadow-md group">
               <Image 
-                src="/assets/music-assets/What Do I Look Like Album Cover.jpeg" 
+                src="/assets/music-assets/WhatDoILookLikeCover.webp" 
                 alt="What Do I Look Like?" 
                 fill 
                 sizes="176px"
                 className="object-cover group-hover:scale-105 transition-transform duration-300" 
-                unoptimized
               />
             </Link>
 

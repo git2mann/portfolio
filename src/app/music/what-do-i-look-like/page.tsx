@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: `What Do I Look Like? | ${SITE_NAME}`,
     description: "An unreleased 2-disc album by Leon Nduati (Klense). Pay-what-you-want download ($0 or whatever you want to pay).",
-    images: ['/assets/music-assets/What Do I Look Like Album Cover.jpeg'],
+    images: ['/assets/music-assets/WhatDoILookLikeCover.webp'],
     type: 'music.album',
   },
   twitter: {
     card: 'summary_large_image',
     title: `What Do I Look Like? | ${SITE_NAME}`,
     description: "An unreleased 2-disc album by Leon Nduati (Klense). Pay-what-you-want download ($0 or whatever you want to pay).",
-    images: ['/assets/music-assets/What Do I Look Like Album Cover.jpeg'],
+    images: ['/assets/music-assets/WhatDoILookLikeCover.webp'],
   },
 };
 

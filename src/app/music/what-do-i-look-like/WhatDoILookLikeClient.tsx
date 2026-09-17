@@ -15,7 +15,8 @@ import {
 } from "react-icons/fi";
 
 const GUMROAD_LINK = "https://klense.gumroad.com/l/wdill-album";
-const COVER_IMAGE = "/assets/music-assets/What Do I Look Like Album Cover.jpeg";
+const COVER_IMAGE = "/assets/music-assets/WhatDoILookLikeCover.webp";
+const BLUR_IMAGE = "/assets/music-assets/WhatDoILookLikeCover-blur.webp";
 
 const DISC_1_TRACKS = [
   { number: "1", title: "Bad at Being Bad", duration: "1:47" },
@@ -39,7 +40,9 @@ export default function WhatDoILookLikeClient() {
 
   const handleCopy = () => {
     if (typeof window !== "undefined") {
-      navigator.clipboard.writeText(GUMROAD_LINK);
+      if (navigator?.clipboard?.writeText) {
+        navigator.clipboard.writeText(GUMROAD_LINK).catch(() => {});
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
@@ -47,21 +50,20 @@ export default function WhatDoILookLikeClient() {
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-background-primary text-primary font-noto-display-condensed relative pb-24">
-      {/* Background Atmosphere */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 z-0" style={{ transform: "translateZ(0)" }}>
+      {/* Background Atmosphere - Memory-optimized for Mobile Safari */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 z-0" style={{ transform: "translate3d(0, 0, 0)" }}>
           <Image 
-            src={COVER_IMAGE} 
+            src={BLUR_IMAGE} 
             alt="" 
             fill 
-            sizes="100vw" 
-            className="object-cover scale-125 blur-[120px] opacity-20" 
+            sizes="(max-width: 768px) 100vw, 50vw" 
+            className="object-cover scale-110 md:scale-125 blur-2xl md:blur-[100px] opacity-20" 
             priority 
-            unoptimized 
           />
         </div>
         <div 
-          className="absolute inset-0 z-10 opacity-[0.15] mix-blend-overlay pointer-events-none" 
+          className="absolute inset-0 z-10 opacity-[0.12] mix-blend-overlay pointer-events-none" 
           style={{ backgroundImage: "url(/noise.png)" }}
         />
         <div className="absolute inset-0 z-20 bg-gradient-to-b from-background-primary/30 via-background-primary/85 to-background-primary" />
