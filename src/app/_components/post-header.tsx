@@ -55,7 +55,7 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
              className="w-12 h-px" 
              style={{ backgroundColor: 'color-mix(in srgb, var(--accent-blue) 40%, transparent)' }}
            />
-           <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue">Data_Log // Sequence_Active</span>
+           <span className="font-mono text-[10px] uppercase tracking-[0.6em] text-accent-blue">Journal Entry</span>
         </div>
 
         {/* Title Artifact with Scroll Fade / Translate */}
@@ -63,7 +63,7 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
           style={{ opacity: headerOpacity, y: headerY }}
           className="space-y-6"
         >
-           <h1 className="text-6xl sm:text-7xl md:text-[10rem] font-light tracking-tighter leading-[0.8] uppercase text-primary">
+           <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tighter leading-[0.9] sm:leading-[0.8] uppercase text-primary break-words">
               {title}
            </h1>
            
@@ -87,7 +87,7 @@ export function PostHeader({ title, coverImage, date, author }: Props) {
         </motion.div>
 
         {/* Hero Cover Artifact with Parallax Zoom */}
-        <div className="relative aspect-[21/9] w-full rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/5 animate-in zoom-in-95 duration-1000">
+        <div className="relative aspect-[16/10] sm:aspect-[16/9] md:aspect-[21/9] w-full rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/5 animate-in zoom-in-95 duration-1000">
            <motion.div 
              style={{ scale: imageScale, y: imageY }}
              className="absolute inset-0 w-full h-full"

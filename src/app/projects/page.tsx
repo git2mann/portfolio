@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Container from "@/app/_components/container";
-import { Terminal, Cpu, Layout, Globe, Github, ExternalLink, Maximize2, X } from 'lucide-react';
+import { Terminal, Cpu, Layout, Globe, Github, ExternalLink, Maximize2, X, ArrowRight, ArrowUpRight } from 'lucide-react';
 import ScrollReveal from "@/app/_components/ScrollReveal";
 import { motion } from "framer-motion";
 
@@ -71,15 +71,15 @@ const projects = [
   },
   {
     id: "articulate",
-    title: "articulate: Interactive Song",
-    category: "web",
-    role: "Art-to-Audio Visualizer",
-    description: "An interactive project that allows users to experience and visualize the song 'Articulate' dynamically mapped to and driven by its cover art.",
+    title: "Articulate: Semantic Music Search",
+    category: "ai",
+    role: "Visual-to-Audio Retrieval Engine",
+    description: "An AI-powered semantic search engine and visual archive that allows listeners to retrieve songs from their Spotify library by describing the cover art they remember.",
     metrics: [
-      { label: "Sample Rate", value: "44.1 kHz" },
-      { label: "Type", value: "Visualizer" }
+      { label: "Vector Space", value: "384D" },
+      { label: "Integration", value: "Spotify API" }
     ],
-    stack: ["TypeScript", "Next.js", "Web Audio API", "CSS"],
+    stack: ["TypeScript", "Next.js", "Vector Embeddings", "Vision Models", "Spotify API"],
     github: "https://github.com/git2mann/articulate",
     link: "https://github.com/git2mann/articulate",
     status: "Production"
@@ -157,9 +157,12 @@ export default function ProjectsPage() {
   const fullScreenProject = projects.find(project => project.id === fullScreenProjectId) ?? null;
 
   return (
-    <main className="min-h-screen pb-32 bg-background-primary relative overflow-hidden">
+    <main className="min-h-screen pb-32 bg-background-primary relative selection:bg-accent-blue/30 font-noto-display-condensed">
+      {/* Background layer */}
+      <div className="fixed inset-0 z-0 pointer-events-none bg-background-primary" />
+
       {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
-      <section className="relative min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-20 z-10">
+      <section className="relative min-h-[50vh] md:min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-16 pb-4 md:pt-20">
         <div className="absolute inset-0 z-0 pointer-events-none bg-background-primary" />
 
         <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
@@ -167,16 +170,18 @@ export default function ProjectsPage() {
             {/* Left: Dictionary Text */}
             <div className="flex-1 text-left relative z-10">
               <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
-                 <div className="flex items-center gap-6 mb-4 md:mb-8">
-                    <span className="block w-12 md:w-20 h-[1px] bg-accent-blue opacity-50"></span>
-                    <span className="text-accent-blue font-medium text-xs md:text-sm uppercase tracking-[0.5em]">Engineering</span>
+                 <div className="flex items-center gap-4 mb-3 md:mb-4">
+                    <span className="block w-8 md:w-12 h-[1px] bg-accent-blue opacity-50"></span>
+                    <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Selected Works</span>
                  </div>
-                 <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-6 md:mb-10 text-primary uppercase">
+                 
+                 <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6 uppercase text-primary">
                    Code
                  </h1>
-                 <div className="flex flex-wrap items-center gap-4 md:gap-8 text-xl md:text-4xl font-mono text-secondary">
+                 
+                 <div className="flex flex-wrap items-center gap-2 md:gap-4 text-lg md:text-3xl font-mono text-secondary">
                    <span>/koʊd/</span>
-                   <span className="w-2 h-2 rounded-full bg-accent-blue/50"></span>
+                   <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent-blue/50"></span>
                    <span>noun</span>
                  </div>
               </div>
@@ -194,27 +199,39 @@ export default function ProjectsPage() {
               </ScrollReveal>
 
               <div className="mt-12 md:mt-24 flex flex-wrap gap-6 md:gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+                <a 
+                  href="#projects" 
+                  className="px-10 md:px-12 py-3 md:py-4 rounded-full font-medium text-xs md:text-sm uppercase tracking-widest transition-all bg-primary text-background-primary shadow-xl hover:scale-105 active:scale-95 flex items-center gap-3"
+                >
+                   <span>Explore Projects</span>
+                   <ArrowRight size={16} />
+                </a>
                 <Link 
                   href="https://github.com/git2mann"
                   target="_blank"
-                  className="px-8 md:px-10 py-3 md:py-4 rounded-full font-medium text-sm md:text-base uppercase tracking-widest transition-all bg-primary text-background-primary shadow-xl flex items-center gap-3 hover:scale-105 active:scale-95"
+                  className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95 text-primary flex items-center gap-2"
                 >
-                  <Github size={20} /> GitHub Profile
+                  <Github size={16} />
+                  <span>GitHub Profile</span>
+                  <ArrowUpRight size={14} />
                 </Link>
-                <Link href="/contact" className="px-8 md:px-10 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-sm md:text-base uppercase tracking-widest hover:bg-primary/5 transition-all hover:scale-105 active:scale-95 text-primary">
+                <Link 
+                  href="/contact" 
+                  className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95 text-primary"
+                >
                   Contact
                 </Link>
               </div>
             </div>
 
             {/* Right: Layered Figurine Visual */}
-            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-8 md:mt-0">
+            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-4 md:mt-0">
                <div className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-accent-blue/5 blur-3xl rounded-full opacity-60"></div>
                   <Image 
                     src="/assets/LN Projects Still.webp" 
                     alt="Engineering Figurine"
-                    fill
+                    fill 
                     sizes="(max-width: 768px) 300px, 600px"
                     className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
                     priority
@@ -225,24 +242,24 @@ export default function ProjectsPage() {
         </Container>
       </section>
 
-      {/* --- NAVIGATION / TABS --- */}
-      <div id="projects" className="sticky top-16 md:top-24 z-40 mb-10 md:mb-20 pt-4 md:pt-10 font-noto-display-condensed px-3 md:px-0">
-        <div className="w-full md:w-auto max-w-full md:max-w-fit mx-auto liquid-glass px-1.5 md:px-2 py-1.5 md:py-2 rounded-full shadow-lg border border-primary/10 overflow-x-auto">
-          <nav className="flex gap-1 md:gap-2 whitespace-nowrap min-w-max">
+      {/* --- STICKY NAVIGATION TABS --- */}
+      <div id="projects" className="sticky top-20 md:top-24 z-40 mb-12 scroll-mt-24 px-2 md:px-0">
+        <div className="max-w-full md:max-w-fit mx-auto liquid-glass px-1.5 py-1.5 sm:px-2 sm:py-2 rounded-full shadow-2xl border border-primary/10 overflow-x-auto no-scrollbar">
+          <nav className="flex gap-1 items-center justify-start md:justify-center whitespace-nowrap min-w-max">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveTab(cat.id)}
                 className={`
-                  flex items-center gap-2 md:gap-3 px-4 md:px-10 py-2 md:py-3.5 rounded-full text-xs md:text-base font-medium uppercase tracking-[0.14em] md:tracking-widest transition-all
+                  flex items-center justify-center gap-2 px-5 py-2.5 sm:px-8 sm:py-3 rounded-full text-xs font-medium uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-all whitespace-nowrap
                   ${activeTab === cat.id 
-                    ? 'bg-primary text-background-primary shadow-xl' 
-                    : 'text-secondary hover:text-primary hover:bg-primary/5'
+                    ? 'bg-primary text-background-primary shadow-xl scale-105' 
+                    : 'text-secondary hover:text-primary hover:bg-white/5'
                   }
                 `}
               >
                 <cat.icon size={14} />
-                {cat.label}
+                <span>{cat.label}</span>
               </button>
             ))}
           </nav>
@@ -251,13 +268,21 @@ export default function ProjectsPage() {
 
       <Container className="!max-w-none px-6 md:px-20 font-noto-display-condensed relative z-10">
         <section className="animate-in fade-in duration-700">
-          <div className="mb-10 md:mb-14 rounded-3xl border border-primary/10 bg-background-primary/50 backdrop-blur-xl px-6 py-5 md:px-8 md:py-6 shadow-[0_15px_45px_rgba(0,0,0,0.08)]">
-            <p className="font-mono text-[11px] md:text-xs uppercase tracking-[0.25em] text-accent-blue">
-              guest@projects:~$ ls systems --verbose
-            </p>
-            <p className="mt-2 text-sm md:text-base text-secondary">
-              Showing {filteredProjects.length} executable project modules. Use tabs to filter by domain.
-            </p>
+          {/* Section Header */}
+          <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 bg-primary/[0.02] backdrop-blur-md shadow-lg border border-primary/5">
+             <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent"></div>
+             
+             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div>
+                   <div className="flex items-center gap-3 mb-2">
+                       <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.2em] font-semibold">Engineering Directory</span>
+                       <span className="w-1.5 h-1.5 rounded-full bg-accent-blue/40"></span>
+                       <span className="text-secondary opacity-50 font-mono text-[10px] uppercase tracking-wider">{filteredProjects.length} Systems</span>
+                   </div>
+                   <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter leading-none text-primary">Systems & Software</h2>
+                   <p className="text-secondary text-sm md:text-base mt-2 max-w-xl opacity-60">Full-stack web applications, decentralized platforms, cryptographic utilities, and game engines.</p>
+                </div>
+             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-14 mb-32">
@@ -283,7 +308,7 @@ export default function ProjectsPage() {
                     />
                   </div>
                   <div className="font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase text-secondary truncate px-2">
-                    guest@leon-nduati:~/projects/{project.id}
+                    leon-nduati // {project.id}
                   </div>
                   <button
                     type="button"
@@ -328,10 +353,10 @@ export default function ProjectsPage() {
                       {project.role}
                     </p>
 
-                    {/* Session Log Box */}
+                    {/* Architecture Profile Header */}
                     <div className="liquid-terminal-console rounded-xl px-3.5 py-2 text-[10px] md:text-xs text-secondary/80 flex items-center justify-between mb-3 shadow-inner">
-                      <span>ttys008 // env: secure_sandbox</span>
-                      <span className="text-[9px] font-semibold uppercase tracking-wider text-accent-blue">Active Session</span>
+                      <span>module // architecture profile</span>
+                      <span className="text-[9px] font-semibold uppercase tracking-wider text-accent-blue">Active Build</span>
                     </div>
 
                     <div className="liquid-terminal-console rounded-xl p-3 md:p-3.5 space-y-1 text-[11px] md:text-xs leading-relaxed mb-4 text-secondary">

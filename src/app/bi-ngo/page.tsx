@@ -45,7 +45,7 @@ export default function BiNgoPage() {
                       text="The BI NGO" 
                       flex={true} 
                       textColor="#4ade80" 
-                      minFontSize={80} 
+                      minFontSize={36} 
                       mouseMode={true} 
                       fontFamily="Noto Serif Display"
                       minWdth={62.5}

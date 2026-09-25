@@ -104,5 +104,5 @@
 }
 
 .markdown header {
-  @apply hidden; /* Hide internal headers from HTML posts as we use PostHeader */
+  display: none !important; /* Hide internal headers from HTML posts as we use PostHeader */
 }

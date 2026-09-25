@@ -66,53 +66,60 @@ const ArtPage = () => {
   };
 
   return (
-    <main className="min-h-screen pb-32 bg-background-primary">
+    <main className="min-h-screen pb-32 bg-background-primary relative selection:bg-accent-blue/30 font-noto-display-condensed">
       
+      {/* Background layer */}
+      <div className="fixed inset-0 z-0 pointer-events-none bg-background-primary" />
+
       {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
-      <section className="relative min-h-[62vh] lg:h-[85vh] flex flex-col justify-center overflow-hidden pt-16 lg:pt-20">
+      <section className="relative min-h-[50vh] md:min-h-[70vh] md:h-[85vh] flex flex-col justify-center overflow-hidden pt-16 pb-4 md:pt-20">
         <div className="absolute inset-0 z-0 pointer-events-none bg-background-primary" />
 
-        <Container className="relative z-10 w-full !max-w-none px-5 lg:px-20">
-          <div className="flex flex-col lg:flex-row items-center gap-7 lg:gap-24">
+        <Container className="relative z-10 w-full !max-w-none px-6 md:px-20">
+          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-24">
             {/* Left: Dictionary Text */}
             <div className="flex-1 text-left relative z-10">
-              <div className="mb-7 lg:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
-                 <div className="flex items-center gap-3 lg:gap-4 mb-3 lg:mb-4">
-                    <span className="block w-8 lg:w-12 h-[1px] bg-accent-blue opacity-50"></span>
-                    <span className="text-accent-blue font-medium text-[11px] lg:text-sm uppercase tracking-[0.38em] lg:tracking-[0.5em]">Selected Works</span>
+              <div className="mb-8 md:mb-12 animate-in fade-in slide-in-from-left-8 duration-1000">
+                 <div className="flex items-center gap-4 mb-3 md:mb-4">
+                    <span className="block w-8 md:w-12 h-[1px] bg-accent-blue opacity-50"></span>
+                    <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Selected Works</span>
                  </div>
-                 <h1 className="text-5xl sm:text-6xl lg:text-[11rem] font-light tracking-tighter leading-[0.82] mb-3 lg:mb-6 uppercase">
+                 
+                 <h1 className="text-6xl sm:text-7xl md:text-[11rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6 uppercase text-primary">
                    Art
                  </h1>
-                 <div className="flex flex-wrap items-center gap-2 lg:gap-4 text-base lg:text-3xl font-mono text-secondary">
+                 
+                 <div className="flex flex-wrap items-center gap-2 md:gap-4 text-lg md:text-3xl font-mono text-secondary">
                    <span>/ɑːrt/</span>
-                   <span className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-accent-blue opacity-50"></span>
+                   <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent-blue/50"></span>
                    <span>noun</span>
                  </div>
               </div>
               
-              <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-lg lg:text-5xl font-light text-primary mt-6 lg:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
+              <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-xl md:text-5xl font-light text-primary mt-8 md:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
                 1. Visual poetry. An exploration of form, light, and narrative. 2. Digital realizations of abstract human emotion and logical structures.
               </ScrollReveal>
 
-              <div className="mt-8 lg:mt-16 flex flex-col sm:flex-row w-full sm:w-auto gap-3 lg:gap-6 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
-                <button onClick={() => setGalleryActive(true)} className="w-full sm:w-auto px-7 lg:px-12 py-3 lg:py-4 rounded-full font-medium text-[11px] lg:text-sm uppercase tracking-[0.24em] lg:tracking-widest transition-all bg-primary text-background-primary shadow-[0_0_30px_rgba(var(--text-primary-rgb),0.2)] hover:scale-105 active:scale-95 flex items-center justify-center gap-3">
-                   <span>Enter Gallery</span>
+              <div className="mt-12 md:mt-24 flex flex-wrap gap-6 md:gap-8 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500">
+                <button onClick={() => setGalleryActive(true)} className="px-10 md:px-12 py-3 md:py-4 rounded-full font-medium text-xs md:text-sm uppercase tracking-widest transition-all bg-primary text-background-primary shadow-xl hover:scale-105 active:scale-95 flex items-center gap-3">
+                   <span>Enter 3D Gallery</span>
                    <ArrowRight size={16} />
                 </button>
-                <a href="#collections" className="w-full sm:w-auto text-center px-7 lg:px-12 py-3 lg:py-4 rounded-full liquid-glass-clear font-medium text-[11px] lg:text-sm uppercase tracking-[0.24em] lg:tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95">View Collection</a>
+                <a href="#collections" className="px-10 md:px-12 py-3 md:py-4 rounded-full liquid-glass-clear font-medium text-xs md:text-sm uppercase tracking-widest hover:bg-white/5 transition-all hover:scale-105 active:scale-95 text-primary">
+                   View Catalog
+                </a>
               </div>
             </div>
 
             {/* Right: Figurine Visual */}
-            <div className="flex-[0.6] lg:flex-[0.8] w-full max-w-[280px] sm:max-w-[340px] lg:max-w-[600px] relative mt-7 lg:mt-0">
+            <div className="flex-[0.6] md:flex-[0.8] w-full max-w-[300px] md:max-w-[600px] relative mt-4 md:mt-0">
                <div className="relative aspect-square w-full group">
                   <div className="absolute inset-0 bg-accent-blue/5 blur-3xl rounded-full opacity-60"></div>
                   <Image 
                     src="/assets/LN Art Still.webp" 
                     alt="Art Figurine"
-                    fill
-                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 600px"
+                    fill 
+                    sizes="(max-width: 768px) 300px, 600px"
                     className="object-contain z-10 transition-all duration-1000 group-hover:scale-105 drop-shadow-[0_20px_80px_rgba(0,0,0,0.4)]"
                     priority
                   />
@@ -129,69 +136,79 @@ const ArtPage = () => {
         </section>
       )}
 
-      {/* --- COLLECTIONS INDEX --- */}
-      <Container id="collections" className="mt-20 lg:mt-32 !max-w-none px-5 lg:px-20">
-        
-        {/* Functional Navigation / Filter */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-10 lg:mb-16 gap-5 lg:gap-8 border-b border-primary/10 pb-6 lg:pb-8">
-           <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                 <Grid className="text-accent-blue w-5 h-5" />
-                 <span className="font-mono text-xs uppercase tracking-[0.4em] opacity-40 text-secondary">Collection Guide</span>
-              </div>
-              <h2 className="text-3xl lg:text-7xl font-light uppercase tracking-tighter leading-none text-primary">Curated Archive</h2>
-           </div>
+      {/* --- STICKY NAVIGATION TABS --- */}
+      <div id="collections" className="sticky top-20 md:top-24 z-40 mb-12 scroll-mt-24 px-2 md:px-0">
+        <div className="max-w-full md:max-w-fit mx-auto liquid-glass px-1.5 py-1.5 sm:px-2 sm:py-2 rounded-full shadow-2xl border border-primary/10 overflow-x-auto no-scrollbar">
+          <nav className="flex gap-1 items-center justify-start md:justify-center whitespace-nowrap min-w-max">
+            {[
+              { id: 'all', label: 'Full Catalog' },
+              { id: 'hiqugraph', label: 'HiQuGraphs' },
+              { id: 'studies', label: 'Editorial Studies' }
+            ].map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`
+                  flex items-center justify-center gap-2 px-5 py-2.5 sm:px-8 sm:py-3 rounded-full text-xs font-medium uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-all whitespace-nowrap
+                  ${activeCategory === cat.id 
+                    ? 'bg-primary text-background-primary shadow-xl scale-105' 
+                    : 'text-secondary hover:text-primary hover:bg-white/5'
+                  }
+                `}
+              >
+                <span>{cat.label}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
+      </div>
 
-           <div className="max-w-full overflow-hidden bg-primary/[0.03] p-1.5 rounded-full border border-primary/5">
-              <div className="flex flex-nowrap gap-1 lg:gap-2 overflow-x-auto no-scrollbar">
-                {[
-                  { id: 'all', label: 'Full Catalog' },
-                  { id: 'hiqugraph', label: 'HiQuGraphs' },
-                  { id: 'studies', label: 'Editorial Studies' }
-                ].map((cat) => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setActiveCategory(cat.id)}
-                    className={`px-4 lg:px-8 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.18em] lg:tracking-[0.2em] transition-all whitespace-nowrap
-                      ${activeCategory === cat.id 
-                        ? 'bg-primary text-background-primary shadow-xl' 
-                        : 'text-secondary hover:text-primary hover:bg-primary/5'
-                      }
-                    `}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
+      {/* --- COLLECTIONS INDEX --- */}
+      <Container className="!max-w-none px-6 md:px-20 relative z-10">
+        
+        {/* Section Header */}
+        <div className="relative mb-10 md:mb-16 rounded-2xl overflow-hidden p-6 md:p-8 bg-primary/[0.02] backdrop-blur-md shadow-lg border border-primary/5">
+           <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-accent-blue/30 to-transparent"></div>
+           
+           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div>
+                 <div className="flex items-center gap-3 mb-2">
+                     <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.2em] font-semibold">Visual Archives</span>
+                     <span className="w-1.5 h-1.5 rounded-full bg-accent-blue/40"></span>
+                     <span className="text-secondary opacity-50 font-mono text-[10px] uppercase tracking-wider">{filteredWorks.length} Pieces</span>
+                 </div>
+                 <h2 className="text-4xl md:text-6xl font-light uppercase tracking-tighter leading-none text-primary">Curated Catalog</h2>
+                 <p className="text-secondary text-sm md:text-base mt-2 max-w-xl opacity-60">High-resolution visual experiments in form, light, and generative narrative.</p>
               </div>
            </div>
         </div>
 
         {/* Dynamic Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-7">
            {filteredWorks.map((work, i) => (
              <div 
                 key={work.src} 
-                className="group relative flex flex-col bg-primary/[0.02] border border-primary/5 hover:border-accent-blue/40 transition-all duration-500 rounded-sm p-3 lg:p-4 overflow-hidden cursor-pointer shadow-lg hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98]"
+                className="group relative flex flex-col rounded-2xl bg-primary/[0.02] hover:bg-primary/[0.04] border border-primary/5 hover:border-accent-blue/40 transition-all duration-300 p-3.5 md:p-4 overflow-hidden cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.12)] hover:scale-[1.01] active:scale-[0.99]"
                 onClick={() => openArtworkModal(work.src, work.title, work.year, "", String(i))}
              >
-                <div className="absolute top-2 right-4 font-mono text-[10px] opacity-10 uppercase tracking-widest pointer-events-none group-hover:opacity-30 text-secondary">{String(i + 1).padStart(3, '0')}</div>
+                <div className="absolute top-3 right-4 font-mono text-[10px] opacity-20 uppercase tracking-widest pointer-events-none group-hover:opacity-40 text-secondary z-10">{String(i + 1).padStart(3, '0')}</div>
                 
-                <div className="relative aspect-[4/5] w-full overflow-hidden mb-4 lg:mb-6 rounded-sm bg-background-secondary">
+                <div className="relative aspect-[4/5] w-full overflow-hidden mb-3 md:mb-5 rounded-xl bg-background-secondary">
                    <Image 
                       src={work.src} 
                       alt={work.title} 
                       fill 
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                      className="object-cover opacity-80 group-hover:opacity-100 transition-all duration-1000 group-hover:scale-110" 
+                      className="object-cover opacity-85 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105" 
                    />
                 </div>
 
-                <div className="flex justify-between items-end">
+                <div className="flex justify-between items-end mt-auto">
                    <div>
-                      <span className="block font-mono text-[9px] uppercase tracking-[0.3em] text-accent-blue/60 mb-1">{work.category}</span>
-                      <h3 className="text-base lg:text-xl font-light tracking-tight uppercase leading-none truncate group-hover:text-primary transition-colors text-primary">{work.title}</h3>
+                      <span className="block font-mono text-[9px] uppercase tracking-[0.25em] text-accent-blue mb-1">{work.category}</span>
+                      <h3 className="text-sm md:text-base font-light tracking-tight uppercase leading-none truncate group-hover:text-accent-blue transition-colors text-primary">{work.title}</h3>
                    </div>
-                   <span className="text-xs font-medium text-secondary opacity-40">{work.year}</span>
+                   <span className="text-xs font-mono text-secondary opacity-50">{work.year}</span>
                 </div>
              </div>
            ))}
@@ -199,7 +216,7 @@ const ArtPage = () => {
 
         {/* Empty State */}
         {filteredWorks.length === 0 && (
-           <div className="py-40 text-center liquid-glass rounded-[3rem] border-dashed border-2">
+           <div className="py-40 text-center liquid-glass rounded-3xl border-dashed border-2 border-primary/10">
               <span className="font-mono text-xs uppercase tracking-[0.5em] opacity-30 text-secondary">No artwork found in this category.</span>
            </div>
         )}

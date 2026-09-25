@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
 import { SITE_NAME } from "@/lib/constants";
-import ReactMarkdown from "react-markdown";
 import Alert from "@/app/_components/alert";
 import Container from "@/app/_components/container";
 import { PostBody } from "@/app/_components/post-body";
@@ -35,8 +34,17 @@ export default async function Post(props: Params) {
 
   // Strip out manual Back to Archive/Home buttons from content to avoid duplicate or broken links
   const rawContent = post.content || "";
-  const content = rawContent.replace(/<p>\s*<a href="[^"]*">Back to [^<]*<\/a>\s*<\/p>|<a href="[^"]*">Back to [^<]*<\/a>/gi, "");
+  let content = rawContent.replace(/<p>\s*<a href="[^"]*">Back to [^<]*<\/a>\s*<\/p>|<a href="[^"]*">Back to [^<]*<\/a>/gi, "");
   const contentType = post.contentType;
+
+  // Strip leading H1 title from content to avoid rendering the title twice (since PostHeader already displays it)
+  if (contentType === "markdown" || contentType === "mdx") {
+    // Strips leading "# Heading Title" (and optional leading whitespace/blank lines)
+    content = content.replace(/^\s*#\s+[^\n]+(?:\r?\n)*/, "");
+  } else if (contentType === "html") {
+    // Strips leading <h1>...</h1> if present in HTML posts
+    content = content.replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, "");
+  }
 
   // Retrieve related posts in the same category
   const allPosts = getAllPosts(["title", "date", "coverImage", "slug", "category", "excerpt"]);
@@ -114,7 +122,7 @@ export default async function Post(props: Params) {
             <div className="max-w-4xl mx-auto border-t border-white/5 pt-16 space-y-12 animate-in fade-in duration-1000 delay-700">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-px bg-accent-blue/40" />
-                <span className="font-mono text-[9px] uppercase tracking-[0.5em] text-accent-blue">Related_Sequences // Continuing the Stream</span>
+                <span className="font-mono text-[9px] uppercase tracking-[0.5em] text-accent-blue">Related Articles</span>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -143,7 +151,7 @@ export default async function Post(props: Params) {
                       {relatedPost.excerpt}
                     </p>
                     <div className="flex justify-between items-center text-[9px] font-mono uppercase tracking-[0.3em] text-secondary opacity-60 group-hover:opacity-100 transition-opacity">
-                      <span>Execute_Log</span>
+                      <span>Read Article</span>
                       <ArrowRight size={14} className="text-accent-blue group-hover:translate-x-2 transition-transform" />
                     </div>
                   </Link>

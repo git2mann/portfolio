@@ -8,7 +8,7 @@ author:
   picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
   url: "/assets/music-assets/HalfThoughts1Cover.webp"
-tags: ["music", "album", "half-thoughts", "release", "interactive"]
+tags: ["Archives", "Sound Design"]
 category: "Music"
 ---
 

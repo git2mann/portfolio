@@ -18,7 +18,7 @@ export default async function TechBlogPage({
   const currentPage = pageParam ? parseInt(pageParam, 10) : 1;
 
   const techPosts = getPostsByCategory("Tech", tag);
-  const techTags = getTechTags();
+  const techTagsData = getTechTagsWithCounts();
 
   const postsPerPage = 6;
   const totalPages = Math.ceil((techPosts.length - 1) / postsPerPage);
@@ -31,7 +31,7 @@ export default async function TechBlogPage({
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <main className="min-h-screen pb-32 bg-background-primary text-primary">
+    <main className="min-h-screen pb-32 bg-background-primary text-primary font-noto-display-condensed selection:bg-accent-blue/30">
       
       {/* --- HERO SECTION: DICTIONARY ENTRY --- */}
       <section className="relative min-h-[60vh] md:h-[70vh] flex flex-col justify-center overflow-hidden pt-20 border-b border-white/5">
@@ -49,15 +49,15 @@ export default async function TechBlogPage({
                  </Link>
                  <div className="flex items-center gap-4 mb-3 md:mb-4">
                     <span className="block w-8 md:w-12 h-[1px] bg-accent-blue opacity-50"></span>
-                    <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Sector_Tech</span>
+                    <span className="text-accent-blue font-medium text-[12px] md:text-sm uppercase tracking-[0.5em]">Engineering</span>
                  </div>
                  <h1 className="text-6xl sm:text-7xl md:text-[10rem] font-light tracking-tighter leading-[0.8] mb-4 md:mb-6 uppercase">
-                   Dev<br/>Logs
+                   Tech<br/>Notes
                  </h1>
               </div>
               
               <ScrollReveal baseOpacity={0} enableBlur={true} blurStrength={10} textClassName="text-xl md:text-4xl font-light text-secondary mt-8 md:mt-12 leading-tight max-w-2xl" stagger={0.08} duration={1} autoReveal={true}>
-                Technical architecture, full-stack development logs, and experimental breakthroughs in digital systems and logic.
+                Engineering notes, architecture teardowns, and reflections on building reliable software and creative tools.
               </ScrollReveal>
             </div>
 
@@ -81,73 +81,90 @@ export default async function TechBlogPage({
       <Container className="!max-w-none px-6 md:px-20 py-20">
         
         {/* --- TAG FILTERS --- */}
-        {techTags.length > 0 && (
-          <div className="mb-20 flex flex-col md:flex-row justify-between items-start md:items-center gap-8 border-b border-white/5 pb-10">
-             <div className="space-y-2">
+        {techTagsData.length > 0 && (
+          <div className="mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-b border-white/5 pb-8">
+             <div className="space-y-1">
                 <div className="flex items-center gap-3">
-                   <Tag className="text-accent-blue w-4 h-4" />
-                   <span className="font-mono text-[10px] uppercase tracking-[0.4em] opacity-40">System_Filter</span>
+                   <Tag className="text-accent-blue w-3.5 h-3.5" />
+                   <span className="font-mono text-[10px] uppercase tracking-[0.4em] opacity-40">Topic Filter</span>
                 </div>
-                <h2 className="text-3xl font-light uppercase tracking-tighter">Signal Selection</h2>
+                <h2 className="text-2xl font-light uppercase tracking-tighter">Filter by Topic</h2>
              </div>
 
-             <div className="flex flex-wrap gap-2">
+             <div className="flex flex-wrap gap-2 items-center">
                 <Link
                   href="/blog/tech"
-                  className={`px-6 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all border
+                  className={`px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-widest transition-all border
                     ${!tag 
-                      ? 'bg-primary text-background-primary border-primary shadow-lg scale-105' 
+                      ? 'bg-primary text-background-primary border-primary shadow-lg font-medium' 
                       : 'text-secondary border-white/10 hover:border-accent-blue/40 hover:text-primary'
                     }
                   `}
                 >
-                  [ ALL_SYSTEMS ]
+                  ALL POSTS
                 </Link>
-                {techTags.map((tagItem) => (
+                {techTagsData.map(({ tag: tagItem, count }) => (
                   <Link
                     key={tagItem}
-                    href={`/blog/tech?tag=${tagItem}`}
-                    className={`px-6 py-2.5 rounded-full text-[10px] font-medium uppercase tracking-[0.2em] transition-all border
+                    href={tag === tagItem ? '/blog/tech' : `/blog/tech?tag=${encodeURIComponent(tagItem)}`}
+                    className={`px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-widest transition-all border flex items-center gap-1.5
                       ${tag === tagItem
-                        ? 'bg-accent-blue text-white border-accent-blue shadow-lg scale-105' 
+                        ? 'bg-accent-blue text-white border-accent-blue shadow-lg font-medium scale-105' 
                         : 'text-secondary border-white/10 hover:border-accent-blue/40 hover:text-primary'
                       }
                     `}
                   >
-                    [ {tagItem.toUpperCase()} ]
+                    <span>{tagItem.toUpperCase()}</span>
+                    <span className="text-[8px] opacity-60">({count})</span>
                   </Link>
                 ))}
+                {tag && (
+                  <Link
+                    href="/blog/tech"
+                    className="text-[9px] font-mono uppercase tracking-wider text-secondary/60 hover:text-primary transition-colors ml-2 underline"
+                  >
+                    Clear
+                  </Link>
+                )}
              </div>
           </div>
         )}
 
         {/* --- FEATURED ARTIFACT --- */}
         {featuredPost && (
-          <div className="mb-32 animate-in fade-in slide-in-from-bottom-6 duration-1000">
-              <Link href={`/posts/${featuredPost.slug}`} className="group block relative min-h-[500px] md:min-h-[550px] lg:aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 bg-white/[0.01] flex flex-col justify-end">
+          <div className="mb-24 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+              <Link href={`/posts/${featuredPost.slug}`} className="group block relative min-h-[480px] md:min-h-[540px] rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.5)] border border-white/5 bg-white/[0.01] flex flex-col justify-end">
                  <Image
                     src={featuredPost.coverImage}
                     alt={featuredPost.title}
                     fill
                     sizes="(max-width: 1280px) 100vw, 1280px"
-                    className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-65 group-hover:opacity-85 blur-[6px] group-hover:blur-[4px]"
+                    className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-60 group-hover:opacity-80 blur-[4px] group-hover:blur-[2px]"
                  />
                  <div 
-                   className="absolute inset-0 via-transparent to-transparent"
-                   style={{ backgroundImage: 'linear-gradient(to top, var(--background-primary), color-mix(in srgb, var(--background-primary) 20%, transparent), transparent)' }}
+                   className="absolute inset-0 bg-gradient-to-t from-background-primary via-background-primary/80 to-background-primary/20 opacity-95"
                  ></div>
-                 <div className="relative z-10 p-8 sm:p-12 md:p-20 flex flex-col justify-end mt-20">
-                    <div className="max-w-4xl space-y-6">
+                 <div className="relative z-10 p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-end">
+                    <div className="max-w-4xl space-y-4 md:space-y-6">
                        <div className="flex items-center gap-4">
                           <div className="w-10 h-px bg-accent-blue" />
-                          <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">System_Analysis</span>
+                          <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">Featured Article</span>
                        </div>
-                       <h3 className="text-5xl md:text-8xl font-light uppercase tracking-tighter leading-[0.8]">{featuredPost.title}</h3>
-                       <p className="text-xl text-secondary font-light max-w-xl leading-relaxed opacity-60 group-hover:opacity-100 transition-opacity">{featuredPost.excerpt}</p>
-                       <div className="pt-6">
-                          <div className="inline-flex items-center gap-4 text-xs font-medium uppercase tracking-[0.4em] group-hover:gap-8 transition-all">
-                             Access_Sequence <ArrowRight size={18} />
+                       <h3 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-light uppercase tracking-tight leading-[1.08] text-primary">{featuredPost.title}</h3>
+                       <p className="text-sm sm:text-base md:text-lg text-secondary font-light max-w-3xl leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity">{featuredPost.excerpt}</p>
+                       <div className="pt-2 sm:pt-4 flex flex-wrap items-center gap-4">
+                          <div className="inline-flex items-center gap-3 text-xs font-medium uppercase tracking-[0.4em] text-accent-blue group-hover:gap-6 transition-all">
+                             Read Article <ArrowRight size={18} />
                           </div>
+                          {featuredPost.tags && featuredPost.tags.length > 0 && (
+                            <div className="flex flex-wrap gap-2 items-center">
+                              {featuredPost.tags.map((t) => (
+                                <span key={t} className="text-[9px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-white/10 bg-white/5 text-secondary">
+                                  #{t}
+                                </span>
+                              ))}
+                            </div>
+                          )}
                        </div>
                     </div>
                  </div>
@@ -173,7 +190,7 @@ export default async function TechBlogPage({
                           className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-80 group-hover:opacity-100"
                        />
                        <div className="absolute top-4 left-4 z-10 bg-accent-blue text-white px-3 py-1 font-mono text-[9px] uppercase tracking-widest rounded-full">
-                          LOG_0{idx + 2}
+                          {post.tags?.[0] || post.category}
                        </div>
                     </div>
                     <div className="flex flex-col flex-1">
@@ -195,7 +212,7 @@ export default async function TechBlogPage({
                           {post.excerpt}
                        </p>
                        <div className="mt-auto pt-6 border-t border-white/5 flex justify-between items-center opacity-60 group-hover:opacity-100 transition-all">
-                          <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-secondary">Execute_Logic</span>
+                          <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-secondary">Read Article</span>
                           <ArrowRight className="w-5 h-5 text-accent-blue group-hover:translate-x-3 transition-transform" />
                        </div>
                     </div>
@@ -252,10 +269,19 @@ export default async function TechBlogPage({
 }
 
 // Helpers
-function getTechTags(): string[] {
-  const techPosts = getPostsByCategory("Tech");
-  const tags = techPosts.flatMap((post) => post.tags || []);
-  return Array.from(new Set(tags));
+function getTechTagsWithCounts(): { tag: string; count: number }[] {
+  const allTechPosts = getAllPosts(["tags", "category"]).filter(
+    (post) => post.category === "Tech"
+  );
+  const counts: Record<string, number> = {};
+  allTechPosts.forEach((post) => {
+    (post.tags || []).forEach((t) => {
+      counts[t] = (counts[t] || 0) + 1;
+    });
+  });
+  return Object.entries(counts)
+    .sort((a, b) => b[1] - a[1])
+    .map(([tag, count]) => ({ tag, count }));
 }
 
 function getPostsByCategory(category: string, tag?: string): Post[] {

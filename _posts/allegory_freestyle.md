@@ -8,12 +8,12 @@ author:
   picture: "/assets/blog/authors/IMG_7908.webp"
 ogImage:
   url: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.webp"
-tags: ["Announcement", "Single", "New Release", "Hip-Hop", "Freestyle", "Rap"]
+tags: ["Releases", "Production"]
+category: "Music"
 contentType: "audio"
 mediaUrl: "/assets/music-assets/ALLEGORY (FREESTYLE) Single Cover.webp"
 ---
 
-# New Track Premiere: 'Allegory (Freestyle)'
 ## Technical Details
 - BPM: 84
 - Key: C minor

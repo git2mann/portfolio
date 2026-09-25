@@ -32,6 +32,8 @@ export default function BlogTabsClient({ posts, categories }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [showAllTags, setShowAllTags] = useState(false);
+  const MAX_VISIBLE_TAGS = 5;
 
   const featuredPost = posts[0];
   const allPosts = posts;
@@ -44,11 +46,24 @@ export default function BlogTabsClient({ posts, categories }: Props) {
   else if (activeTab === "music") tabPosts = musicPosts;
   else if (activeTab === "tech") tabPosts = techPosts;
 
-  // Extract available tags for the active tab before filters are applied
+  // Extract available tags with frequency ranking for the active tab (smarter tags)
   const basePostsForTab = activeTab === "all" ? allPosts : activeTab === "music" ? musicPosts : techPosts;
-  const availableTags = Array.from(
-    new Set(basePostsForTab.flatMap((post) => post.tags || []))
-  ).filter(Boolean);
+  
+  const tagCounts = basePostsForTab.reduce<Record<string, number>>((acc, post) => {
+    (post.tags || []).forEach((tag) => {
+      acc[tag] = (acc[tag] || 0) + 1;
+    });
+    return acc;
+  }, {});
+
+  const allSortedTags = Object.keys(tagCounts).sort((a, b) => tagCounts[b] - tagCounts[a]);
+
+  // Keep visible list focused: top 5 by default, plus active tag if outside top 5
+  const visibleTags = showAllTags 
+    ? allSortedTags 
+    : allSortedTags.filter((tag, idx) => idx < MAX_VISIBLE_TAGS || tag === selectedTag);
+  
+  const hasHiddenTags = allSortedTags.length > MAX_VISIBLE_TAGS;
 
   // Apply filters
   if (selectedTag) {
@@ -74,12 +89,12 @@ export default function BlogTabsClient({ posts, categories }: Props) {
 
   const handleSubscribe = async () => {
     if (!email) {
-      setMessage("Input required: Email Address");
+      setMessage("Please enter your email address.");
       return;
     }
 
     if (website) {
-      setMessage("Uplink Established. You are subscribed.");
+      setMessage("You're subscribed! Thanks for following along.");
       setEmail("");
       setWebsite("");
       return;
@@ -98,13 +113,13 @@ export default function BlogTabsClient({ posts, categories }: Props) {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("Uplink Established. You are subscribed.");
+        setMessage("You're subscribed! Thanks for following along.");
         setEmail("");
       } else {
-        setMessage(`Error: ${data.error || "Uplink Failed"}`);
+        setMessage(`Error: ${data.error || "Subscription failed. Please try again."}`);
       }
     } catch (error) {
-      setMessage("Critical Error: Connection Lost.");
+      setMessage("Something went wrong. Please check your connection and try again.");
     } finally {
       setIsLoading(false);
     }
@@ -113,15 +128,15 @@ export default function BlogTabsClient({ posts, categories }: Props) {
   return (
     <div className="space-y-16">
       {/* 1. NAVIGATION TABS */}
-      <div className="sticky top-24 z-40 mb-12">
-        <div className="max-w-fit mx-auto liquid-glass-clear px-1.5 py-1.5 sm:px-2 sm:py-2 rounded-full shadow-2xl overflow-hidden">
-          <nav className="flex gap-1 items-center justify-center overflow-hidden">
+      <div className="sticky top-20 md:top-24 z-40 mb-12 px-2 md:px-0">
+        <div className="max-w-full md:max-w-fit mx-auto liquid-glass px-1.5 py-1.5 sm:px-2 sm:py-2 rounded-full shadow-2xl border border-primary/10 overflow-x-auto no-scrollbar">
+          <nav className="flex gap-1 items-center justify-start md:justify-center whitespace-nowrap min-w-max">
             {[
               { id: 'featured', label: 'Highlights', icon: Star },
-              { id: 'all', label: 'All Logs', icon: Clock },
-              { id: 'music', label: 'Music Logs', icon: Music },
-              { id: 'tech', label: 'Dev Logs', icon: Terminal },
-              { id: 'subscribe', label: 'Subscribe', icon: Mail },
+              { id: 'all', label: 'All Posts', icon: Clock },
+              { id: 'music', label: 'Music', icon: Music },
+              { id: 'tech', label: 'Tech', icon: Terminal },
+              { id: 'subscribe', label: 'Newsletter', icon: Mail },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -131,7 +146,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                   setSelectedTag(null);
                 }}
                 className={`
-                  flex items-center justify-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-8 sm:py-3 rounded-full text-xs font-medium uppercase tracking-[0.2em] sm:tracking-[0.3em] transition-all whitespace-nowrap
+                  flex items-center justify-center gap-2 sm:gap-3 px-4 py-2.5 sm:px-8 sm:py-3 rounded-full text-xs font-medium uppercase tracking-[0.2em] sm:tracking-[0.25em] transition-all whitespace-nowrap
                   ${activeTab === tab.id
                     ? 'bg-primary text-background-primary shadow-xl scale-105'
                     : 'text-secondary hover:text-primary hover:bg-white/5'
@@ -139,7 +154,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                 `}
               >
                 <tab.icon className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">{tab.label}</span>
+                <span>{tab.label}</span>
               </button>
             ))}
           </nav>
@@ -153,7 +168,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 space-y-24">
              
              {/* The Hero Post artifact */}
-             <div className="relative min-h-[450px] md:min-h-[550px] w-full mb-24 group rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/5 flex flex-col justify-end">
+             <div className="relative min-h-[480px] md:min-h-[540px] w-full mb-24 group rounded-[2.5rem] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.6)] border border-white/5 flex flex-col justify-end">
                 <Image
                   src={featuredPost.coverImage}
                   alt={featuredPost.title}
@@ -162,34 +177,43 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                   className="object-cover transition-all duration-[3000ms] group-hover:scale-105 opacity-65 group-hover:opacity-85 blur-[4px] group-hover:blur-[2px]"
                 />
                 <div 
-                  className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90"
+                  className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30 opacity-95"
                 ></div>
                 
-                <div className="relative p-8 md:p-16 lg:p-20 flex flex-col justify-end z-10 mt-20">
+                <div className="relative p-6 sm:p-10 md:p-14 lg:p-16 flex flex-col justify-end z-10">
                    <div className="max-w-4xl space-y-4 md:space-y-6">
                       <div className="flex items-center gap-4">
                          <div className="w-12 h-px bg-accent-blue animate-pulse" />
-                         <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">Priority_Sequence // Featured</span>
+                         <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">Featured Story</span>
                       </div>
-                      <h2 className="text-3xl md:text-5xl lg:text-6xl font-light tracking-tighter uppercase leading-[0.9] text-white">
+                      <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight uppercase leading-[1.08] text-white">
                          <Link href={`/posts/${featuredPost.slug}`}>
                             {featuredPost.title}
                          </Link>
                       </h2>
-                      <p className="text-base md:text-lg text-white/70 font-light max-w-3xl leading-relaxed">
+                      <p className="text-sm sm:text-base md:text-lg text-white/80 font-light max-w-3xl leading-relaxed">
                          {featuredPost.excerpt}
                       </p>
                       
-                      <div className="flex flex-wrap gap-4 items-center">
-                         <Link href={`/posts/${featuredPost.slug}`} className="inline-flex items-center gap-4 px-8 py-4 rounded-full bg-white text-black hover:bg-white/90 text-[10px] font-medium uppercase tracking-[0.4em] hover:scale-105 active:scale-95 transition-all">
-                            Open Sequence <ArrowRight size={14} />
+                      <div className="flex flex-wrap gap-3 sm:gap-4 items-center pt-2">
+                         <Link href={`/posts/${featuredPost.slug}`} className="inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full bg-white text-black hover:bg-white/90 text-[10px] font-medium uppercase tracking-[0.3em] hover:scale-105 active:scale-95 transition-all">
+                            Read Story <ArrowRight size={14} />
                          </Link>
-                         <span className="text-[10px] font-mono text-white/60 tracking-widest px-4 py-2 border border-white/10 rounded-full bg-white/5">
+                         <span className="text-[10px] font-mono text-white/70 tracking-widest px-3.5 py-1.5 border border-white/10 rounded-full bg-white/5">
                             {getReadTime(featuredPost.content)} MIN READ
                          </span>
-                         <span className="text-[10px] font-mono text-accent-blue tracking-widest px-4 py-2 border border-accent-blue/20 rounded-full bg-accent-blue/10">
+                         <span className="text-[10px] font-mono text-accent-blue tracking-widest px-3.5 py-1.5 border border-accent-blue/20 rounded-full bg-accent-blue/10">
                             {featuredPost.category?.toUpperCase()}
                          </span>
+                         {featuredPost.tags && featuredPost.tags.length > 0 && (
+                           <div className="hidden sm:flex items-center gap-2">
+                             {featuredPost.tags.slice(0, 2).map((t) => (
+                               <span key={t} className="text-[9px] font-mono uppercase tracking-widest px-3 py-1 rounded-full border border-white/10 bg-white/5 text-white/60">
+                                 #{t}
+                               </span>
+                             ))}
+                           </div>
+                         )}
                       </div>
                    </div>
                 </div>
@@ -199,7 +223,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
               <div className="space-y-10 py-8">
                  <div className="flex items-center gap-4">
                     <div className="w-12 h-px bg-accent-blue/30 animate-pulse" />
-                    <h3 className="font-mono text-xs uppercase tracking-[0.5em] text-accent-blue">Recent_Activity // Log_Feed</h3>
+                    <h3 className="font-mono text-xs uppercase tracking-[0.5em] text-accent-blue">Recent Writing</h3>
                  </div>
                  
                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -232,7 +256,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                                   {readTime} MIN READ
                                </span>
                                <Link href={`/posts/${post.slug}`} className="flex items-center gap-2 text-accent-blue font-semibold uppercase tracking-[0.2em] group-hover:gap-4 transition-all">
-                                  Read Log <ArrowRight size={12} />
+                                  Read Article <ArrowRight size={12} />
                                </Link>
                             </div>
                          </motion.div>
@@ -271,7 +295,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                             <h3 className="text-7xl md:text-8xl font-light uppercase tracking-tighter text-primary leading-[0.7]">{cat.category}</h3>
                             <p className="text-secondary font-light text-xl max-w-sm group-hover:opacity-100 transition-opacity leading-relaxed">{cat.description}</p>
                             <div className="flex items-center gap-4 text-xs font-medium uppercase tracking-[0.5em] text-accent-blue group-hover:translate-x-4 transition-transform pt-4">
-                               Establish_Entry <ChevronRight size={20} />
+                               Explore <ChevronRight size={20} />
                             </div>
                          </div>
                       </Link>
@@ -293,7 +317,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                    </span>
                    <input
                       type="text"
-                      placeholder={`Search ${activeTab === 'all' ? 'all logs' : activeTab === 'music' ? 'music posts' : 'dev logs'}...`}
+                      placeholder={`Search ${activeTab === 'all' ? 'all posts' : activeTab === 'music' ? 'music articles' : 'tech articles'}...`}
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="w-full pl-14 pr-12 py-4 rounded-full bg-white/[0.02] border border-white/10 text-sm font-mono tracking-wide placeholder:text-secondary/30 focus:outline-none focus:border-accent-blue/40 focus:bg-white/[0.04] transition-all text-primary"
@@ -308,32 +332,49 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                    )}
                 </div>
 
-                {availableTags.length > 0 && (
+                {allSortedTags.length > 0 && (
                    <div className="flex flex-wrap gap-2 items-center justify-start md:justify-end w-full md:w-auto">
-                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-secondary/40 mr-2">Filter signals:</span>
+                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-secondary/40 mr-1">Topics:</span>
                       <button
                          onClick={() => setSelectedTag(null)}
-                         className={`px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-widest transition-all border ${
+                         className={`px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-widest transition-all border ${
                             selectedTag === null
-                               ? 'bg-primary text-background-primary border-primary shadow-lg'
+                               ? 'bg-primary text-background-primary border-primary shadow-lg font-medium'
                                : 'text-secondary border-white/5 bg-white/[0.01] hover:border-white/10 hover:text-primary'
                          }`}
                       >
-                         All
+                         All ({basePostsForTab.length})
                       </button>
-                      {availableTags.map((tag) => (
+                      {visibleTags.map((tag) => (
                          <button
                             key={tag}
                             onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-                            className={`px-4 py-2 rounded-full text-[10px] font-mono uppercase tracking-widest transition-all border ${
+                            className={`px-3.5 py-1.5 rounded-full text-[10px] font-mono uppercase tracking-widest transition-all border flex items-center gap-1.5 ${
                                selectedTag === tag
-                                  ? 'bg-accent-blue text-white border-accent-blue shadow-lg'
+                                  ? 'bg-accent-blue text-white border-accent-blue shadow-lg font-medium scale-105'
                                   : 'text-secondary border-white/5 bg-white/[0.01] hover:border-white/10 hover:text-primary'
                             }`}
                          >
-                            {tag}
+                            <span>{tag}</span>
+                            <span className="text-[8px] opacity-60">({tagCounts[tag]})</span>
                          </button>
                       ))}
+                      {hasHiddenTags && (
+                        <button
+                          onClick={() => setShowAllTags(!showAllTags)}
+                          className="px-3 py-1.5 rounded-full text-[9px] font-mono uppercase tracking-wider text-accent-blue hover:text-white border border-accent-blue/20 hover:border-accent-blue/40 bg-accent-blue/5 hover:bg-accent-blue/10 transition-all"
+                        >
+                          {showAllTags ? "Less" : `+${allSortedTags.length - MAX_VISIBLE_TAGS} More`}
+                        </button>
+                      )}
+                      {selectedTag && (
+                        <button
+                          onClick={() => setSelectedTag(null)}
+                          className="text-[9px] font-mono uppercase tracking-wider text-secondary/60 hover:text-primary transition-colors ml-1 underline"
+                        >
+                          Clear
+                        </button>
+                      )}
                    </div>
                 )}
              </div>
@@ -342,7 +383,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 {tabPosts.length === 0 ? (
                    <div className="col-span-full py-40 text-center rounded-[3rem] border border-dashed border-white/10">
-                      <p className="font-mono text-xs uppercase tracking-[0.6em] text-secondary opacity-50 leading-relaxed">Reference_Not_Found<br/>Sector currently void of matching data logs.</p>
+                      <p className="font-mono text-xs uppercase tracking-[0.4em] text-secondary opacity-60 leading-relaxed">No Articles Found<br/><span className="text-[11px] normal-case tracking-normal opacity-75">No posts match your search or selected topic.</span></p>
                       {(searchQuery || selectedTag) && (
                          <button 
                             onClick={() => { setSearchQuery(""); setSelectedTag(null); }}
@@ -380,22 +421,22 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                                    <div className="w-6 h-px bg-accent-blue/30" />
                                    <time className="text-[10px] font-mono text-accent-blue uppercase tracking-[0.3em]">
                                       {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                                    </time>
+                                   </time>
                                 </div>
                                 <span className="text-[9px] font-mono text-secondary/50 uppercase tracking-widest">
                                    {getReadTime(post.content)} min read
                                  </span>
                              </div>
-                             <h3 className="text-3xl font-light tracking-tighter mb-6 group-hover:text-primary transition-colors uppercase leading-[0.9]">
+                             <h3 className="text-2xl sm:text-3xl font-light tracking-tight mb-5 group-hover:text-primary transition-colors uppercase leading-[1.1]">
                                 <Link href={`/posts/${post.slug}`}>{post.title}</Link>
                              </h3>
-                             <p className="text-secondary font-light text-sm line-clamp-3 mb-8 leading-relaxed opacity-70 group-hover:opacity-90 transition-opacity">
+                             <p className="text-secondary font-light text-sm line-clamp-3 mb-6 leading-relaxed opacity-70 group-hover:opacity-90 transition-opacity">
                                 {post.excerpt}
                              </p>
                              
                              {post.tags && post.tags.length > 0 && (
-                                <div className="flex flex-wrap gap-1.5 mb-8 mt-auto">
-                                   {post.tags.slice(0, 3).map(tag => (
+                                <div className="flex flex-wrap gap-1.5 mb-6 mt-auto">
+                                   {post.tags.slice(0, 2).map(tag => (
                                       <span 
                                          key={tag} 
                                          onClick={(e) => {
@@ -415,7 +456,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                              )}
 
                              <div className="pt-6 border-t border-white/5 flex justify-between items-center opacity-60 group-hover:opacity-100 transition-all">
-                                <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-secondary">Execute_Log</span>
+                                <span className="text-[9px] font-mono uppercase tracking-[0.4em] text-secondary">Read Article</span>
                                 <ArrowRight className="w-5 h-5 text-accent-blue group-hover:translate-x-3 transition-transform" />
                              </div>
                           </div>
@@ -431,18 +472,18 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                    <div className="space-y-3 text-center lg:text-left max-w-xl">
                       <div className="flex items-center gap-3 justify-center lg:justify-start">
                          <Mail size={14} className="text-accent-blue" />
-                         <span className="text-accent-blue font-mono text-[9px] uppercase tracking-[0.5em]">SYSTEM_COMMUNICATION</span>
+                         <span className="text-accent-blue font-mono text-[9px] uppercase tracking-[0.5em]">Newsletter</span>
                       </div>
-                      <h4 className="text-3xl font-light uppercase tracking-tighter text-primary">Establish Uplink Channel</h4>
+                      <h4 className="text-3xl font-light uppercase tracking-tighter text-primary">Stay in the Loop</h4>
                       <p className="text-secondary text-sm font-light leading-relaxed">
-                         Receive low-frequency dispatches of experimental systems, synthesis logs, and architectural breakdowns.
+                         Essays on sound design, music production, software architecture, and creative engineering.
                       </p>
                    </div>
                    
                    <div className="flex flex-col sm:flex-row gap-4 w-full lg:max-w-md">
                       <input
                          type="email"
-                         placeholder="ENDPOINT_EMAIL"
+                         placeholder="your@email.com"
                          value={email}
                          onChange={(e) => setEmail(e.target.value)}
                          className="flex-1 px-6 py-4 rounded-full bg-white/[0.02] border border-white/15 font-mono text-xs uppercase tracking-wider focus:outline-none focus:border-accent-blue/40 text-primary text-center sm:text-left"
@@ -452,7 +493,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                          disabled={isLoading}
                          className="px-8 py-4 rounded-full bg-primary text-background-primary text-xs font-semibold uppercase tracking-[0.3em] flex items-center justify-center gap-3 hover:scale-105 active:scale-95 transition-all"
                       >
-                         {isLoading ? "SYNCING..." : "CONNECT"}
+                         {isLoading ? "Subscribing..." : "Subscribe"}
                       </button>
                    </div>
                 </div>
@@ -482,11 +523,11 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                 <div className="relative z-10">
                    <div className="flex items-center justify-center gap-4 mb-8">
                       <div className="w-12 h-px" style={{ backgroundColor: 'color-mix(in srgb, var(--accent-blue) 40%, transparent)' }} />
-                      <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">System_Establishment</span>
+                      <span className="text-accent-blue font-mono text-[10px] uppercase tracking-[0.6em]">Newsletter</span>
                    </div>
-                   <h2 className="text-7xl md:text-8xl font-light uppercase tracking-tighter mb-12 text-primary leading-none">Uplink</h2>
+                   <h2 className="text-7xl md:text-8xl font-light uppercase tracking-tighter mb-12 text-primary leading-none">Dispatches</h2>
                    <p className="text-secondary font-light text-2xl mb-20 max-w-xl mx-auto leading-relaxed italic opacity-80">
-                      Automated dispatches of technical modules, sonic studies, and high-fidelity data logs.
+                      Essays on sound design, music production, software architecture, and creative engineering.
                    </p>
                    
                    <div className="space-y-8 max-w-md mx-auto">
@@ -497,7 +538,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
 
                          <input
                             type="email"
-                            placeholder="ENDPOINT_EMAIL"
+                            placeholder="your@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             disabled={isLoading}
@@ -510,7 +551,7 @@ export default function BlogTabsClient({ posts, categories }: Props) {
                         disabled={isLoading}
                         className="w-full h-24 rounded-full bg-primary text-background-primary flex items-center justify-center gap-6 group hover:scale-[1.02] active:scale-[0.98] transition-all relative overflow-hidden"
                       >
-                         <span className="text-xl font-medium uppercase tracking-[0.5em] relative z-10">{isLoading ? "SYNCING..." : "INITIALIZE_UPLINK"}</span>
+                         <span className="text-xl font-medium uppercase tracking-[0.5em] relative z-10">{isLoading ? "Subscribing..." : "Subscribe"}</span>
                          <ArrowRight size={24} className="relative z-10 group-hover:translate-x-3 transition-transform" />
                          <div className="absolute inset-0 bg-accent-blue translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                       </button>

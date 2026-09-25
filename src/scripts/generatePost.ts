@@ -47,8 +47,6 @@ ogImage:
   url: "${coverImage}"
 ---
 
-# ${title}
-
 Write your content here...
 `;
 
